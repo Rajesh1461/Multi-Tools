@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Discount Calculator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Discount Calculator</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="originalPrice" class="form-label">Original Price:</label>
+                <input type="number" id="originalPrice" class="form-control bg-dark text-light border-danger" placeholder="Enter original price" step="0.01" min="0">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="discountPercent" class="form-label">Discount Percentage:</label>
+                <input type="number" id="discountPercent" class="form-control bg-dark text-light border-danger" placeholder="Enter discount %" step="0.01" min="0" max="100">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="finalPrice" class="form-label">Final Price (Optional):</label>
+                <input type="number" id="finalPrice" class="form-control bg-dark text-light border-danger" placeholder="Enter final price" step="0.01" min="0">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="taxRate" class="form-label">Tax Rate % (Optional):</label>
+                <input type="number" id="taxRate" class="form-control bg-dark text-light border-danger" placeholder="Enter tax rate" step="0.01" min="0" max="100">
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="calculateDiscount()">Calculate Discount</button>
+              <button class="btn btn-outline-danger" onclick="clearInput()">Clear</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Discount Calculation Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Discount Amount</h6>
+                    <h3 id="discountAmount">$0.00</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Final Price</h6>
+                    <h3 id="calculatedFinalPrice">$0.00</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Total with Tax</h6>
+                    <h3 id="totalWithTax">$0.00</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row text-center">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Savings</h6>
+                    <h4 id="savings">$0.00</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Tax Amount</h6>
+                    <h4 id="taxAmount">$0.00</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Effective Discount</h6>
+                    <h4 id="effectiveDiscount">0%</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+              <button class="btn btn-outline-danger" onclick="exportResults()">Export Results</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Discount Buttons -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Quick Discounts</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-3 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="applyQuickDiscount(10)">10% Off</button>
+              </div>
+              <div class="col-md-3 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="applyQuickDiscount(20)">20% Off</button>
+              </div>
+              <div class="col-md-3 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="applyQuickDiscount(25)">25% Off</button>
+              </div>
+              <div class="col-md-3 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="applyQuickDiscount(50)">50% Off</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function calculateDiscount() {
+      const originalPrice = parseFloat(document.getElementById('originalPrice').value);
+      const discountPercent = parseFloat(document.getElementById('discountPercent').value);
+      const finalPrice = parseFloat(document.getElementById('finalPrice').value);
+      const taxRate = parseFloat(document.getElementById('taxRate').value) || 0;
+      
+      if (isNaN(originalPrice) || originalPrice <= 0) {
+        alert('Please enter a valid original price.');
+        return;
+      }
+      
+      let calculatedFinalPrice, discountAmount, calculatedDiscountPercent;
+      
+      if (!isNaN(discountPercent) && discountPercent >= 0 && discountPercent <= 100) {
+        // Calculate from discount percentage
+        discountAmount = originalPrice * (discountPercent / 100);
+        calculatedFinalPrice = originalPrice - discountAmount;
+        calculatedDiscountPercent = discountPercent;
+      } else if (!isNaN(finalPrice) && finalPrice >= 0 && finalPrice <= originalPrice) {
+        // Calculate from final price
+        discountAmount = originalPrice - finalPrice;
+        calculatedFinalPrice = finalPrice;
+        calculatedDiscountPercent = (discountAmount / originalPrice) * 100;
+      } else {
+        alert('Please enter either a valid discount percentage or final price.');
+        return;
+      }
+      
+      const taxAmount = calculatedFinalPrice * (taxRate / 100);
+      const totalWithTax = calculatedFinalPrice + taxAmount;
+      const savings = originalPrice - calculatedFinalPrice;
+      const effectiveDiscount = ((originalPrice - totalWithTax) / originalPrice) * 100;
+      
+      // Display results
+      document.getElementById('discountAmount').textContent = '$' + discountAmount.toFixed(2);
+      document.getElementById('calculatedFinalPrice').textContent = '$' + calculatedFinalPrice.toFixed(2);
+      document.getElementById('totalWithTax').textContent = '$' + totalWithTax.toFixed(2);
+      document.getElementById('savings').textContent = '$' + savings.toFixed(2);
+      document.getElementById('taxAmount').textContent = '$' + taxAmount.toFixed(2);
+      document.getElementById('effectiveDiscount').textContent = effectiveDiscount.toFixed(1) + '%';
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function applyQuickDiscount(discountPercent) {
+      const originalPrice = parseFloat(document.getElementById('originalPrice').value);
+      
+      if (isNaN(originalPrice) || originalPrice <= 0) {
+        alert('Please enter an original price first.');
+        return;
+      }
+      
+      document.getElementById('discountPercent').value = discountPercent;
+      document.getElementById('finalPrice').value = '';
+      calculateDiscount();
+    }
+    
+    function clearInput() {
+      document.getElementById('originalPrice').value = '';
+      document.getElementById('discountPercent').value = '';
+      document.getElementById('finalPrice').value = '';
+      document.getElementById('taxRate').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+    
+    function copyResults() {
+      const originalPrice = document.getElementById('originalPrice').value;
+      const discountPercent = document.getElementById('discountPercent').value;
+      const discountAmount = document.getElementById('discountAmount').textContent;
+      const calculatedFinalPrice = document.getElementById('calculatedFinalPrice').textContent;
+      const totalWithTax = document.getElementById('totalWithTax').textContent;
+      const savings = document.getElementById('savings').textContent;
+      const taxAmount = document.getElementById('taxAmount').textContent;
+      const effectiveDiscount = document.getElementById('effectiveDiscount').textContent;
+      
+      const results = `Discount Calculator Results:
+Original Price: $${originalPrice}
+Discount: ${discountPercent}%
+Discount Amount: ${discountAmount}
+Final Price: ${calculatedFinalPrice}
+Tax Amount: ${taxAmount}
+Total with Tax: ${totalWithTax}
+Savings: ${savings}
+Effective Discount: ${effectiveDiscount}`;
+      
+      navigator.clipboard.writeText(results).then(() => {
+        alert('Results copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy results. Please copy manually.');
+      });
+    }
+    
+    function exportResults() {
+      const originalPrice = document.getElementById('originalPrice').value;
+      const discountPercent = document.getElementById('discountPercent').value;
+      const discountAmount = document.getElementById('discountAmount').textContent;
+      const calculatedFinalPrice = document.getElementById('calculatedFinalPrice').textContent;
+      const totalWithTax = document.getElementById('totalWithTax').textContent;
+      const savings = document.getElementById('savings').textContent;
+      const taxAmount = document.getElementById('taxAmount').textContent;
+      const effectiveDiscount = document.getElementById('effectiveDiscount').textContent;
+      
+      const exportText = `Discount Calculator Analysis Report
+
+Original Price: $${originalPrice}
+Discount Percentage: ${discountPercent}%
+Tax Rate: ${document.getElementById('taxRate').value || 0}%
+
+Calculation Results:
+- Discount Amount: ${discountAmount}
+- Final Price: ${calculatedFinalPrice}
+- Tax Amount: ${taxAmount}
+- Total with Tax: ${totalWithTax}
+- Savings: ${savings}
+- Effective Discount: ${effectiveDiscount}
+
+Generated on: ${new Date().toLocaleString()}`;
+      
+      const blob = new Blob([exportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'discount-calculator-analysis.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    // Auto-calculate when inputs change
+    document.getElementById('originalPrice').addEventListener('input', function() {
+      if (this.value && (document.getElementById('discountPercent').value || document.getElementById('finalPrice').value)) {
+        calculateDiscount();
+      }
+    });
+    
+    document.getElementById('discountPercent').addEventListener('input', function() {
+      if (this.value && document.getElementById('originalPrice').value) {
+        document.getElementById('finalPrice').value = '';
+        calculateDiscount();
+      }
+    });
+    
+    document.getElementById('finalPrice').addEventListener('input', function() {
+      if (this.value && document.getElementById('originalPrice').value) {
+        document.getElementById('discountPercent').value = '';
+        calculateDiscount();
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

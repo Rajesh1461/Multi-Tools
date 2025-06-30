@@ -1,0 +1,180 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volume Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../assets/img/Rajesh Kumar S.jpg">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Volume Converter</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Convert between different volume units quickly and accurately.
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">From Unit</label>
+                <select class="form-select bg-dark text-light border-danger" id="fromUnit">
+                  <option value="liters">Liters (L)</option>
+                  <option value="milliliters">Milliliters (mL)</option>
+                  <option value="cubic-meters">Cubic Meters (m³)</option>
+                  <option value="cubic-centimeters">Cubic Centimeters (cm³)</option>
+                  <option value="gallons">US Gallons (gal)</option>
+                  <option value="quarts">US Quarts (qt)</option>
+                  <option value="pints">US Pints (pt)</option>
+                  <option value="cups">US Cups (cup)</option>
+                  <option value="fluid-ounces">US Fluid Ounces (fl oz)</option>
+                  <option value="tablespoons">US Tablespoons (tbsp)</option>
+                  <option value="teaspoons">US Teaspoons (tsp)</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Value</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="inputValue" placeholder="Enter value" step="any">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">To Unit</label>
+                <select class="form-select bg-dark text-light border-danger" id="toUnit">
+                  <option value="liters">Liters (L)</option>
+                  <option value="milliliters">Milliliters (mL)</option>
+                  <option value="cubic-meters">Cubic Meters (m³)</option>
+                  <option value="cubic-centimeters">Cubic Centimeters (cm³)</option>
+                  <option value="gallons">US Gallons (gal)</option>
+                  <option value="quarts">US Quarts (qt)</option>
+                  <option value="pints">US Pints (pt)</option>
+                  <option value="cups">US Cups (cup)</option>
+                  <option value="fluid-ounces">US Fluid Ounces (fl oz)</option>
+                  <option value="tablespoons">US Tablespoons (tbsp)</option>
+                  <option value="teaspoons">US Teaspoons (tsp)</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center mb-4">
+              <button class="btn btn-danger btn-lg" onclick="convertVolume()">
+                <i class="fas fa-exchange-alt me-2"></i>Convert
+              </button>
+            </div>
+            <div id="resultSection" style="display: none;">
+              <div class="card bg-dark border-danger">
+                <div class="card-body text-center">
+                  <h5 class="text-danger">Conversion Result</h5>
+                  <div class="text-light fs-4 fw-bold" id="resultDisplay"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h5 class="text-danger"><i class="fas fa-info-circle me-2"></i>Common Conversions</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <ul class="text-light">
+                    <li>1 liter = 1000 milliliters</li>
+                    <li>1 cubic meter = 1000 liters</li>
+                    <li>1 gallon = 3.78541 liters</li>
+                    <li>1 quart = 0.946353 liters</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <ul class="text-light">
+                    <li>1 cup = 236.588 milliliters</li>
+                    <li>1 fluid ounce = 29.5735 milliliters</li>
+                    <li>1 tablespoon = 14.7868 milliliters</li>
+                    <li>1 teaspoon = 4.92892 milliliters</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function convertVolume() {
+      const fromUnit = document.getElementById('fromUnit').value;
+      const toUnit = document.getElementById('toUnit').value;
+      const inputValue = parseFloat(document.getElementById('inputValue').value);
+
+      if (isNaN(inputValue)) {
+        alert('Please enter a valid number.');
+        return;
+      }
+
+      // Convert to milliliters first (base unit)
+      const milliliters = convertToMilliliters(inputValue, fromUnit);
+      
+      // Convert from milliliters to target unit
+      const result = convertFromMilliliters(milliliters, toUnit);
+
+      // Display result
+      document.getElementById('resultDisplay').textContent = 
+        `${inputValue} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+      document.getElementById('resultSection').style.display = 'block';
+    }
+
+    function convertToMilliliters(value, unit) {
+      switch (unit) {
+        case 'liters': return value * 1000;
+        case 'milliliters': return value;
+        case 'cubic-meters': return value * 1000000;
+        case 'cubic-centimeters': return value;
+        case 'gallons': return value * 3785.41;
+        case 'quarts': return value * 946.353;
+        case 'pints': return value * 473.176;
+        case 'cups': return value * 236.588;
+        case 'fluid-ounces': return value * 29.5735;
+        case 'tablespoons': return value * 14.7868;
+        case 'teaspoons': return value * 4.92892;
+        default: return value;
+      }
+    }
+
+    function convertFromMilliliters(milliliters, unit) {
+      switch (unit) {
+        case 'liters': return milliliters / 1000;
+        case 'milliliters': return milliliters;
+        case 'cubic-meters': return milliliters / 1000000;
+        case 'cubic-centimeters': return milliliters;
+        case 'gallons': return milliliters / 3785.41;
+        case 'quarts': return milliliters / 946.353;
+        case 'pints': return milliliters / 473.176;
+        case 'cups': return milliliters / 236.588;
+        case 'fluid-ounces': return milliliters / 29.5735;
+        case 'tablespoons': return milliliters / 14.7868;
+        case 'teaspoons': return milliliters / 4.92892;
+        default: return milliliters;
+      }
+    }
+
+    // Handle Enter key
+    document.getElementById('inputValue').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        convertVolume();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Certificate Generator</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="recipientName" class="form-label">Recipient Name:</label>
+                <input type="text" id="recipientName" class="form-control bg-dark text-light border-danger" placeholder="Enter recipient name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="certificateType" class="form-label">Certificate Type:</label>
+                <select id="certificateType" class="form-select bg-dark text-light border-danger">
+                  <option value="achievement">Achievement</option>
+                  <option value="completion">Completion</option>
+                  <option value="participation">Participation</option>
+                  <option value="excellence">Excellence</option>
+                  <option value="recognition">Recognition</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="courseProgram" class="form-label">Course/Program:</label>
+                <input type="text" id="courseProgram" class="form-control bg-dark text-light border-danger" placeholder="Enter course or program name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="issueDate" class="form-label">Issue Date:</label>
+                <input type="date" id="issueDate" class="form-control bg-dark text-light border-danger">
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="issuerName" class="form-label">Issuer Name:</label>
+                <input type="text" id="issuerName" class="form-control bg-dark text-light border-danger" placeholder="Enter issuer name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="certificateId" class="form-label">Certificate ID:</label>
+                <input type="text" id="certificateId" class="form-control bg-dark text-light border-danger" placeholder="Enter certificate ID">
+              </div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="customMessage" class="form-label">Custom Message (optional):</label>
+              <textarea id="customMessage" class="form-control bg-dark text-light border-danger" rows="3" placeholder="Enter custom message"></textarea>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="certificateStyle" class="form-label">Style:</label>
+                <select id="certificateStyle" class="form-select bg-dark text-light border-danger">
+                  <option value="classic">Classic</option>
+                  <option value="modern">Modern</option>
+                  <option value="elegant">Elegant</option>
+                  <option value="professional">Professional</option>
+                  <option value="creative">Creative</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="certificateColor" class="form-label">Color Theme:</label>
+                <select id="certificateColor" class="form-select bg-dark text-light border-danger">
+                  <option value="gold">Gold</option>
+                  <option value="blue">Blue</option>
+                  <option value="green">Green</option>
+                  <option value="purple">Purple</option>
+                  <option value="red">Red</option>
+                  <option value="black">Black</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateCertificate()">Generate Certificate</button>
+              <button class="btn btn-outline-danger" onclick="clearForm()">Clear</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Certificate Preview -->
+        <div id="certificatePreview" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Certificate Preview</h5>
+          </div>
+          <div class="card-body text-center">
+            <div id="certificateCanvas" class="mb-3">
+              <!-- Certificate will be generated here -->
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadCertificate('png')">Download PNG</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadCertificate('pdf')">Download PDF</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="printCertificate()">Print Certificate</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Templates -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Quick Templates</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('course')">Course Completion</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('achievement')">Achievement Award</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('participation')">Participation</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('excellence')">Excellence Award</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('recognition')">Recognition</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('custom')">Custom</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Certificate Tips -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Certificate Design Tips</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="text-danger">Design Elements:</h6>
+                <ul class="list-unstyled">
+                  <li>✅ Use professional fonts</li>
+                  <li>✅ Include official logos</li>
+                  <li>✅ Add decorative borders</li>
+                  <li>✅ Use appropriate colors</li>
+                  <li>✅ Include security features</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6 class="text-danger">Content Guidelines:</h6>
+                <ul class="list-unstyled">
+                  <li>✅ Clear recipient name</li>
+                  <li>✅ Specific achievement</li>
+                  <li>✅ Issue date</li>
+                  <li>✅ Issuer signature</li>
+                  <li>✅ Unique certificate ID</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    // Set default date to today
+    document.getElementById('issueDate').valueAsDate = new Date();
+    
+    function generateCertificate() {
+      const recipientName = document.getElementById('recipientName').value.trim();
+      const certificateType = document.getElementById('certificateType').value;
+      const courseProgram = document.getElementById('courseProgram').value.trim();
+      const issueDate = document.getElementById('issueDate').value;
+      const issuerName = document.getElementById('issuerName').value.trim();
+      const certificateId = document.getElementById('certificateId').value.trim();
+      const customMessage = document.getElementById('customMessage').value.trim();
+      const style = document.getElementById('certificateStyle').value;
+      const color = document.getElementById('certificateColor').value;
+      
+      if (!recipientName || !courseProgram || !issuerName) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+      
+      const certificate = createCertificateHTML(recipientName, certificateType, courseProgram, issueDate, issuerName, certificateId, customMessage, style, color);
+      
+      document.getElementById('certificateCanvas').innerHTML = certificate;
+      document.getElementById('certificatePreview').style.display = 'block';
+    }
+    
+    function createCertificateHTML(recipientName, certificateType, courseProgram, issueDate, issuerName, certificateId, customMessage, style, color) {
+      const typeText = getCertificateTypeText(certificateType);
+      const colorClass = getColorClass(color);
+      const styleClass = getStyleClass(style);
+      
+      return `
+        <div class="certificate-container ${colorClass} ${styleClass}" style="width: 800px; height: 600px; margin: 0 auto; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border: 8px solid #d4af37; border-radius: 15px; padding: 40px; position: relative; font-family: 'Times New Roman', serif;">
+          <!-- Border Pattern -->
+          <div style="position: absolute; top: 20px; left: 20px; right: 20px; bottom: 20px; border: 2px solid #d4af37; border-radius: 10px;"></div>
+          
+          <!-- Header -->
+          <div style="text-align: center; margin-bottom: 30px;">
+            <h1 style="color: #d4af37; font-size: 48px; font-weight: bold; margin: 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">CERTIFICATE</h1>
+            <h2 style="color: #333; font-size: 24px; margin: 10px 0; font-weight: normal;">${typeText}</h2>
+          </div>
+          
+          <!-- Main Content -->
+          <div style="text-align: center; margin: 40px 0;">
+            <p style="font-size: 18px; color: #666; margin: 20px 0;">This is to certify that</p>
+            <h3 style="font-size: 36px; color: #333; margin: 20px 0; font-weight: bold; text-decoration: underline;">${recipientName}</h3>
+            <p style="font-size: 18px; color: #666; margin: 20px 0;">has successfully completed</p>
+            <h4 style="font-size: 28px; color: #d4af37; margin: 20px 0; font-weight: bold;">${courseProgram}</h4>
+            ${customMessage ? `<p style="font-size: 16px; color: #666; margin: 20px 0; font-style: italic;">"${customMessage}"</p>` : ''}
+          </div>
+          
+          <!-- Footer -->
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 60px;">
+            <div style="text-align: center;">
+              <div style="width: 150px; height: 2px; background: #d4af37; margin: 0 auto 10px;"></div>
+              <p style="font-size: 16px; color: #333; margin: 0;">Date</p>
+              <p style="font-size: 18px; color: #d4af37; margin: 5px 0; font-weight: bold;">${formatDate(issueDate)}</p>
+            </div>
+            <div style="text-align: center;">
+              <div style="width: 150px; height: 2px; background: #d4af37; margin: 0 auto 10px;"></div>
+              <p style="font-size: 16px; color: #333; margin: 0;">Issuer</p>
+              <p style="font-size: 18px; color: #d4af37; margin: 5px 0; font-weight: bold;">${issuerName}</p>
+            </div>
+          </div>
+          
+          <!-- Certificate ID -->
+          <div style="position: absolute; bottom: 20px; right: 20px; text-align: right;">
+            <p style="font-size: 12px; color: #999; margin: 0;">Certificate ID: ${certificateId || generateCertificateId()}</p>
+          </div>
+          
+          <!-- Decorative Elements -->
+          <div style="position: absolute; top: 50px; left: 50px; font-size: 60px; color: #d4af37; opacity: 0.1;">★</div>
+          <div style="position: absolute; top: 50px; right: 50px; font-size: 60px; color: #d4af37; opacity: 0.1;">★</div>
+          <div style="position: absolute; bottom: 50px; left: 50px; font-size: 60px; color: #d4af37; opacity: 0.1;">★</div>
+          <div style="position: absolute; bottom: 50px; right: 50px; font-size: 60px; color: #d4af37; opacity: 0.1;">★</div>
+        </div>
+      `;
+    }
+    
+    function getCertificateTypeText(type) {
+      const types = {
+        'achievement': 'OF ACHIEVEMENT',
+        'completion': 'OF COMPLETION',
+        'participation': 'OF PARTICIPATION',
+        'excellence': 'OF EXCELLENCE',
+        'recognition': 'OF RECOGNITION',
+        'custom': 'OF ACHIEVEMENT'
+      };
+      return types[type] || 'OF ACHIEVEMENT';
+    }
+    
+    function getColorClass(color) {
+      const colors = {
+        'gold': 'color-gold',
+        'blue': 'color-blue',
+        'green': 'color-green',
+        'purple': 'color-purple',
+        'red': 'color-red',
+        'black': 'color-black'
+      };
+      return colors[color] || 'color-gold';
+    }
+    
+    function getStyleClass(style) {
+      const styles = {
+        'classic': 'style-classic',
+        'modern': 'style-modern',
+        'elegant': 'style-elegant',
+        'professional': 'style-professional',
+        'creative': 'style-creative'
+      };
+      return styles[style] || 'style-classic';
+    }
+    
+    function formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', { 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric' 
+      });
+    }
+    
+    function generateCertificateId() {
+      return 'CERT-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+    }
+    
+    function clearForm() {
+      document.getElementById('recipientName').value = '';
+      document.getElementById('courseProgram').value = '';
+      document.getElementById('issuerName').value = '';
+      document.getElementById('certificateId').value = '';
+      document.getElementById('customMessage').value = '';
+      document.getElementById('issueDate').valueAsDate = new Date();
+      document.getElementById('certificatePreview').style.display = 'none';
+    }
+    
+    function downloadCertificate(format) {
+      const certificateElement = document.querySelector('.certificate-container');
+      if (!certificateElement) {
+        alert('Please generate a certificate first.');
+        return;
+      }
+      
+      html2canvas(certificateElement, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true
+      }).then(canvas => {
+        if (format === 'png') {
+          const link = document.createElement('a');
+          link.download = 'certificate.png';
+          link.href = canvas.toDataURL();
+          link.click();
+        } else if (format === 'pdf') {
+          // For PDF, we'll use a simple approach
+          const imgData = canvas.toDataURL('image/png');
+          const pdf = window.open('', '_blank');
+          pdf.document.write(`
+            <html>
+              <head>
+                <title>Certificate</title>
+                <style>
+                  body { margin: 0; padding: 20px; }
+                  img { width: 100%; height: auto; }
+                </style>
+              </head>
+              <body>
+                <img src="${imgData}" alt="Certificate">
+              </body>
+            </html>
+          `);
+          pdf.document.close();
+          pdf.print();
+        }
+      });
+    }
+    
+    function printCertificate() {
+      const certificateElement = document.querySelector('.certificate-container');
+      if (!certificateElement) {
+        alert('Please generate a certificate first.');
+        return;
+      }
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+          <head>
+            <title>Certificate Print</title>
+            <style>
+              body { margin: 0; padding: 20px; text-align: center; }
+              .certificate-container { display: inline-block; }
+            </style>
+          </head>
+          <body>
+            ${certificateElement.outerHTML}
+          </body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    }
+    
+    function useTemplate(type) {
+      let recipientName = 'John Doe';
+      let certificateType = 'achievement';
+      let courseProgram = 'Sample Course';
+      let issuerName = 'Sample Organization';
+      let customMessage = '';
+      
+      switch (type) {
+        case 'course':
+          certificateType = 'completion';
+          courseProgram = 'Web Development Course';
+          customMessage = 'Successfully completed all modules and assignments';
+          break;
+        case 'achievement':
+          certificateType = 'achievement';
+          courseProgram = 'Outstanding Performance Award';
+          customMessage = 'For demonstrating exceptional skills and dedication';
+          break;
+        case 'participation':
+          certificateType = 'participation';
+          courseProgram = 'Conference Participation';
+          customMessage = 'For active participation and valuable contributions';
+          break;
+        case 'excellence':
+          certificateType = 'excellence';
+          courseProgram = 'Excellence in Leadership';
+          customMessage = 'For outstanding leadership and team management';
+          break;
+        case 'recognition':
+          certificateType = 'recognition';
+          courseProgram = 'Employee Recognition';
+          customMessage = 'For outstanding contributions to the organization';
+          break;
+        case 'custom':
+          certificateType = 'custom';
+          courseProgram = 'Custom Achievement';
+          customMessage = 'For exceptional performance and dedication';
+          break;
+      }
+      
+      document.getElementById('recipientName').value = recipientName;
+      document.getElementById('certificateType').value = certificateType;
+      document.getElementById('courseProgram').value = courseProgram;
+      document.getElementById('issuerName').value = issuerName;
+      document.getElementById('customMessage').value = customMessage;
+      document.getElementById('certificateId').value = generateCertificateId();
+      
+      generateCertificate();
+    }
+    
+    // Auto-generate certificate ID if empty
+    document.getElementById('certificateId').addEventListener('blur', function() {
+      if (!this.value.trim()) {
+        this.value = generateCertificateId();
+      }
+    });
+  </script>
+  <style>
+    .color-gold .certificate-container { border-color: #d4af37; }
+    .color-blue .certificate-container { border-color: #007bff; }
+    .color-green .certificate-container { border-color: #28a745; }
+    .color-purple .certificate-container { border-color: #6f42c1; }
+    .color-red .certificate-container { border-color: #dc3545; }
+    .color-black .certificate-container { border-color: #343a40; }
+  </style>
+</body>
+</html>

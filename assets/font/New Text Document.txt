@@ -1,0 +1,13 @@
+Request ID: 046bd6d9-20c3-49bf-add7-644be463aa13
+{"error":"ERROR_UNAUTHORIZED","details":{"title":"Unauthorized request.","detail":"Your request has been blocked as our system has detected suspicious activity from your account. \nIf you believe this is a mistake, please contact us at hi@cursor.com. ","isRetryable":false,"additionalInfo":{}},"isExpected":true}
+ConnectError: [unauthenticated] Error
+    at fTa.$endAiConnectTransportReportError (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:4248:218871)
+    at Qjs.S (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:494:17406)
+    at Qjs.Q (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:494:17184)
+    at Qjs.M (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:494:16272)
+    at Qjs.L (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:494:15373)
+    at Spt.value (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:494:14165)
+    at ye.B (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:46:2398)
+    at ye.fire (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:46:2617)
+    at NQe.fire (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:4230:10378)
+    at u.onmessage (vscode-file://vscode-app/c:/Users/Rajesh%20Kumar%20S/AppData/Local/Programs/cursor/resources/app/out/vs/workbench/workbench.desktop.main.js:6712:12344)

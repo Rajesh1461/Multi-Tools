@@ -1,0 +1,371 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unit Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../assets/img/Rajesh Kumar S.jpg">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Unit Converter</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Convert between different units of measurement including length, weight, temperature, area, volume, and more.
+            </div>
+            <div class="mb-3">
+              <label for="conversionType" class="form-label">Conversion Type:</label>
+              <select class="form-select bg-dark text-light border-danger" id="conversionType" onchange="updateUnits()">
+                <option value="length">Length</option>
+                <option value="weight">Weight/Mass</option>
+                <option value="temperature">Temperature</option>
+                <option value="area">Area</option>
+                <option value="volume">Volume</option>
+                <option value="speed">Speed</option>
+                <option value="time">Time</option>
+                <option value="data">Data Storage</option>
+                <option value="energy">Energy</option>
+                <option value="pressure">Pressure</option>
+              </select>
+            </div>
+            <div class="row">
+              <div class="col-md-5">
+                <div class="mb-3">
+                  <label for="fromUnit" class="form-label">From:</label>
+                  <select class="form-select bg-dark text-light border-danger" id="fromUnit"></select>
+                </div>
+                <div class="mb-3">
+                  <label for="fromValue" class="form-label">Value:</label>
+                  <input type="number" class="form-control bg-dark text-light border-danger" id="fromValue" value="1" step="any" oninput="convert()">
+                </div>
+              </div>
+              <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <button class="btn btn-outline-danger" onclick="swapUnits()">
+                  <i class="fas fa-exchange-alt"></i>
+                </button>
+              </div>
+              <div class="col-md-5">
+                <div class="mb-3">
+                  <label for="toUnit" class="form-label">To:</label>
+                  <select class="form-select bg-dark text-light border-danger" id="toUnit"></select>
+                </div>
+                <div class="mb-3">
+                  <label for="toValue" class="form-label">Result:</label>
+                  <input type="text" class="form-control bg-dark text-light border-danger" id="toValue" readonly>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="convert()">
+                <i class="fas fa-calculator me-2"></i>Convert
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearConverter()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="copyResult()">
+                <i class="fas fa-copy me-2"></i>Copy Result
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Conversion History -->
+        <div id="historyBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-history me-2"></i>Conversion History</h5>
+          </div>
+          <div class="card-body">
+            <div id="historyList" class="mb-3"></div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger" onclick="clearHistory()">
+                <i class="fas fa-trash me-2"></i>Clear History
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Unit conversion data
+    const units = {
+      length: {
+        meters: 1,
+        kilometers: 1000,
+        centimeters: 0.01,
+        millimeters: 0.001,
+        inches: 0.0254,
+        feet: 0.3048,
+        yards: 0.9144,
+        miles: 1609.34
+      },
+      weight: {
+        kilograms: 1,
+        grams: 0.001,
+        pounds: 0.453592,
+        ounces: 0.0283495,
+        tons: 1000,
+        stone: 6.35029
+      },
+      temperature: {
+        celsius: 'celsius',
+        fahrenheit: 'fahrenheit',
+        kelvin: 'kelvin',
+        rankine: 'rankine'
+      },
+      area: {
+        'square meters': 1,
+        'square kilometers': 1000000,
+        'square centimeters': 0.0001,
+        'square inches': 0.00064516,
+        'square feet': 0.092903,
+        'square yards': 0.836127,
+        acres: 4046.86,
+        hectares: 10000
+      },
+      volume: {
+        liters: 1,
+        milliliters: 0.001,
+        'cubic meters': 1000,
+        gallons: 3.78541,
+        quarts: 0.946353,
+        pints: 0.473176,
+        cups: 0.236588,
+        'fluid ounces': 0.0295735
+      },
+      speed: {
+        'meters per second': 1,
+        'kilometers per hour': 0.277778,
+        'miles per hour': 0.44704,
+        'feet per second': 0.3048,
+        knots: 0.514444
+      },
+      time: {
+        seconds: 1,
+        minutes: 60,
+        hours: 3600,
+        days: 86400,
+        weeks: 604800,
+        months: 2592000,
+        years: 31536000
+      },
+      data: {
+        bytes: 1,
+        kilobytes: 1024,
+        megabytes: 1048576,
+        gigabytes: 1073741824,
+        terabytes: 1099511627776
+      },
+      energy: {
+        joules: 1,
+        kilojoules: 1000,
+        calories: 4.184,
+        kilocalories: 4184,
+        'kilowatt hours': 3600000,
+        'electron volts': 1.60218e-19
+      },
+      pressure: {
+        pascals: 1,
+        kilopascals: 1000,
+        megapascals: 1000000,
+        bars: 100000,
+        'pounds per square inch': 6894.76,
+        atmospheres: 101325
+      }
+    };
+
+    let conversionHistory = [];
+
+    // Initialize the converter
+    document.addEventListener('DOMContentLoaded', function() {
+      updateUnits();
+      convert();
+    });
+
+    function updateUnits() {
+      const conversionType = document.getElementById('conversionType').value;
+      const fromUnit = document.getElementById('fromUnit');
+      const toUnit = document.getElementById('toUnit');
+      
+      // Clear existing options
+      fromUnit.innerHTML = '';
+      toUnit.innerHTML = '';
+      
+      const unitList = units[conversionType];
+      if (unitList) {
+        Object.keys(unitList).forEach(unit => {
+          const fromOption = document.createElement('option');
+          fromOption.value = unit;
+          fromOption.textContent = unit;
+          fromUnit.appendChild(fromOption);
+          
+          const toOption = document.createElement('option');
+          toOption.value = unit;
+          toOption.textContent = unit;
+          toUnit.appendChild(toOption);
+        });
+        
+        // Set default selections
+        if (conversionType === 'temperature') {
+          fromUnit.value = 'celsius';
+          toUnit.value = 'fahrenheit';
+        } else {
+          const unitKeys = Object.keys(unitList);
+          fromUnit.value = unitKeys[0];
+          toUnit.value = unitKeys[1] || unitKeys[0];
+        }
+      }
+      
+      convert();
+    }
+
+    function convert() {
+      const conversionType = document.getElementById('conversionType').value;
+      const fromUnit = document.getElementById('fromUnit').value;
+      const toUnit = document.getElementById('toUnit').value;
+      const fromValue = parseFloat(document.getElementById('fromValue').value) || 0;
+      
+      let result = 0;
+      
+      if (conversionType === 'temperature') {
+        result = convertTemperature(fromValue, fromUnit, toUnit);
+      } else {
+        const unitList = units[conversionType];
+        if (unitList && unitList[fromUnit] && unitList[toUnit]) {
+          // Convert to base unit first, then to target unit
+          const baseValue = fromValue * unitList[fromUnit];
+          result = baseValue / unitList[toUnit];
+        }
+      }
+      
+      document.getElementById('toValue').value = result.toFixed(6);
+      
+      // Add to history
+      addToHistory(conversionType, fromValue, fromUnit, result, toUnit);
+    }
+
+    function convertTemperature(value, fromUnit, toUnit) {
+      // Convert to Celsius first
+      let celsius = 0;
+      switch (fromUnit) {
+        case 'celsius':
+          celsius = value;
+          break;
+        case 'fahrenheit':
+          celsius = (value - 32) * 5/9;
+          break;
+        case 'kelvin':
+          celsius = value - 273.15;
+          break;
+        case 'rankine':
+          celsius = (value - 491.67) * 5/9;
+          break;
+      }
+      
+      // Convert from Celsius to target unit
+      switch (toUnit) {
+        case 'celsius':
+          return celsius;
+        case 'fahrenheit':
+          return (celsius * 9/5) + 32;
+        case 'kelvin':
+          return celsius + 273.15;
+        case 'rankine':
+          return (celsius * 9/5) + 491.67;
+        default:
+          return celsius;
+      }
+    }
+
+    function swapUnits() {
+      const fromUnit = document.getElementById('fromUnit');
+      const toUnit = document.getElementById('toUnit');
+      const fromValue = document.getElementById('fromValue');
+      const toValue = document.getElementById('toValue');
+      
+      const tempUnit = fromUnit.value;
+      const tempValue = fromValue.value;
+      
+      fromUnit.value = toUnit.value;
+      toUnit.value = tempUnit;
+      fromValue.value = toValue.value;
+      
+      convert();
+    }
+
+    function clearConverter() {
+      document.getElementById('fromValue').value = '1';
+      document.getElementById('toValue').value = '';
+      updateUnits();
+    }
+
+    function copyResult() {
+      const result = document.getElementById('toValue').value;
+      if (result) {
+        navigator.clipboard.writeText(result).then(() => {
+          alert('Result copied to clipboard!');
+        });
+      }
+    }
+
+    function addToHistory(conversionType, fromValue, fromUnit, toValue, toUnit) {
+      const historyItem = {
+        type: conversionType,
+        from: `${fromValue} ${fromUnit}`,
+        to: `${toValue.toFixed(6)} ${toUnit}`,
+        timestamp: new Date().toLocaleString()
+      };
+      
+      conversionHistory.unshift(historyItem);
+      if (conversionHistory.length > 10) {
+        conversionHistory.pop();
+      }
+      
+      updateHistoryDisplay();
+    }
+
+    function updateHistoryDisplay() {
+      const historyList = document.getElementById('historyList');
+      const historyBox = document.getElementById('historyBox');
+      
+      if (conversionHistory.length > 0) {
+        historyList.innerHTML = conversionHistory.map(item => `
+          <div class="alert alert-info bg-dark border-danger mb-2">
+            <strong>${item.type.toUpperCase()}:</strong> ${item.from} → ${item.to}
+            <br><small class="text-muted">${item.timestamp}</small>
+          </div>
+        `).join('');
+        historyBox.style.display = 'block';
+      } else {
+        historyBox.style.display = 'none';
+      }
+    }
+
+    function clearHistory() {
+      conversionHistory = [];
+      updateHistoryDisplay();
+    }
+  </script>
+</body>
+</html>

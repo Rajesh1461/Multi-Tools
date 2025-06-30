@@ -1,0 +1,176 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Number Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Random Number Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate random numbers for various purposes including games, simulations, and statistical sampling.
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="minValue" class="form-label">Minimum Value:</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="minValue" value="1" step="any">
+              </div>
+              <div class="col-md-6">
+                <label for="maxValue" class="form-label">Maximum Value:</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="maxValue" value="100" step="any">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="count" class="form-label">Number of Results:</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="count" value="1" min="1" max="1000">
+              </div>
+              <div class="col-md-6">
+                <label for="decimalPlaces" class="form-label">Decimal Places:</label>
+                <select class="form-select bg-dark text-light border-danger" id="decimalPlaces">
+                  <option value="0">0 (Whole Numbers)</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="allowDuplicates" checked>
+                <label class="form-check-label" for="allowDuplicates">Allow Duplicates</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="sortResults">
+                <label class="form-check-label" for="sortResults">Sort Results</label>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateNumbers()">
+                <i class="fas fa-dice me-2"></i>Generate Numbers
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearResults()">
+                <i class="fas fa-trash me-2"></i>Clear Results
+              </button>
+              <button class="btn btn-outline-danger" onclick="copyResults()">
+                <i class="fas fa-copy me-2"></i>Copy Results
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-list me-2"></i>Generated Numbers</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Total Generated</h6>
+                    <h3 id="totalGenerated">0</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Range</h6>
+                    <h4 id="range">0 - 0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Average</h6>
+                    <h4 id="average">0</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="resultsDisplay" class="form-label">Results:</label>
+              <textarea id="resultsDisplay" class="form-control bg-dark text-light border-danger" rows="8" readonly></textarea>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="exportResults()">
+                <i class="fas fa-download me-2"></i>Export Results
+              </button>
+              <button class="btn btn-outline-danger" onclick="generateMore()">
+                <i class="fas fa-plus me-2"></i>Generate More
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Quick Generators -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-bolt me-2"></i>Quick Generators</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate(1, 6)">
+                  <i class="fas fa-dice-one me-2"></i>Dice (1-6)
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate(1, 10)">
+                  <i class="fas fa-dice-d10 me-2"></i>1-10
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate(1, 20)">
+                  <i class="fas fa-dice-d20 me-2"></i>1-20
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate(1, 100)">
+                  <i class="fas fa-percentage me-2"></i>1-100
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate(0, 1)">
+                  <i class="fas fa-toggle-on me-2"></i>0 or 1
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate(1, 52)">
+                  <i class="fas fa-spade me-2"></i>Playing Card (1-52)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+</body>
+</html>

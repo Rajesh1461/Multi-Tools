@@ -1,0 +1,385 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sitemap Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Sitemap Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate XML sitemaps for your website to help search engines discover and index your pages more effectively.
+            </div>
+            <div class="mb-3">
+              <label for="websiteUrl" class="form-label">Website URL:</label>
+              <input type="url" class="form-control bg-dark text-light border-danger" id="websiteUrl" placeholder="https://example.com" value="https://example.com">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Sitemap Type:</label>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sitemapType" id="basicSitemap" value="basic" checked>
+                    <label class="form-check-label" for="basicSitemap">Basic Sitemap</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sitemapType" id="customSitemap" value="custom">
+                    <label class="form-check-label" for="customSitemap">Custom URLs</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sitemapType" id="imageSitemap" value="image">
+                    <label class="form-check-label" for="imageSitemap">Image Sitemap</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="sitemapType" id="videoSitemap" value="video">
+                    <label class="form-check-label" for="videoSitemap">Video Sitemap</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="customUrlsSection" style="display: none;">
+              <div class="mb-3">
+                <label for="customUrls" class="form-label">Custom URLs (one per line):</label>
+                <textarea class="form-control bg-dark text-light border-danger" id="customUrls" rows="6" placeholder="/about&#10;/contact&#10;/services&#10;/blog&#10;/products"></textarea>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="changeFreq" class="form-label">Change Frequency:</label>
+                <select class="form-select bg-dark text-light border-danger" id="changeFreq">
+                  <option value="always">Always</option>
+                  <option value="hourly">Hourly</option>
+                  <option value="daily" selected>Daily</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                  <option value="never">Never</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="priority" class="form-label">Priority:</label>
+                <select class="form-select bg-dark text-light border-danger" id="priority">
+                  <option value="0.0">0.0</option>
+                  <option value="0.1">0.1</option>
+                  <option value="0.2">0.2</option>
+                  <option value="0.3">0.3</option>
+                  <option value="0.4">0.4</option>
+                  <option value="0.5">0.5</option>
+                  <option value="0.6">0.6</option>
+                  <option value="0.7">0.7</option>
+                  <option value="0.8">0.8</option>
+                  <option value="0.9">0.9</option>
+                  <option value="1.0" selected>1.0</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="lastMod" class="form-label">Last Modified:</label>
+              <input type="datetime-local" class="form-control bg-dark text-light border-danger" id="lastMod">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateSitemap()">
+                <i class="fas fa-sitemap me-2"></i>Generate Sitemap
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearForm()">
+                <i class="fas fa-trash me-2"></i>Clear Form
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadPreset()">
+                <i class="fas fa-download me-2"></i>Load Preset
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-file-code me-2"></i>Generated Sitemap</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">URLs</h6>
+                    <h4 id="urlCount">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">File Size</h6>
+                    <h4 id="fileSize">0 KB</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Generated</h6>
+                    <h4 id="generatedTime">Now</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="sitemapOutput" class="form-label">Sitemap XML:</label>
+              <textarea id="sitemapOutput" class="form-control bg-dark text-light border-danger" rows="15" readonly></textarea>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copySitemap()">
+                <i class="fas fa-copy me-2"></i>Copy to Clipboard
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="downloadSitemap()">
+                <i class="fas fa-download me-2"></i>Download XML
+              </button>
+              <button class="btn btn-outline-danger" onclick="validateSitemap()">
+                <i class="fas fa-check me-2"></i>Validate
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Quick Templates -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-bolt me-2"></i>Quick Templates</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadTemplate('blog')">
+                  <i class="fas fa-blog me-2"></i>Blog Website
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadTemplate('ecommerce')">
+                  <i class="fas fa-shopping-cart me-2"></i>E-commerce
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadTemplate('corporate')">
+                  <i class="fas fa-building me-2"></i>Corporate Site
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadTemplate('portfolio')">
+                  <i class="fas fa-briefcase me-2"></i>Portfolio
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  
+  <script src="../assets/js/include.js"></script>
+  <script>
+    // Show/hide custom URLs section based on sitemap type
+    document.querySelectorAll('input[name="sitemapType"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+        const customSection = document.getElementById('customUrlsSection');
+        customSection.style.display = this.value === 'custom' ? 'block' : 'none';
+      });
+    });
+
+    // Set current date and time for last modified
+    document.getElementById('lastMod').value = new Date().toISOString().slice(0, 16);
+
+    function generateSitemap() {
+      const websiteUrl = document.getElementById('websiteUrl').value.trim();
+      const sitemapType = document.querySelector('input[name="sitemapType"]:checked').value;
+      const changeFreq = document.getElementById('changeFreq').value;
+      const priority = document.getElementById('priority').value;
+      const lastMod = document.getElementById('lastMod').value;
+
+      if (!websiteUrl) {
+        alert('Please enter a website URL.');
+        return;
+      }
+
+      let urls = [];
+      
+      if (sitemapType === 'custom') {
+        const customUrls = document.getElementById('customUrls').value.trim();
+        if (!customUrls) {
+          alert('Please enter custom URLs.');
+          return;
+        }
+        urls = customUrls.split('\n').filter(url => url.trim());
+      } else {
+        // Generate basic URLs based on sitemap type
+        urls = ['/', '/about', '/contact', '/services', '/blog', '/products'];
+        
+        if (sitemapType === 'image') {
+          urls = urls.map(url => url + ' (with images)');
+        } else if (sitemapType === 'video') {
+          urls = urls.map(url => url + ' (with videos)');
+        }
+      }
+
+      // Generate XML sitemap
+      let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+      xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
+      
+      urls.forEach(url => {
+        const fullUrl = url.startsWith('http') ? url : websiteUrl.replace(/\/$/, '') + url;
+        xml += '  <url>\n';
+        xml += `    <loc>${fullUrl}</loc>\n`;
+        xml += `    <lastmod>${lastMod}</lastmod>\n`;
+        xml += `    <changefreq>${changeFreq}</changefreq>\n`;
+        xml += `    <priority>${priority}</priority>\n`;
+        xml += '  </url>\n';
+      });
+      
+      xml += '</urlset>';
+
+      // Update results
+      document.getElementById('sitemapOutput').value = xml;
+      document.getElementById('urlCount').textContent = urls.length;
+      document.getElementById('fileSize').textContent = Math.round(xml.length / 1024 * 10) / 10 + ' KB';
+      document.getElementById('generatedTime').textContent = new Date().toLocaleTimeString();
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+
+    function clearForm() {
+      document.getElementById('websiteUrl').value = 'https://example.com';
+      document.getElementById('customUrls').value = '';
+      document.getElementById('changeFreq').value = 'daily';
+      document.getElementById('priority').value = '1.0';
+      document.getElementById('lastMod').value = new Date().toISOString().slice(0, 16);
+      document.getElementById('resultsBox').style.display = 'none';
+      document.getElementById('customUrlsSection').style.display = 'none';
+      document.getElementById('basicSitemap').checked = true;
+    }
+
+    function loadPreset() {
+      const presetUrls = `/about
+/contact
+/services
+/blog
+/products
+/faq
+/privacy-policy
+/terms-of-service`;
+      document.getElementById('customUrls').value = presetUrls;
+      document.getElementById('customSitemap').checked = true;
+      document.getElementById('customUrlsSection').style.display = 'block';
+    }
+
+    function copySitemap() {
+      const sitemap = document.getElementById('sitemapOutput').value;
+      navigator.clipboard.writeText(sitemap).then(() => {
+        alert('Sitemap copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy sitemap.');
+      });
+    }
+
+    function downloadSitemap() {
+      const sitemap = document.getElementById('sitemapOutput').value;
+      const blob = new Blob([sitemap], { type: 'application/xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sitemap.xml';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function validateSitemap() {
+      const sitemap = document.getElementById('sitemapOutput').value;
+      if (!sitemap) {
+        alert('Please generate a sitemap first.');
+        return;
+      }
+      
+      // Basic validation
+      const hasXmlDeclaration = sitemap.includes('<?xml');
+      const hasUrlset = sitemap.includes('<urlset');
+      const hasUrls = sitemap.includes('<url>');
+      
+      if (hasXmlDeclaration && hasUrlset && hasUrls) {
+        alert('✅ Sitemap is valid!');
+      } else {
+        alert('❌ Sitemap validation failed. Please check the format.');
+      }
+    }
+
+    function loadTemplate(type) {
+      let urls = '';
+      
+      switch(type) {
+        case 'blog':
+          urls = `/about
+/blog
+/blog/category/technology
+/blog/category/business
+/blog/category/lifestyle
+/contact
+/subscribe`;
+          break;
+        case 'ecommerce':
+          urls = `/products
+/products/category/electronics
+/products/category/clothing
+/products/category/home
+/cart
+/checkout
+/account
+/contact`;
+          break;
+        case 'corporate':
+          urls = `/about
+/services
+/team
+/careers
+/news
+/contact
+/investors`;
+          break;
+        case 'portfolio':
+          urls = `/about
+/portfolio
+/portfolio/web-design
+/portfolio/graphic-design
+/portfolio/photography
+/services
+/contact`;
+          break;
+      }
+      
+      document.getElementById('customUrls').value = urls;
+      document.getElementById('customSitemap').checked = true;
+      document.getElementById('customUrlsSection').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

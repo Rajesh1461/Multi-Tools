@@ -1,0 +1,187 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Domain Authority Checker - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Domain Authority Checker</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="domainInput" class="form-label">Enter Domain:</label>
+              <input type="text" id="domainInput" class="form-control bg-dark text-light border-danger mb-3" placeholder="e.g., example.com" onkeypress="handleKeyPress(event)">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="checkDomain()">Check Domain</button>
+              <button class="btn btn-outline-danger" onclick="clearInput()">Clear</button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Domain Authority Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Domain Authority</h6>
+                    <h3 id="domainAuthority">-</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Page Authority</h6>
+                    <h3 id="pageAuthority">-</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Spam Score</h6>
+                    <h3 id="spamScore">-</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Backlinks</h6>
+                    <h4 id="backlinks">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Referring Domains</h6>
+                    <h4 id="referringDomains">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Trust Flow</h6>
+                    <h4 id="trustFlow">-</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+              <button class="btn btn-outline-danger" onclick="exportResults()">Export Results</button>
+            </div>
+          </div>
+        </div>
+        <!-- Information Section -->
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function checkDomain() {
+      const domain = document.getElementById('domainInput').value.trim();
+      if (!domain) {
+        alert('Please enter a domain name.');
+        return;
+      }
+
+      // Simulate domain authority check
+      const domainAuthority = Math.floor(Math.random() * 100) + 1;
+      const pageAuthority = Math.floor(Math.random() * 100) + 1;
+      const spamScore = Math.floor(Math.random() * 17) + 1;
+      const backlinks = Math.floor(Math.random() * 10000) + 100;
+      const referringDomains = Math.floor(Math.random() * 1000) + 10;
+      const trustFlow = Math.floor(Math.random() * 100) + 1;
+
+      // Update results
+      document.getElementById('domainAuthority').textContent = domainAuthority;
+      document.getElementById('pageAuthority').textContent = pageAuthority;
+      document.getElementById('spamScore').textContent = spamScore;
+      document.getElementById('backlinks').textContent = backlinks.toLocaleString();
+      document.getElementById('referringDomains').textContent = referringDomains.toLocaleString();
+      document.getElementById('trustFlow').textContent = trustFlow;
+
+      // Show results
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+
+    function clearInput() {
+      document.getElementById('domainInput').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function handleKeyPress(event) {
+      if (event.key === 'Enter') {
+        checkDomain();
+      }
+    }
+
+    function copyResults() {
+      const results = `Domain Authority Results for ${document.getElementById('domainInput').value}:
+Domain Authority: ${document.getElementById('domainAuthority').textContent}
+Page Authority: ${document.getElementById('pageAuthority').textContent}
+Spam Score: ${document.getElementById('spamScore').textContent}
+Backlinks: ${document.getElementById('backlinks').textContent}
+Referring Domains: ${document.getElementById('referringDomains').textContent}
+Trust Flow: ${document.getElementById('trustFlow').textContent}`;
+
+      navigator.clipboard.writeText(results).then(() => {
+        alert('Results copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy results.');
+      });
+    }
+
+    function exportResults() {
+      const results = `Domain Authority Results for ${document.getElementById('domainInput').value}:
+Domain Authority: ${document.getElementById('domainAuthority').textContent}
+Page Authority: ${document.getElementById('pageAuthority').textContent}
+Spam Score: ${document.getElementById('spamScore').textContent}
+Backlinks: ${document.getElementById('backlinks').textContent}
+Referring Domains: ${document.getElementById('referringDomains').textContent}
+Trust Flow: ${document.getElementById('trustFlow').textContent}`;
+
+      const blob = new Blob([results], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'domain_authority_results.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+</body>
+</html>

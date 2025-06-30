@@ -1,0 +1,291 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Address Generator - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <!-- Header -->
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">Fake Address Generator</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="country" class="form-label">Country:</label>
+                                    <select class="form-select bg-dark text-light border-danger mb-3" id="country">
+                                        <option value="us">United States</option>
+                                        <option value="uk">United Kingdom</option>
+                                        <option value="ca">Canada</option>
+                                        <option value="au">Australia</option>
+                                        <option value="de">Germany</option>
+                                        <option value="fr">France</option>
+                                        <option value="jp">Japan</option>
+                                        <option value="in">India</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="addressType" class="form-label">Address Type:</label>
+                                    <select class="form-select bg-dark text-light border-danger mb-3" id="addressType">
+                                        <option value="full">Full Address</option>
+                                        <option value="street">Street Address Only</option>
+                                        <option value="postal">Postal Address</option>
+                                    </select>
+                                </div>
+                                <div class="text-center mb-3">
+                                    <button class="btn btn-danger me-2" onclick="generateAddress()">
+                                        <i class="fas fa-map-marker-alt"></i> Generate Address
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="clearAddress()">
+                                        <i class="fas fa-trash"></i> Clear
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="quantity" class="form-label">Number of Addresses:</label>
+                                    <input type="number" class="form-control bg-dark text-light border-danger mb-3" id="quantity" min="1" max="10" value="1">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="includePhone" class="form-label">Include Phone Number:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="includePhone" checked>
+                                        <label class="form-check-label" for="includePhone">
+                                            Generate phone number
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="includeEmail" class="form-label">Include Email:</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="includeEmail" checked>
+                                        <label class="form-check-label" for="includeEmail">
+                                            Generate email address
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Result Box -->
+                <div id="resultBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5>Generated Addresses</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="addressResults"></div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-danger me-2" onclick="copyAddresses()">
+                                <i class="fas fa-copy"></i> Copy All
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="exportAddresses()">
+                                <i class="fas fa-download"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div id="footer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        const fakeData = {
+            us: {
+                streets: ['Main St', 'Oak Ave', 'Maple Dr', 'Cedar Ln', 'Pine Rd', 'Elm St', 'Washington Ave', 'Lincoln Blvd'],
+                cities: ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix', 'Philadelphia', 'San Antonio', 'San Diego'],
+                states: ['NY', 'CA', 'IL', 'TX', 'AZ', 'PA', 'TX', 'CA'],
+                zipFormats: ['#####', '#####-####'],
+                phoneFormats: ['(###) ###-####', '###-###-####'],
+                ssnFormat: '###-##-####'
+            },
+            uk: {
+                streets: ['High Street', 'Church Lane', 'Station Road', 'Victoria Street', 'Queen Street', 'King Street'],
+                cities: ['London', 'Manchester', 'Birmingham', 'Leeds', 'Liverpool', 'Sheffield', 'Edinburgh', 'Glasgow'],
+                states: ['England', 'Scotland', 'Wales', 'Northern Ireland'],
+                zipFormats: ['A## ###', 'AA## ###', 'A## #AA', 'AA## #AA'],
+                phoneFormats: ['+44 7### ### ###', '+44 2### ### ###']
+            },
+            ca: {
+                streets: ['Queen Street', 'King Street', 'Main Street', 'Oak Avenue', 'Maple Drive'],
+                cities: ['Toronto', 'Montreal', 'Vancouver', 'Calgary', 'Edmonton', 'Ottawa', 'Winnipeg'],
+                states: ['ON', 'QC', 'BC', 'AB', 'SK', 'MB', 'NS'],
+                zipFormats: ['A#A #A#'],
+                phoneFormats: ['(###) ###-####', '###-###-####']
+            }
+        };
+        function generateAddresses() {
+            const country = document.getElementById('country').value;
+            const count = parseInt(document.getElementById('count').value);
+            const includePhone = document.getElementById('includePhone').checked;
+            const includeEmail = document.getElementById('includeEmail').checked;
+            const includeSSN = document.getElementById('includeSSN').checked;
+            const format = document.getElementById('format').value;
+            if (count < 1 || count > 50) {
+                alert('Please enter a number between 1 and 50');
+                return;
+            }
+            const addresses = [];
+            for (let i = 0; i < count; i++) {
+                addresses.push(generateAddress(country, includePhone, includeEmail, includeSSN));
+            }
+            displayResults(addresses, format);
+        }
+        function generateAddress(country, includePhone, includeEmail, includeSSN) {
+            const data = fakeData[country] || fakeData.us;
+            const firstName = generateFirstName();
+            const lastName = generateLastName();
+            const streetNumber = Math.floor(Math.random() * 9999) + 1;
+            const street = data.streets[Math.floor(Math.random() * data.streets.length)];
+            const city = data.cities[Math.floor(Math.random() * data.cities.length)];
+            const state = data.states[Math.floor(Math.random() * data.states.length)];
+            const zip = generateZipCode(data.zipFormats[0]);
+            const address = {
+                firstName,
+                lastName,
+                street: `${streetNumber} ${street}`,
+                city,
+                state,
+                zip,
+                country: getCountryName(country)
+            };
+            if (includePhone) {
+                address.phone = generatePhoneNumber(data.phoneFormats[0]);
+            }
+            if (includeEmail) {
+                address.email = generateEmail(firstName, lastName);
+            }
+            if (includeSSN && country === 'us') {
+                address.ssn = generateSSN();
+            }
+            return address;
+        }
+        function generateFirstName() {
+            const names = ['John', 'Jane', 'Michael', 'Sarah', 'David', 'Emily', 'Robert', 'Lisa', 'James', 'Jennifer'];
+            return names[Math.floor(Math.random() * names.length)];
+        }
+        function generateLastName() {
+            const names = ['Smith', 'Johnson', 'Williams', 'Brown', 'Jones', 'Garcia', 'Miller', 'Davis', 'Rodriguez', 'Martinez'];
+            return names[Math.floor(Math.random() * names.length)];
+        }
+        function generateZipCode(format) {
+            return format.replace(/#/g, () => Math.floor(Math.random() * 10));
+        }
+        function generatePhoneNumber(format) {
+            return format.replace(/#/g, () => Math.floor(Math.random() * 10));
+        }
+        function generateEmail(firstName, lastName) {
+            const domains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'example.com'];
+            const domain = domains[Math.floor(Math.random() * domains.length)];
+            const number = Math.floor(Math.random() * 999);
+            return `${firstName.toLowerCase()}.${lastName.toLowerCase()}${number}@${domain}`;
+        }
+        function generateSSN() {
+            return '###-##-####'.replace(/#/g, () => Math.floor(Math.random() * 10));
+        }
+        function getCountryName(code) {
+            const countries = {
+                us: 'United States',
+                uk: 'United Kingdom',
+                ca: 'Canada',
+                au: 'Australia',
+                de: 'Germany',
+                fr: 'France',
+                jp: 'Japan',
+                in: 'India',
+                br: 'Brazil',
+                mx: 'Mexico'
+            };
+            return countries[code] || 'United States';
+        }
+        function displayResults(addresses, format) {
+            const resultsDiv = document.getElementById('addressResults');
+            let output = '';
+            switch (format) {
+                case 'json':
+                    output = `<pre class="text-light">${JSON.stringify(addresses, null, 2)}</pre>`;
+                    break;
+                case 'csv':
+                    const headers = Object.keys(addresses[0]).join(',');
+                    const rows = addresses.map(addr => Object.values(addr).join(','));
+                    output = `<pre class="text-light">${headers}\n${rows.join('\n')}</pre>`;
+                    break;
+                case 'xml':
+                    output = '<pre class="text-light">&lt;addresses&gt;\n';
+                    addresses.forEach(addr => {
+                        output += '  &lt;address&gt;\n';
+                        Object.entries(addr).forEach(([key, value]) => {
+                            output += `    &lt;${key}&gt;${value}&lt;/${key}&gt;\n`;
+                        });
+                        output += '  &lt;/address&gt;\n';
+                    });
+                    output += '&lt;/addresses&gt;</pre>';
+                    break;
+                default:
+                    addresses.forEach((addr, index) => {
+                        output += `<div class="mb-3 p-3 border border-secondary rounded">`;
+                        output += `<h6>Address ${index + 1}:</h6>`;
+                        output += `<p class="mb-1"><strong>${addr.firstName} ${addr.lastName}</strong></p>`;
+                        output += `<p class="mb-1">${addr.street}</p>`;
+                        output += `<p class="mb-1">${addr.city}, ${addr.state} ${addr.zip}</p>`;
+                        output += `<p class="mb-1">${addr.country}</p>`;
+                        if (addr.phone) output += `<p class="mb-1"><strong>Phone:</strong> ${addr.phone}</p>`;
+                        if (addr.email) output += `<p class="mb-1"><strong>Email:</strong> ${addr.email}</p>`;
+                        if (addr.ssn) output += `<p class="mb-1"><strong>SSN:</strong> ${addr.ssn}</p>`;
+                        output += `</div>`;
+                    });
+            }
+            resultsDiv.innerHTML = output;
+            document.getElementById('results').style.display = 'block';
+        }
+        function copyToClipboard() {
+            const resultsDiv = document.getElementById('addressResults');
+            const text = resultsDiv.textContent || resultsDiv.innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Addresses copied to clipboard!');
+            });
+        }
+        function downloadResults() {
+            const format = document.getElementById('format').value;
+            const extension = format === 'json' ? 'json' : format === 'csv' ? 'csv' : format === 'xml' ? 'xml' : 'txt';
+            const filename = `fake_addresses.${extension}`;
+            const resultsDiv = document.getElementById('addressResults');
+            const content = resultsDiv.textContent || resultsDiv.innerText;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        function clearResults() {
+            document.getElementById('results').style.display = 'none';
+            document.getElementById('addressResults').innerHTML = '';
+        }
+    </script>
+</body>
+</html>
+

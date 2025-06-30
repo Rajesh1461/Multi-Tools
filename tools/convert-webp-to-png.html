@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebP to PNG Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .upload-area {
+      border: 2px dashed #dc3545;
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      background: #212529;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .upload-area:hover {
+      border-color: #dc3545;
+      background: #343a40;
+    }
+    .upload-area.dragover {
+      border-color: #28a745;
+      background: #1e7e34;
+    }
+    .image-preview {
+      max-width: 300px;
+      max-height: 300px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">WebP to PNG Converter</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> This tool converts WebP images to PNG format in your browser. No files are uploaded to any server.
+            </div>
+            <div class="mb-4">
+              <h5><i class="fas fa-upload me-2"></i>Upload WebP Image</h5>
+              <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt fa-3x text-danger mb-3"></i>
+                <p class="mb-2">Drag and drop a WebP image here or click to browse</p>
+                <input type="file" id="imageInput" accept="image/webp" style="display: none;">
+                <button class="btn btn-danger">
+                  <i class="fas fa-folder-open me-2"></i>Select WebP Image
+                </button>
+              </div>
+            </div>
+            <div id="imageInfoSection" style="display: none;">
+              <h5><i class="fas fa-info-circle me-2"></i>Image Information</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card bg-dark border-danger mb-3">
+                    <div class="card-body">
+                      <h6>WebP Image</h6>
+                      <img id="webpImage" class="image-preview" alt="WebP image">
+                      <div class="mt-2">
+                        <small class="text-muted">
+                          Format: WebP<br>
+                          Size: <span id="webpSize">0 KB</span><br>
+                          Dimensions: <span id="webpDimensions">0 x 0</span>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card bg-dark border-danger mb-3">
+                    <div class="card-body">
+                      <h6>PNG Preview</h6>
+                      <img id="pngPreview" class="image-preview" alt="PNG preview">
+                      <div class="mt-2">
+                        <small class="text-muted">
+                          Format: PNG<br>
+                          Size: <span id="pngSize">Calculating...</span><br>
+                          Dimensions: <span id="pngDimensions">0 x 0</span>
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center mt-3">
+                <button class="btn btn-outline-danger me-2" onclick="downloadPNG()">
+                  <i class="fas fa-download me-2"></i>Download PNG
+                </button>
+                <button class="btn btn-outline-danger" onclick="clearAll()">
+                  <i class="fas fa-trash me-2"></i>Clear All
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lottery Number Generator - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Lottery Number Generator</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Generate random lottery numbers for various lottery games. This is for entertainment purposes only.
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="lotteryType" class="form-label">Lottery Type:</label>
+                                <select class="form-select bg-dark text-light border-danger" id="lotteryType" onchange="updateSettings()">
+                                    <option value="powerball">Powerball (5 + 1)</option>
+                                    <option value="megamillions">Mega Millions (5 + 1)</option>
+                                    <option value="euromillions">EuroMillions (5 + 2)</option>
+                                    <option value="lotto649">Lotto 6/49 (6 numbers)</option>
+                                    <option value="lotto649plus">Lotto 6/49 Plus (6 numbers)</option>
+                                    <option value="custom">Custom</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="numberOfTickets" class="form-label">Number of Tickets:</label>
+                                <input type="number" class="form-control bg-dark text-light border-danger" id="numberOfTickets" value="1" min="1" max="10">
+                            </div>
+                        </div>
+                        <div id="customSettings" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="mainNumbers" class="form-label">Main Numbers to Pick:</label>
+                                    <input type="number" class="form-control bg-dark text-light border-danger" id="mainNumbers" value="6" min="1" max="20">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="mainRange" class="form-label">Main Numbers Range (1 to):</label>
+                                    <input type="number" class="form-control bg-dark text-light border-danger" id="mainRange" value="49" min="1" max="100">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="bonusNumbers" class="form-label">Bonus Numbers to Pick:</label>
+                                    <input type="number" class="form-control bg-dark text-light border-danger" id="bonusNumbers" value="1" min="0" max="10">
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="bonusRange" class="form-label">Bonus Numbers Range (1 to):</label>
+                                    <input type="number" class="form-control bg-dark text-light border-danger" id="bonusRange" value="10" min="1" max="50">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="generateNumbers()">
+                                <i class="fas fa-dice me-2"></i>Generate Numbers
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="clearResults()">
+                                <i class="fas fa-trash me-2"></i>Clear Results
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="quickPick()">
+                                <i class="fas fa-bolt me-2"></i>Quick Pick
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Results Output Box -->
+                <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-ticket-alt me-2"></i>Generated Numbers</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="ticketsContainer"></div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-danger me-2" onclick="copyResults()">
+                                <i class="fas fa-copy me-2"></i>Copy Numbers
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="printResults()">
+                                <i class="fas fa-print me-2"></i>Print Tickets
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="saveResults()">
+                                <i class="fas fa-save me-2"></i>Save Results
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Statistics -->
+                <div id="statsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Number Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Most Frequent</h6>
+                                        <h4 id="mostFrequent">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Least Frequent</h6>
+                                        <h4 id="leastFrequent">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Total Numbers</h6>
+                                        <h4 id="totalNumbers">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Info Card -->
+                        <div class="alert alert-warning bg-dark border-warning mt-3">
+                            <i class="fas fa-exclamation-triangle me-2"></i>
+                            <strong>Disclaimer:</strong> This tool is for entertainment purposes only. Lottery games are games of chance and no strategy can guarantee a win.
+                        </div>
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../assets/js/include.js"></script>
+</body>
+</html>

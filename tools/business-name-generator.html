@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Name Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Business Name Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="industry" class="form-label">Industry/Business Type:</label>
+                <select id="industry" class="form-select bg-dark text-light border-danger">
+                  <option value="tech">Technology</option>
+                  <option value="food">Food & Restaurant</option>
+                  <option value="health">Healthcare</option>
+                  <option value="fitness">Fitness & Wellness</option>
+                  <option value="fashion">Fashion & Beauty</option>
+                  <option value="finance">Finance & Banking</option>
+                  <option value="education">Education</option>
+                  <option value="real-estate">Real Estate</option>
+                  <option value="automotive">Automotive</option>
+                  <option value="consulting">Consulting</option>
+                  <option value="retail">Retail</option>
+                  <option value="creative">Creative & Design</option>
+                  <option value="general">General</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="nameStyle" class="form-label">Name Style:</label>
+                <select id="nameStyle" class="form-select bg-dark text-light border-danger">
+                  <option value="modern">Modern & Tech</option>
+                  <option value="classic">Classic & Professional</option>
+                  <option value="creative">Creative & Unique</option>
+                  <option value="simple">Simple & Clean</option>
+                  <option value="premium">Premium & Luxury</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="nameCount" class="form-label">Number of Names:</label>
+                <input type="range" id="nameCount" class="form-range" min="5" max="20" value="10" oninput="updateCountDisplay()">
+                <div class="text-center">
+                  <span id="countDisplay" class="text-danger">10</span> names
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="keywords" class="form-label">Keywords (optional):</label>
+                <input type="text" id="keywords" class="form-control bg-dark text-light border-danger" placeholder="Enter keywords separated by commas">
+              </div>
+            </div>
+            
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateNames()">Generate Names</button>
+              <button class="btn btn-outline-danger" onclick="clearResults()">Clear</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Generated Business Names</h5>
+          </div>
+          <div class="card-body">
+            <div id="namesList" class="mb-3">
+              <!-- Generated names will be displayed here -->
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="copyAllNames()">Copy All Names</button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadNames()">Download List</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Name Analysis -->
+        <div id="analysisBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Name Analysis</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Average Length</h6>
+                    <h4 id="avgLengthResult">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Domain Available</h6>
+                    <h4 id="domainResult">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">SEO Score</h6>
+                    <h4 id="seoResult">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Memorability</h6>
+                    <h4 id="memoryResult">-</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Templates -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Quick Templates</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('startup')">Tech Startup</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('restaurant')">Restaurant</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('consulting')">Consulting</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('fitness')">Fitness Studio</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('creative')">Creative Agency</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('retail')">Retail Store</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Business Naming Tips -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Business Naming Tips</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="text-danger">Do's:</h6>
+                <ul class="list-unstyled">
+                  <li>✅ Keep it short and memorable</li>
+                  <li>✅ Make it easy to spell</li>
+                  <li>✅ Check domain availability</li>
+                  <li>✅ Consider trademark conflicts</li>
+                  <li>✅ Reflect your brand values</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6 class="text-danger">Don'ts:</h6>
+                <ul class="list-unstyled">
+                  <li>❌ Use hard-to-spell words</li>
+                  <li>❌ Copy existing brand names</li>
+                  <li>❌ Use generic terms only</li>
+                  <li>❌ Ignore cultural sensitivity</li>
+                  <li>❌ Make it too long</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    const nameComponents = {
+      tech: {
+        prefixes: ['Tech', 'Digital', 'Cyber', 'Smart', 'Next', 'Future', 'Cloud', 'Data', 'AI', 'App'],
+        suffixes: ['Tech', 'Solutions', 'Systems', 'Labs', 'Works', 'Studio', 'Hub', 'Core', 'Logic', 'Flow'],
+        words: ['Innovation', 'Technology', 'Digital', 'Smart', 'Future', 'Next', 'Cloud', 'Data', 'AI', 'App']
+      },
+      food: {
+        prefixes: ['Fresh', 'Tasty', 'Delicious', 'Gourmet', 'Artisan', 'Kitchen', 'Cafe', 'Bistro', 'Diner', 'Grill'],
+        suffixes: ['Kitchen', 'Cafe', 'Bistro', 'Diner', 'Grill', 'Restaurant', 'Eats', 'Food', 'Cuisine', 'Table'],
+        words: ['Fresh', 'Tasty', 'Delicious', 'Gourmet', 'Artisan', 'Kitchen', 'Cafe', 'Bistro', 'Diner', 'Grill']
+      },
+      health: {
+        prefixes: ['Health', 'Wellness', 'Vital', 'Care', 'Medical', 'Life', 'Well', 'Fit', 'Active', 'Pure'],
+        suffixes: ['Health', 'Care', 'Wellness', 'Medical', 'Life', 'Well', 'Fit', 'Active', 'Pure', 'Vital'],
+        words: ['Health', 'Wellness', 'Vital', 'Care', 'Medical', 'Life', 'Well', 'Fit', 'Active', 'Pure']
+      },
+      fitness: {
+        prefixes: ['Fit', 'Active', 'Strong', 'Power', 'Elite', 'Peak', 'Core', 'Flex', 'Move', 'Energy'],
+        suffixes: ['Fit', 'Gym', 'Fitness', 'Training', 'Workout', 'Strength', 'Core', 'Flex', 'Move', 'Energy'],
+        words: ['Fit', 'Active', 'Strong', 'Power', 'Elite', 'Peak', 'Core', 'Flex', 'Move', 'Energy']
+      },
+      fashion: {
+        prefixes: ['Style', 'Fashion', 'Trend', 'Chic', 'Elegant', 'Luxe', 'Boutique', 'Design', 'Mode', 'Vogue'],
+        suffixes: ['Style', 'Fashion', 'Trend', 'Chic', 'Elegant', 'Luxe', 'Boutique', 'Design', 'Mode', 'Vogue'],
+        words: ['Style', 'Fashion', 'Trend', 'Chic', 'Elegant', 'Luxe', 'Boutique', 'Design', 'Mode', 'Vogue']
+      },
+      finance: {
+        prefixes: ['Capital', 'Finance', 'Wealth', 'Money', 'Asset', 'Invest', 'Trust', 'Secure', 'Prime', 'Elite'],
+        suffixes: ['Capital', 'Finance', 'Wealth', 'Money', 'Asset', 'Invest', 'Trust', 'Secure', 'Prime', 'Elite'],
+        words: ['Capital', 'Finance', 'Wealth', 'Money', 'Asset', 'Invest', 'Trust', 'Secure', 'Prime', 'Elite']
+      },
+      education: {
+        prefixes: ['Learn', 'Education', 'Knowledge', 'Study', 'Academy', 'Institute', 'School', 'Center', 'Hub', 'Lab'],
+        suffixes: ['Learn', 'Education', 'Knowledge', 'Study', 'Academy', 'Institute', 'School', 'Center', 'Hub', 'Lab'],
+        words: ['Learn', 'Education', 'Knowledge', 'Study', 'Academy', 'Institute', 'School', 'Center', 'Hub', 'Lab']
+      },
+      real_estate: {
+        prefixes: ['Real', 'Property', 'Home', 'House', 'Estate', 'Land', 'Space', 'Place', 'Living', 'Residence'],
+        suffixes: ['Real', 'Property', 'Home', 'House', 'Estate', 'Land', 'Space', 'Place', 'Living', 'Residence'],
+        words: ['Real', 'Property', 'Home', 'House', 'Estate', 'Land', 'Space', 'Place', 'Living', 'Residence']
+      },
+      automotive: {
+        prefixes: ['Auto', 'Car', 'Drive', 'Motor', 'Wheel', 'Road', 'Speed', 'Performance', 'Mech', 'Gear'],
+        suffixes: ['Auto', 'Car', 'Drive', 'Motor', 'Wheel', 'Road', 'Speed', 'Performance', 'Mech', 'Gear'],
+        words: ['Auto', 'Car', 'Drive', 'Motor', 'Wheel', 'Road', 'Speed', 'Performance', 'Mech', 'Gear']
+      },
+      consulting: {
+        prefixes: ['Consult', 'Advisory', 'Strategy', 'Business', 'Management', 'Solutions', 'Partners', 'Group', 'Team', 'Associates'],
+        suffixes: ['Consult', 'Advisory', 'Strategy', 'Business', 'Management', 'Solutions', 'Partners', 'Group', 'Team', 'Associates'],
+        words: ['Consult', 'Advisory', 'Strategy', 'Business', 'Management', 'Solutions', 'Partners', 'Group', 'Team', 'Associates']
+      },
+      retail: {
+        prefixes: ['Shop', 'Store', 'Market', 'Retail', 'Trade', 'Commerce', 'Buy', 'Sell', 'Outlet', 'Mart'],
+        suffixes: ['Shop', 'Store', 'Market', 'Retail', 'Trade', 'Commerce', 'Buy', 'Sell', 'Outlet', 'Mart'],
+        words: ['Shop', 'Store', 'Market', 'Retail', 'Trade', 'Commerce', 'Buy', 'Sell', 'Outlet', 'Mart']
+      },
+      creative: {
+        prefixes: ['Creative', 'Design', 'Art', 'Studio', 'Works', 'Craft', 'Vision', 'Idea', 'Concept', 'Innovation'],
+        suffixes: ['Creative', 'Design', 'Art', 'Studio', 'Works', 'Craft', 'Vision', 'Idea', 'Concept', 'Innovation'],
+        words: ['Creative', 'Design', 'Art', 'Studio', 'Works', 'Craft', 'Vision', 'Idea', 'Concept', 'Innovation']
+      },
+      general: {
+        prefixes: ['Global', 'World', 'Universal', 'Premier', 'Elite', 'Prime', 'First', 'Best', 'Top', 'Leading'],
+        suffixes: ['Global', 'World', 'Universal', 'Premier', 'Elite', 'Prime', 'First', 'Best', 'Top', 'Leading'],
+        words: ['Global', 'World', 'Universal', 'Premier', 'Elite', 'Prime', 'First', 'Best', 'Top', 'Leading']
+      }
+    };
+    
+    function updateCountDisplay() {
+      const count = document.getElementById('nameCount').value;
+      document.getElementById('countDisplay').textContent = count;
+    }
+    
+    function generateNames() {
+      const industry = document.getElementById('industry').value;
+      const style = document.getElementById('nameStyle').value;
+      const count = parseInt(document.getElementById('nameCount').value);
+      const keywords = document.getElementById('keywords').value.trim();
+      
+      const components = nameComponents[industry] || nameComponents.general;
+      const names = [];
+      
+      for (let i = 0; i < count; i++) {
+        const name = generateSingleName(components, style, keywords);
+        if (!names.includes(name)) {
+          names.push(name);
+        }
+      }
+      
+      displayNames(names);
+      analyzeNames(names);
+    }
+    
+    function generateSingleName(components, style, keywords) {
+      const keywordArray = keywords ? keywords.split(',').map(k => k.trim()) : [];
+      const allWords = [...components.words, ...keywordArray];
+      
+      let name = '';
+      
+      switch (style) {
+        case 'modern':
+          name = generateModernName(components, allWords);
+          break;
+        case 'classic':
+          name = generateClassicName(components, allWords);
+          break;
+        case 'creative':
+          name = generateCreativeName(components, allWords);
+          break;
+        case 'simple':
+          name = generateSimpleName(components, allWords);
+          break;
+        case 'premium':
+          name = generatePremiumName(components, allWords);
+          break;
+        default:
+          name = generateModernName(components, allWords);
+      }
+      
+      return name;
+    }
+    
+    function generateModernName(components, words) {
+      const patterns = [
+        () => `${getRandomElement(components.prefixes)}${getRandomElement(components.suffixes)}`,
+        () => `${getRandomElement(words)}${getRandomElement(['Tech', 'Lab', 'Hub', 'Core'])}`,
+        () => `${getRandomElement(['Next', 'Future', 'Smart'])}${getRandomElement(words)}`,
+        () => `${getRandomElement(words)}${getRandomElement(['ly', 'ify', 'able'])}`
+      ];
+      
+      return getRandomElement(patterns)();
+    }
+    
+    function generateClassicName(components, words) {
+      const patterns = [
+        () => `${getRandomElement(components.prefixes)} ${getRandomElement(components.suffixes)}`,
+        () => `${getRandomElement(words)} & ${getRandomElement(words)}`,
+        () => `The ${getRandomElement(words)} ${getRandomElement(['Company', 'Group', 'Partners'])}`,
+        () => `${getRandomElement(words)} ${getRandomElement(['Associates', 'Consultants', 'Services'])}`
+      ];
+      
+      return getRandomElement(patterns)();
+    }
+    
+    function generateCreativeName(components, words) {
+      const patterns = [
+        () => `${getRandomElement(words)}${getRandomElement(['ify', 'ly', 'able', 'ous'])}`,
+        () => `${getRandomElement(['Infinite', 'Limitless', 'Boundless'])} ${getRandomElement(words)}`,
+        () => `${getRandomElement(words)}${getRandomElement(['X', 'Z', 'Q', 'V'])}`,
+        () => `${getRandomElement(['Meta', 'Hyper', 'Ultra'])}${getRandomElement(words)}`
+      ];
+      
+      return getRandomElement(patterns)();
+    }
+    
+    function generateSimpleName(components, words) {
+      const patterns = [
+        () => getRandomElement(words),
+        () => `${getRandomElement(words)} ${getRandomElement(['Co', 'Inc', 'LLC'])}`,
+        () => `${getRandomElement(words)} ${getRandomElement(['Group', 'Team', 'Partners'])}`
+      ];
+      
+      return getRandomElement(patterns)();
+    }
+    
+    function generatePremiumName(components, words) {
+      const patterns = [
+        () => `${getRandomElement(['Elite', 'Premier', 'Luxury'])} ${getRandomElement(words)}`,
+        () => `${getRandomElement(words)} ${getRandomElement(['International', 'Global', 'Worldwide'])}`,
+        () => `${getRandomElement(['Royal', 'Imperial', 'Noble'])} ${getRandomElement(words)}`,
+        () => `${getRandomElement(words)} ${getRandomElement(['Holdings', 'Enterprises', 'Corporation'])}`
+      ];
+      
+      return getRandomElement(patterns)();
+    }
+    
+    function getRandomElement(array) {
+      return array[Math.floor(Math.random() * array.length)];
+    }
+    
+    function displayNames(names) {
+      const namesList = document.getElementById('namesList');
+      namesList.innerHTML = '';
+      
+      names.forEach((name, index) => {
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'card bg-secondary border-danger mb-2';
+        nameDiv.innerHTML = `
+          <div class="card-body d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">${name}</h5>
+            <div>
+              <button class="btn btn-sm btn-outline-danger me-2" onclick="copyName('${name}')">Copy</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="checkDomain('${name}')">Check Domain</button>
+            </div>
+          </div>
+        `;
+        namesList.appendChild(nameDiv);
+      });
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function analyzeNames(names) {
+      const avgLength = Math.round(names.reduce((sum, name) => sum + name.length, 0) / names.length);
+      const domainAvailable = Math.random() > 0.7 ? 'Likely' : 'Check Required';
+      const seoScore = Math.floor(Math.random() * 40) + 60; // 60-100
+      const memory = Math.floor(Math.random() * 30) + 70; // 70-100
+      
+      document.getElementById('avgLengthResult').textContent = avgLength;
+      document.getElementById('domainResult').textContent = domainAvailable;
+      document.getElementById('seoResult').textContent = seoScore + '/100';
+      document.getElementById('memoryResult').textContent = memory + '/100';
+      
+      document.getElementById('analysisBox').style.display = 'block';
+    }
+    
+    function clearResults() {
+      document.getElementById('resultsBox').style.display = 'none';
+      document.getElementById('analysisBox').style.display = 'none';
+    }
+    
+    function copyName(name) {
+      navigator.clipboard.writeText(name).then(() => {
+        alert(`"${name}" copied to clipboard!`);
+      });
+    }
+    
+    function copyAllNames() {
+      const names = Array.from(document.querySelectorAll('#namesList h5')).map(el => el.textContent);
+      navigator.clipboard.writeText(names.join('\n')).then(() => {
+        alert('All names copied to clipboard!');
+      });
+    }
+    
+    function downloadNames() {
+      const names = Array.from(document.querySelectorAll('#namesList h5')).map(el => el.textContent);
+      const blob = new Blob([names.join('\n')], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'business-names.txt';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function checkDomain(name) {
+      const domain = name.toLowerCase().replace(/[^a-z0-9]/g, '') + '.com';
+      alert(`Checking domain: ${domain}\n\nNote: This is a simulation. Use a real domain checker for actual availability.`);
+    }
+    
+    function useTemplate(type) {
+      let industry = 'general';
+      let style = 'modern';
+      let keywords = '';
+      
+      switch (type) {
+        case 'startup':
+          industry = 'tech';
+          style = 'modern';
+          keywords = 'innovation, startup, technology';
+          break;
+        case 'restaurant':
+          industry = 'food';
+          style = 'creative';
+          keywords = 'fresh, local, organic';
+          break;
+        case 'consulting':
+          industry = 'consulting';
+          style = 'classic';
+          keywords = 'strategy, business, solutions';
+          break;
+        case 'fitness':
+          industry = 'fitness';
+          style = 'modern';
+          keywords = 'fitness, health, wellness';
+          break;
+        case 'creative':
+          industry = 'creative';
+          style = 'creative';
+          keywords = 'design, creative, innovation';
+          break;
+        case 'retail':
+          industry = 'retail';
+          style = 'simple';
+          keywords = 'retail, store, shop';
+          break;
+      }
+      
+      document.getElementById('industry').value = industry;
+      document.getElementById('nameStyle').value = style;
+      document.getElementById('keywords').value = keywords;
+    }
+    
+    // Initialize on page load
+    window.addEventListener('load', function() {
+      updateCountDisplay();
+    });
+  </script>
+</body>
+</html>

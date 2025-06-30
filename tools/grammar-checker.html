@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Checker - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .text-area {
+            min-height: 200px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .error-highlight {
+            background-color: rgba(220, 53, 69, 0.3);
+            border-bottom: 2px solid #dc3545;
+            cursor: pointer;
+        }
+        .suggestion-popup {
+            position: absolute;
+            background: #343a40;
+            border: 1px solid #dc3545;
+            border-radius: 4px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 300px;
+            color: white;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">Grammar Checker</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Check your text for grammar, spelling, and style issues. Get suggestions for improvements.
+                        </div>
+                        <div class="mb-3">
+                            <label for="textInput" class="form-label">Enter Text to Check:</label>
+                            <textarea class="form-control bg-dark text-light border-danger text-area" id="textInput" placeholder="Type or paste your text here to check for grammar and spelling errors..." oninput="updateStats()"></textarea>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="checkGrammar()" id="checkButton">
+                                <i class="fas fa-search me-2"></i>Check Grammar
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="clearText()">
+                                <i class="fas fa-eraser me-2"></i>Clear Text
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="applyAllCorrections()">
+                                <i class="fas fa-magic me-2"></i>Apply All Corrections
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body text-center">
+                                <h6 class="text-danger"><i class="fas fa-chart-bar me-2"></i>Text Statistics</h6>
+                                <p><strong>Words:</strong> <span id="wordCount">0</span></p>
+                                <p><strong>Characters:</strong> <span id="charCount">0</span></p>
+                                <p><strong>Sentences:</strong> <span id="sentenceCount">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body text-center">
+                                <h6 class="text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Issues Found</h6>
+                                <p><strong>Grammar:</strong> <span id="grammarErrors">0</span></p>
+                                <p><strong>Spelling:</strong> <span id="spellingErrors">0</span></p>
+                                <p><strong>Style:</strong> <span id="styleIssues">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body text-center">
+                                <h6 class="text-danger"><i class="fas fa-star me-2"></i>Quality Score</h6>
+                                <p><strong>Overall:</strong> <span id="qualityScore">100%</span></p>
+                                <p><strong>Readability:</strong> <span id="readabilityScore">Good</span></p>
+                                <p><strong>Grade Level:</strong> <span id="gradeLevel">College</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Results Output Box -->
+                <div id="resultsSection" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-list me-2"></i>Issues Found</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="issuesList">
+                            <!-- Issues will appear here -->
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+                            <button class="btn btn-outline-danger" onclick="exportResults()">Export Results</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Quick Examples -->
+                    </div>
+                </div>        
+            </div>
+        </div>
+    </div>
+    <div id="footer">

@@ -1,0 +1,192 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHA Hash Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">SHA Hash Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate SHA (Secure Hash Algorithm) hashes for text input. SHA hashes are one-way cryptographic functions used for data integrity and security.
+            </div>
+            <div class="mb-3">
+              <label for="inputText" class="form-label">Enter text to hash:</label>
+              <textarea id="inputText" class="form-control bg-dark text-light border-danger" rows="4" placeholder="Enter the text you want to hash..."></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Hash Types:</label>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sha1" checked>
+                    <label class="form-check-label" for="sha1">SHA-1 (160-bit)</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sha256" checked>
+                    <label class="form-check-label" for="sha256">SHA-256 (256-bit)</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sha384">
+                    <label class="form-check-label" for="sha384">SHA-384 (384-bit)</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sha512">
+                    <label class="form-check-label" for="sha512">SHA-512 (512-bit)</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sha224">
+                    <label class="form-check-label" for="sha224">SHA-224 (224-bit)</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="md5">
+                    <label class="form-check-label" for="md5">MD5 (128-bit)</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateHashes()">
+                <i class="fas fa-hashtag me-2"></i>Generate Hashes
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear Input
+              </button>
+              <button class="btn btn-outline-danger" onclick="uploadFile()">
+                <i class="fas fa-upload me-2"></i>Upload File
+              </button>
+            </div>
+            <input type="file" id="fileInput" style="display: none;" onchange="handleFileUpload(event)">
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-list me-2"></i>Generated Hashes</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Input Length</h6>
+                    <h4 id="inputLength">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Hash Count</h6>
+                    <h4 id="hashCount">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Generated</h6>
+                    <h4 id="generatedTime">Now</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="hashResults"></div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyAllHashes()">
+                <i class="fas fa-copy me-2"></i>Copy All Hashes
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="exportHashes()">
+                <i class="fas fa-download me-2"></i>Export Results
+              </button>
+              <button class="btn btn-outline-danger" onclick="verifyHash()">
+                <i class="fas fa-check me-2"></i>Verify Hash
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Hash Verification -->
+        <div id="verificationBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-check-circle me-2"></i>Hash Verification</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="originalText" class="form-label">Original Text:</label>
+                <textarea id="originalText" class="form-control bg-dark text-light border-danger" rows="3"></textarea>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="hashToVerify" class="form-label">Hash to Verify:</label>
+                <input type="text" id="hashToVerify" class="form-control bg-dark text-light border-danger" placeholder="Paste hash here...">
+              </div>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-danger" onclick="performVerification()">
+                <i class="fas fa-search me-2"></i>Verify Hash
+              </button>
+            </div>
+            <div id="verificationResult" class="mt-3"></div>
+          </div>
+        </div>
+        <!-- Quick Hash Examples -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-bolt me-2"></i>Quick Hash Examples</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadExample('hello')">
+                  <i class="fas fa-hand-wave me-2"></i>"Hello World"
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadExample('password')">
+                  <i class="fas fa-key me-2"></i>"password123"
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadExample('empty')">
+                  <i class="fas fa-minus me-2"></i>Empty String
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="loadExample('long')">
+                  <i class="fas fa-paragraph me-2"></i>Long Text
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+</body>
+</html>

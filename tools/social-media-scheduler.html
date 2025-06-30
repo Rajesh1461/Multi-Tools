@@ -1,0 +1,217 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Scheduler - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Social Media Scheduler</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Plan and schedule your social media posts across multiple platforms.
+            </div>
+            <div class="mb-3">
+              <label for="platform" class="form-label">Select Platform:</label>
+              <select class="form-select bg-dark text-light border-danger" id="platform">
+                <option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option>
+                <option value="twitter">Twitter</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="postContent" class="form-label">Post Content:</label>
+              <textarea class="form-control bg-dark text-light border-danger" id="postContent" rows="4" placeholder="Enter your post content here..."></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="scheduleDate" class="form-label">Schedule Date:</label>
+                <input type="date" class="form-control bg-dark text-light border-danger" id="scheduleDate">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="scheduleTime" class="form-label">Schedule Time:</label>
+                <input type="time" class="form-control bg-dark text-light border-danger" id="scheduleTime">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="hashtags" class="form-label">Hashtags (optional):</label>
+              <input type="text" class="form-control bg-dark text-light border-danger" id="hashtags" placeholder="Enter hashtags separated by spaces">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="schedulePost()">
+                <i class="fas fa-calendar-plus me-2"></i>Schedule Post
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">
+                <i class="fas fa-download me-2"></i>Load Example
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Scheduled Posts List -->
+        <div id="scheduledPostsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-calendar me-2"></i>Scheduled Posts</h5>
+          </div>
+          <div class="card-body">
+            <div id="scheduledPostsList"></div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="exportSchedule()">
+                <i class="fas fa-download me-2"></i>Export Schedule
+              </button>
+              <button class="btn btn-outline-danger" onclick="clearAllScheduled()">
+                <i class="fas fa-trash me-2"></i>Clear All
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    let scheduledPosts = [];
+
+    function schedulePost() {
+      const platform = document.getElementById('platform').value;
+      const content = document.getElementById('postContent').value.trim();
+      const date = document.getElementById('scheduleDate').value;
+      const time = document.getElementById('scheduleTime').value;
+      const hashtags = document.getElementById('hashtags').value.trim();
+      
+      if (!content || !date || !time) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+      
+      const post = {
+        id: Date.now(),
+        platform,
+        content,
+        date,
+        time,
+        hashtags,
+        status: 'Scheduled'
+      };
+      
+      scheduledPosts.push(post);
+      displayScheduledPosts();
+      clearInput();
+    }
+
+    function displayScheduledPosts() {
+      if (scheduledPosts.length === 0) {
+        document.getElementById('scheduledPostsBox').style.display = 'none';
+        return;
+      }
+      
+      const postsHTML = scheduledPosts.map(post => `
+        <div class="card bg-black border-danger mb-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-8">
+                <h6 class="text-danger">${post.platform.toUpperCase()}</h6>
+                <p class="mb-1">${post.content}</p>
+                <small class="text-muted">Scheduled for: ${post.date} at ${post.time}</small>
+                ${post.hashtags ? `<br><small class="text-muted">Hashtags: ${post.hashtags}</small>` : ''}
+              </div>
+              <div class="col-md-4 text-end">
+                <span class="badge bg-success">${post.status}</span>
+                <button class="btn btn-sm btn-outline-danger ms-2" onclick="deletePost(${post.id})">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+      
+      document.getElementById('scheduledPostsList').innerHTML = postsHTML;
+      document.getElementById('scheduledPostsBox').style.display = 'block';
+    }
+
+    function deletePost(id) {
+      scheduledPosts = scheduledPosts.filter(post => post.id !== id);
+      displayScheduledPosts();
+    }
+
+    function clearInput() {
+      document.getElementById('platform').value = 'instagram';
+      document.getElementById('postContent').value = '';
+      document.getElementById('scheduleDate').value = '';
+      document.getElementById('scheduleTime').value = '';
+      document.getElementById('hashtags').value = '';
+    }
+
+    function loadExample() {
+      document.getElementById('platform').value = 'instagram';
+      document.getElementById('postContent').value = 'Check out our latest product! 🚀 #innovation #tech';
+      document.getElementById('scheduleDate').value = new Date().toISOString().split('T')[0];
+      document.getElementById('scheduleTime').value = '18:00';
+      document.getElementById('hashtags').value = '#innovation #tech #product';
+    }
+
+    function exportSchedule() {
+      if (scheduledPosts.length === 0) {
+        alert('No posts to export.');
+        return;
+      }
+      
+      const exportText = `Social Media Schedule Export
+
+Total Posts: ${scheduledPosts.length}
+Export Date: ${new Date().toLocaleString()}
+
+${scheduledPosts.map(post => `
+Platform: ${post.platform}
+Content: ${post.content}
+Scheduled: ${post.date} at ${post.time}
+Hashtags: ${post.hashtags || 'None'}
+Status: ${post.status}
+---`).join('\n')}`;
+      
+      const blob = new Blob([exportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'social-media-schedule.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function clearAllScheduled() {
+      if (confirm('Are you sure you want to clear all scheduled posts?')) {
+        scheduledPosts = [];
+        displayScheduledPosts();
+      }
+    }
+
+    // Set default date to today
+    document.getElementById('scheduleDate').value = new Date().toISOString().split('T')[0];
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

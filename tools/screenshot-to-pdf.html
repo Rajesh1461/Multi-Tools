@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screenshot to PDF Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    .upload-area {
+      border: 2px dashed #dc3545;
+      border-radius: 10px;
+      padding: 40px;
+      text-align: center;
+      background: #212529;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    .upload-area:hover {
+      border-color: #dc3545;
+      background: #343a40;
+    }
+    .upload-area.dragover {
+      border-color: #28a745;
+      background: #1e7e34;
+    }
+    .image-preview {
+      max-width: 300px;
+      max-height: 300px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .screenshot-area {
+      border: 2px solid #dc3545;
+      border-radius: 8px;
+      padding: 10px;
+      background: #212529;
+      margin: 10px 0;
+    }
+    .capture-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10000;
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+    }
+    .capture-button:hover {
+      background: #c82333;
+      transform: scale(1.1);
+    }
+  </style>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Screenshot to PDF Converter</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> This tool converts screenshots to PDF format in your browser. No files are uploaded to any server.
+            </div>
+            
+            <div class="mb-4">
+              <h5><i class="fas fa-upload me-2"></i>Upload Screenshot</h5>
+              <div class="upload-area" id="uploadArea">
+                <i class="fas fa-cloud-upload-alt fa-3x text-danger mb-3"></i>
+                <p class="mb-2">Drag and drop a screenshot here or click to browse</p>
+                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                <button class="btn btn-danger">
+                  <i class="fas fa-folder-open me-2"></i>Select Screenshot
+                </button>
+              </div>
+            </div>
+            
+            <div class="mb-4">
+              <h5><i class="fas fa-camera me-2"></i>Take Screenshot</h5>
+              <div class="text-center">
+                <button class="btn btn-outline-danger me-2" onclick="takeScreenshot()">
+                  <i class="fas fa-camera me-2"></i>Capture Screen
+                </button>
+                <button class="btn btn-outline-danger" onclick="captureVisibleArea()">
+                  <i class="fas fa-crop me-2"></i>Capture Visible Area
+                </button>
+              </div>
+            </div>
+            
+            <div id="pdfSettingsSection" style="display: none;">
+              <h5><i class="fas fa-cog me-2"></i>PDF Settings</h5>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="pageSize" class="form-label">Page Size:</label>
+                  <select class="form-select bg-dark text-light border-danger" id="pageSize">
+                    <option value="a4">A4</option>
+                    <option value="letter">Letter</option>
+                    <option value="legal">Legal</option>
+                    <option value="auto">Auto (Fit Image)</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="orientation" class="form-label">Orientation:</label>
+                  <select class="form-select bg-dark text-light border-danger" id="orientation">
+                    <option value="portrait">Portrait</option>
+                    <option value="landscape">Landscape</option>
+                    <option value="auto">Auto</option>
+                  </select>
+                </div>
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="margin" class="form-label">Margin (mm):</label>
+                  <input type="number" class="form-control bg-dark text-light border-danger" id="margin" value="10" min="0" max="50">
+                </div>
+                <div class="col-md-6">
+                  <label for="imageQuality" class="form-label">Image Quality:</label>
+                  <select class="form-select bg-dark text-light border-danger" id="imageQuality">
+                    <option value="high">High</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="low">Low</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="addTimestamp" checked>
+                  <label class="form-check-label" for="addTimestamp">Add timestamp to filename</label>
+                </div>
+              </div>
+              <div class="text-center">
+                <button class="btn btn-outline-danger me-2" onclick="convertToPDF()">
+                  <i class="fas fa-file-pdf me-2"></i>Convert to PDF
+                </button>
+                <button class="btn btn-outline-danger" onclick="clearAll()">
+                  <i class="fas fa-trash me-2"></i>Clear All
+                </button>
+              </div>
+            </div>
+            
+            <div id="previewSection" style="display: none;">
+              <h5><i class="fas fa-eye me-2"></i>Screenshot Preview</h5>
+              <div class="screenshot-area">
+                <img id="screenshotPreview" class="image-preview" alt="Screenshot preview">
+              </div>
+              <div class="text-center mt-3">
+                <small class="text-muted">
+                  Size: <span id="imageSize">0 KB</span> | 
+                  Dimensions: <span id="imageDimensions">0 x 0</span>
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    let currentImage = null;
+    let captureButton = null;
+    
+    // Drag and drop functionality
+    const uploadArea = document.getElementById('uploadArea');
+    const imageInput = document.getElementById('imageInput');
+    
+    uploadArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadArea.classList.add('dragover');
+    });
+    
+    uploadArea.addEventListener('dragleave', () => {
+      uploadArea.classList.remove('dragover');
+    });
+    
+    uploadArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      uploadArea.classList.remove('dragover');
+      const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+      if (files.length > 0) {
+        handleFile(files[0]);
+      }
+    });
+    
+    uploadArea.addEventListener('click', () => {
+      imageInput.click();
+    });
+    
+    imageInput.addEventListener('change', (e) => {
+      if (e.target.files.length > 0) {
+        handleFile(e.target.files[0]);
+      }
+    });
+    
+    function handleFile(file) {
+      if (!file.type.startsWith('image/')) return;
+      
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        currentImage = {
+          file: file,
+          dataUrl: e.target.result,
+          name: file.name
+        };
+        
+        const img = new Image();
+        img.onload = () => {
+          displayImageInfo(img);
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+    
+    function displayImageInfo(img) {
+      document.getElementById('screenshotPreview').src = currentImage.dataUrl;
+      document.getElementById('imageSize').textContent = formatFileSize(currentImage.file.size);
+      document.getElementById('imageDimensions').textContent = `${img.naturalWidth} x ${img.naturalHeight}`;
+      
+      document.getElementById('previewSection').style.display = 'block';
+      document.getElementById('pdfSettingsSection').style.display = 'block';
+    }
+    
+    function takeScreenshot() {
+      // Create capture button
+      if (captureButton) {
+        document.body.removeChild(captureButton);
+      }
+      
+      captureButton = document.createElement('button');
+      captureButton.className = 'capture-button';
+      captureButton.innerHTML = '<i class="fas fa-camera"></i>';
+      captureButton.title = 'Click to capture screenshot';
+      captureButton.onclick = captureFullScreen;
+      document.body.appendChild(captureButton);
+      
+      alert('A capture button has been added to the top-right corner. Click it to take a screenshot of the entire screen.');
+    }
+    
+    function captureFullScreen() {
+      if (captureButton) {
+        document.body.removeChild(captureButton);
+        captureButton = null;
+      }
+      
+      // Use html2canvas to capture the current page
+      html2canvas(document.body, {
+        allowTaint: true,
+        useCORS: true,
+        scale: 1,
+        backgroundColor: '#ffffff'
+      }).then(canvas => {
+        canvas.toBlob((blob) => {
+          const dataUrl = URL.createObjectURL(blob);
+          currentImage = {
+            file: new File([blob], 'screenshot.png', { type: 'image/png' }),
+            dataUrl: dataUrl,
+            name: 'screenshot.png'
+          };
+          
+          const img = new Image();
+          img.onload = () => {
+            displayImageInfo(img);
+          };
+          img.src = dataUrl;
+        }, 'image/png');
+      });
+    }
+    
+    function captureVisibleArea() {
+      // Capture only the visible area of the current page
+      html2canvas(document.documentElement, {
+        allowTaint: true,
+        useCORS: true,
+        scale: 1,
+        backgroundColor: '#ffffff',
+        height: window.innerHeight,
+        width: window.innerWidth
+      }).then(canvas => {
+        canvas.toBlob((blob) => {
+          const dataUrl = URL.createObjectURL(blob);
+          currentImage = {
+            file: new File([blob], 'screenshot.png', { type: 'image/png' }),
+            dataUrl: dataUrl,
+            name: 'screenshot.png'
+          };
+          
+          const img = new Image();
+          img.onload = () => {
+            displayImageInfo(img);
+          };
+          img.src = dataUrl;
+        }, 'image/png');
+      });
+    }
+    
+    function convertToPDF() {
+      if (!currentImage) {
+        alert('Please upload or capture a screenshot first.');
+        return;
+      }
+      
+      const pageSize = document.getElementById('pageSize').value;
+      const orientation = document.getElementById('orientation').value;
+      const margin = parseInt(document.getElementById('margin').value);
+      const imageQuality = document.getElementById('imageQuality').value;
+      const addTimestamp = document.getElementById('addTimestamp').checked;
+      
+      const img = new Image();
+      img.onload = () => {
+        // Create PDF
+        const { jsPDF } = window.jspdf;
+        
+        let pdfWidth, pdfHeight;
+        let imgWidth, imgHeight;
+        
+        // Calculate dimensions
+        if (pageSize === 'auto') {
+          // Auto-fit to image
+          const maxWidth = 210 - (margin * 2); // A4 width in mm
+          const maxHeight = 297 - (margin * 2); // A4 height in mm
+          const ratio = Math.min(maxWidth / img.naturalWidth, maxHeight / img.naturalHeight);
+          imgWidth = img.naturalWidth * ratio;
+          imgHeight = img.naturalHeight * ratio;
+          pdfWidth = imgWidth + (margin * 2);
+          pdfHeight = imgHeight + (margin * 2);
+        } else {
+          // Use selected page size
+          const pageSizes = {
+            'a4': { width: 210, height: 297 },
+            'letter': { width: 216, height: 279 },
+            'legal': { width: 216, height: 356 }
+          };
+          
+          const size = pageSizes[pageSize];
+          if (orientation === 'landscape') {
+            pdfWidth = size.height;
+            pdfHeight = size.width;
+          } else {
+            pdfWidth = size.width;
+            pdfHeight = size.height;
+          }
+          
+          // Calculate image size to fit within margins
+          const maxWidth = pdfWidth - (margin * 2);
+          const maxHeight = pdfHeight - (margin * 2);
+          const ratio = Math.min(maxWidth / img.naturalWidth, maxHeight / img.naturalHeight);
+          imgWidth = img.naturalWidth * ratio;
+          imgHeight = img.naturalHeight * ratio;
+        }
+        
+        const pdf = new jsPDF({
+          orientation: orientation === 'auto' ? (img.naturalWidth > img.naturalHeight ? 'landscape' : 'portrait') : orientation,
+          unit: 'mm',
+          format: pageSize === 'auto' ? [pdfWidth, pdfHeight] : pageSize
+        });
+        
+        // Add image to PDF
+        const x = margin;
+        const y = margin;
+        pdf.addImage(currentImage.dataUrl, 'PNG', x, y, imgWidth, imgHeight);
+        
+        // Generate filename
+        let filename = 'screenshot.pdf';
+        if (addTimestamp) {
+          const now = new Date();
+          const timestamp = now.toISOString().slice(0, 19).replace(/:/g, '-');
+          filename = `screenshot_${timestamp}.pdf`;
+        }
+        
+        // Save PDF
+        pdf.save(filename);
+      };
+      img.src = currentImage.dataUrl;
+    }
+    
+    function clearAll() {
+      document.getElementById('previewSection').style.display = 'none';
+      document.getElementById('pdfSettingsSection').style.display = 'none';
+      if (captureButton) {
+        document.body.removeChild(captureButton);
+        captureButton = null;
+      }
+      currentImage = null;
+    }
+    
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+  </script>
+</body>
+</html>

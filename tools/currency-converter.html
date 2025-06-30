@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Currency Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="icon" type="image/png" href="../assets/img/Rajesh Kumar S.jpg">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Currency Converter</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="amount" class="form-label">Amount:</label>
+                <input type="number" id="amount" class="form-control bg-dark text-light border-danger" placeholder="100" step="0.01" min="0">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="fromCurrency" class="form-label">From Currency:</label>
+                <select id="fromCurrency" class="form-select bg-dark text-light border-danger">
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="EUR">EUR - Euro</option>
+                  <option value="GBP">GBP - British Pound</option>
+                  <option value="JPY">JPY - Japanese Yen</option>
+                  <option value="CAD">CAD - Canadian Dollar</option>
+                  <option value="AUD">AUD - Australian Dollar</option>
+                  <option value="CHF">CHF - Swiss Franc</option>
+                  <option value="CNY">CNY - Chinese Yuan</option>
+                  <option value="INR">INR - Indian Rupee</option>
+                  <option value="BRL">BRL - Brazilian Real</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="toCurrency" class="form-label">To Currency:</label>
+                <select id="toCurrency" class="form-select bg-dark text-light border-danger">
+                  <option value="EUR">EUR - Euro</option>
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="GBP">GBP - British Pound</option>
+                  <option value="JPY">JPY - Japanese Yen</option>
+                  <option value="CAD">CAD - Canadian Dollar</option>
+                  <option value="AUD">AUD - Australian Dollar</option>
+                  <option value="CHF">CHF - Swiss Franc</option>
+                  <option value="CNY">CNY - Chinese Yuan</option>
+                  <option value="INR">INR - Indian Rupee</option>
+                  <option value="BRL">BRL - Brazilian Real</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="exchangeRate" class="form-label">Exchange Rate:</label>
+                <input type="number" id="exchangeRate" class="form-control bg-dark text-light border-danger" placeholder="1.18" step="0.0001" min="0">
+              </div>
+            </div>
+            
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="convertCurrency()">Convert Currency</button>
+              <button class="btn btn-outline-danger me-2" onclick="swapCurrencies()">Swap Currencies</button>
+              <button class="btn btn-outline-danger" onclick="getLiveRates()">Get Live Rates</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Conversion Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Original Amount</h6>
+                    <h4 id="originalAmount">$0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Converted Amount</h6>
+                    <h4 id="convertedAmount">€0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Exchange Rate</h6>
+                    <h4 id="rateResult">1.0000</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Detailed Breakdown -->
+            <div class="mb-3">
+              <h6 class="text-danger">Conversion Details:</h6>
+              <div class="table-responsive">
+                <table class="table table-dark table-striped">
+                  <tbody>
+                    <tr>
+                      <td>From Currency:</td>
+                      <td id="fromCurrencyResult">-</td>
+                    </tr>
+                    <tr>
+                      <td>To Currency:</td>
+                      <td id="toCurrencyResult">-</td>
+                    </tr>
+                    <tr>
+                      <td>Amount:</td>
+                      <td id="amountResult">-</td>
+                    </tr>
+                    <tr>
+                      <td>Exchange Rate:</td>
+                      <td id="exchangeRateResult">-</td>
+                    </tr>
+                    <tr>
+                      <td>Converted Amount:</td>
+                      <td id="finalAmountResult">-</td>
+                    </tr>
+                    <tr>
+                      <td>Last Updated:</td>
+                      <td id="lastUpdatedResult">-</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="copyResult()">Copy Result</button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadResult()">Download Result</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Popular Conversions -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Popular Conversions</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickConvert('USD', 'EUR', 100)">USD → EUR</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickConvert('EUR', 'USD', 100)">EUR → USD</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickConvert('GBP', 'USD', 100)">GBP → USD</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickConvert('USD', 'JPY', 100)">USD → JPY</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickConvert('USD', 'INR', 100)">USD → INR</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickConvert('USD', 'CNY', 100)">USD → CNY</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Exchange Rate History -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Exchange Rate History</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="historyFrom" class="form-label">From Currency:</label>
+                <select id="historyFrom" class="form-select bg-dark text-light border-danger">
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="EUR">EUR - Euro</option>
+                  <option value="GBP">GBP - British Pound</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="historyTo" class="form-label">To Currency:</label>
+                <select id="historyTo" class="form-select bg-dark text-light border-danger">
+                  <option value="EUR">EUR - Euro</option>
+                  <option value="USD">USD - US Dollar</option>
+                  <option value="GBP">GBP - British Pound</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger" onclick="showHistory()">Show Historical Rates</button>
+            </div>
+            <div id="historyResults" class="mt-3" style="display: none;">
+              <!-- Historical rates will be displayed here -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Currency Information -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Currency Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th>Currency</th>
+                    <th>Code</th>
+                    <th>Symbol</th>
+                    <th>Country/Region</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>US Dollar</td>
+                    <td>USD</td>
+                    <td>$</td>
+                    <td>United States</td>
+                  </tr>
+                  <tr>
+                    <td>Euro</td>
+                    <td>EUR</td>
+                    <td>€</td>
+                    <td>European Union</td>
+                  </tr>
+                  <tr>
+                    <td>British Pound</td>
+                    <td>GBP</td>
+                    <td>£</td>
+                    <td>United Kingdom</td>
+                  </tr>
+                  <tr>
+                    <td>Japanese Yen</td>
+                    <td>JPY</td>
+                    <td>¥</td>
+                    <td>Japan</td>
+                  </tr>
+                  <tr>
+                    <td>Canadian Dollar</td>
+                    <td>CAD</td>
+                    <td>C$</td>
+                    <td>Canada</td>
+                  </tr>
+                  <tr>
+                    <td>Australian Dollar</td>
+                    <td>AUD</td>
+                    <td>A$</td>
+                    <td>Australia</td>
+                  </tr>
+                  <tr>
+                    <td>Swiss Franc</td>
+                    <td>CHF</td>
+                    <td>CHF</td>
+                    <td>Switzerland</td>
+                  </tr>
+                  <tr>
+                    <td>Chinese Yuan</td>
+                    <td>CNY</td>
+                    <td>¥</td>
+                    <td>China</td>
+                  </tr>
+                  <tr>
+                    <td>Indian Rupee</td>
+                    <td>INR</td>
+                    <td>₹</td>
+                    <td>India</td>
+                  </tr>
+                  <tr>
+                    <td>Brazilian Real</td>
+                    <td>BRL</td>
+                    <td>R$</td>
+                    <td>Brazil</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    // Sample exchange rates (in real app, these would come from an API)
+    const exchangeRates = {
+      'USD': {
+        'EUR': 0.85,
+        'GBP': 0.73,
+        'JPY': 110.50,
+        'CAD': 1.25,
+        'AUD': 1.35,
+        'CHF': 0.92,
+        'CNY': 6.45,
+        'INR': 74.50,
+        'BRL': 5.20,
+        'USD': 1.00
+      },
+      'EUR': {
+        'USD': 1.18,
+        'GBP': 0.86,
+        'JPY': 130.00,
+        'CAD': 1.47,
+        'AUD': 1.59,
+        'CHF': 1.08,
+        'CNY': 7.59,
+        'INR': 87.65,
+        'BRL': 6.12,
+        'EUR': 1.00
+      },
+      'GBP': {
+        'USD': 1.37,
+        'EUR': 1.16,
+        'JPY': 151.37,
+        'CAD': 1.71,
+        'AUD': 1.85,
+        'CHF': 1.26,
+        'CNY': 8.84,
+        'INR': 102.05,
+        'BRL': 7.12,
+        'GBP': 1.00
+      },
+      'JPY': {
+        'USD': 0.009,
+        'EUR': 0.0077,
+        'GBP': 0.0066,
+        'CAD': 0.011,
+        'AUD': 0.012,
+        'CHF': 0.0083,
+        'CNY': 0.058,
+        'INR': 0.67,
+        'BRL': 0.047,
+        'JPY': 1.00
+      },
+      'CAD': {
+        'USD': 0.80,
+        'EUR': 0.68,
+        'GBP': 0.58,
+        'JPY': 88.40,
+        'AUD': 1.08,
+        'CHF': 0.74,
+        'CNY': 5.16,
+        'INR': 59.60,
+        'BRL': 4.16,
+        'CAD': 1.00
+      },
+      'AUD': {
+        'USD': 0.74,
+        'EUR': 0.63,
+        'GBP': 0.54,
+        'JPY': 81.85,
+        'CAD': 0.93,
+        'CHF': 0.68,
+        'CNY': 4.78,
+        'INR': 55.19,
+        'BRL': 3.85,
+        'AUD': 1.00
+      },
+      'CHF': {
+        'USD': 1.09,
+        'EUR': 0.93,
+        'GBP': 0.79,
+        'JPY': 120.11,
+        'CAD': 1.36,
+        'AUD': 1.47,
+        'CNY': 7.01,
+        'INR': 80.98,
+        'BRL': 5.65,
+        'CHF': 1.00
+      },
+      'CNY': {
+        'USD': 0.155,
+        'EUR': 0.132,
+        'GBP': 0.113,
+        'JPY': 17.13,
+        'CAD': 0.194,
+        'AUD': 0.209,
+        'CHF': 0.143,
+        'INR': 11.55,
+        'BRL': 0.806,
+        'CNY': 1.00
+      },
+      'INR': {
+        'USD': 0.0134,
+        'EUR': 0.0114,
+        'GBP': 0.0098,
+        'JPY': 1.48,
+        'CAD': 0.0168,
+        'AUD': 0.0181,
+        'CHF': 0.0124,
+        'CNY': 0.087,
+        'BRL': 0.070,
+        'INR': 1.00
+      },
+      'BRL': {
+        'USD': 0.192,
+        'EUR': 0.163,
+        'GBP': 0.140,
+        'JPY': 21.25,
+        'CAD': 0.240,
+        'AUD': 0.259,
+        'CHF': 0.177,
+        'CNY': 1.24,
+        'INR': 14.33,
+        'BRL': 1.00
+      }
+    };
+    
+    const currencySymbols = {
+      'USD': '$',
+      'EUR': '€',
+      'GBP': '£',
+      'JPY': '¥',
+      'CAD': 'C$',
+      'AUD': 'A$',
+      'CHF': 'CHF',
+      'CNY': '¥',
+      'INR': '₹',
+      'BRL': 'R$'
+    };
+    
+    function convertCurrency() {
+      const amount = parseFloat(document.getElementById('amount').value) || 0;
+      const fromCurrency = document.getElementById('fromCurrency').value;
+      const toCurrency = document.getElementById('toCurrency').value;
+      const customRate = parseFloat(document.getElementById('exchangeRate').value);
+      
+      if (amount <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+      }
+      
+      let rate;
+      if (customRate > 0) {
+        rate = customRate;
+      } else {
+        rate = exchangeRates[fromCurrency][toCurrency];
+      }
+      
+      const convertedAmount = amount * rate;
+      
+      // Update results
+      document.getElementById('originalAmount').textContent = formatCurrency(amount, fromCurrency);
+      document.getElementById('convertedAmount').textContent = formatCurrency(convertedAmount, toCurrency);
+      document.getElementById('rateResult').textContent = rate.toFixed(4);
+      
+      // Update detailed breakdown
+      document.getElementById('fromCurrencyResult').textContent = `${fromCurrency} - ${getCurrencyName(fromCurrency)}`;
+      document.getElementById('toCurrencyResult').textContent = `${toCurrency} - ${getCurrencyName(toCurrency)}`;
+      document.getElementById('amountResult').textContent = formatCurrency(amount, fromCurrency);
+      document.getElementById('exchangeRateResult').textContent = `1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}`;
+      document.getElementById('finalAmountResult').textContent = formatCurrency(convertedAmount, toCurrency);
+      document.getElementById('lastUpdatedResult').textContent = new Date().toLocaleString();
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function formatCurrency(amount, currency) {
+      const symbol = currencySymbols[currency];
+      const options = {
+        style: 'currency',
+        currency: currency,
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      };
+      
+      try {
+        return new Intl.NumberFormat('en-US', options).format(amount);
+      } catch (e) {
+        return `${symbol}${amount.toFixed(2)}`;
+      }
+    }
+    
+    function getCurrencyName(code) {
+      const names = {
+        'USD': 'US Dollar',
+        'EUR': 'Euro',
+        'GBP': 'British Pound',
+        'JPY': 'Japanese Yen',
+        'CAD': 'Canadian Dollar',
+        'AUD': 'Australian Dollar',
+        'CHF': 'Swiss Franc',
+        'CNY': 'Chinese Yuan',
+        'INR': 'Indian Rupee',
+        'BRL': 'Brazilian Real'
+      };
+      return names[code] || code;
+    }
+    
+    function swapCurrencies() {
+      const fromCurrency = document.getElementById('fromCurrency').value;
+      const toCurrency = document.getElementById('toCurrency').value;
+      
+      document.getElementById('fromCurrency').value = toCurrency;
+      document.getElementById('toCurrency').value = fromCurrency;
+      
+      if (document.getElementById('amount').value) {
+        convertCurrency();
+      }
+    }
+    
+    function getLiveRates() {
+      // Simulate getting live rates (in real app, this would call an API)
+      alert('Live rates feature would connect to a currency API. For demo purposes, using sample rates.');
+      
+      // Update exchange rate field with current rate
+      const fromCurrency = document.getElementById('fromCurrency').value;
+      const toCurrency = document.getElementById('toCurrency').value;
+      const rate = exchangeRates[fromCurrency][toCurrency];
+      
+      document.getElementById('exchangeRate').value = rate.toFixed(4);
+      
+      if (document.getElementById('amount').value) {
+        convertCurrency();
+      }
+    }
+    
+    function copyResult() {
+      const original = document.getElementById('originalAmount').textContent;
+      const converted = document.getElementById('convertedAmount').textContent;
+      const rate = document.getElementById('rateResult').textContent;
+      
+      const result = `Currency Conversion Result:
+${original} = ${converted}
+Exchange Rate: ${rate}
+Converted on: ${new Date().toLocaleString()}`;
+      
+      navigator.clipboard.writeText(result).then(() => {
+        alert('Conversion result copied to clipboard!');
+      });
+    }
+    
+    function downloadResult() {
+      const original = document.getElementById('originalAmount').textContent;
+      const converted = document.getElementById('convertedAmount').textContent;
+      const rate = document.getElementById('rateResult').textContent;
+      const fromCurrency = document.getElementById('fromCurrency').value;
+      const toCurrency = document.getElementById('toCurrency').value;
+      
+      const content = `Currency Conversion Report
+========================
+
+From: ${original} (${fromCurrency})
+To: ${converted} (${toCurrency})
+Exchange Rate: ${rate}
+Date: ${new Date().toLocaleString()}
+
+Generated by MultiTools Currency Converter`;
+      
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = `currency-conversion-${fromCurrency}-to-${toCurrency}.txt`;
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function quickConvert(from, to, amount) {
+      document.getElementById('fromCurrency').value = from;
+      document.getElementById('toCurrency').value = to;
+      document.getElementById('amount').value = amount;
+      
+      // Get the rate and update the exchange rate field
+      const rate = exchangeRates[from][to];
+      document.getElementById('exchangeRate').value = rate.toFixed(4);
+      
+      convertCurrency();
+    }
+    
+    function showHistory() {
+      const fromCurrency = document.getElementById('historyFrom').value;
+      const toCurrency = document.getElementById('historyTo').value;
+      
+      // Simulate historical data (in real app, this would come from an API)
+      const historicalRates = [
+        { date: '2024-01-01', rate: exchangeRates[fromCurrency][toCurrency] * 0.98 },
+        { date: '2024-01-15', rate: exchangeRates[fromCurrency][toCurrency] * 0.99 },
+        { date: '2024-02-01', rate: exchangeRates[fromCurrency][toCurrency] * 1.01 },
+        { date: '2024-02-15', rate: exchangeRates[fromCurrency][toCurrency] * 1.02 },
+        { date: '2024-03-01', rate: exchangeRates[fromCurrency][toCurrency] }
+      ];
+      
+      const container = document.getElementById('historyResults');
+      container.innerHTML = `
+        <h6 class="text-danger">Historical Exchange Rates (${fromCurrency} to ${toCurrency}):</h6>
+        <div class="table-responsive">
+          <table class="table table-dark table-striped">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Exchange Rate</th>
+                <th>Change</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${historicalRates.map((item, index) => {
+                const change = index > 0 ? ((item.rate - historicalRates[index - 1].rate) / historicalRates[index - 1].rate * 100).toFixed(2) : '0.00';
+                const changeClass = change > 0 ? 'text-success' : change < 0 ? 'text-danger' : 'text-muted';
+                return `
+                  <tr>
+                    <td>${item.date}</td>
+                    <td>${item.rate.toFixed(4)}</td>
+                    <td class="${changeClass}">${change}%</td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+      
+      container.style.display = 'block';
+    }
+    
+    // Auto-convert on input change
+    document.getElementById('amount').addEventListener('input', function() {
+      if (this.value && document.getElementById('fromCurrency').value && document.getElementById('toCurrency').value) {
+        convertCurrency();
+      }
+    });
+    
+    document.getElementById('fromCurrency').addEventListener('change', function() {
+      if (document.getElementById('amount').value && document.getElementById('toCurrency').value) {
+        convertCurrency();
+      }
+    });
+    
+    document.getElementById('toCurrency').addEventListener('change', function() {
+      if (document.getElementById('amount').value && document.getElementById('fromCurrency').value) {
+        convertCurrency();
+      }
+    });
+    
+    document.getElementById('exchangeRate').addEventListener('input', function() {
+      if (this.value && document.getElementById('amount').value) {
+        convertCurrency();
+      }
+    });
+  </script>
+</body>
+</html>

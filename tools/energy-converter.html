@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Energy Converter - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+
+    <!-- Header -->
+    <div id="header"></div>
+
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">Energy Converter</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="inputValue" class="form-label">Value:</label>
+                                    <input type="number" class="form-control bg-dark text-light border-danger mb-3" id="inputValue" placeholder="Enter value">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="fromUnit" class="form-label">From Unit:</label>
+                                    <select class="form-select bg-dark text-light border-danger mb-3" id="fromUnit">
+                                        <option value="joule">Joule (J)</option>
+                                        <option value="kilojoule">Kilojoule (kJ)</option>
+                                        <option value="calorie">Calorie (cal)</option>
+                                        <option value="kilocalorie">Kilocalorie (kcal)</option>
+                                        <option value="watt_hour">Watt-hour (Wh)</option>
+                                        <option value="kilowatt_hour">Kilowatt-hour (kWh)</option>
+                                        <option value="btu">British Thermal Unit (BTU)</option>
+                                        <option value="electronvolt">Electronvolt (eV)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="toUnit" class="form-label">To Unit:</label>
+                                    <select class="form-select bg-dark text-light border-danger mb-3" id="toUnit">
+                                        <option value="joule">Joule (J)</option>
+                                        <option value="kilojoule">Kilojoule (kJ)</option>
+                                        <option value="calorie">Calorie (cal)</option>
+                                        <option value="kilocalorie">Kilocalorie (kcal)</option>
+                                        <option value="watt_hour">Watt-hour (Wh)</option>
+                                        <option value="kilowatt_hour">Kilowatt-hour (kWh)</option>
+                                        <option value="btu">British Thermal Unit (BTU)</option>
+                                        <option value="electronvolt">Electronvolt (eV)</option>
+                                    </select>
+                                </div>
+                                <div class="text-center mb-3">
+                                    <button class="btn btn-danger me-2" onclick="convertEnergy()">
+                                        <i class="fas fa-exchange-alt"></i> Convert
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="clearEnergy()">
+                                        <i class="fas fa-trash"></i> Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="resultBox" class="mt-4" style="display: none;">
+                            <div class="alert alert-success border-danger">
+                                <h5 class="text-center mb-0">
+                                    <span id="inputDisplay"></span> = <span id="resultDisplay" class="text-danger fw-bold"></span>
+                                </h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Info Card -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-info-circle"></i> Energy Conversion</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Convert between different energy units including joules, calories, watt-hours, and more. This tool is useful for physics calculations, nutrition, and energy consumption analysis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        // Conversion factors to joules
+        const conversionFactors = {
+            joule: 1,
+            kilojoule: 1000,
+            calorie: 4.184,
+            kilocalorie: 4184,
+            watt_hour: 3600,
+            kilowatt_hour: 3600000,
+            electronvolt: 1.602176634e-19,
+            british_thermal_unit: 1055.06,
+            foot_pound: 1.355818,
+            erg: 1e-7
+        };
+
+        function convert() {
+            const fromValue = parseFloat(document.getElementById('fromValue').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+
+            if (isNaN(fromValue)) {
+                alert('Please enter a valid number');
+                return;
+            }
+
+            // Convert to joules first
+            const joules = fromValue * conversionFactors[fromUnit];
+            
+            // Convert from joules to target unit
+            const result = joules / conversionFactors[toUnit];
+            
+            document.getElementById('result').value = result.toFixed(6);
+        }
+
+        function clearAll() {
+            document.getElementById('fromValue').value = '';
+            document.getElementById('result').value = '';
+        }
+
+        // Auto-convert when values change
+        document.getElementById('fromValue').addEventListener('input', convert);
+        document.getElementById('fromUnit').addEventListener('change', convert);
+        document.getElementById('toUnit').addEventListener('change', convert);
+    </script>
+</body>
+</html>

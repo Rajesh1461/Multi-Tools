@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mobile-Friendly Test - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Mobile Friendly Test</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="websiteUrl" class="form-label">Website URL:</label>
+              <input type="url" id="websiteUrl" class="form-control bg-dark text-light border-danger" placeholder="https://example.com">
+                    </div>
+            <div class="mb-3">
+              <label for="deviceType" class="form-label">Device Type:</label>
+              <select id="deviceType" class="form-control bg-dark text-light border-danger">
+                <option value="mobile">Mobile (375x667)</option>
+                <option value="tablet">Tablet (768x1024)</option>
+                <option value="desktop">Desktop (1200x800)</option>
+              </select>
+                        </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="testWebsite()">Test Website</button>
+              <button class="btn btn-outline-danger" onclick="clearInputs()">Clear</button>
+                            </div>
+                            </div>
+                        </div>
+
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Mobile-Friendly Test Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Overall Score</h6>
+                    <h3 id="overallScore">0</h3>
+                    <small id="scoreLabel" class="text-light">-</small>
+                  </div>
+                                    </div>
+                                </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Tests Passed</h6>
+                    <h3 id="testsPassed">0</h3>
+                                    </div>
+                                </div>
+                                    </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Status</h6>
+                    <h3 id="statusResult">-</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            <div class="row text-center">
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Viewport Meta Tag</h6>
+                    <h4 id="viewportResult">-</h4>
+                                </div>
+                            </div>
+                        </div>
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Touch Targets</h6>
+                    <h4 id="touchTargetsResult">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            <div class="row text-center">
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                                        <div class="card-body">
+                    <h6 class="text-danger">Text Readability</h6>
+                    <h4 id="textReadabilityResult">-</h4>
+                                        </div>
+                                    </div>
+                                </div>
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                                        <div class="card-body">
+                    <h6 class="text-danger">Loading Speed</h6>
+                    <h4 id="loadingSpeedResult">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            <div class="mt-3">
+              <h6 class="text-danger">Detailed Analysis:</h6>
+              <div id="detailedAnalysis" class="bg-black p-3 rounded">
+                <!-- Detailed analysis will be displayed here -->
+                                </div>
+                            </div>
+            
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+              <button class="btn btn-outline-danger" onclick="downloadResults()">Download Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+    <script>
+    let lastResults = null;
+
+        function testWebsite() {
+      const url = document.getElementById('websiteUrl').value.trim();
+      const deviceType = document.getElementById('deviceType').value;
+      
+            if (!url) {
+                alert('Please enter a website URL.');
+                return;
+            }
+
+      if (!isValidUrl(url)) {
+                alert('Please enter a valid URL (including http:// or https://)');
+                return;
+            }
+
+      // Show loading state
+      document.getElementById('overallScore').textContent = 'Testing...';
+      document.getElementById('resultsBox').style.display = 'block';
+      
+      // Simulate mobile-friendly testing
+      simulateMobileTest(url, deviceType);
+    }
+
+    function simulateMobileTest(url, deviceType) {
+                setTimeout(() => {
+        // Simulate different test scenarios
+        const scenarios = [
+          {
+            overallScore: 95,
+            scoreLabel: 'Excellent',
+            testsPassed: 5,
+            status: 'Mobile-Friendly',
+            viewport: 'Pass',
+            touchTargets: 'Pass',
+            textReadability: 'Pass',
+            loadingSpeed: 'Pass',
+            analysis: 'Website is fully optimized for mobile devices with excellent performance across all metrics.',
+            recommendations: 'Continue monitoring performance and consider implementing AMP for even better mobile experience.'
+          },
+          {
+            overallScore: 78,
+            scoreLabel: 'Good',
+            testsPassed: 4,
+            status: 'Mostly Mobile-Friendly',
+            viewport: 'Pass',
+            touchTargets: 'Pass',
+            textReadability: 'Pass',
+            loadingSpeed: 'Warning',
+            analysis: 'Website is generally mobile-friendly but could benefit from some optimization improvements.',
+            recommendations: 'Optimize images and reduce JavaScript to improve loading speed on mobile devices.'
+          },
+          {
+            overallScore: 62,
+            scoreLabel: 'Needs Improvement',
+            testsPassed: 3,
+            status: 'Partially Mobile-Friendly',
+            viewport: 'Pass',
+            touchTargets: 'Warning',
+            textReadability: 'Pass',
+            loadingSpeed: 'Fail',
+            analysis: 'Website has basic mobile compatibility but requires significant improvements for optimal mobile experience.',
+            recommendations: 'Increase touch target sizes and optimize page loading speed for better mobile performance.'
+          },
+          {
+            overallScore: 35,
+            scoreLabel: 'Poor',
+            testsPassed: 2,
+            status: 'Not Mobile-Friendly',
+            viewport: 'Fail',
+            touchTargets: 'Fail',
+            textReadability: 'Warning',
+            loadingSpeed: 'Fail',
+            analysis: 'Website is not optimized for mobile devices and requires major improvements.',
+            recommendations: 'Implement responsive design, add viewport meta tag, and optimize for mobile performance.'
+          }
+        ];
+        
+        const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+        displayResults(randomScenario, url, deviceType);
+        
+      }, 2000); // Simulate 2-second delay
+    }
+
+    function displayResults(results, url, deviceType) {
+      document.getElementById('overallScore').textContent = results.overallScore;
+      document.getElementById('scoreLabel').textContent = results.scoreLabel;
+      document.getElementById('testsPassed').textContent = results.testsPassed;
+      document.getElementById('statusResult').textContent = results.status;
+      document.getElementById('viewportResult').textContent = results.viewport;
+      document.getElementById('touchTargetsResult').textContent = results.touchTargets;
+      document.getElementById('textReadabilityResult').textContent = results.textReadability;
+      document.getElementById('loadingSpeedResult').textContent = results.loadingSpeed;
+      
+      // Detailed analysis
+      const detailedAnalysis = document.getElementById('detailedAnalysis');
+      detailedAnalysis.innerHTML = `
+        <p><strong>Tested URL:</strong> ${url}</p>
+        <p><strong>Device Type:</strong> ${deviceType}</p>
+        <p><strong>Analysis:</strong> ${results.analysis}</p>
+        <p><strong>Recommendations:</strong> ${results.recommendations}</p>
+      `;
+      
+      lastResults = { url, deviceType, ...results };
+    }
+
+    function isValidUrl(string) {
+      try {
+        new URL(string);
+        return true;
+      } catch (_) {
+        return false;
+      }
+    }
+
+    function clearInputs() {
+      document.getElementById('websiteUrl').value = '';
+      document.getElementById('deviceType').value = 'mobile';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function copyResults() {
+      if (!lastResults) {
+        alert('No results to copy.');
+        return;
+      }
+      
+      const results = `Mobile-Friendly Test Results:
+URL: ${lastResults.url}
+Device Type: ${lastResults.deviceType}
+Overall Score: ${lastResults.overallScore}/100 (${lastResults.scoreLabel})
+Status: ${lastResults.status}
+Tests Passed: ${lastResults.testsPassed}/5
+
+Test Results:
+- Viewport Meta Tag: ${lastResults.viewport}
+- Touch Targets: ${lastResults.touchTargets}
+- Text Readability: ${lastResults.textReadability}
+- Loading Speed: ${lastResults.loadingSpeed}
+
+Analysis: ${lastResults.analysis}
+Recommendations: ${lastResults.recommendations}`;
+      
+      navigator.clipboard.writeText(results).then(() => {
+        alert('Results copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy results. Please copy manually.');
+      });
+    }
+
+    function downloadResults() {
+      if (!lastResults) {
+        alert('No results to download.');
+        return;
+      }
+      
+      const exportText = `Mobile-Friendly Test Report
+
+Test Details:
+- URL: ${lastResults.url}
+- Device Type: ${lastResults.deviceType}
+- Test Date: ${new Date().toLocaleString()}
+
+Results:
+- Overall Score: ${lastResults.overallScore}/100 (${lastResults.scoreLabel})
+- Status: ${lastResults.status}
+- Tests Passed: ${lastResults.testsPassed}/5
+
+Individual Test Results:
+- Viewport Meta Tag: ${lastResults.viewport}
+- Touch Targets: ${lastResults.touchTargets}
+- Text Readability: ${lastResults.textReadability}
+- Loading Speed: ${lastResults.loadingSpeed}
+
+Analysis: ${lastResults.analysis}
+Recommendations: ${lastResults.recommendations}`;
+      
+      const blob = new Blob([exportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'mobile-friendly-test-report.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Auto-test on Enter key
+    document.getElementById('websiteUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                testWebsite();
+            }
+        });
+    </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

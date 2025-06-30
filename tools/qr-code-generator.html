@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    
+    <div id="header"></div>
+    
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">QR Code Generator</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Generate QR codes for any content including URLs, text, contact information, and more.
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="qrContent" class="form-label">Content to encode:</label>
+                            <textarea id="qrContent" class="form-control bg-dark text-light" rows="3" 
+                                placeholder="Enter text, URL, phone number, email, or any content you want to encode in QR code"></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="qrSize" class="form-label">QR Code Size:</label>
+                                <select id="qrSize" class="form-select bg-dark text-light">
+                                    <option value="128">128x128 (Small)</option>
+                                    <option value="256" selected>256x256 (Medium)</option>
+                                    <option value="512">512x512 (Large)</option>
+                                    <option value="1024">1024x1024 (Extra Large)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="qrErrorLevel" class="form-label">Error Correction Level:</label>
+                                <select id="qrErrorLevel" class="form-select bg-dark text-light">
+                                    <option value="L">Low (7%)</option>
+                                    <option value="M" selected>Medium (15%)</option>
+                                    <option value="Q">Quartile (25%)</option>
+                                    <option value="H">High (30%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="qrForeground" class="form-label">Foreground Color:</label>
+                                <input type="color" id="qrForeground" class="form-control form-control-color bg-dark text-light" value="#000000">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="qrBackground" class="form-label">Background Color:</label>
+                                <input type="color" id="qrBackground" class="form-control form-control-color bg-dark text-light" value="#FFFFFF">
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="generateQR()">
+                                <i class="fas fa-qrcode me-2"></i>Generate QR Code
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="clearQR()">
+                                <i class="fas fa-trash me-2"></i>Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Output Box -->
+                <div id="resultsBox" class="card bg-dark mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-qrcode me-2"></i>Generated QR Code</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <div class="mb-3">
+                            <canvas id="qrCanvas" class="border"></canvas>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="downloadQR('png')">
+                                    <i class="fas fa-download me-2"></i>Download PNG
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="downloadQR('svg')">
+                                    <i class="fas fa-download me-2"></i>Download SVG
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="copyQR()">
+                                    <i class="fas fa-copy me-2"></i>Copy to Clipboard
+                                </button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="printQR()">
+                                    <i class="fas fa-print me-2"></i>Print QR Code
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Templates -->
+                <div class="card bg-dark mb-4">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-templates me-2"></i>Quick Templates</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('url')">
+                                    <i class="fas fa-link me-2"></i>Website URL
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('email')">
+                                    <i class="fas fa-envelope me-2"></i>Email Address
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('phone')">
+                                    <i class="fas fa-phone me-2"></i>Phone Number
+                                </button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('wifi')">
+                                    <i class="fas fa-wifi me-2"></i>WiFi Network
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('vcard')">
+                                    <i class="fas fa-address-card me-2"></i>Contact Info
+                                </button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('text')">
+                                    <i class="fas fa-text-width me-2"></i>Plain Text
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="footer"></div>
+    
+    <script src="../assets/js/include.js"></script>
+    <script>
+        let currentQRData = null;
+        
+        function generateQR() {
+            const content = document.getElementById('qrContent').value.trim();
+            if (!content) {
+                alert('Please enter content to encode in the QR code.');
+                return;
+            }
+            
+            const size = parseInt(document.getElementById('qrSize').value);
+            const errorLevel = document.getElementById('qrErrorLevel').value;
+            const foreground = document.getElementById('qrForeground').value;
+            const background = document.getElementById('qrBackground').value;
+            
+            const canvas = document.getElementById('qrCanvas');
+            
+            QRCode.toCanvas(canvas, content, {
+                width: size,
+                margin: 2,
+                color: {
+                    dark: foreground,
+                    light: background
+                },
+                errorCorrectionLevel: errorLevel
+            }, function (error) {
+                if (error) {
+                    alert('Error generating QR code: ' + error);
+                } else {
+                    currentQRData = {
+                        content: content,
+                        size: size,
+                        errorLevel: errorLevel,
+                        foreground: foreground,
+                        background: background
+                    };
+                    document.getElementById('resultsBox').style.display = 'block';
+                }
+            });
+        }
+        
+        function clearQR() {
+            document.getElementById('qrContent').value = '';
+            document.getElementById('resultsBox').style.display = 'none';
+            currentQRData = null;
+        }
+        
+        function downloadQR(format) {
+            if (!currentQRData) {
+                alert('Please generate a QR code first.');
+                return;
+            }
+            
+            const content = currentQRData.content;
+            const size = currentQRData.size;
+            const errorLevel = currentQRData.errorLevel;
+            const foreground = currentQRData.foreground;
+            const background = currentQRData.background;
+            
+            if (format === 'png') {
+                QRCode.toDataURL(content, {
+                    width: size,
+                    margin: 2,
+                    color: {
+                        dark: foreground,
+                        light: background
+                    },
+                    errorCorrectionLevel: errorLevel
+                }, function (error, url) {
+                    if (error) {
+                        alert('Error generating PNG: ' + error);
+                    } else {
+                        const link = document.createElement('a');
+                        link.download = 'qr-code.png';
+                        link.href = url;
+                        link.click();
+                    }
+                });
+            } else if (format === 'svg') {
+                QRCode.toString(content, {
+                    width: size,
+                    margin: 2,
+                    color: {
+                        dark: foreground,
+                        light: background
+                    },
+                    errorCorrectionLevel: errorLevel
+                }, function (error, string) {
+                    if (error) {
+                        alert('Error generating SVG: ' + error);
+                    } else {
+                        const blob = new Blob([string], { type: 'image/svg+xml' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.download = 'qr-code.svg';
+                        link.href = url;
+                        link.click();
+                        URL.revokeObjectURL(url);
+                    }
+                });
+            }
+        }
+        
+        function copyQR() {
+            if (!currentQRData) {
+                alert('Please generate a QR code first.');
+                return;
+            }
+            
+            const canvas = document.getElementById('qrCanvas');
+            canvas.toBlob(function(blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]).then(function() {
+                    alert('QR code copied to clipboard!');
+                }).catch(function() {
+                    alert('Failed to copy QR code to clipboard.');
+                });
+            });
+        }
+        
+        function printQR() {
+            alert('Test function works!');
+        }
+        
+        function useTemplate(type) {
+            let template = '';
+            let placeholder = '';
+            
+            switch(type) {
+                case 'url':
+                    template = 'https://example.com';
+                    placeholder = 'Enter website URL (e.g., https://example.com)';
+                    break;
+                case 'email':
+                    template = 'mailto:example@email.com';
+                    placeholder = 'Enter email address (e.g., example@email.com)';
+                    break;
+                case 'phone':
+                    template = 'tel:+1234567890';
+                    placeholder = 'Enter phone number (e.g., +1234567890)';
+                    break;
+                case 'wifi':
+                    template = 'WIFI:S:NetworkName;T:WPA;P:Password;;';
+                    placeholder = 'Enter WiFi details (SSID, Password, Security Type)';
+                    break;
+                case 'vcard':
+                    template = 'BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nORG:Company\nTEL:+1234567890\nEMAIL:john@example.com\nEND:VCARD';
+                    placeholder = 'Enter contact information';
+                    break;
+                case 'text':
+                    template = 'Hello World!';
+                    placeholder = 'Enter any text content';
+                    break;
+            }
+            
+            document.getElementById('qrContent').value = template;
+            document.getElementById('qrContent').placeholder = placeholder;
+        }
+        
+        // Auto-generate QR code as user types
+        document.getElementById('qrContent').addEventListener('input', function() {
+            if (this.value.trim() !== '') {
+                generateQR();
+            }
+        });
+        
+        // Auto-generate when settings change
+        document.getElementById('qrSize').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+        
+        document.getElementById('qrErrorLevel').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+        
+        document.getElementById('qrForeground').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+        
+        document.getElementById('qrBackground').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+    </script>
+</body>
+</html> 

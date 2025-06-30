@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name to Numerology - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .numerology-card {
+            border-left: 4px solid #6f42c1;
+            transition: all 0.3s ease;
+        }
+        .numerology-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .number-display {
+            font-size: 3em;
+            font-weight: bold;
+            color: #6f42c1;
+            text-align: center;
+        }
+        .letter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        .letter-item {
+            background: linear-gradient(135deg, #6f42c1, #8e44ad);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0.375rem;
+            text-align: center;
+            font-weight: bold;
+        }
+        .meaning-section {
+            background-color: #f8f9fa;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Name to Numerology</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="fas fa-magic me-2"></i>Name to Numerology</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Discover the hidden meanings and vibrations behind names using ancient numerology principles.
+                        </div>
+                        
+                        <!-- Name Input -->
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <label class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Enter your full name" maxlength="50">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label">&nbsp;</label>
+                                <button class="btn btn-primary w-100" onclick="calculateNumerology()">
+                                    <i class="fas fa-calculator me-2"></i>Calculate
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Numerology Type Selection -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Calculation Type</label>
+                                <select class="form-control" id="calculationType">
+                                    <option value="pythagorean">Pythagorean</option>
+                                    <option value="chaldean">Chaldean</option>
+                                    <option value="hebrew">Hebrew</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label">Include Middle Name</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="includeMiddle" checked>
+                                    <label class="form-check-label" for="includeMiddle">
+                                        Include middle name in calculation
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Results Section -->
+                        <div id="resultsSection" style="display: none;">
+                            <h5 class="text-center mb-4"><i class="fas fa-star me-2"></i>Numerology Results</h5>
+                            
+                            <!-- Life Path Number -->
+                            <div class="card numerology-card mb-4">
+                                <div class="card-body text-center">
+                                    <h6>Life Path Number</h6>
+                                    <div class="number-display" id="lifePathNumber">0</div>
+                                    <p class="text-muted" id="lifePathMeaning">Your life path number represents your life's purpose and the lessons you need to learn.</p>
+                                </div>
+                            </div>
+
+                            <!-- Expression Number -->
+                            <div class="card numerology-card mb-4">
+                                <div class="card-body text-center">
+                                    <h6>Expression Number</h6>
+                                    <div class="number-display" id="expressionNumber">0</div>
+                                    <p class="text-muted" id="expressionMeaning">Your expression number reveals your natural talents and abilities.</p>
+                                </div>
+                            </div>
+
+                            <!-- Soul Number -->
+                            <div class="card numerology-card mb-4">
+                                <div class="card-body text-center">
+                                    <h6>Soul Number</h6>
+                                    <div class="number-display" id="soulNumber">0</div>
+                                    <p class="text-muted" id="soulMeaning">Your soul number represents your inner desires and what truly motivates you.</p>
+                                </div>
+                            </div>
+
+                            <!-- Letter Breakdown -->
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <h6 class="mb-0"><i class="fas fa-spell-check me-2"></i>Letter Breakdown</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div id="letterBreakdown"></div>
+                                </div>
+                            </div>
+
+                            <!-- Detailed Meanings -->
+                            <div class="meaning-section">
+                                <h6><i class="fas fa-book me-2"></i>Detailed Meanings</h6>
+                                <div id="detailedMeanings"></div>
+                            </div>
+                        </div>
+
+                        <!-- Numerology Guide -->
+                        <div class="mt-4">
+                            <h5><i class="fas fa-info-circle me-2"></i>Numerology Guide</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Calculation Methods:</h6>
+                                    <ul>
+                                        <li><strong>Pythagorean:</strong> Most common method, assigns numbers 1-9 to letters A-Z</li>
+                                        <li><strong>Chaldean:</strong> Ancient Babylonian system with different letter values</li>
+                                        <li><strong>Hebrew:</strong> Based on Hebrew alphabet numerology</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Number Meanings:</h6>
+                                    <ul>
+                                        <li><strong>1:</strong> Leadership, independence, innovation</li>
+                                        <li><strong>2:</strong> Cooperation, diplomacy, sensitivity</li>
+                                        <li><strong>3:</strong> Creativity, self-expression, joy</li>
+                                        <li><strong>4:</strong> Stability, organization, hard work</li>
+                                        <li><strong>5:</strong> Freedom, adventure, change</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Disclaimer -->
+                        <div class="mt-4">
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Disclaimer:</strong> Numerology is for entertainment purposes only. 
+                                The interpretations provided are based on traditional numerology principles and should not be considered as professional advice.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Numerology letter values
+        const pythagoreanValues = {
+            'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+            'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 6, 'P': 7, 'Q': 8, 'R': 9,
+            'S': 1, 'T': 2, 'U': 3, 'V': 4, 'W': 5, 'X': 6, 'Y': 7, 'Z': 8
+        };
+
+        const chaldeanValues = {
+            'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 8, 'G': 3, 'H': 5, 'I': 1,
+            'J': 1, 'K': 2, 'L': 3, 'M': 4, 'N': 5, 'O': 7, 'P': 8, 'Q': 1, 'R': 2,
+            'S': 3, 'T': 4, 'U': 6, 'V': 6, 'W': 6, 'X': 5, 'Y': 1, 'Z': 7
+        };
+
+        const hebrewValues = {
+            'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8, 'I': 9,
+            'J': 10, 'K': 20, 'L': 30, 'M': 40, 'N': 50, 'O': 60, 'P': 70, 'Q': 80, 'R': 90,
+            'S': 100, 'T': 200, 'U': 300, 'V': 400, 'W': 500, 'X': 600, 'Y': 700, 'Z': 800
+        };
+
+        const numberMeanings = {
+            1: {
+                lifePath: "Natural born leader with strong individuality and determination",
+                expression: "Innovative and creative with strong leadership qualities",
+                soul: "Desires independence and recognition for achievements"
+            },
+            2: {
+                lifePath: "Diplomatic and cooperative, seeks harmony and balance",
+                expression: "Excellent mediator with strong intuitive abilities",
+                soul: "Craves peace, harmony, and meaningful relationships"
+            },
+            3: {
+                lifePath: "Creative and expressive, brings joy and inspiration to others",
+                expression: "Artistic and communicative with natural charisma",
+                soul: "Seeks self-expression and creative fulfillment"
+            },
+            4: {
+                lifePath: "Practical and organized, builds solid foundations",
+                expression: "Reliable and methodical with strong work ethic",
+                soul: "Desires security, stability, and order in life"
+            },
+            5: {
+                lifePath: "Adventurous and freedom-loving, embraces change",
+                expression: "Versatile and adaptable with strong communication skills",
+                soul: "Craves freedom, variety, and new experiences"
+            },
+            6: {
+                lifePath: "Nurturing and responsible, focuses on family and community",
+                expression: "Compassionate and caring with strong sense of duty",
+                soul: "Desires to help others and create harmony"
+            },
+            7: {
+                lifePath: "Analytical and spiritual, seeks knowledge and wisdom",
+                expression: "Intellectual and introspective with strong intuition",
+                soul: "Seeks truth, knowledge, and spiritual understanding"
+            },
+            8: {
+                lifePath: "Ambitious and goal-oriented, achieves material success",
+                expression: "Strong business sense with natural leadership abilities",
+                soul: "Desires financial security and recognition"
+            },
+            9: {
+                lifePath: "Compassionate and humanitarian, serves others selflessly",
+                expression: "Wise and understanding with universal perspective",
+                soul: "Seeks to make a positive impact on the world"
+            }
+        };
+
+        function calculateNumerology() {
+            const fullName = document.getElementById('fullName').value.trim().toUpperCase();
+            const calculationType = document.getElementById('calculationType').value;
+            const includeMiddle = document.getElementById('includeMiddle').checked;
+
+            if (!fullName) {
+                alert('Please enter a name.');
+                return;
+            }
+
+            // Get the appropriate value system
+            let valueSystem;
+            switch (calculationType) {
+                case 'pythagorean':
+                    valueSystem = pythagoreanValues;
+                    break;
+                case 'chaldean':
+                    valueSystem = chaldeanValues;
+                    break;
+                case 'hebrew':
+                    valueSystem = hebrewValues;
+                    break;
+                default:
+                    valueSystem = pythagoreanValues;
+            }
+
+            // Parse name components
+            const nameParts = fullName.split(' ').filter(part => part.length > 0);
+            let firstName = nameParts[0] || '';
+            let middleName = nameParts.length > 2 ? nameParts.slice(1, -1).join(' ') : '';
+            let lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+
+            if (!includeMiddle) {
+                middleName = '';
+            }
+
+            // Calculate numbers
+            const lifePathNumber = calculateLifePathNumber(firstName, middleName, lastName, valueSystem);
+            const expressionNumber = calculateExpressionNumber(firstName, middleName, lastName, valueSystem);
+            const soulNumber = calculateSoulNumber(firstName, middleName, lastName, valueSystem);
+
+            // Display results
+            displayResults(lifePathNumber, expressionNumber, soulNumber, fullName, valueSystem);
+        }
+
+        function calculateLifePathNumber(firstName, middleName, lastName, valueSystem) {
+            const fullNameStr = (firstName + middleName + lastName).replace(/\s/g, '');
+            let sum = 0;
+
+            for (let char of fullNameStr) {
+                if (valueSystem[char]) {
+                    sum += valueSystem[char];
+                }
+            }
+
+            return reduceToSingleDigit(sum);
+        }
+
+        function calculateExpressionNumber(firstName, middleName, lastName, valueSystem) {
+            const fullNameStr = (firstName + middleName + lastName).replace(/\s/g, '');
+            let sum = 0;
+
+            for (let char of fullNameStr) {
+                if (valueSystem[char]) {
+                    sum += valueSystem[char];
+                }
+            }
+
+            return reduceToSingleDigit(sum);
+        }
+
+        function calculateSoulNumber(firstName, middleName, lastName, valueSystem) {
+            const vowels = 'AEIOU';
+            const fullNameStr = (firstName + middleName + lastName).replace(/\s/g, '');
+            let sum = 0;
+
+            for (let char of fullNameStr) {
+                if (vowels.includes(char) && valueSystem[char]) {
+                    sum += valueSystem[char];
+                }
+            }
+
+            return reduceToSingleDigit(sum);
+        }
+
+        function reduceToSingleDigit(number) {
+            while (number > 9 && number !== 11 && number !== 22 && number !== 33) {
+                number = number.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+            }
+            return number;
+        }
+
+        function displayResults(lifePath, expression, soul, fullName, valueSystem) {
+            // Display numbers
+            document.getElementById('lifePathNumber').textContent = lifePath;
+            document.getElementById('expressionNumber').textContent = expression;
+            document.getElementById('soulNumber').textContent = soul;
+
+            // Display meanings
+            document.getElementById('lifePathMeaning').textContent = numberMeanings[lifePath]?.lifePath || 'Life path number meaning not available.';
+            document.getElementById('expressionMeaning').textContent = numberMeanings[expression]?.expression || 'Expression number meaning not available.';
+            document.getElementById('soulMeaning').textContent = numberMeanings[soul]?.soul || 'Soul number meaning not available.';
+
+            // Display letter breakdown
+            displayLetterBreakdown(fullName, valueSystem);
+
+            // Display detailed meanings
+            displayDetailedMeanings(lifePath, expression, soul);
+
+            document.getElementById('resultsSection').style.display = 'block';
+        }
+
+        function displayLetterBreakdown(fullName, valueSystem) {
+            const breakdownDiv = document.getElementById('letterBreakdown');
+            let html = '';
+
+            for (let char of fullName) {
+                if (char === ' ') {
+                    html += '<div class="letter-item" style="background: #6c757d;">SPACE</div>';
+                } else if (valueSystem[char]) {
+                    html += `<div class="letter-item">${char}<br><small>${valueSystem[char]}</small></div>`;
+                } else {
+                    html += `<div class="letter-item" style="background: #6c757d;">${char}</div>`;
+                }
+            }
+
+            breakdownDiv.innerHTML = `<div class="letter-grid">${html}</div>`;
+        }
+
+        function displayDetailedMeanings(lifePath, expression, soul) {
+            const meaningsDiv = document.getElementById('detailedMeanings');
+            let html = '';
+
+            [lifePath, expression, soul].forEach((number, index) => {
+                const type = ['Life Path', 'Expression', 'Soul'][index];
+                const meaning = numberMeanings[number];
+                
+                if (meaning) {
+                    html += `
+                        <div class="mb-3">
+                            <h6>${type} Number ${number}</h6>
+                            <p class="mb-1"><strong>General:</strong> ${meaning[type.toLowerCase().replace(' ', '')]}</p>
+                            <p class="mb-0"><strong>Characteristics:</strong> ${getCharacteristics(number)}</p>
+                        </div>
+                    `;
+                }
+            });
+
+            meaningsDiv.innerHTML = html;
+        }
+
+        function getCharacteristics(number) {
+            const characteristics = {
+                1: "Independent, ambitious, innovative, confident, determined",
+                2: "Cooperative, diplomatic, intuitive, patient, supportive",
+                3: "Creative, expressive, optimistic, sociable, inspiring",
+                4: "Practical, organized, reliable, disciplined, loyal",
+                5: "Adventurous, versatile, freedom-loving, adaptable, curious",
+                6: "Nurturing, responsible, compassionate, harmonious, caring",
+                7: "Analytical, spiritual, introspective, wise, intuitive",
+                8: "Ambitious, goal-oriented, authoritative, practical, successful",
+                9: "Compassionate, humanitarian, wise, understanding, generous"
+            };
+            return characteristics[number] || "Characteristics not available.";
+        }
+
+        // Handle Enter key
+        document.getElementById('fullName').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                calculateNumerology();
+            }
+        });
+    </script>
+</body>
+</html>

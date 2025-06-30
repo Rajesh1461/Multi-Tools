@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Planner - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">Daily Planner</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="taskInput" class="form-label">Add New Task:</label>
+                            <input type="text" id="taskInput" class="form-control bg-dark text-light border-danger mb-3" placeholder="Enter your task here...">
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="taskTime" class="form-label">Time:</label>
+                                <input type="time" id="taskTime" class="form-control bg-dark text-light border-danger">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="taskPriority" class="form-label">Priority:</label>
+                                <select id="taskPriority" class="form-select bg-dark text-light border-danger">
+                                    <option value="low">Low</option>
+                                    <option value="medium" selected>Medium</option>
+                                    <option value="high">High</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="addTask()">Add Task</button>
+                            <button class="btn btn-outline-danger" onclick="clearAll()">Clear All</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tasks List -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5>Today's Tasks</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="tasksList">
+                            <!-- Tasks will be added here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Summary -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5>Progress Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Total Tasks</h6>
+                                        <h4 id="totalTasks">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Completed</h6>
+                                        <h4 id="completedTasks">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Pending</h6>
+                                        <h4 id="pendingTasks">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Progress</h6>
+                                        <h4 id="progressPercent">0%</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        let tasks = [];
+        
+        function addTask() {
+            const taskText = document.getElementById('taskInput').value.trim();
+            const taskTime = document.getElementById('taskTime').value;
+            const taskPriority = document.getElementById('taskPriority').value;
+            
+            if (!taskText) {
+                alert('Please enter a task description.');
+                return;
+            }
+            
+            const task = {
+                id: Date.now(),
+                text: taskText,
+                time: taskTime,
+                priority: taskPriority,
+                completed: false,
+                createdAt: new Date()
+            };
+            
+            tasks.push(task);
+            saveTasks();
+            renderTasks();
+            updateProgress();
+            
+            // Clear input
+            document.getElementById('taskInput').value = '';
+            document.getElementById('taskTime').value = '';
+        }
+        
+        function toggleTask(id) {
+            const task = tasks.find(t => t.id === id);
+            if (task) {
+                task.completed = !task.completed;
+                saveTasks();
+                renderTasks();
+                updateProgress();
+            }
+        }
+        
+        function deleteTask(id) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderTasks();
+            updateProgress();
+        }
+        
+        function renderTasks() {
+            const tasksList = document.getElementById('tasksList');
+            tasksList.innerHTML = '';
+            
+            if (tasks.length === 0) {
+                tasksList.innerHTML = '<p class="text-muted text-center">No tasks added yet. Add your first task above!</p>';
+                return;
+            }
+            
+            // Sort tasks by time and priority
+            const sortedTasks = [...tasks].sort((a, b) => {
+                if (a.time && b.time) {
+                    return a.time.localeCompare(b.time);
+                }
+                return 0;
+            });
+            
+            sortedTasks.forEach(task => {
+                const taskElement = document.createElement('div');
+                taskElement.className = `task-item mb-2 p-3 border border-${getPriorityColor(task.priority)} rounded ${task.completed ? 'bg-secondary' : 'bg-dark'}`;
+                
+                taskElement.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <input type="checkbox" class="form-check-input me-3" ${task.completed ? 'checked' : ''} onchange="toggleTask(${task.id})">
+                            <div>
+                                <span class="${task.completed ? 'text-decoration-line-through text-muted' : ''}">${task.text}</span>
+                                ${task.time ? `<br><small class="text-muted">Time: ${task.time}</small>` : ''}
+                                <span class="badge bg-${getPriorityColor(task.priority)} ms-2">${task.priority}</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${task.id})">Delete</button>
+                    </div>
+                `;
+                
+                tasksList.appendChild(taskElement);
+            });
+        }
+        
+        function getPriorityColor(priority) {
+            switch (priority) {
+                case 'high': return 'danger';
+                case 'medium': return 'warning';
+                case 'low': return 'success';
+                default: return 'secondary';
+            }
+        }
+        
+        function updateProgress() {
+            const total = tasks.length;
+            const completed = tasks.filter(t => t.completed).length;
+            const pending = total - completed;
+            const progress = total > 0 ? Math.round((completed / total) * 100) : 0;
+            
+            document.getElementById('totalTasks').textContent = total;
+            document.getElementById('completedTasks').textContent = completed;
+            document.getElementById('pendingTasks').textContent = pending;
+            document.getElementById('progressPercent').textContent = progress + '%';
+        }
+        
+        function clearAll() {
+            if (confirm('Are you sure you want to clear all tasks?')) {
+                tasks = [];
+                saveTasks();
+                renderTasks();
+                updateProgress();
+            }
+        }
+        
+        function saveTasks() {
+            localStorage.setItem('dailyPlannerTasks', JSON.stringify(tasks));
+        }
+        
+        function loadTasks() {
+            const saved = localStorage.getItem('dailyPlannerTasks');
+            if (saved) {
+                tasks = JSON.parse(saved);
+                renderTasks();
+                updateProgress();
+            }
+        }
+        
+        // Load tasks on page load
+        document.addEventListener('DOMContentLoaded', loadTasks);
+        
+        // Handle Enter key in task input
+        document.getElementById('taskInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../assets/img/Rajesh Kumar S.jpg">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">URL Shortener</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Create short, shareable URLs from long web addresses. Perfect for social media, messaging, and marketing campaigns.
+            </div>
+            <div class="mb-3">
+              <label for="longUrl" class="form-label">Long URL:</label>
+              <input type="url" class="form-control bg-dark text-light border-danger" id="longUrl" placeholder="https://www.example.com/very/long/url/with/many/parameters...">
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="customAlias" class="form-label">Custom Alias (Optional):</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="customAlias" placeholder="my-custom-link">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="expiryDays" class="form-label">Expiry (Days):</label>
+                <select class="form-select bg-dark text-light border-danger" id="expiryDays">
+                  <option value="0">No expiry</option>
+                  <option value="1">1 day</option>
+                  <option value="7">7 days</option>
+                  <option value="30">30 days</option>
+                  <option value="90">90 days</option>
+                  <option value="365">1 year</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="shortenUrl()">
+                <i class="fas fa-link me-2"></i>Shorten URL
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">
+                <i class="fas fa-lightbulb me-2"></i>Load Example
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-check-circle me-2"></i>Shortened URL</h5>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-success bg-dark border-danger mb-3">
+              <div class="row">
+                <div class="col-md-8">
+                  <label for="shortUrl" class="form-label">Short URL:</label>
+                  <input type="text" class="form-control bg-dark text-light border-danger" id="shortUrl" readonly>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                  <button class="btn btn-outline-danger w-100" onclick="copyShortUrl()">
+                    <i class="fas fa-copy me-2"></i>Copy
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="alert alert-info bg-dark border-danger">
+                  <h6 class="text-info">URL Statistics:</h6>
+                  <p class="mb-1">Original Length: <span id="originalLength">0</span> characters</p>
+                  <p class="mb-1">Shortened Length: <span id="shortenedLength">0</span> characters</p>
+                  <p class="mb-0">Reduction: <span id="reductionPercent">0%</span></p>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="alert alert-warning bg-dark border-danger">
+                  <h6 class="text-warning">Share Options:</h6>
+                  <div class="d-grid gap-2">
+                    <button class="btn btn-outline-danger btn-sm" onclick="shareOnTwitter()">
+                      <i class="fab fa-twitter me-2"></i>Share on Twitter
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm" onclick="shareOnFacebook()">
+                      <i class="fab fa-facebook me-2"></i>Share on Facebook
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="generateQR()">
+                <i class="fas fa-qrcode me-2"></i>Generate QR Code
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="previewUrl()">
+                <i class="fas fa-eye me-2"></i>Preview
+              </button>
+              <button class="btn btn-outline-danger" onclick="downloadQR()">
+                <i class="fas fa-download me-2"></i>Download QR
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- QR Code Display -->
+        <div id="qrBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-qrcode me-2"></i>QR Code</h5>
+          </div>
+          <div class="card-body text-center">
+            <div id="qrCode" class="mb-3"></div>
+            <p class="text-muted">Scan this QR code to access the shortened URL</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+</body>
+</html>

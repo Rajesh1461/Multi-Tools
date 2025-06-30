@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leap Year Checker - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .result-box {
+            font-size: 1.5em;
+            font-weight: bold;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .result-leap {
+            background: linear-gradient(90deg, #28a745, #20c997);
+            color: white;
+        }
+        .result-not-leap {
+            background: linear-gradient(90deg, #dc3545, #fd7e14);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Leap Year Checker</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Enter a year to check if it is a leap year. Leap years have 366 days instead of 365.
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Enter Year</label>
+                                <input type="number" class="form-control" id="yearInput" placeholder="e.g. 2024" min="1">
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                <button class="btn btn-primary w-100" onclick="checkLeapYear()">
+                                    <i class="fas fa-search me-2"></i>Check Leap Year
+                                </button>
+                            </div>
+                        </div>
+                        <div id="resultBox" class="result-box text-center" style="display: none;"></div>
+                        <div class="mt-4">
+                            <h5><i class="fas fa-info-circle me-2"></i>Leap Year Rules</h5>
+                            <ul>
+                                <li>A year is a leap year if it is divisible by 4</li>
+                                <li>But if the year is also divisible by 100, it is <strong>not</strong> a leap year</li>
+                                <li>However, if the year is divisible by 400, it <strong>is</strong> a leap year</li>
+                                <li>Examples: 2000 (leap), 1900 (not leap), 2024 (leap)</li>
+                            </ul>
+                        </div>
+                        <div class="mt-4">
+                            <h5><i class="fas fa-lightbulb me-2"></i>Fun Fact</h5>
+                            <p>Leap years keep our calendar in alignment with the Earth's revolutions around the Sun!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function checkLeapYear() {
+            const year = parseInt(document.getElementById('yearInput').value);
+            const resultBox = document.getElementById('resultBox');
+            if (!year || year < 1) {
+                resultBox.style.display = 'block';
+                resultBox.className = 'result-box result-not-leap text-center';
+                resultBox.textContent = 'Please enter a valid year.';
+                return;
+            }
+            let isLeap = false;
+            if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) {
+                isLeap = true;
+            }
+            resultBox.style.display = 'block';
+            if (isLeap) {
+                resultBox.className = 'result-box result-leap text-center';
+                resultBox.innerHTML = `<i class='fas fa-check-circle me-2'></i>${year} is a <strong>Leap Year</strong>!`;
+            } else {
+                resultBox.className = 'result-box result-not-leap text-center';
+                resultBox.innerHTML = `<i class='fas fa-times-circle me-2'></i>${year} is <strong>Not a Leap Year</strong>.`;
+            }
+        }
+        // Handle Enter key
+        document.getElementById('yearInput').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                checkLeapYear();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hash Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="icon" type="image/png" href="../assets/img/Rajesh Kumar S.jpg">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Hash Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate cryptographic hashes for text input using various algorithms. Hashes are one-way functions used for data integrity and security.
+            </div>
+            <div class="mb-3">
+              <label for="inputText" class="form-label">Enter Text to Hash:</label>
+              <textarea class="form-control bg-dark text-light border-danger" id="inputText" rows="4" placeholder="Enter the text you want to hash..." oninput="generateHashes()"></textarea>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="hashType" class="form-label">Hash Algorithm:</label>
+                <select class="form-select bg-dark text-light border-danger" id="hashType" onchange="generateHashes()">
+                  <option value="all">All Algorithms</option>
+                  <option value="md5">MD5</option>
+                  <option value="sha1">SHA-1</option>
+                  <option value="sha256">SHA-256</option>
+                  <option value="sha512">SHA-512</option>
+                  <option value="sha384">SHA-384</option>
+                  <option value="sha224">SHA-224</option>
+                  <option value="ripemd160">RIPEMD-160</option>
+                  <option value="whirlpool">Whirlpool</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="outputFormat" class="form-label">Output Format:</label>
+                <select class="form-select bg-dark text-light border-danger" id="outputFormat" onchange="generateHashes()">
+                  <option value="hex">Hexadecimal</option>
+                  <option value="base64">Base64</option>
+                  <option value="binary">Binary</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateHashes()">
+                <i class="fas fa-magic me-2"></i>Generate Hash
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearAll()">
+                <i class="fas fa-eraser me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="copyAllHashes()">
+                <i class="fas fa-copy me-2"></i>Copy All
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsSection" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-hashtag me-2"></i>Generated Hashes</h5>
+          </div>
+          <div class="card-body">
+            <div id="hashResults">
+              <!-- Hash results will appear here -->
+            </div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="exportResults()">Export Results</button>
+              <button class="btn btn-outline-danger" onclick="verifyHash()">Verify Hash</button>
+            </div>
+          </div>
+        </div>
+        <!-- Quick Examples -->
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+</body>
+</html>

@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Twitter Character Counter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Twitter Character Counter</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Count characters for Twitter posts. Twitter allows 280 characters per tweet. URLs are automatically shortened to 23 characters.
+            </div>
+            <div class="mb-3">
+              <label for="twitterText" class="form-label">Your Tweet Text:</label>
+              <textarea class="form-control bg-dark text-light border-danger" id="twitterText" rows="6" placeholder="Enter your tweet here..." maxlength="1000"></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="includeUrls" class="form-label">Include URLs:</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="includeUrls" placeholder="https://example.com (optional)">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="includeHashtags" class="form-label">Include Hashtags:</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="includeHashtags" placeholder="#hashtag1 #hashtag2 (optional)">
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="analyzeTweet()">
+                <i class="fas fa-search me-2"></i>Analyze Tweet
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">
+                <i class="fas fa-lightbulb me-2"></i>Load Example
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-chart-bar me-2"></i>Character Analysis</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="alert alert-success bg-dark border-danger mb-3">
+                  <h6 class="text-success">Character Count:</h6>
+                  <p class="mb-1">Total Characters: <span id="totalChars">0</span></p>
+                  <p class="mb-1">Characters Remaining: <span id="charsRemaining">280</span></p>
+                  <p class="mb-0">Status: <span id="tweetStatus">Ready to tweet</span></p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="alert alert-info bg-dark border-danger mb-3">
+                  <h6 class="text-info">Word Analysis:</h6>
+                  <p class="mb-1">Words: <span id="wordCount">0</span></p>
+                  <p class="mb-1">Sentences: <span id="sentenceCount">0</span></p>
+                  <p class="mb-0">Average Word Length: <span id="avgWordLength">0</span></p>
+                </div>
+              </div>
+            </div>
+            <div class="alert alert-warning bg-dark border-danger">
+              <h6 class="text-warning">URL Analysis:</h6>
+              <p class="mb-1">URLs Found: <span id="urlCount">0</span></p>
+              <p class="mb-1">URL Characters: <span id="urlChars">0</span></p>
+              <p class="mb-0">Shortened URL Characters: <span id="shortenedUrlChars">0</span></p>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copyTweet()">
+                <i class="fas fa-copy me-2"></i>Copy Tweet
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="optimizeTweet()">
+                <i class="fas fa-magic me-2"></i>Optimize Tweet
+              </button>
+              <button class="btn btn-outline-danger" onclick="splitTweet()">
+                <i class="fas fa-cut me-2"></i>Split into Thread
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Character Progress Bar -->
+        <div id="progressBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-tachometer-alt me-2"></i>Character Usage</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Character Usage Progress:</label>
+              <div class="progress bg-dark">
+                <div id="charProgress" class="progress-bar bg-success" role="progressbar" style="width: 0%"></div>
+              </div>
+              <small class="text-muted">0% used</small>
+            </div>
+            <div id="progressStatus" class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <span id="progressText">Ready to compose your tweet</span>
+            </div>
+          </div>
+        </div>
+        <!-- Hashtag Suggestions -->        
+        <!-- Info Card -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-info-circle"></i> About TWITTER CHARACTER COUNTER</h5>
+          </div>
+          <div class="card-body">
+            <p>Count characters in your tweets and ensure they meet Twitter limits.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">

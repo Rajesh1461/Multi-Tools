@@ -1,0 +1,429 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Text Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Random Text Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate random text for placeholder content, testing, and creative writing purposes.
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="textType" class="form-label">Text Type:</label>
+                <select class="form-select bg-dark text-light border-danger" id="textType">
+                  <option value="lorem">Lorem Ipsum</option>
+                  <option value="random">Random Words</option>
+                  <option value="sentences">Random Sentences</option>
+                  <option value="paragraphs">Random Paragraphs</option>
+                  <option value="custom">Custom Text</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="length" class="form-label">Length:</label>
+                <select class="form-select bg-dark text-light border-danger" id="length">
+                  <option value="short">Short (50-100 words)</option>
+                  <option value="medium" selected>Medium (100-200 words)</option>
+                  <option value="long">Long (200-500 words)</option>
+                  <option value="very-long">Very Long (500+ words)</option>
+                  <option value="custom">Custom</option>
+                </select>
+              </div>
+            </div>
+            <div class="row mb-3" id="customLengthRow" style="display: none;">
+              <div class="col-md-6">
+                <label for="customLength" class="form-label">Custom Length (words):</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="customLength" value="150" min="1" max="2000">
+              </div>
+              <div class="col-md-6">
+                <label for="paragraphs" class="form-label">Number of Paragraphs:</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="paragraphs" value="3" min="1" max="20">
+              </div>
+            </div>
+            <div class="mb-3">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="startWithLorem" checked>
+                <label class="form-check-label" for="startWithLorem">Start with "Lorem ipsum dolor sit amet"</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="includePunctuation" checked>
+                <label class="form-check-label" for="includePunctuation">Include punctuation</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="capitalizeFirst">
+                <label class="form-check-label" for="capitalizeFirst">Capitalize first letter of sentences</label>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateText()">
+                <i class="fas fa-magic me-2"></i>Generate Text
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearText()">
+                <i class="fas fa-trash me-2"></i>Clear Text
+              </button>
+              <button class="btn btn-outline-danger" onclick="copyText()">
+                <i class="fas fa-copy me-2"></i>Copy Text
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-file-text me-2"></i>Generated Text</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Words</h6>
+                    <h4 id="wordCount">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Characters</h6>
+                    <h4 id="charCount">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Sentences</h6>
+                    <h4 id="sentenceCount">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Paragraphs</h6>
+                    <h4 id="paragraphCount">0</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="generatedText" class="form-label">Generated Text:</label>
+              <textarea id="generatedText" class="form-control bg-dark text-light border-danger" rows="12" readonly></textarea>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="exportText()">
+                <i class="fas fa-download me-2"></i>Export Text
+              </button>
+              <button class="btn btn-outline-danger" onclick="generateMore()">
+                <i class="fas fa-plus me-2"></i>Generate More
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Quick Generators -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-bolt me-2"></i>Quick Generators</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate('lorem', 'short')">
+                  <i class="fas fa-paragraph me-2"></i>Short Lorem Ipsum
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate('lorem', 'medium')">
+                  <i class="fas fa-paragraph me-2"></i>Medium Lorem Ipsum
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate('random', 'medium')">
+                  <i class="fas fa-random me-2"></i>Random Words
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate('sentences', 'long')">
+                  <i class="fas fa-comment me-2"></i>Random Sentences
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate('paragraphs', 'very-long')">
+                  <i class="fas fa-file-alt me-2"></i>Multiple Paragraphs
+                </button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="quickGenerate('custom', 'custom')">
+                  <i class="fas fa-cog me-2"></i>Custom Text
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Lorem Ipsum words
+    const loremWords = [
+      'lorem', 'ipsum', 'dolor', 'sit', 'amet', 'consectetur', 'adipiscing', 'elit', 'sed', 'do', 'eiusmod', 'tempor', 'incididunt', 'ut', 'labore', 'et', 'dolore', 'magna', 'aliqua', 'ut', 'enim', 'ad', 'minim', 'veniam', 'quis', 'nostrud', 'exercitation', 'ullamco', 'laboris', 'nisi', 'ut', 'aliquip', 'ex', 'ea', 'commodo', 'consequat', 'duis', 'aute', 'irure', 'dolor', 'in', 'reprehenderit', 'in', 'voluptate', 'velit', 'esse', 'cillum', 'dolore', 'eu', 'fugiat', 'nulla', 'pariatur', 'excepteur', 'sint', 'occaecat', 'cupidatat', 'non', 'proident', 'sunt', 'culpa', 'qui', 'officia', 'deserunt', 'mollit', 'anim', 'id', 'est', 'laborum'
+    ];
+
+    // Random words for variety
+    const randomWords = [
+      'the', 'be', 'to', 'of', 'and', 'a', 'in', 'that', 'have', 'I', 'it', 'for', 'not', 'on', 'with', 'he', 'as', 'you', 'do', 'at', 'this', 'but', 'his', 'by', 'from', 'they', 'we', 'say', 'her', 'she', 'or', 'an', 'will', 'my', 'one', 'all', 'would', 'there', 'their', 'what', 'so', 'up', 'out', 'if', 'about', 'who', 'get', 'which', 'go', 'me', 'when', 'make', 'can', 'like', 'time', 'no', 'just', 'him', 'know', 'take', 'people', 'into', 'year', 'your', 'good', 'some', 'could', 'them', 'see', 'other', 'than', 'then', 'now', 'look', 'only', 'come', 'its', 'over', 'think', 'also', 'back', 'after', 'use', 'two', 'how', 'our', 'work', 'first', 'well', 'way', 'even', 'new', 'want', 'because', 'any', 'these', 'give', 'day', 'most', 'us'
+    ];
+
+    // Random sentences
+    const randomSentences = [
+      'The quick brown fox jumps over the lazy dog.',
+      'All work and no play makes Jack a dull boy.',
+      'A journey of a thousand miles begins with a single step.',
+      'Actions speak louder than words.',
+      'Beauty is in the eye of the beholder.',
+      'Better late than never.',
+      'Don\'t judge a book by its cover.',
+      'Every cloud has a silver lining.',
+      'Fortune favors the bold.',
+      'Good things come to those who wait.',
+      'Honesty is the best policy.',
+      'If you can dream it, you can do it.',
+      'Knowledge is power.',
+      'Life is what happens when you\'re busy making other plans.',
+      'Look before you leap.',
+      'Practice makes perfect.',
+      'The early bird catches the worm.',
+      'Time heals all wounds.',
+      'Where there\'s a will, there\'s a way.',
+      'You can\'t teach an old dog new tricks.'
+    ];
+
+    function generateText() {
+      const textType = document.getElementById('textType').value;
+      const length = document.getElementById('length').value;
+      const startWithLorem = document.getElementById('startWithLorem').checked;
+      const includePunctuation = document.getElementById('includePunctuation').checked;
+      const capitalizeFirst = document.getElementById('capitalizeFirst').checked;
+
+      let wordCount = getWordCount(length);
+      let result = '';
+
+      switch (textType) {
+        case 'lorem':
+          result = generateLoremIpsum(wordCount, startWithLorem, includePunctuation, capitalizeFirst);
+          break;
+        case 'random':
+          result = generateRandomWords(wordCount, includePunctuation, capitalizeFirst);
+          break;
+        case 'sentences':
+          result = generateRandomSentences(wordCount, includePunctuation, capitalizeFirst);
+          break;
+        case 'paragraphs':
+          result = generateParagraphs(wordCount, includePunctuation, capitalizeFirst);
+          break;
+        case 'custom':
+          const customLength = document.getElementById('customLength').value;
+          const paragraphs = document.getElementById('paragraphs').value;
+          result = generateCustomText(customLength, paragraphs, includePunctuation, capitalizeFirst);
+          break;
+      }
+
+      document.getElementById('generatedText').value = result;
+      updateStats(result);
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+
+    function getWordCount(length) {
+      switch (length) {
+        case 'short': return Math.floor(Math.random() * 50) + 50;
+        case 'medium': return Math.floor(Math.random() * 100) + 100;
+        case 'long': return Math.floor(Math.random() * 300) + 200;
+        case 'very-long': return Math.floor(Math.random() * 500) + 500;
+        default: return 150;
+      }
+    }
+
+    function generateLoremIpsum(wordCount, startWithLorem, includePunctuation, capitalizeFirst) {
+      let result = startWithLorem ? 'Lorem ipsum dolor sit amet' : '';
+      let currentWords = startWithLorem ? 5 : 0;
+
+      while (currentWords < wordCount) {
+        const word = loremWords[Math.floor(Math.random() * loremWords.length)];
+        if (result && includePunctuation && Math.random() < 0.1) {
+          result += '. ' + (capitalizeFirst ? word.charAt(0).toUpperCase() + word.slice(1) : word);
+        } else {
+          result += (result ? ' ' : '') + (capitalizeFirst && !result ? word.charAt(0).toUpperCase() + word.slice(1) : word);
+        }
+        currentWords++;
+      }
+
+      if (includePunctuation && !result.endsWith('.')) {
+        result += '.';
+      }
+
+      return result;
+    }
+
+    function generateRandomWords(wordCount, includePunctuation, capitalizeFirst) {
+      let result = '';
+      for (let i = 0; i < wordCount; i++) {
+        const word = randomWords[Math.floor(Math.random() * randomWords.length)];
+        if (result && includePunctuation && Math.random() < 0.1) {
+          result += '. ' + (capitalizeFirst ? word.charAt(0).toUpperCase() + word.slice(1) : word);
+        } else {
+          result += (result ? ' ' : '') + (capitalizeFirst && !result ? word.charAt(0).toUpperCase() + word.slice(1) : word);
+        }
+      }
+
+      if (includePunctuation && !result.endsWith('.')) {
+        result += '.';
+      }
+
+      return result;
+    }
+
+    function generateRandomSentences(wordCount, includePunctuation, capitalizeFirst) {
+      let result = '';
+      const sentences = Math.ceil(wordCount / 10);
+      
+      for (let i = 0; i < sentences; i++) {
+        const sentence = randomSentences[Math.floor(Math.random() * randomSentences.length)];
+        result += (result ? ' ' : '') + sentence;
+      }
+
+      return result;
+    }
+
+    function generateParagraphs(wordCount, includePunctuation, capitalizeFirst) {
+      const paragraphs = Math.ceil(wordCount / 100);
+      let result = '';
+
+      for (let i = 0; i < paragraphs; i++) {
+        const paragraphWords = Math.floor(wordCount / paragraphs);
+        const paragraph = generateLoremIpsum(paragraphWords, false, includePunctuation, capitalizeFirst);
+        result += (result ? '\n\n' : '') + paragraph;
+      }
+
+      return result;
+    }
+
+    function generateCustomText(wordCount, paragraphs, includePunctuation, capitalizeFirst) {
+      let result = '';
+      const wordsPerParagraph = Math.floor(wordCount / paragraphs);
+
+      for (let i = 0; i < paragraphs; i++) {
+        const paragraph = generateLoremIpsum(wordsPerParagraph, false, includePunctuation, capitalizeFirst);
+        result += (result ? '\n\n' : '') + paragraph;
+      }
+
+      return result;
+    }
+
+    function quickGenerate(type, length) {
+      document.getElementById('textType').value = type;
+      document.getElementById('length').value = length;
+      
+      if (length === 'custom') {
+        document.getElementById('customLengthRow').style.display = 'block';
+      } else {
+        document.getElementById('customLengthRow').style.display = 'none';
+      }
+      
+      generateText();
+    }
+
+    function updateStats(text) {
+      const words = text.trim().split(/\s+/).length;
+      const characters = text.length;
+      const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0).length;
+      const paragraphs = text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+
+      document.getElementById('wordCount').textContent = words;
+      document.getElementById('charCount').textContent = characters;
+      document.getElementById('sentenceCount').textContent = sentences;
+      document.getElementById('paragraphCount').textContent = paragraphs;
+    }
+
+    function clearText() {
+      document.getElementById('generatedText').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function copyText() {
+      const text = document.getElementById('generatedText').value;
+      if (!text.trim()) {
+        alert('No text to copy');
+        return;
+      }
+
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Text copied to clipboard!');
+      }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Text copied to clipboard!');
+      });
+    }
+
+    function exportText() {
+      const text = document.getElementById('generatedText').value;
+      if (!text.trim()) {
+        alert('No text to export');
+        return;
+      }
+
+      const blob = new Blob([text], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'random-text.txt';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function generateMore() {
+      generateText();
+    }
+
+    // Show/hide custom length row based on length selection
+    document.getElementById('length').addEventListener('change', function() {
+      if (this.value === 'custom') {
+        document.getElementById('customLengthRow').style.display = 'block';
+      } else {
+        document.getElementById('customLengthRow').style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
