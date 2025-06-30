@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # MultiTools
 
 A collection of 95+ free online tools including calculators, converters, generators, SEO tools, image tools, and more. No download required, instant access for everyone!
@@ -38,3 +39,7 @@ You can deploy this static website for free using platforms like:
 ## Credits
 - Author: [Rajesh Kumar S]
 - Website: [https://github.com/Rajesh1461/Multi-Tools]
+=======
+# Multi-Tools
+100+ Multi Tools Developers Needs
+>>>>>>> a474075d342cc9cfa664cf012819847e8d0bf3f3
