@@ -21,4 +21,7 @@ Disallow: /private/
 # Allow important directories
 Allow: /tools/
 Allow: /assets/
-Allow: /components/ 
+Allow: /components/
+
+User-agent: Mediapartners-Google
+Allow: / 
