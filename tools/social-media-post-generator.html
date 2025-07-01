@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Social Media Post Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Social Media Post Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate engaging social media posts for different platforms with AI assistance.
+            </div>
+            <div class="mb-3">
+              <label for="platform" class="form-label">Select Platform:</label>
+              <select class="form-select bg-dark text-light border-danger" id="platform">
+                <option value="instagram">Instagram</option>
+                <option value="facebook">Facebook</option>
+                <option value="twitter">Twitter</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="tiktok">TikTok</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="topic" class="form-label">Topic/Theme:</label>
+              <input type="text" class="form-control bg-dark text-light border-danger" id="topic" placeholder="Enter your topic or theme">
+            </div>
+            <div class="mb-3">
+              <label for="tone" class="form-label">Tone:</label>
+              <select class="form-select bg-dark text-light border-danger" id="tone">
+                <option value="professional">Professional</option>
+                <option value="casual">Casual</option>
+                <option value="funny">Funny</option>
+                <option value="inspirational">Inspirational</option>
+                <option value="educational">Educational</option>
+                <option value="promotional">Promotional</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="keywords" class="form-label">Keywords (optional):</label>
+              <input type="text" class="form-control bg-dark text-light border-danger" id="keywords" placeholder="Enter keywords separated by commas">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generatePost()">
+                <i class="fas fa-magic me-2"></i>Generate Post
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">
+                <i class="fas fa-download me-2"></i>Load Example
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-edit me-2"></i>Generated Post</h5>
+          </div>
+          <div class="card-body">
+            <div id="postOutput" class="mb-3"></div>
+            <div class="mb-3">
+              <label for="hashtags" class="form-label">Suggested Hashtags:</label>
+              <textarea class="form-control bg-dark text-light border-danger" id="hashtags" rows="2" readonly></textarea>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copyPost()">
+                <i class="fas fa-copy me-2"></i>Copy Post
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="copyHashtags()">
+                <i class="fas fa-copy me-2"></i>Copy Hashtags
+              </button>
+              <button class="btn btn-outline-danger" onclick="generateNew()">
+                <i class="fas fa-sync me-2"></i>Generate New
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    function generatePost() {
+      const platform = document.getElementById('platform').value;
+      const topic = document.getElementById('topic').value;
+      const tone = document.getElementById('tone').value;
+      const keywords = document.getElementById('keywords').value;
+      const platformHashtags = getPlatformHashtags(platform);
+      const post = generateSocialMediaPost(topic, tone, keywords);
+      document.getElementById('postOutput').innerText = post;
+      document.getElementById('hashtags').value = platformHashtags;
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    function clearInput() {
+      document.getElementById('platform').value = 'instagram';
+      document.getElementById('topic').value = '';
+      document.getElementById('tone').value = 'professional';
+      document.getElementById('keywords').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+      document.getElementById('postOutput').innerHTML = '';
+      document.getElementById('hashtags').value = '';
+    }
+    function loadExample() {
+      document.getElementById('platform').value = 'instagram';
+      document.getElementById('topic').value = 'social media marketing';
+      document.getElementById('tone').value = 'professional';
+      document.getElementById('keywords').value = 'marketing, social media, business';
+      generatePost();
+    }
+    function copyPost() {
+      const postText = document.getElementById('postOutput').innerText.replace('Generated Post for Instagram:', '').trim();
+      navigator.clipboard.writeText(postText);
+      alert('Post copied to clipboard!');
+    }
+    function copyHashtags() {
+      const hashtags = document.getElementById('hashtags').value;
+      navigator.clipboard.writeText(hashtags);
+      alert('Hashtags copied to clipboard!');
+    }
+    function generateNew() {
+      generatePost();
+    }
+  </script>
+</body>
+</html>
+

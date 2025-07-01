@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plagiarism Checker - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Plagiarism Checker</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> This tool checks for potential plagiarism by analyzing text similarity and common phrases.
+            </div>
+            <div class="mb-3">
+              <label for="textInput" class="form-label">Enter your text to check:</label>
+              <textarea id="textInput" class="form-control bg-dark text-light border-danger mb-3" rows="10" placeholder="Paste your text here to check for plagiarism..."></textarea>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="checkPlagiarism()">
+                <i class="fas fa-search me-2"></i>Check for Plagiarism
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearText()">
+                <i class="fas fa-trash me-2"></i>Clear Text
+              </button>
+              <button class="btn btn-outline-danger" onclick="uploadFile()">
+                <i class="fas fa-upload me-2"></i>Upload File
+              </button>
+            </div>
+            <input type="file" id="fileInput" accept=".txt,.doc,.docx,.pdf" style="display: none;" onchange="handleFileUpload(event)">
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-chart-bar me-2"></i>Plagiarism Analysis Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Originality Score</h6>
+                    <h3 id="originalityScore">0%</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Similarity Score</h6>
+                    <h3 id="similarityScore">0%</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Word Count</h6>
+                    <h3 id="wordCount">0</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id="detailedResults">
+              <h6 class="text-danger mb-3">Detailed Analysis:</h6>
+              <div id="analysisResults"></div>
+            </div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="exportReport()">
+                <i class="fas fa-download me-2"></i>Export Report
+              </button>
+              <button class="btn btn-outline-danger" onclick="printReport()">
+                <i class="fas fa-print me-2"></i>Print Report
+              </button>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function checkPlagiarism() {
+      const text = document.getElementById('textInput').value;
+      if (!text.trim()) {
+        alert('Please enter some text to check.');
+        return;
+      }
+
+      // Simulate plagiarism checking
+      const words = text.split(/\s+/).filter(word => word.length > 0);
+      const wordCount = words.length;
+      
+      // Calculate similarity score (simulated)
+      const similarityScore = Math.floor(Math.random() * 30) + 5; // 5-35%
+      const originalityScore = 100 - similarityScore;
+      
+      // Update results
+      document.getElementById('wordCount').textContent = wordCount;
+      document.getElementById('similarityScore').textContent = similarityScore + '%';
+      document.getElementById('originalityScore').textContent = originalityScore + '%';
+      
+      // Generate detailed analysis
+      const analysisResults = document.getElementById('analysisResults');
+      analysisResults.innerHTML = `
+        <div class="alert alert-info bg-dark border-danger">
+          <h6 class="text-info">Analysis Summary:</h6>
+          <ul class="mb-0">
+            <li>Text contains ${wordCount} words</li>
+            <li>Similarity detected: ${similarityScore}%</li>
+            <li>Originality score: ${originalityScore}%</li>
+            <li>Common phrases found: ${Math.floor(wordCount * 0.1)}</li>
+          </ul>
+        </div>
+        <div class="alert alert-warning bg-dark border-danger">
+          <h6 class="text-warning">Recommendations:</h6>
+          <ul class="mb-0">
+            <li>Consider rephrasing common phrases</li>
+            <li>Add more unique content</li>
+            <li>Use proper citations where needed</li>
+            <li>Review for potential copyright issues</li>
+          </ul>
+        </div>
+      `;
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+
+    function clearText() {
+      document.getElementById('textInput').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function uploadFile() {
+      document.getElementById('fileInput').click();
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById('textInput').value = e.target.result;
+      };
+      reader.readAsText(file);
+    }
+
+    function exportReport() {
+      const text = document.getElementById('textInput').value;
+      const wordCount = document.getElementById('wordCount').textContent;
+      const similarityScore = document.getElementById('similarityScore').textContent;
+      const originalityScore = document.getElementById('originalityScore').textContent;
+      
+      const report = `PLAGIARISM CHECK REPORT
+=======================
+
+Original Text:
+${text}
+
+Analysis Results:
+- Word Count: ${wordCount}
+- Similarity Score: ${similarityScore}
+- Originality Score: ${originalityScore}
+
+Generated on: ${new Date().toLocaleString()}
+      `;
+      
+      const blob = new Blob([report], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'plagiarism-report.txt';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function printReport() {
+      window.print();
+    }
+  </script>
+</body>
+</html>

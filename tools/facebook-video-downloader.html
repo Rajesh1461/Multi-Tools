@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Video Downloader - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+
+    <!-- Header -->
+    <div id="header"></div>
+
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Facebook Video Downloader</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="videoUrl" class="form-label">Facebook Video URL:</label>
+                            <input type="url" class="form-control bg-dark text-light border-danger mb-3" id="videoUrl" placeholder="https://www.facebook.com/watch?v=...">
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="downloadVideo()">
+                                <i class="fab fa-facebook"></i> Download Video
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="clearUrl()">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Result Box -->
+                <div id="resultBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5>Download Options</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="downloadOptions" class="text-center">
+                            <!-- Download options will be populated here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Info Card -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-info-circle"></i> How to use:</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="mb-0">
+                            <li>Paste a Facebook video URL in the input field</li>
+                            <li>Click "Download Video" to extract available formats</li>
+                            <li>Choose your preferred quality and format</li>
+                            <li>Right-click and "Save as" to download the video</li>
+                            <li>Note: Only public Facebook videos can be downloaded</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="footer"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        function analyzeVideo() {
+            const url = document.getElementById('videoUrl').value.trim();
+            
+            if (!url) {
+                alert('Please enter a Facebook video URL');
+                return;
+            }
+            
+            if (!url.includes('facebook.com') && !url.includes('fb.watch')) {
+                alert('Please enter a valid Facebook video URL');
+                return;
+            }
+            
+            // Show loading state
+            document.getElementById('videoInfo').style.display = 'block';
+            document.getElementById('videoDetails').innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Analyzing video...</div>';
+            document.getElementById('downloadOptions').innerHTML = '';
+            
+            // Simulate analysis (in a real implementation, this would make an API call)
+            setTimeout(() => {
+                displayVideoInfo(url);
+            }, 2000);
+        }
+        
+        function displayVideoInfo(url) {
+            // Simulated video information
+            const videoDetails = `
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Title:</strong> Sample Facebook Video</p>
+                        <p><strong>Duration:</strong> 2:45</p>
+                        <p><strong>Upload Date:</strong> 2024-01-15</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Views:</strong> 1,234</p>
+                        <p><strong>Likes:</strong> 567</p>
+                        <p><strong>Comments:</strong> 89</p>
+                    </div>
+                </div>
+            `;
+            
+            const downloadOptions = `
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <a href="#" class="btn btn-success w-100" onclick="downloadVideo('hd')">
+                            <i class="fas fa-download"></i> HD Quality (720p)
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <a href="#" class="btn btn-primary w-100" onclick="downloadVideo('sd')">
+                            <i class="fas fa-download"></i> Standard Quality (480p)
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <a href="#" class="btn btn-secondary w-100" onclick="downloadVideo('audio')">
+                            <i class="fas fa-music"></i> Audio Only (MP3)
+                        </a>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <a href="#" class="btn btn-info w-100" onclick="downloadVideo('low')">
+                            <i class="fas fa-download"></i> Low Quality (360p)
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('videoDetails').innerHTML = videoDetails;
+            document.getElementById('downloadOptions').innerHTML = downloadOptions;
+        }
+        
+        function downloadVideo(quality) {
+            alert(`Download started for ${quality} quality. In a real implementation, this would initiate the actual download.`);
+        }
+        
+        function clearAll() {
+            document.getElementById('videoUrl').value = '';
+            document.getElementById('videoInfo').style.display = 'none';
+        }
+        
+        // Auto-analyze when Enter is pressed
+        document.getElementById('videoUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                analyzeVideo();
+            }
+        });
+    </script>
+</body>
+</html>

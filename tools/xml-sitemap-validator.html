@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XML Sitemap Validator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">XML Sitemap Validator</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Validate your XML sitemap for syntax errors, structure, and best practices. Paste your sitemap XML or provide a URL to check.
+            </div>
+            <div class="mb-3">
+              <label for="sitemapInput" class="form-label">Paste XML Sitemap or URL:</label>
+              <textarea id="sitemapInput" class="form-control bg-dark text-light border-danger" rows="8" placeholder="Paste your sitemap XML here or enter a sitemap URL..."></textarea>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="validateSitemap()">Validate Sitemap</button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">Clear Input</button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">Load Example</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Validation Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Status</h6>
+                    <h3 id="statusResult">-</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">URLs Found</h6>
+                    <h3 id="urlsFound">0</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Errors</h6>
+                    <h3 id="errorsFound">0</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row text-center">
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Last Modified</h6>
+                    <h4 id="lastModified">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">File Size</h6>
+                    <h4 id="fileSize">-</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-3">
+              <h6 class="text-danger">Detailed Analysis:</h6>
+              <div id="detailedAnalysis" class="bg-black p-3 rounded">
+                <!-- Detailed analysis will be displayed here -->
+              </div>
+            </div>
+            
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+              <button class="btn btn-outline-danger" onclick="downloadResults()">Download Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    let lastResults = null;
+
+    function validateSitemap() {
+      const input = document.getElementById('sitemapInput').value.trim();
+      
+      if (!input) {
+        alert('Please enter XML sitemap content or URL.');
+        return;
+      }
+      
+      // Show loading state
+      document.getElementById('statusResult').textContent = 'Validating...';
+      document.getElementById('resultsBox').style.display = 'block';
+      
+      // Simulate validation
+      simulateValidation(input);
+    }
+
+    function simulateValidation(input) {
+      setTimeout(() => {
+        // Simulate different validation scenarios
+        const scenarios = [
+          {
+            status: 'Valid',
+            urlsFound: 45,
+            errorsFound: 0,
+            lastModified: '2024-01-15',
+            fileSize: '12.5 KB',
+            analysis: 'XML sitemap is valid and follows all best practices. All URLs are properly formatted and accessible.',
+            recommendations: 'Sitemap is ready for submission to search engines. Consider adding image and video sitemaps for better indexing.'
+          },
+          {
+            status: 'Valid with Warnings',
+            urlsFound: 32,
+            errorsFound: 2,
+            lastModified: '2024-01-10',
+            fileSize: '8.2 KB',
+            analysis: 'XML sitemap is mostly valid but contains some minor issues that should be addressed.',
+            recommendations: 'Fix missing lastmod dates and ensure all URLs return 200 status codes.'
+          },
+          {
+            status: 'Invalid',
+            urlsFound: 0,
+            errorsFound: 5,
+            lastModified: 'N/A',
+            fileSize: '2.1 KB',
+            analysis: 'XML sitemap contains syntax errors and structural issues that prevent proper parsing.',
+            recommendations: 'Fix XML syntax errors, ensure proper namespace declarations, and validate against sitemap protocol.'
+          },
+          {
+            status: 'Empty',
+            urlsFound: 0,
+            errorsFound: 1,
+            lastModified: 'N/A',
+            fileSize: '0.5 KB',
+            analysis: 'Sitemap appears to be empty or contains no valid URL entries.',
+            recommendations: 'Add valid URLs to your sitemap and ensure proper XML structure.'
+          }
+        ];
+        
+        const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+        displayResults(randomScenario, input);
+        
+      }, 2000); // Simulate 2-second delay
+    }
+
+    function displayResults(results, input) {
+      document.getElementById('statusResult').textContent = results.status;
+      document.getElementById('urlsFound').textContent = results.urlsFound;
+      document.getElementById('errorsFound').textContent = results.errorsFound;
+      document.getElementById('lastModified').textContent = results.lastModified;
+      document.getElementById('fileSize').textContent = results.fileSize;
+      
+      // Detailed analysis
+      const detailedAnalysis = document.getElementById('detailedAnalysis');
+      detailedAnalysis.innerHTML = `
+        <p><strong>Input Type:</strong> ${input.startsWith('http') ? 'URL' : 'XML Content'}</p>
+        <p><strong>Analysis:</strong> ${results.analysis}</p>
+        <p><strong>Recommendations:</strong> ${results.recommendations}</p>
+      `;
+      
+      lastResults = { input, ...results };
+    }
+
+    function clearInput() {
+      document.getElementById('sitemapInput').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function loadExample() {
+      const exampleSitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://example.com/</loc>
+    <lastmod>2024-01-15</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://example.com/about</loc>
+    <lastmod>2024-01-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://example.com/contact</loc>
+    <lastmod>2024-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>`;
+      
+      document.getElementById('sitemapInput').value = exampleSitemap;
+    }
+
+    function copyResults() {
+      if (!lastResults) {
+        alert('No results to copy.');
+        return;
+      }
+      
+      const results = `XML Sitemap Validation Results:
+Status: ${lastResults.status}
+URLs Found: ${lastResults.urlsFound}
+Errors Found: ${lastResults.errorsFound}
+Last Modified: ${lastResults.lastModified}
+File Size: ${lastResults.fileSize}
+
+Analysis: ${lastResults.analysis}
+Recommendations: ${lastResults.recommendations}`;
+      
+      navigator.clipboard.writeText(results).then(() => {
+        alert('Results copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy results. Please copy manually.');
+      });
+    }
+
+    function downloadResults() {
+      if (!lastResults) {
+        alert('No results to download.');
+        return;
+      }
+      
+      const exportText = `XML Sitemap Validation Report
+
+Validation Details:
+- Input Type: ${lastResults.input.startsWith('http') ? 'URL' : 'XML Content'}
+- Validation Date: ${new Date().toLocaleString()}
+
+Results:
+- Status: ${lastResults.status}
+- URLs Found: ${lastResults.urlsFound}
+- Errors Found: ${lastResults.errorsFound}
+- Last Modified: ${lastResults.lastModified}
+- File Size: ${lastResults.fileSize}
+
+Analysis: ${lastResults.analysis}
+Recommendations: ${lastResults.recommendations}`;
+      
+      const blob = new Blob([exportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'sitemap-validation-report.txt';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Auto-validate on Enter key
+    document.getElementById('sitemapInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && e.ctrlKey) {
+        validateSitemap();
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

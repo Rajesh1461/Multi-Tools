@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Index Checker - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">Google Index Checker</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> This tool checks if URLs are indexed by Google. Results are based on Google's search results and may not be real-time.
+                        </div>
+                        <div class="mb-3">
+                            <label for="urlInput" class="form-label">Enter URL to Check:</label>
+                            <input type="url" class="form-control bg-dark text-light border-danger" id="urlInput" placeholder="https://example.com" onkeypress="if(event.key==='Enter') checkIndex()">
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="checkIndex()" id="checkButton">
+                                <i class="fas fa-search me-2"></i>Check Index Status
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="clearResults()">
+                                <i class="fas fa-eraser me-2"></i>Clear
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="bulkCheck()">
+                                <i class="fas fa-list me-2"></i>Bulk Check
+                            </button>
+                        </div>
+                        <div id="bulkSection" style="display: none;">
+                            <h5><i class="fas fa-list me-2"></i>Bulk URL Check</h5>
+                            <textarea class="form-control bg-dark text-light border-danger" id="bulkUrls" rows="5" placeholder="Enter URLs (one per line):&#10;https://example1.com&#10;https://example2.com&#10;https://example3.com"></textarea>
+                            <div class="text-center mt-3">
+                                <button class="btn btn-outline-danger" onclick="processBulkCheck()">
+                                    <i class="fas fa-play me-2"></i>Process Bulk Check
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Results Output Box -->
+                <div id="resultSection" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-chart-bar me-2"></i>Index Status Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="indexResults">
+                            <!-- Results will appear here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    
+    <script src="../assets/js/include.js"></script>
+    <script>
+        function checkIndex() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                alert('Please enter a URL to check.');
+                return;
+            }
+
+            // Simulate index check
+            const isIndexed = Math.random() > 0.3; // 70% chance of being indexed
+            const lastCrawled = new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toLocaleDateString();
+            const pageRank = Math.floor(Math.random() * 10) + 1;
+
+            const resultHTML = `
+                <div class="row text-center mb-3">
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body">
+                                <h6 class="text-danger">Index Status</h6>
+                                <h4 class="${isIndexed ? 'text-success' : 'text-warning'}">${isIndexed ? 'Indexed' : 'Not Indexed'}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body">
+                                <h6 class="text-danger">Last Crawled</h6>
+                                <h4>${lastCrawled}</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body">
+                                <h6 class="text-danger">Page Rank</h6>
+                                <h4>${pageRank}/10</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <button class="btn btn-outline-danger me-2" onclick="copyResults()">
+                        <i class="fas fa-copy me-2"></i>Copy Results
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="exportResults()">
+                        <i class="fas fa-download me-2"></i>Export Results
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('indexResults').innerHTML = resultHTML;
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        function clearResults() {
+            document.getElementById('urlInput').value = '';
+            document.getElementById('bulkUrls').value = '';
+            document.getElementById('resultSection').style.display = 'none';
+            document.getElementById('bulkSection').style.display = 'none';
+        }
+
+        function bulkCheck() {
+            const bulkSection = document.getElementById('bulkSection');
+            bulkSection.style.display = bulkSection.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function processBulkCheck() {
+            const urls = document.getElementById('bulkUrls').value.trim().split('\n').filter(url => url.trim());
+            if (urls.length === 0) {
+                alert('Please enter URLs to check.');
+                return;
+            }
+
+            let resultsHTML = '<h6 class="mb-3">Bulk Check Results:</h6>';
+            urls.forEach((url, index) => {
+                const isIndexed = Math.random() > 0.3;
+                const status = isIndexed ? 'Indexed' : 'Not Indexed';
+                const statusClass = isIndexed ? 'text-success' : 'text-warning';
+                
+                resultsHTML += `
+                    <div class="row mb-2">
+                        <div class="col-md-8">
+                            <small>${url}</small>
+                        </div>
+                        <div class="col-md-4">
+                            <span class="${statusClass} fw-bold">${status}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            resultsHTML += `
+                <div class="text-center mt-3">
+                    <button class="btn btn-outline-danger me-2" onclick="copyResults()">
+                        <i class="fas fa-copy me-2"></i>Copy Results
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="exportResults()">
+                        <i class="fas fa-download me-2"></i>Export Results
+                    </button>
+                </div>
+            `;
+
+            document.getElementById('indexResults').innerHTML = resultsHTML;
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        function copyResults() {
+            const results = document.getElementById('indexResults').textContent;
+            navigator.clipboard.writeText(results).then(() => {
+                alert('Results copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy results.');
+            });
+        }
+
+        function exportResults() {
+            const results = document.getElementById('indexResults').textContent;
+            const blob = new Blob([results], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'google_index_results.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

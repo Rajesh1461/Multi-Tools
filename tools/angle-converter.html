@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Angle Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Angle Converter</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="inputValue" class="form-label">Input Value:</label>
+                <input type="number" id="inputValue" class="form-control bg-dark text-light border-danger" placeholder="Enter value" step="any">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="fromUnit" class="form-label">From Unit:</label>
+                <select id="fromUnit" class="form-select bg-dark text-light border-danger">
+                  <option value="degrees">Degrees</option>
+                  <option value="radians">Radians</option>
+                  <option value="gradians">Gradians</option>
+                  <option value="arcminutes">Arc Minutes</option>
+                  <option value="arcseconds">Arc Seconds</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="convertAngle()">Convert</button>
+              <button class="btn btn-outline-danger" onclick="clearInput()">Clear</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Conversion Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-md-4 mb-3">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Degrees</h6>
+                    <h4 id="degreesResult">0°</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Radians</h6>
+                    <h4 id="radiansResult">0 rad</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Gradians</h6>
+                    <h4 id="gradiansResult">0 grad</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-center">
+              <div class="col-md-6 mb-3">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Arc Minutes</h6>
+                    <h4 id="arcminutesResult">0′</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Arc Seconds</h6>
+                    <h4 id="arcsecondsResult">0″</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Common Angles Reference -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Common Angles Reference</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h6 class="text-danger">Special Angles:</h6>
+                <ul class="list-unstyled text-light">
+                  <li class="text-light">0° = 0 rad = 0 grad</li>
+                  <li class="text-light">30° = π/6 rad = 33.33 grad</li>
+                  <li class="text-light">45° = π/4 rad = 50 grad</li>
+                  <li class="text-light">60° = π/3 rad = 66.67 grad</li>
+                  <li class="text-light">90° = π/2 rad = 100 grad</li>
+                  <li class="text-light">180° = π rad = 200 grad</li>
+                  <li class="text-light">360° = 2π rad = 400 grad</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <h6 class="text-danger">Quick Conversions:</h6>
+                <ul class="list-unstyled text-light">
+                  <li class="text-light">1° = 60 arc minutes</li>
+                  <li class="text-light">1 arc minute = 60 arc seconds</li>
+                  <li class="text-light">1 radian ≈ 57.2958°</li>
+                  <li class="text-light">1 gradian = 0.9°</li>
+                  <li class="text-light">π radians = 180°</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function convertAngle() {
+      const inputValue = parseFloat(document.getElementById('inputValue').value);
+      const fromUnit = document.getElementById('fromUnit').value;
+      
+      if (isNaN(inputValue)) {
+        alert('Please enter a valid number.');
+        return;
+      }
+      
+      // Convert to degrees first
+      let degrees = 0;
+      switch (fromUnit) {
+        case 'degrees':
+          degrees = inputValue;
+          break;
+        case 'radians':
+          degrees = inputValue * (180 / Math.PI);
+          break;
+        case 'gradians':
+          degrees = inputValue * 0.9;
+          break;
+        case 'arcminutes':
+          degrees = inputValue / 60;
+          break;
+        case 'arcseconds':
+          degrees = inputValue / 3600;
+          break;
+      }
+      
+      // Convert from degrees to all other units
+      const radians = degrees * (Math.PI / 180);
+      const gradians = degrees / 0.9;
+      const arcminutes = degrees * 60;
+      const arcseconds = degrees * 3600;
+      
+      // Display results
+      document.getElementById('degreesResult').textContent = degrees.toFixed(6) + '°';
+      document.getElementById('radiansResult').textContent = radians.toFixed(6) + ' rad';
+      document.getElementById('gradiansResult').textContent = gradians.toFixed(6) + ' grad';
+      document.getElementById('arcminutesResult').textContent = arcminutes.toFixed(6) + '′';
+      document.getElementById('arcsecondsResult').textContent = arcseconds.toFixed(6) + '″';
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function clearInput() {
+      document.getElementById('inputValue').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+    
+    // Auto-convert on input change
+    document.getElementById('inputValue').addEventListener('input', function() {
+      if (this.value !== '') {
+        convertAngle();
+      }
+    });
+    
+    document.getElementById('fromUnit').addEventListener('change', function() {
+      if (document.getElementById('inputValue').value !== '') {
+        convertAngle();
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

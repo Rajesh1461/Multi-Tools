@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robots.txt Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Robots.txt Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate a robots.txt file to control search engine crawlers and specify which parts of your website should be indexed.
+            </div>
+            <div class="mb-3">
+              <label for="userAgent" class="form-label">User-Agent:</label>
+              <select class="form-select bg-dark text-light border-danger" id="userAgent">
+                <option value="*">All robots (*)</option>
+                <option value="Googlebot">Googlebot</option>
+                <option value="Bingbot">Bingbot</option>
+                <option value="Slurp">Yahoo! Slurp</option>
+                <option value="DuckDuckBot">DuckDuckBot</option>
+                <option value="Baiduspider">Baiduspider</option>
+                <option value="YandexBot">YandexBot</option>
+                <option value="facebookexternalhit">Facebook</option>
+                <option value="Twitterbot">Twitter</option>
+                <option value="LinkedInBot">LinkedIn</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Allow/Disallow Rules:</label>
+              <div id="rulesContainer">
+                <div class="rule-item mb-2">
+                  <div class="row">
+                    <div class="col-md-3">
+                      <select class="form-select bg-dark text-light border-danger rule-type">
+                        <option value="Allow">Allow</option>
+                        <option value="Disallow" selected>Disallow</option>
+                      </select>
+                    </div>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control bg-dark text-light border-danger rule-path" placeholder="/admin/" value="/admin/">
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-outline-danger btn-sm" onclick="removeRule(this)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button class="btn btn-outline-danger btn-sm" onclick="addRule()">
+                <i class="fas fa-plus me-2"></i>Add Rule
+              </button>
+            </div>
+            <div class="mb-3">
+              <label for="sitemapUrl" class="form-label">Sitemap URL (optional):</label>
+              <input type="url" class="form-control bg-dark text-light border-danger" id="sitemapUrl" placeholder="https://example.com/sitemap.xml">
+            </div>
+            <div class="mb-3">
+              <label for="crawlDelay" class="form-label">Crawl Delay (seconds, optional):</label>
+              <input type="number" class="form-control bg-dark text-light border-danger" id="crawlDelay" min="0" max="30" placeholder="1">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateRobotsTxt()">
+                <i class="fas fa-magic me-2"></i>Generate Robots.txt
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearForm()">
+                <i class="fas fa-trash me-2"></i>Clear Form
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadPreset()">
+                <i class="fas fa-download me-2"></i>Load Preset
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-file-code me-2"></i>Generated Robots.txt</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="robotsOutput" class="form-label">Robots.txt Content:</label>
+              <textarea id="robotsOutput" class="form-control bg-dark text-light border-danger" rows="15" readonly></textarea>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copyRobotsTxt()">
+                <i class="fas fa-copy me-2"></i>Copy to Clipboard
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="downloadRobotsTxt()">
+                <i class="fas fa-download me-2"></i>Download File
+              </button>
+              <button class="btn btn-outline-danger" onclick="validateRobotsTxt()">
+                <i class="fas fa-check me-2"></i>Validate
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function addRule() {
+      const container = document.getElementById('rulesContainer');
+      const ruleDiv = document.createElement('div');
+      ruleDiv.className = 'rule-item mb-2';
+      ruleDiv.innerHTML = `
+        <div class="row">
+          <div class="col-md-3">
+            <select class="form-select bg-dark text-light border-danger rule-type">
+              <option value="Allow">Allow</option>
+              <option value="Disallow" selected>Disallow</option>
+            </select>
+          </div>
+          <div class="col-md-7">
+            <input type="text" class="form-control bg-dark text-light border-danger rule-path" placeholder="/path/">
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-outline-danger btn-sm" onclick="removeRule(this)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </div>
+        </div>
+      `;
+      container.appendChild(ruleDiv);
+    }
+
+    function removeRule(button) {
+      button.closest('.rule-item').remove();
+    }
+
+    function generateRobotsTxt() {
+      const userAgent = document.getElementById('userAgent').value;
+      const sitemapUrl = document.getElementById('sitemapUrl').value.trim();
+      const crawlDelay = document.getElementById('crawlDelay').value;
+
+      let robotsTxt = `User-agent: ${userAgent}\n`;
+
+      // Add rules
+      const rules = document.querySelectorAll('.rule-item');
+      rules.forEach(rule => {
+        const type = rule.querySelector('.rule-type').value;
+        const path = rule.querySelector('.rule-path').value.trim();
+        if (path) {
+          robotsTxt += `${type}: ${path}\n`;
+        }
+      });
+
+      // Add crawl delay
+      if (crawlDelay) {
+        robotsTxt += `Crawl-delay: ${crawlDelay}\n`;
+      }
+
+      // Add sitemap
+      if (sitemapUrl) {
+        robotsTxt += `Sitemap: ${sitemapUrl}\n`;
+      }
+
+      // Display results
+      document.getElementById('robotsOutput').value = robotsTxt;
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+
+    function clearForm() {
+      document.getElementById('userAgent').value = '*';
+      document.getElementById('sitemapUrl').value = '';
+      document.getElementById('crawlDelay').value = '';
+      
+      // Clear all rules except the first one
+      const rules = document.querySelectorAll('.rule-item');
+      for (let i = 1; i < rules.length; i++) {
+        rules[i].remove();
+      }
+      
+      // Reset first rule
+      const firstRule = rules[0];
+      firstRule.querySelector('.rule-type').value = 'Disallow';
+      firstRule.querySelector('.rule-path').value = '/admin/';
+      
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function loadPreset() {
+      // Clear existing rules
+      const container = document.getElementById('rulesContainer');
+      container.innerHTML = '';
+
+      // Add preset rules
+      const presetRules = [
+        { type: 'Disallow', path: '/admin/' },
+        { type: 'Disallow', path: '/private/' },
+        { type: 'Disallow', path: '/temp/' },
+        { type: 'Disallow', path: '/cgi-bin/' },
+        { type: 'Allow', path: '/public/' },
+        { type: 'Allow', path: '/images/' }
+      ];
+
+      presetRules.forEach(rule => {
+        const ruleDiv = document.createElement('div');
+        ruleDiv.className = 'rule-item mb-2';
+        ruleDiv.innerHTML = `
+          <div class="row">
+            <div class="col-md-3">
+              <select class="form-select bg-dark text-light border-danger rule-type">
+                <option value="Allow" ${rule.type === 'Allow' ? 'selected' : ''}>Allow</option>
+                <option value="Disallow" ${rule.type === 'Disallow' ? 'selected' : ''}>Disallow</option>
+              </select>
+            </div>
+            <div class="col-md-7">
+              <input type="text" class="form-control bg-dark text-light border-danger rule-path" value="${rule.path}">
+            </div>
+            <div class="col-md-2">
+              <button class="btn btn-outline-danger btn-sm" onclick="removeRule(this)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+          </div>
+        `;
+        container.appendChild(ruleDiv);
+      });
+
+      document.getElementById('sitemapUrl').value = 'https://example.com/sitemap.xml';
+      document.getElementById('crawlDelay').value = '1';
+    }
+
+    function copyRobotsTxt() {
+      const robotsTxt = document.getElementById('robotsOutput').value;
+      navigator.clipboard.writeText(robotsTxt).then(() => {
+        alert('Robots.txt copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy robots.txt.');
+      });
+    }
+
+    function downloadRobotsTxt() {
+      const robotsTxt = document.getElementById('robotsOutput').value;
+      const blob = new Blob([robotsTxt], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'robots.txt';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function validateRobotsTxt() {
+      const robotsTxt = document.getElementById('robotsOutput').value;
+      if (!robotsTxt) {
+        alert('Please generate a robots.txt first.');
+        return;
+      }
+
+      // Basic validation
+      const hasUserAgent = robotsTxt.includes('User-agent:');
+      const hasRules = robotsTxt.includes('Allow:') || robotsTxt.includes('Disallow:');
+      
+      if (hasUserAgent && hasRules) {
+        alert('✅ Robots.txt is valid!');
+      } else {
+        alert('❌ Robots.txt validation failed. Please check the format.');
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Time Zone Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Time Zone Converter</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Convert times between different time zones around the world. Perfect for scheduling meetings, travel planning, and international communication.
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="fromTimeZone" class="form-label">From Time Zone:</label>
+                <select class="form-select bg-dark text-light border-danger" id="fromTimeZone">
+                  <option value="UTC">UTC (Coordinated Universal Time)</option>
+                  <option value="America/New_York">Eastern Time (ET)</option>
+                  <option value="America/Chicago">Central Time (CT)</option>
+                  <option value="America/Denver">Mountain Time (MT)</option>
+                  <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                  <option value="Europe/London">London (GMT/BST)</option>
+                  <option value="Europe/Paris">Paris (CET/CEST)</option>
+                  <option value="Europe/Berlin">Berlin (CET/CEST)</option>
+                  <option value="Asia/Tokyo">Tokyo (JST)</option>
+                  <option value="Asia/Shanghai">Shanghai (CST)</option>
+                  <option value="Asia/Dubai">Dubai (GST)</option>
+                  <option value="Asia/Kolkata">Mumbai (IST)</option>
+                  <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+                  <option value="Pacific/Auckland">Auckland (NZST/NZDT)</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="toTimeZone" class="form-label">To Time Zone:</label>
+                <select class="form-select bg-dark text-light border-danger" id="toTimeZone">
+                  <option value="America/New_York">Eastern Time (ET)</option>
+                  <option value="UTC">UTC (Coordinated Universal Time)</option>
+                  <option value="America/Chicago">Central Time (CT)</option>
+                  <option value="America/Denver">Mountain Time (MT)</option>
+                  <option value="America/Los_Angeles">Pacific Time (PT)</option>
+                  <option value="Europe/London">London (GMT/BST)</option>
+                  <option value="Europe/Paris">Paris (CET/CEST)</option>
+                  <option value="Europe/Berlin">Berlin (CET/CEST)</option>
+                  <option value="Asia/Tokyo">Tokyo (JST)</option>
+                  <option value="Asia/Shanghai">Shanghai (CST)</option>
+                  <option value="Asia/Dubai">Dubai (GST)</option>
+                  <option value="Asia/Kolkata">Mumbai (IST)</option>
+                  <option value="Australia/Sydney">Sydney (AEST/AEDT)</option>
+                  <option value="Pacific/Auckland">Auckland (NZST/NZDT)</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="fromDate" class="form-label">From Date:</label>
+                <input type="date" class="form-control bg-dark text-light border-danger" id="fromDate">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="fromTime" class="form-label">From Time:</label>
+                <input type="time" class="form-control bg-dark text-light border-danger" id="fromTime">
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="convertTime()">
+                <i class="fas fa-exchange-alt me-2"></i>Convert Time
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="swapTimeZones()">
+                <i class="fas fa-arrows-alt-h me-2"></i>Swap Time Zones
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-clock me-2"></i>Converted Time</h5>
+          </div>
+          <div class="card-body">
+            <div id="conversionResult" class="text-center mb-3"></div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copyResult()">
+                <i class="fas fa-copy me-2"></i>Copy Result
+              </button>
+              <button class="btn btn-outline-danger" onclick="showAllTimeZones()">
+                <i class="fas fa-globe me-2"></i>Show All Time Zones
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- All Time Zones Table -->
+        <div id="allTimeZonesBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-table me-2"></i>All Time Zones</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th>Time Zone</th>
+                    <th>Current Time</th>
+                    <th>Offset</th>
+                  </tr>
+                </thead>
+                <tbody id="allTimeZonesTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <!-- Common Time Zones -->        
+        <!-- Info Card -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-info-circle"></i> About TIME ZONE CONVERTER</h5>
+          </div>
+          <div class="card-body">
+            <p>Convert time between different time zones around the world.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer">

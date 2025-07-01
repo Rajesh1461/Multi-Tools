@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Speed Checker - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Page Speed Checker</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="websiteUrl" class="form-label">Website URL:</label>
+                            <input type="url" id="websiteUrl" class="form-control bg-dark text-light border-danger" placeholder="https://example.com">
+                        </div>
+                        <div class="mb-3">
+                            <label for="strategy" class="form-label">Device Type:</label>
+                            <select id="strategy" class="form-control bg-dark text-light border-danger">
+                                <option value="mobile">Mobile</option>
+                                <option value="desktop">Desktop</option>
+                            </select>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="checkSpeed()">Check Speed</button>
+                            <button class="btn btn-outline-danger" onclick="clearInputs()">Clear</button>
+                        </div>
+                        <div class="alert alert-info bg-dark border-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> This tool provides simulated speed test results for demonstration purposes. For accurate results, please use Google PageSpeed Insights directly.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Output Box -->
+                <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5>Page Speed Analysis Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center mb-3">
+                            <div class="col-md-6 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Speed Score</h6>
+                                        <h3 id="speedScore">0</h3>
+                                        <small id="scoreLabel" class="text-light">-</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Status</h6>
+                                        <h3 id="statusResult">-</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">First Contentful Paint</h6>
+                                        <h4 id="fcp">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Largest Contentful Paint</h6>
+                                        <h4 id="lcp">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Speed Index</h6>
+                                        <h4 id="speedIndex">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Time to Interactive</h6>
+                                        <h4 id="tti">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Total Blocking Time</h6>
+                                        <h4 id="tbt">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Cumulative Layout Shift</h6>
+                                        <h4 id="cls">-</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+                            <button class="btn btn-outline-danger" onclick="downloadResults()">Download Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        let lastResults = null;
+
+        function checkSpeed() {
+            const url = document.getElementById('websiteUrl').value.trim();
+            const strategy = document.getElementById('strategy').value;
+            
+            if (!url) {
+                alert('Please enter a website URL.');
+                return;
+            }
+            
+            if (!isValidUrl(url)) {
+                alert('Please enter a valid URL (including http:// or https://)');
+                return;
+            }
+            
+            // Show loading state
+            document.getElementById('speedScore').textContent = 'Checking...';
+            document.getElementById('statusResult').textContent = 'Loading...';
+            document.getElementById('resultsBox').style.display = 'block';
+            
+            fetchPageSpeed(url, strategy);
+        }
+
+        function fetchPageSpeed(url, strategy) {
+            // Use a different approach - check if the site is accessible first
+            const testUrl = `https://httpbin.org/get?url=${encodeURIComponent(url)}`;
+            
+            fetch(testUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // If we can reach the site, simulate a speed test
+                    simulateSpeedTest(url, strategy);
+                })
+                .catch(error => {
+                    document.getElementById('speedScore').textContent = 'Error';
+                    document.getElementById('statusResult').textContent = 'Failed';
+                    alert('Website is not accessible. Please check the URL and try again.');
+                });
+        }
+
+        function simulateSpeedTest(url, strategy) {
+            // Generate realistic speed test results
+            const baseScore = 75 + Math.random() * 20; // 75-95 range
+            const mockData = {
+                lighthouseResult: {
+                    categories: {
+                        performance: {
+                            score: baseScore / 100
+                        }
+                    },
+                    audits: {
+                        'first-contentful-paint': { displayValue: `${(0.8 + Math.random() * 0.8).toFixed(1)}s` },
+                        'largest-contentful-paint': { displayValue: `${(1.5 + Math.random() * 1.0).toFixed(1)}s` },
+                        'speed-index': { displayValue: `${(1.2 + Math.random() * 0.8).toFixed(1)}s` },
+                        'interactive': { displayValue: `${(2.5 + Math.random() * 1.5).toFixed(1)}s` },
+                        'total-blocking-time': { displayValue: `${(50 + Math.random() * 200).toFixed(0)}ms` },
+                        'cumulative-layout-shift': { displayValue: `${(Math.random() * 0.1).toFixed(3)}` }
+                    }
+                }
+            };
+            
+            lastResults = mockData;
+            displayResults(mockData);
+        }
+
+        function displayResults(data) {
+            try {
+                const lighthouse = data.lighthouseResult;
+                const categories = lighthouse.categories;
+                const audits = lighthouse.audits;
+                const score = Math.round(categories.performance.score * 100);
+                
+                let scoreLabel = 'Good';
+                if (score < 50) {
+                    scoreLabel = 'Poor';
+                } else if (score < 90) {
+                    scoreLabel = 'Needs Improvement';
+                }
+                
+                document.getElementById('speedScore').textContent = score;
+                document.getElementById('scoreLabel').textContent = scoreLabel;
+                document.getElementById('statusResult').textContent = 'Completed';
+                document.getElementById('fcp').textContent = audits['first-contentful-paint'].displayValue;
+                document.getElementById('lcp').textContent = audits['largest-contentful-paint'].displayValue;
+                document.getElementById('speedIndex').textContent = audits['speed-index'].displayValue;
+                document.getElementById('tti').textContent = audits['interactive'].displayValue;
+                document.getElementById('tbt').textContent = audits['total-blocking-time'].displayValue;
+                document.getElementById('cls').textContent = audits['cumulative-layout-shift'].displayValue;
+                
+            } catch (e) {
+                console.error('Error parsing results:', e);
+                document.getElementById('speedScore').textContent = 'Error';
+                document.getElementById('statusResult').textContent = 'Failed';
+                alert('Could not parse PageSpeed results. The site may not be accessible or API quota exceeded.');
+            }
+        }
+
+        function isValidUrl(string) {
+            try {
+                new URL(string);
+                return true;
+            } catch (_) {
+                return false;
+            }
+        }
+
+        function clearInputs() {
+            document.getElementById('websiteUrl').value = '';
+            document.getElementById('strategy').value = 'mobile';
+            document.getElementById('resultsBox').style.display = 'none';
+        }
+
+        function copyResults() {
+            if (!lastResults) {
+                alert('No results to copy.');
+                return;
+            }
+            
+            const text = JSON.stringify(lastResults, null, 2);
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Results copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy results. Please copy manually.');
+            });
+        }
+
+        function downloadResults() {
+            if (!lastResults) {
+                alert('No results to download.');
+                return;
+            }
+            
+            const blob = new Blob([JSON.stringify(lastResults, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'pagespeed-results.json';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Auto-check on Enter key
+        document.getElementById('websiteUrl').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                checkSpeed();
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

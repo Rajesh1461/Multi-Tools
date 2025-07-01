@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Roller - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        .dice {
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 2px solid #333;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .dice:hover {
+            transform: scale(1.1);
+        }
+        
+        .dice.rolling {
+            animation: roll 0.5s ease-in-out;
+        }
+        
+        @keyframes roll {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(0.9); }
+            75% { transform: rotate(270deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        .dice-container {
+            min-height: 120px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        
+        .history-item {
+            transition: all 0.3s ease;
+        }
+        
+        .history-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Dice Roller</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="diceType" class="form-label">Dice Type:</label>
+                                <select id="diceType" class="form-select bg-dark text-light border-danger">
+                                    <option value="4">D4 (4-sided)</option>
+                                    <option value="6" selected>D6 (6-sided)</option>
+                                    <option value="8">D8 (8-sided)</option>
+                                    <option value="10">D10 (10-sided)</option>
+                                    <option value="12">D12 (12-sided)</option>
+                                    <option value="20">D20 (20-sided)</option>
+                                    <option value="100">D100 (100-sided)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="numDice" class="form-label">Number of Dice:</label>
+                                <input type="number" id="numDice" class="form-control bg-dark text-light border-danger" value="1" min="1" max="10">
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="rollDice()">Roll Dice</button>
+                            <button class="btn btn-outline-danger" onclick="clearResults()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Output Box -->
+                <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5>Dice Roll Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center mb-3">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Total</h6>
+                                        <h3 id="totalResult">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Average</h6>
+                                        <h3 id="averageResult">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Rolls</h6>
+                                        <h3 id="rollsResult">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="individualRolls" class="mb-3">
+                            <h6 class="text-danger">Individual Rolls:</h6>
+                            <div id="rollsList" class="text-center"></div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+                            <button class="btn btn-outline-danger" onclick="exportResults()">Export Results</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Roll Buttons -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5>Quick Roll</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="quickRoll(6)">D6</button>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="quickRoll(20)">D20</button>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="quickRoll(100)">D100</button>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="rollMultiple(6, 2)">2D6</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        let rollHistory = [];
+        
+        function rollDice() {
+            const diceType = parseInt(document.getElementById('diceType').value);
+            const numDice = parseInt(document.getElementById('numDice').value);
+            
+            if (numDice < 1 || numDice > 10) {
+                alert('Please enter a number between 1 and 10 for dice count.');
+                return;
+            }
+            
+            const rolls = [];
+            let total = 0;
+            
+            for (let i = 0; i < numDice; i++) {
+                const roll = Math.floor(Math.random() * diceType) + 1;
+                rolls.push(roll);
+                total += roll;
+            }
+            
+            const average = total / numDice;
+            
+            // Store in history
+            const rollData = {
+                diceType: diceType,
+                numDice: numDice,
+                rolls: rolls,
+                total: total,
+                average: average,
+                timestamp: new Date().toLocaleString()
+            };
+            rollHistory.push(rollData);
+            
+            // Display results
+            document.getElementById('totalResult').textContent = total;
+            document.getElementById('averageResult').textContent = average.toFixed(1);
+            document.getElementById('rollsResult').textContent = rolls.length;
+            
+            // Display individual rolls
+            const rollsList = document.getElementById('rollsList');
+            rollsList.innerHTML = rolls.map((roll, index) => 
+                `<span class="badge bg-danger me-2 mb-2">Roll ${index + 1}: ${roll}</span>`
+            ).join('');
+            
+            document.getElementById('resultsBox').style.display = 'block';
+        }
+        
+        function quickRoll(diceType) {
+            document.getElementById('diceType').value = diceType;
+            document.getElementById('numDice').value = 1;
+            rollDice();
+        }
+        
+        function rollMultiple(diceType, numDice) {
+            document.getElementById('diceType').value = diceType;
+            document.getElementById('numDice').value = numDice;
+            rollDice();
+        }
+        
+        function clearResults() {
+            document.getElementById('resultsBox').style.display = 'none';
+            rollHistory = [];
+        }
+        
+        function copyResults() {
+            if (rollHistory.length === 0) {
+                alert('No results to copy.');
+                return;
+            }
+            
+            const lastRoll = rollHistory[rollHistory.length - 1];
+            const results = `Dice Roll Results:
+Dice: ${lastRoll.numDice}D${lastRoll.diceType}
+Rolls: ${lastRoll.rolls.join(', ')}
+Total: ${lastRoll.total}
+Average: ${lastRoll.average.toFixed(1)}
+Time: ${lastRoll.timestamp}`;
+            
+            navigator.clipboard.writeText(results).then(() => {
+                alert('Results copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy results. Please copy manually.');
+            });
+        }
+        
+        function exportResults() {
+            if (rollHistory.length === 0) {
+                alert('No results to export.');
+                return;
+            }
+            
+            const exportText = `Dice Roll History
+
+${rollHistory.map((roll, index) => `Roll ${index + 1}:
+- Dice: ${roll.numDice}D${roll.diceType}
+- Rolls: ${roll.rolls.join(', ')}
+- Total: ${roll.total}
+- Average: ${roll.average.toFixed(1)}
+- Time: ${roll.timestamp}
+`).join('\n')}
+
+Generated on: ${new Date().toLocaleString()}`;
+            
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'dice-roll-history.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

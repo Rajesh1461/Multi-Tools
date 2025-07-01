@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>.htaccess Redirect Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">.htaccess Redirect Generator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="sourceUrl" class="form-label">Source URL (relative path):</label>
+              <input type="text" id="sourceUrl" class="form-control bg-dark text-light border-danger" placeholder="e.g. /old-page.html">
+            </div>
+            <div class="mb-3">
+              <label for="destinationUrl" class="form-label">Destination URL (absolute or relative):</label>
+              <input type="text" id="destinationUrl" class="form-control bg-dark text-light border-danger" placeholder="e.g. /new-page.html or https://example.com/new-page.html">
+            </div>
+            <div class="mb-3">
+              <label for="redirectType" class="form-label">Redirect Type:</label>
+              <select id="redirectType" class="form-select bg-dark text-light border-danger">
+                <option value="301">301 (Permanent)</option>
+                <option value="302">302 (Temporary)</option>
+                <option value="307">307 (Temporary, preserves method)</option>
+              </select>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateRedirect()">
+                <i class="fas fa-exchange-alt me-2"></i>Generate Redirect
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearFields()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="copyRule()">
+                <i class="fas fa-copy me-2"></i>Copy Rule
+              </button>
+            </div>
+            <div class="mb-3">
+              <label for="htaccessOutput" class="form-label">Generated .htaccess Rule:</label>
+              <textarea id="htaccessOutput" class="form-control bg-dark text-light border-danger" rows="4" readonly placeholder="Your .htaccess redirect rule will appear here..."></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function generateRedirect() {
+      const source = document.getElementById('sourceUrl').value.trim();
+      const destination = document.getElementById('destinationUrl').value.trim();
+      const type = document.getElementById('redirectType').value;
+      if (!source || !destination) {
+        alert('Please enter both source and destination URLs.');
+        return;
+      }
+      let rule = '';
+      if (type === '301' || type === '302') {
+        rule = `Redirect ${type} ${source} ${destination}`;
+      } else if (type === '307') {
+        rule = `Redirect ${type} ${source} ${destination} # 307 is rarely used in .htaccess, use with caution.`;
+      }
+      document.getElementById('htaccessOutput').value = rule;
+    }
+    function clearFields() {
+      document.getElementById('sourceUrl').value = '';
+      document.getElementById('destinationUrl').value = '';
+      document.getElementById('redirectType').value = '301';
+      document.getElementById('htaccessOutput').value = '';
+    }
+    function copyRule() {
+      const output = document.getElementById('htaccessOutput');
+      if (!output.value.trim()) {
+        alert('No rule to copy.');
+        return;
+      }
+      output.select();
+      document.execCommand('copy');
+      alert('.htaccess rule copied to clipboard!');
+    }
+  </script>
+</body>
+</html>

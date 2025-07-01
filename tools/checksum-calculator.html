@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checksum Calculator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/crypto-js@4.1.1/crypto-js.min.js"></script>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Checksum Calculator</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="inputText" class="form-label">Input Text/Data:</label>
+              <textarea id="inputText" class="form-control bg-dark text-light border-danger" rows="6" placeholder="Enter text or data to calculate checksum"></textarea>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="checksumType" class="form-label">Checksum Type:</label>
+                <select id="checksumType" class="form-select bg-dark text-light border-danger">
+                  <option value="md5">MD5</option>
+                  <option value="sha1">SHA-1</option>
+                  <option value="sha256">SHA-256</option>
+                  <option value="sha512">SHA-512</option>
+                  <option value="crc32">CRC32</option>
+                  <option value="adler32">Adler-32</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="outputFormat" class="form-label">Output Format:</label>
+                <select id="outputFormat" class="form-select bg-dark text-light border-danger">
+                  <option value="hex">Hexadecimal</option>
+                  <option value="base64">Base64</option>
+                  <option value="binary">Binary</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="calculateChecksum()">Calculate Checksum</button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">Clear</button>
+              <button class="btn btn-outline-danger" onclick="verifyChecksum()">Verify Checksum</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Checksum Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="checksumResult" class="form-label">Checksum:</label>
+              <div class="input-group">
+                <input type="text" id="checksumResult" class="form-control bg-dark text-light border-danger" readonly>
+                <button class="btn btn-outline-danger" onclick="copyChecksum()">Copy</button>
+              </div>
+            </div>
+            
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Algorithm</h6>
+                    <h4 id="algorithmResult">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Length</h6>
+                    <h4 id="lengthResult">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Format</h6>
+                    <h4 id="formatResult">-</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- All Checksums -->
+            <div class="mb-3">
+              <h6 class="text-danger">All Checksums:</h6>
+              <div class="table-responsive">
+                <table class="table table-dark table-striped">
+                  <thead>
+                    <tr>
+                      <th>Algorithm</th>
+                      <th>Checksum</th>
+                      <th>Length</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="allChecksumsTable">
+                    <!-- All checksums will be displayed here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadResults()">Download Results</button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="compareChecksums()">Compare Checksums</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Checksum Verification -->
+        <div id="verificationBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Checksum Verification</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="originalChecksum" class="form-label">Original Checksum:</label>
+                <input type="text" id="originalChecksum" class="form-control bg-dark text-light border-danger" placeholder="Enter original checksum">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="calculatedChecksum" class="form-label">Calculated Checksum:</label>
+                <input type="text" id="calculatedChecksum" class="form-control bg-dark text-light border-danger" readonly>
+              </div>
+            </div>
+            <div class="text-center">
+              <div id="verificationResult" class="alert" style="display: none;"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Templates -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Quick Templates</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('password')">Password Hash</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('file')">File Checksum</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('json')">JSON Data</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('text')">Simple Text</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('binary')">Binary Data</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('url')">URL Data</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Checksum Information -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Checksum Algorithms Information</h5>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-dark table-striped">
+                <thead>
+                  <tr>
+                    <th>Algorithm</th>
+                    <th>Output Size</th>
+                    <th>Security Level</th>
+                    <th>Common Uses</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>MD5</td>
+                    <td>128 bits (16 bytes)</td>
+                    <td>Weak (broken)</td>
+                    <td>File integrity, legacy systems</td>
+                  </tr>
+                  <tr>
+                    <td>SHA-1</td>
+                    <td>160 bits (20 bytes)</td>
+                    <td>Weak (broken)</td>
+                    <td>Git commits, legacy systems</td>
+                  </tr>
+                  <tr>
+                    <td>SHA-256</td>
+                    <td>256 bits (32 bytes)</td>
+                    <td>Strong</td>
+                    <td>Cryptocurrency, digital signatures</td>
+                  </tr>
+                  <tr>
+                    <td>SHA-512</td>
+                    <td>512 bits (64 bytes)</td>
+                    <td>Very Strong</td>
+                    <td>High-security applications</td>
+                  </tr>
+                  <tr>
+                    <td>CRC32</td>
+                    <td>32 bits (4 bytes)</td>
+                    <td>Error detection only</td>
+                    <td>File integrity, network protocols</td>
+                  </tr>
+                  <tr>
+                    <td>Adler-32</td>
+                    <td>32 bits (4 bytes)</td>
+                    <td>Error detection only</td>
+                    <td>ZIP files, data compression</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function calculateChecksum() {
+      const input = document.getElementById('inputText').value.trim();
+      const checksumType = document.getElementById('checksumType').value;
+      const outputFormat = document.getElementById('outputFormat').value;
+      
+      if (!input) {
+        alert('Please enter text or data to calculate checksum.');
+        return;
+      }
+      
+      let checksum = '';
+      let algorithm = '';
+      
+      try {
+        switch (checksumType) {
+          case 'md5':
+            checksum = CryptoJS.MD5(input);
+            algorithm = 'MD5';
+            break;
+          case 'sha1':
+            checksum = CryptoJS.SHA1(input);
+            algorithm = 'SHA-1';
+            break;
+          case 'sha256':
+            checksum = CryptoJS.SHA256(input);
+            algorithm = 'SHA-256';
+            break;
+          case 'sha512':
+            checksum = CryptoJS.SHA512(input);
+            algorithm = 'SHA-512';
+            break;
+          case 'crc32':
+            checksum = calculateCRC32(input);
+            algorithm = 'CRC32';
+            break;
+          case 'adler32':
+            checksum = calculateAdler32(input);
+            algorithm = 'Adler-32';
+            break;
+        }
+        
+        // Format output
+        let formattedChecksum = '';
+        switch (outputFormat) {
+          case 'hex':
+            formattedChecksum = checksum.toString(CryptoJS.enc.Hex);
+            break;
+          case 'base64':
+            formattedChecksum = checksum.toString(CryptoJS.enc.Base64);
+            break;
+          case 'binary':
+            formattedChecksum = checksum.toString(CryptoJS.enc.Latin1);
+            break;
+        }
+        
+        // Update results
+        document.getElementById('checksumResult').value = formattedChecksum;
+        document.getElementById('algorithmResult').textContent = algorithm;
+        document.getElementById('lengthResult').textContent = formattedChecksum.length;
+        document.getElementById('formatResult').textContent = outputFormat.toUpperCase();
+        
+        // Calculate all checksums
+        calculateAllChecksums(input);
+        
+        document.getElementById('resultsBox').style.display = 'block';
+        
+      } catch (error) {
+        alert('Error calculating checksum: ' + error.message);
+      }
+    }
+    
+    function calculateAllChecksums(input) {
+      const algorithms = [
+        { name: 'MD5', func: () => CryptoJS.MD5(input).toString(CryptoJS.enc.Hex) },
+        { name: 'SHA-1', func: () => CryptoJS.SHA1(input).toString(CryptoJS.enc.Hex) },
+        { name: 'SHA-256', func: () => CryptoJS.SHA256(input).toString(CryptoJS.enc.Hex) },
+        { name: 'SHA-512', func: () => CryptoJS.SHA512(input).toString(CryptoJS.enc.Hex) },
+        { name: 'CRC32', func: () => calculateCRC32(input) },
+        { name: 'Adler-32', func: () => calculateAdler32(input) }
+      ];
+      
+      const tableBody = document.getElementById('allChecksumsTable');
+      tableBody.innerHTML = '';
+      
+      algorithms.forEach(algo => {
+        try {
+          const checksum = algo.func();
+          const row = tableBody.insertRow();
+          row.innerHTML = `
+            <td>${algo.name}</td>
+            <td><code>${checksum}</code></td>
+            <td>${checksum.length}</td>
+            <td><button class="btn btn-sm btn-outline-danger" onclick="copyToClipboard('${checksum}')">Copy</button></td>
+          `;
+        } catch (error) {
+          console.error(`Error calculating ${algo.name}:`, error);
+        }
+      });
+    }
+    
+    function calculateCRC32(str) {
+      let crc = 0xFFFFFFFF;
+      for (let i = 0; i < str.length; i++) {
+        crc ^= str.charCodeAt(i);
+        for (let j = 0; j < 8; j++) {
+          crc = (crc & 1) ? (0xEDB88320 ^ (crc >>> 1)) : (crc >>> 1);
+        }
+      }
+      return (crc ^ 0xFFFFFFFF) >>> 0;
+    }
+    
+    function calculateAdler32(str) {
+      let a = 1, b = 0;
+      for (let i = 0; i < str.length; i++) {
+        a = (a + str.charCodeAt(i)) % 65521;
+        b = (b + a) % 65521;
+      }
+      return ((b << 16) | a) >>> 0;
+    }
+    
+    function clearInput() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+      document.getElementById('verificationBox').style.display = 'none';
+    }
+    
+    function copyChecksum() {
+      const checksum = document.getElementById('checksumResult').value;
+      navigator.clipboard.writeText(checksum).then(() => {
+        alert('Checksum copied to clipboard!');
+      });
+    }
+    
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Checksum copied to clipboard!');
+      });
+    }
+    
+    function verifyChecksum() {
+      const input = document.getElementById('inputText').value.trim();
+      const originalChecksum = document.getElementById('originalChecksum').value.trim();
+      const checksumType = document.getElementById('checksumType').value;
+      
+      if (!input || !originalChecksum) {
+        alert('Please enter both input text and original checksum.');
+        return;
+      }
+      
+      // Calculate current checksum
+      let calculatedChecksum = '';
+      switch (checksumType) {
+        case 'md5':
+          calculatedChecksum = CryptoJS.MD5(input).toString(CryptoJS.enc.Hex);
+          break;
+        case 'sha1':
+          calculatedChecksum = CryptoJS.SHA1(input).toString(CryptoJS.enc.Hex);
+          break;
+        case 'sha256':
+          calculatedChecksum = CryptoJS.SHA256(input).toString(CryptoJS.enc.Hex);
+          break;
+        case 'sha512':
+          calculatedChecksum = CryptoJS.SHA512(input).toString(CryptoJS.enc.Hex);
+          break;
+        case 'crc32':
+          calculatedChecksum = calculateCRC32(input).toString(16);
+          break;
+        case 'adler32':
+          calculatedChecksum = calculateAdler32(input).toString(16);
+          break;
+      }
+      
+      document.getElementById('calculatedChecksum').value = calculatedChecksum;
+      
+      // Compare checksums
+      const isMatch = originalChecksum.toLowerCase() === calculatedChecksum.toLowerCase();
+      const resultDiv = document.getElementById('verificationResult');
+      
+      if (isMatch) {
+        resultDiv.className = 'alert alert-success';
+        resultDiv.textContent = '✅ Checksums match! Data integrity verified.';
+      } else {
+        resultDiv.className = 'alert alert-danger';
+        resultDiv.textContent = '❌ Checksums do not match! Data may be corrupted or modified.';
+      }
+      
+      resultDiv.style.display = 'block';
+      document.getElementById('verificationBox').style.display = 'block';
+    }
+    
+    function downloadResults() {
+      const input = document.getElementById('inputText').value;
+      const algorithm = document.getElementById('algorithmResult').textContent;
+      const checksum = document.getElementById('checksumResult').value;
+      
+      const content = `Checksum Calculation Results
+=======================
+
+Input Data:
+${input}
+
+Algorithm: ${algorithm}
+Checksum: ${checksum}
+Length: ${checksum.length}
+Format: ${document.getElementById('formatResult').textContent}
+
+Generated on: ${new Date().toLocaleString()}`;
+      
+      const blob = new Blob([content], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'checksum-results.txt';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function compareChecksums() {
+      const input = document.getElementById('inputText').value.trim();
+      if (!input) {
+        alert('Please enter text first.');
+        return;
+      }
+      
+      calculateAllChecksums(input);
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function useTemplate(type) {
+      let template = '';
+      
+      switch (type) {
+        case 'password':
+          template = 'mySecurePassword123!';
+          break;
+        case 'file':
+          template = 'file content example\nwith multiple lines\nand special characters: !@#$%^&*()';
+          break;
+        case 'json':
+          template = '{"name": "John Doe", "age": 30, "city": "New York"}';
+          break;
+        case 'text':
+          template = 'Hello, World! This is a sample text for checksum calculation.';
+          break;
+        case 'binary':
+          template = '01010101 10101010 11110000 00001111';
+          break;
+        case 'url':
+          template = 'https://example.com/path?param=value&another=123';
+          break;
+      }
+      
+      document.getElementById('inputText').value = template;
+      calculateChecksum();
+    }
+    
+    // Auto-calculate on input change
+    document.getElementById('inputText').addEventListener('input', function() {
+      if (this.value.trim() !== '') {
+        calculateChecksum();
+      }
+    });
+    
+    document.getElementById('checksumType').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        calculateChecksum();
+      }
+    });
+    
+    document.getElementById('outputFormat').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        calculateChecksum();
+      }
+    });
+  </script>
+</body>
+</html>

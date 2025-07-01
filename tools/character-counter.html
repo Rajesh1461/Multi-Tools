@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+
+    <title>Character Counter - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Character Counter</h1>
+            <div style="width: 120px;"></div> <!-- Spacer to balance the layout -->
+        </div>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="inputText" class="form-label">Input Text:</label>
+                            <textarea id="inputText" class="form-control bg-dark text-light border-danger" rows="8" placeholder="Enter or paste your text here to count characters, words, sentences, and more..."></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="countOptions" class="form-label">Count Options:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="countSpaces" checked>
+                                    <label class="form-check-label" for="countSpaces">
+                                        Include spaces
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="countPunctuation" checked>
+                                    <label class="form-check-label" for="countPunctuation">
+                                        Include punctuation
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="countNumbers" checked>
+                                    <label class="form-check-label" for="countNumbers">
+                                        Include numbers
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="countLineBreaks" checked>
+                                    <label class="form-check-label" for="countLineBreaks">
+                                        Include line breaks
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="displayOptions" class="form-label">Display Options:</label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="showRealTime" checked>
+                                    <label class="form-check-label" for="showRealTime">
+                                        Real-time counting
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="showProgress" checked>
+                                    <label class="form-check-label" for="showProgress">
+                                        Show progress bars
+                                    </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="showLimits" checked>
+                                    <label class="form-check-label" for="showLimits">
+                                        Show limits (Twitter, SMS, etc.)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="countCharacters()">Count Characters</button>
+                            <button class="btn btn-outline-danger me-2" onclick="clearText()">Clear</button>
+                            <button class="btn btn-outline-danger" onclick="copyResults()">Copy Results</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Output Box -->
+                <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5>Character Analysis Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center mb-3">
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Characters</h6>
+                                        <h4 id="charCountResult">0</h4>
+                                        <small class="text-muted">Total characters</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Words</h6>
+                                        <h4 id="wordCountResult">0</h4>
+                                        <small class="text-muted">Total words</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Sentences</h6>
+                                        <h4 id="sentenceCountResult">0</h4>
+                                        <small class="text-muted">Total sentences</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Paragraphs</h6>
+                                        <h4 id="paragraphCountResult">0</h4>
+                                        <small class="text-muted">Total paragraphs</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row text-center mb-3">
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Letters</h6>
+                                        <h4 id="letterCountResult">0</h4>
+                                        <small class="text-muted">A-Z, a-z</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Numbers</h6>
+                                        <h4 id="numberCountResult">0</h4>
+                                        <small class="text-muted">0-9</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Spaces</h6>
+                                        <h4 id="spaceCountResult">0</h4>
+                                        <small class="text-muted">Whitespace</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Punctuation</h6>
+                                        <h4 id="punctuationCountResult">0</h4>
+                                        <small class="text-muted">Special chars</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Platform Limits -->
+                        <div id="limitsSection" class="mb-3">
+                            <h6 class="text-danger mb-3">Platform Character Limits:</h6>
+                            <div class="row">
+                                <div class="col-md-4 mb-2">
+                                    <div class="card bg-secondary border-danger">
+                                        <div class="card-body">
+                                            <h6 class="text-danger">Twitter</h6>
+                                            <div class="progress mb-2" style="height: 20px;">
+                                                <div id="twitterProgress" class="progress-bar bg-danger" style="width: 0%"></div>
+                                            </div>
+                                            <small id="twitterCount">0/280 characters</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="card bg-secondary border-danger">
+                                        <div class="card-body">
+                                            <h6 class="text-danger">SMS</h6>
+                                            <div class="progress mb-2" style="height: 20px;">
+                                                <div id="smsProgress" class="progress-bar bg-danger" style="width: 0%"></div>
+                                            </div>
+                                            <small id="smsCount">0/160 characters</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-2">
+                                    <div class="card bg-secondary border-danger">
+                                        <div class="card-body">
+                                            <h6 class="text-danger">Instagram Caption</h6>
+                                            <div class="progress mb-2" style="height: 20px;">
+                                                <div id="instagramProgress" class="progress-bar bg-danger" style="width: 0%"></div>
+                                            </div>
+                                            <small id="instagramCount">0/2200 characters</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Reading Time -->
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Reading Time</h6>
+                                        <h4 id="readingTimeResult">0 min</h4>
+                                        <small class="text-muted">Average reading speed</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Speaking Time</h6>
+                                        <h4 id="speakingTimeResult">0 min</h4>
+                                        <small class="text-muted">Average speaking speed</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Average Word Length</h6>
+                                        <h4 id="avgWordLengthResult">0</h4>
+                                        <small class="text-muted">Characters per word</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quick Templates -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5>Quick Templates</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('tweet')">Twitter Post</button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('email')">Email Draft</button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('essay')">Essay Sample</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('sms')">SMS Message</button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('caption')">Social Media Caption</button>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <button class="btn btn-outline-danger w-100" onclick="useTemplate('code')">Code Sample</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Character Counting Tips -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5>Character Counting Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Platform Limits:</h6>
+                                <ul class="list-unstyled">
+                                    <li>• Twitter: 280 characters</li>
+                                    <li>• SMS: 160 characters</li>
+                                    <li>• Instagram Caption: 2,200 characters</li>
+                                    <li>• LinkedIn Post: 3,000 characters</li>
+                                    <li>• Facebook Post: 63,206 characters</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Reading Speeds:</h6>
+                                <ul class="list-unstyled">
+                                    <li>• Average reading: 200-250 words/min</li>
+                                    <li>• Fast reading: 400-700 words/min</li>
+                                    <li>• Speaking: 150-160 words/min</li>
+                                    <li>• Typing: 40-60 words/min</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="footer"></div>
+    
+    <script src="../assets/js/include.js"></script>
+    <script>
+        function countCharacters() {
+            const text = document.getElementById('inputText').value;
+            const countSpaces = document.getElementById('countSpaces').checked;
+            const countPunctuation = document.getElementById('countPunctuation').checked;
+            const countNumbers = document.getElementById('countNumbers').checked;
+            const countLineBreaks = document.getElementById('countLineBreaks').checked;
+            
+            if (!text.trim()) {
+                alert('Please enter some text to count.');
+                return;
+            }
+            
+            // Basic counts
+            const totalChars = text.length;
+            const words = text.trim().split(/\s+/).filter(word => word.length > 0);
+            const wordCount = words.length;
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0);
+            const sentenceCount = sentences.length;
+            const paragraphs = text.split(/\n\s*\n/).filter(para => para.trim().length > 0);
+            const paragraphCount = paragraphs.length;
+            
+            // Detailed character analysis
+            const letters = text.match(/[a-zA-Z]/g) || [];
+            const numbers = text.match(/[0-9]/g) || [];
+            const spaces = text.match(/\s/g) || [];
+            const punctuation = text.match(/[^\w\s]/g) || [];
+            const lineBreaks = text.match(/\n/g) || [];
+            
+            // Calculate filtered character count
+            let filteredChars = totalChars;
+            if (!countSpaces) filteredChars -= spaces.length;
+            if (!countPunctuation) filteredChars -= punctuation.length;
+            if (!countNumbers) filteredChars -= numbers.length;
+            if (!countLineBreaks) filteredChars -= lineBreaks.length;
+            
+            // Update results
+            document.getElementById('charCountResult').textContent = filteredChars;
+            document.getElementById('wordCountResult').textContent = wordCount;
+            document.getElementById('sentenceCountResult').textContent = sentenceCount;
+            document.getElementById('paragraphCountResult').textContent = paragraphCount;
+            document.getElementById('letterCountResult').textContent = letters.length;
+            document.getElementById('numberCountResult').textContent = numbers.length;
+            document.getElementById('spaceCountResult').textContent = spaces.length;
+            document.getElementById('punctuationCountResult').textContent = punctuation.length;
+            
+            // Reading and speaking time
+            const readingTime = Math.ceil(wordCount / 200); // 200 words per minute
+            const speakingTime = Math.ceil(wordCount / 150); // 150 words per minute
+            document.getElementById('readingTimeResult').textContent = readingTime + ' min';
+            document.getElementById('speakingTimeResult').textContent = speakingTime + ' min';
+            
+            // Average word length
+            const avgWordLength = wordCount > 0 ? Math.round(letters.length / wordCount) : 0;
+            document.getElementById('avgWordLengthResult').textContent = avgWordLength;
+            
+            // Platform limits
+            updatePlatformLimits(filteredChars);
+            
+            document.getElementById('resultsBox').style.display = 'block';
+        }
+        
+        function updatePlatformLimits(charCount) {
+            const limits = {
+                twitter: 280,
+                sms: 160,
+                instagram: 2200
+            };
+            
+            // Twitter
+            const twitterPercent = Math.min((charCount / limits.twitter) * 100, 100);
+            document.getElementById('twitterProgress').style.width = twitterPercent + '%';
+            document.getElementById('twitterCount').textContent = `${charCount}/${limits.twitter} characters`;
+            document.getElementById('twitterProgress').className = twitterPercent > 100 ? 'progress-bar bg-warning' : 'progress-bar bg-danger';
+            
+            // SMS
+            const smsPercent = Math.min((charCount / limits.sms) * 100, 100);
+            document.getElementById('smsProgress').style.width = smsPercent + '%';
+            document.getElementById('smsCount').textContent = `${charCount}/${limits.sms} characters`;
+            document.getElementById('smsProgress').className = smsPercent > 100 ? 'progress-bar bg-warning' : 'progress-bar bg-danger';
+            
+            // Instagram
+            const instagramPercent = Math.min((charCount / limits.instagram) * 100, 100);
+            document.getElementById('instagramProgress').style.width = instagramPercent + '%';
+            document.getElementById('instagramCount').textContent = `${charCount}/${limits.instagram} characters`;
+            document.getElementById('instagramProgress').className = instagramPercent > 100 ? 'progress-bar bg-warning' : 'progress-bar bg-danger';
+        }
+        
+        function clearText() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('resultsBox').style.display = 'none';
+        }
+        
+        function copyResults() {
+            const results = document.getElementById('resultsBox');
+            if (results.style.display === 'none') {
+                alert('Please count characters first.');
+                return;
+            }
+            
+            const text = document.getElementById('inputText').value;
+            const charCount = document.getElementById('charCountResult').textContent;
+            const wordCount = document.getElementById('wordCountResult').textContent;
+            const sentenceCount = document.getElementById('sentenceCountResult').textContent;
+            
+            const summary = `Character Count Summary:
+Text: ${text.substring(0, 100)}${text.length > 100 ? '...' : ''}
+Characters: ${charCount}
+Words: ${wordCount}
+Sentences: ${sentenceCount}`;
+            
+            navigator.clipboard.writeText(summary).then(() => {
+                alert('Results copied to clipboard!');
+            });
+        }
+        
+        function useTemplate(type) {
+            let template = '';
+            
+            switch (type) {
+                case 'tweet':
+                    template = 'Just discovered this amazing character counter tool! It helps you stay within Twitter\'s 280 character limit. Perfect for crafting the perfect tweet! #TwitterTips #CharacterCount';
+                    break;
+                case 'email':
+                    template = 'Dear Team,\n\nI hope this email finds you well. I wanted to discuss the upcoming project deadline and share some important updates regarding our timeline.\n\nPlease let me know if you have any questions.\n\nBest regards,\n[Your Name]';
+                    break;
+                case 'essay':
+                    template = 'The impact of technology on modern society has been profound and far-reaching. From the way we communicate to how we work and learn, technological advancements have transformed nearly every aspect of our daily lives. This essay explores the various ways in which technology has influenced society, both positively and negatively, and considers the implications for our future.';
+                    break;
+                case 'sms':
+                    template = 'Hi! Just wanted to let you know I\'ll be running about 15 minutes late for our meeting. Traffic is pretty bad today. See you soon!';
+                    break;
+                case 'caption':
+                    template = '✨ Another beautiful day! 🌞 Grateful for these moments of peace and reflection. Sometimes the simplest things bring the most joy. #Gratitude #Mindfulness #LifeIsBeautiful #Blessed #SimpleJoys #PeacefulMoments #Reflection #DailyInspiration';
+                    break;
+                case 'code':
+                    template = 'function countCharacters(text) {\n  const chars = text.length;\n  const words = text.split(" ").length;\n  return { chars, words };\n}\n\n// Example usage\nconst result = countCharacters("Hello world!");\nconsole.log(result);';
+                    break;
+            }
+            
+            document.getElementById('inputText').value = template;
+            countCharacters();
+        }
+        
+        // Real-time counting
+        document.getElementById('inputText').addEventListener('input', function() {
+            if (document.getElementById('showRealTime').checked) {
+                countCharacters();
+            }
+        });
+        
+        // Auto-count on option changes
+        document.getElementById('countSpaces').addEventListener('change', function() {
+            if (document.getElementById('inputText').value.trim() !== '') {
+                countCharacters();
+            }
+        });
+        
+        document.getElementById('countPunctuation').addEventListener('change', function() {
+            if (document.getElementById('inputText').value.trim() !== '') {
+                countCharacters();
+            }
+        });
+        
+        document.getElementById('countNumbers').addEventListener('change', function() {
+            if (document.getElementById('inputText').value.trim() !== '') {
+                countCharacters();
+            }
+        });
+        
+        document.getElementById('countLineBreaks').addEventListener('change', function() {
+            if (document.getElementById('inputText').value.trim() !== '') {
+                countCharacters();
+            }
+        });
+        
+        // Toggle limits section
+        document.getElementById('showLimits').addEventListener('change', function() {
+            const limitsSection = document.getElementById('limitsSection');
+            limitsSection.style.display = this.checked ? 'block' : 'none';
+        });
+    </script>
+</body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

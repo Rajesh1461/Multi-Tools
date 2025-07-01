@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Efficiency Converter - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">Fuel Efficiency Converter</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Convert between different fuel efficiency units like MPG, L/100km, km/L, and more.
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="fromValue" class="form-label">Value:</label>
+                                <input type="number" class="form-control bg-dark text-light border-danger" id="fromValue" placeholder="Enter value" step="0.01" oninput="convert()">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="fromUnit" class="form-label">From Unit:</label>
+                                <select class="form-select bg-dark text-light border-danger" id="fromUnit" onchange="convert()">
+                                    <option value="mpg_us">Miles per Gallon (US)</option>
+                                    <option value="mpg_uk">Miles per Gallon (UK)</option>
+                                    <option value="l_100km">Liters per 100 km</option>
+                                    <option value="km_l">Kilometers per Liter</option>
+                                    <option value="l_100mi">Liters per 100 miles</option>
+                                    <option value="km_gal_us">Kilometers per Gallon (US)</option>
+                                    <option value="km_gal_uk">Kilometers per Gallon (UK)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="swapUnits()">
+                                <i class="fas fa-exchange-alt me-2"></i>Swap Units
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="clearAll()">
+                                <i class="fas fa-eraser me-2"></i>Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Results Output Box -->
+                <div id="resultsSection" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-calculator me-2"></i>Conversion Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center mb-3">
+                            <div class="col-md-6 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-header text-danger">
+                                        <h6>US Units</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>MPG (US):</strong> <span id="mpg_us_result">-</span></p>
+                                        <p><strong>L/100 miles:</strong> <span id="l_100mi_result">-</span></p>
+                                        <p><strong>km/Gal (US):</strong> <span id="km_gal_us_result">-</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-header text-danger">
+                                        <h6>Metric Units</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>L/100 km:</strong> <span id="l_100km_result">-</span></p>
+                                        <p><strong>km/L:</strong> <span id="km_l_result">-</span></p>
+                                        <p><strong>MPG (UK):</strong> <span id="mpg_uk_result">-</span></p>
+                                        <p><strong>km/Gal (UK):</strong> <span id="km_gal_uk_result">-</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+                            <button class="btn btn-outline-danger" onclick="exportResults()">Export Results</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../assets/js/include.js"></script>
+</body>
+</html>

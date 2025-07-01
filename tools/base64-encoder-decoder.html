@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Base64 Encoder/Decoder - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Base64 Encoder/Decoder</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="inputText" class="form-label">Input Text:</label>
+              <textarea id="inputText" class="form-control bg-dark text-light border-danger" rows="6" placeholder="Enter text to encode or base64 to decode"></textarea>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="operation" class="form-label">Operation:</label>
+                <select id="operation" class="form-select bg-dark text-light border-danger">
+                  <option value="encode">Encode to Base64</option>
+                  <option value="decode">Decode from Base64</option>
+                  <option value="auto">Auto Detect</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="encoding" class="form-label">Character Encoding:</label>
+                <select id="encoding" class="form-select bg-dark text-light border-danger">
+                  <option value="UTF-8">UTF-8</option>
+                  <option value="ASCII">ASCII</option>
+                  <option value="ISO-8859-1">ISO-8859-1</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="processText()">Process</button>
+              <button class="btn btn-outline-danger me-2" onclick="clearText()">Clear</button>
+              <button class="btn btn-outline-danger" onclick="swapText()">Swap</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="outputText" class="form-label">Output:</label>
+              <textarea id="outputText" class="form-control bg-dark text-light border-danger" rows="6" readonly></textarea>
+            </div>
+            
+            <div class="row text-center mb-3">
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Operation</h6>
+                    <h4 id="operationResult">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Input Length</h6>
+                    <h4 id="inputLengthResult">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Output Length</h6>
+                    <h4 id="outputLengthResult">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Size Change</h6>
+                    <h4 id="sizeChangeResult">0%</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="copyOutput()">Copy Output</button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadOutput()">Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Actions -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Quick Actions</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('text')">Sample Text</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('base64')">Sample Base64</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('url')">URL Encode</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('json')">JSON Encode</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('html')">HTML Encode</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('binary')">Binary Data</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function processText() {
+      const input = document.getElementById('inputText').value.trim();
+      if (!input) {
+        alert('Please enter text to process.');
+        return;
+      }
+      
+      const operation = document.getElementById('operation').value;
+      const encoding = document.getElementById('encoding').value;
+      
+      let output = '';
+      let actualOperation = operation;
+      
+      try {
+        if (operation === 'auto') {
+          // Try to detect if input is base64
+          if (isBase64(input)) {
+            actualOperation = 'decode';
+            output = decodeBase64(input);
+          } else {
+            actualOperation = 'encode';
+            output = encodeBase64(input);
+          }
+        } else if (operation === 'encode') {
+          output = encodeBase64(input);
+        } else if (operation === 'decode') {
+          output = decodeBase64(input);
+        }
+        
+        document.getElementById('outputText').value = output;
+        document.getElementById('operationResult').textContent = actualOperation.charAt(0).toUpperCase() + actualOperation.slice(1);
+        document.getElementById('inputLengthResult').textContent = input.length;
+        document.getElementById('outputLengthResult').textContent = output.length;
+        
+        const sizeChange = ((output.length - input.length) / input.length * 100).toFixed(1);
+        document.getElementById('sizeChangeResult').textContent = sizeChange + '%';
+        
+        document.getElementById('resultsBox').style.display = 'block';
+        
+      } catch (error) {
+        alert('Error processing text: ' + error.message);
+      }
+    }
+    
+    function encodeBase64(text) {
+      return btoa(unescape(encodeURIComponent(text)));
+    }
+    
+    function decodeBase64(base64) {
+      try {
+        return decodeURIComponent(escape(atob(base64)));
+      } catch (error) {
+        throw new Error('Invalid Base64 string');
+      }
+    }
+    
+    function isBase64(str) {
+      try {
+        return btoa(atob(str)) === str;
+      } catch (err) {
+        return false;
+      }
+    }
+    
+    function clearText() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+    
+    function swapText() {
+      const input = document.getElementById('inputText').value;
+      const output = document.getElementById('outputText').value;
+      
+      if (output) {
+        document.getElementById('inputText').value = output;
+        document.getElementById('outputText').value = input;
+      }
+    }
+    
+    function copyOutput() {
+      const output = document.getElementById('outputText');
+      output.select();
+      document.execCommand('copy');
+      alert('Output copied to clipboard!');
+    }
+    
+    function downloadOutput() {
+      const output = document.getElementById('outputText').value;
+      if (!output) {
+        alert('No output to download.');
+        return;
+      }
+      
+      const blob = new Blob([output], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'base64-output.txt';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function useTemplate(type) {
+      let template = '';
+      let operation = 'encode';
+      
+      switch (type) {
+        case 'text':
+          template = 'Hello, World! This is a sample text for Base64 encoding.';
+          operation = 'encode';
+          break;
+        case 'base64':
+          template = 'SGVsbG8sIFdvcmxkISBUaGlzIGlzIGEgc2FtcGxlIHRleHQgZm9yIEJhc2U2NCBlbmNvZGluZy4=';
+          operation = 'decode';
+          break;
+        case 'url':
+          template = 'https://example.com/path?param=value&another=123';
+          operation = 'encode';
+          break;
+        case 'json':
+          template = '{"name": "John Doe", "age": 30, "city": "New York"}';
+          operation = 'encode';
+          break;
+        case 'html':
+          template = '<div class="container"><h1>Hello World</h1><p>This is HTML content.</p></div>';
+          operation = 'encode';
+          break;
+        case 'binary':
+          template = 'Binary data simulation: \x00\x01\x02\x03\x04\x05';
+          operation = 'encode';
+          break;
+      }
+      
+      document.getElementById('inputText').value = template;
+      document.getElementById('operation').value = operation;
+    }
+    
+    // Auto-process on input change
+    document.getElementById('inputText').addEventListener('input', function() {
+      if (this.value.trim() !== '') {
+        processText();
+      }
+    });
+    
+    document.getElementById('operation').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        processText();
+      }
+    });
+    
+    document.getElementById('encoding').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        processText();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,274 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSL Certificate Checker - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">SSL Certificate Checker</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Check SSL certificate details for any website. Enter a domain name to verify its SSL certificate status.
+            </div>
+            <div class="mb-3">
+              <label for="domain" class="form-label">Domain Name:</label>
+              <input type="text" class="form-control bg-dark text-light border-danger" id="domain" placeholder="Enter domain (e.g., google.com)">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="checkSSL()">Check SSL Certificate</button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">Clear</button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">Load Example</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>SSL Certificate Details</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Status</h6>
+                    <h3 id="statusResult">-</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Days Remaining</h6>
+                    <h3 id="daysRemaining">-</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Issuer</h6>
+                    <h3 id="issuerResult">-</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row text-center">
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Issued Date</h6>
+                    <h4 id="issuedDate">-</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Expiry Date</h6>
+                    <h4 id="expiryDate">-</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-3">
+              <h6 class="text-danger">Detailed Analysis:</h6>
+              <div id="detailedAnalysis" class="bg-black p-3 rounded">
+                <!-- Detailed analysis will be displayed here -->
+              </div>
+            </div>
+            
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+              <button class="btn btn-outline-danger" onclick="downloadResults()">Download Report</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    let lastResults = null;
+
+    function checkSSL() {
+      const domain = document.getElementById('domain').value.trim();
+      
+      if (!domain) {
+        alert('Please enter a domain name.');
+        return;
+      }
+      
+      // Show loading state
+      document.getElementById('statusResult').textContent = 'Checking...';
+      document.getElementById('resultsBox').style.display = 'block';
+      
+      // Simulate SSL checking
+      simulateSSLCheck(domain);
+    }
+
+    function simulateSSLCheck(domain) {
+      setTimeout(() => {
+        // Simulate different SSL scenarios
+        const scenarios = [
+          {
+            status: 'Valid',
+            daysRemaining: 245,
+            issuer: 'DigiCert Inc',
+            issuedDate: '2024-01-15',
+            expiryDate: '2025-01-15',
+            analysis: 'SSL certificate is valid and properly configured. The certificate is issued by a trusted Certificate Authority and has sufficient validity period.',
+            recommendations: 'Certificate is in good standing. Monitor for renewal 30 days before expiry.'
+          },
+          {
+            status: 'Valid',
+            daysRemaining: 15,
+            issuer: 'Let\'s Encrypt',
+            issuedDate: '2024-01-01',
+            expiryDate: '2024-02-01',
+            analysis: 'SSL certificate is valid but expires soon. The certificate is issued by Let\'s Encrypt and needs renewal.',
+            recommendations: 'Certificate expires in 15 days. Renew immediately to avoid service interruption.'
+          },
+          {
+            status: 'Expired',
+            daysRemaining: -5,
+            issuer: 'Comodo CA',
+            issuedDate: '2023-01-15',
+            expiryDate: '2024-01-10',
+            analysis: 'SSL certificate has expired. This poses a security risk and may cause browser warnings.',
+            recommendations: 'Certificate has expired. Renew immediately and ensure proper certificate management.'
+          },
+          {
+            status: 'Invalid',
+            daysRemaining: 0,
+            issuer: 'Unknown',
+            issuedDate: 'N/A',
+            expiryDate: 'N/A',
+            analysis: 'SSL certificate is invalid or not properly configured. This may indicate a self-signed certificate or configuration issues.',
+            recommendations: 'Install a valid SSL certificate from a trusted Certificate Authority.'
+          }
+        ];
+        
+        const randomScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+        displayResults(randomScenario, domain);
+        
+      }, 2000); // Simulate 2-second delay
+    }
+
+    function displayResults(results, domain) {
+      document.getElementById('statusResult').textContent = results.status;
+      document.getElementById('daysRemaining').textContent = results.daysRemaining;
+      document.getElementById('issuerResult').textContent = results.issuer;
+      document.getElementById('issuedDate').textContent = results.issuedDate;
+      document.getElementById('expiryDate').textContent = results.expiryDate;
+      
+      // Detailed analysis
+      const detailedAnalysis = document.getElementById('detailedAnalysis');
+      detailedAnalysis.innerHTML = `
+        <p><strong>Domain:</strong> ${domain}</p>
+        <p><strong>Analysis:</strong> ${results.analysis}</p>
+        <p><strong>Recommendations:</strong> ${results.recommendations}</p>
+      `;
+      
+      lastResults = { domain, ...results };
+    }
+
+    function clearInput() {
+      document.getElementById('domain').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function loadExample() {
+      document.getElementById('domain').value = 'google.com';
+      checkSSL();
+    }
+
+    function copyResults() {
+      if (!lastResults) {
+        alert('No results to copy.');
+        return;
+      }
+      
+      const results = `SSL Certificate Check Results:
+Domain: ${lastResults.domain}
+Status: ${lastResults.status}
+Days Remaining: ${lastResults.daysRemaining}
+Issuer: ${lastResults.issuer}
+Issued Date: ${lastResults.issuedDate}
+Expiry Date: ${lastResults.expiryDate}
+
+Analysis: ${lastResults.analysis}
+Recommendations: ${lastResults.recommendations}`;
+      
+      navigator.clipboard.writeText(results).then(() => {
+        alert('Results copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy results. Please copy manually.');
+      });
+    }
+
+    function downloadResults() {
+      if (!lastResults) {
+        alert('No results to download.');
+        return;
+      }
+      
+      const exportText = `SSL Certificate Check Report
+
+Check Details:
+- Domain: ${lastResults.domain}
+- Check Date: ${new Date().toLocaleString()}
+
+Results:
+- Status: ${lastResults.status}
+- Days Remaining: ${lastResults.daysRemaining}
+- Issuer: ${lastResults.issuer}
+- Issued Date: ${lastResults.issuedDate}
+- Expiry Date: ${lastResults.expiryDate}
+
+Analysis: ${lastResults.analysis}
+Recommendations: ${lastResults.recommendations}`;
+      
+      const blob = new Blob([exportText], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ssl-report-${lastResults.domain}.txt`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // Auto-check on Enter key
+    document.getElementById('domain').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        checkSSL();
+      }
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

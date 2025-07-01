@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Percentage Calculator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Percentage Calculator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="value1" class="form-label">Value 1:</label>
+                <input type="number" id="value1" class="form-control bg-dark text-light border-danger" placeholder="Enter first value">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="value2" class="form-label">Value 2:</label>
+                <input type="number" id="value2" class="form-control bg-dark text-light border-danger" placeholder="Enter second value">
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="calculatePercentage()">Calculate Percentage</button>
+              <button class="btn btn-outline-danger" onclick="clearValues()">Clear</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Percentage Calculation Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="row text-center">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Percentage</h6>
+                    <h3 id="percentageResult">0%</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Difference</h6>
+                    <h3 id="differenceResult">0</h3>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Ratio</h6>
+                    <h3 id="ratioResult">1:1</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function calculatePercentage() {
+      const value1 = parseFloat(document.getElementById('value1').value);
+      const value2 = parseFloat(document.getElementById('value2').value);
+      
+      if (isNaN(value1) || isNaN(value2)) {
+        alert('Please enter valid numbers.');
+        return;
+      }
+      
+      if (value2 === 0) {
+        alert('Value 2 cannot be zero.');
+        return;
+      }
+      
+      const percentage = ((value1 / value2) * 100).toFixed(2);
+      const difference = Math.abs(value1 - value2).toFixed(2);
+      const ratio = (value1 / value2).toFixed(2);
+      
+      document.getElementById('percentageResult').textContent = percentage + '%';
+      document.getElementById('differenceResult').textContent = difference;
+      document.getElementById('ratioResult').textContent = '1:' + ratio;
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function clearValues() {
+      document.getElementById('value1').value = '';
+      document.getElementById('value2').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

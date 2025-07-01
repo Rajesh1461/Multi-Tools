@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Story Plot Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Story Plot Generator</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Generate creative story plots with customizable elements. Perfect for writers, game developers, and creative projects.
+            </div>
+            <div class="mb-3">
+              <label for="genre" class="form-label">Genre:</label>
+              <select class="form-select bg-dark text-light border-danger" id="genre">
+                <option value="fantasy">Fantasy</option>
+                <option value="scifi">Science Fiction</option>
+                <option value="mystery">Mystery/Thriller</option>
+                <option value="romance">Romance</option>
+                <option value="adventure">Adventure</option>
+                <option value="horror">Horror</option>
+                <option value="drama">Drama</option>
+                <option value="comedy">Comedy</option>
+                <option value="historical">Historical</option>
+                <option value="western">Western</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="protagonist" class="form-label">Protagonist Type:</label>
+              <select class="form-select bg-dark text-light border-danger" id="protagonist">
+                <option value="hero">Hero/Heroine</option>
+                <option value="antihero">Anti-Hero</option>
+                <option value="underdog">Underdog</option>
+                <option value="mentor">Mentor/Guide</option>
+                <option value="outsider">Outsider</option>
+                <option value="ordinary">Ordinary Person</option>
+                <option value="royalty">Royalty/Noble</option>
+                <option value="warrior">Warrior/Fighter</option>
+                <option value="scholar">Scholar/Intellectual</option>
+                <option value="rogue">Rogue/Outlaw</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="conflict" class="form-label">Main Conflict:</label>
+              <select class="form-select bg-dark text-light border-danger" id="conflict">
+                <option value="manvsman">Man vs Man</option>
+                <option value="manvsnature">Man vs Nature</option>
+                <option value="manvsself">Man vs Self</option>
+                <option value="manvssociety">Man vs Society</option>
+                <option value="manvstechnology">Man vs Technology</option>
+                <option value="manvssupernatural">Man vs Supernatural</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="setting" class="form-label">Setting:</label>
+              <input type="text" class="form-control bg-dark text-light border-danger" id="setting" placeholder="Enter setting (e.g., futuristic city, medieval castle, small town)">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generatePlot()">
+                <i class="fas fa-magic me-2"></i>Generate Plot
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">
+                <i class="fas fa-download me-2"></i>Load Example
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-book me-2"></i>Generated Story Plot</h5>
+          </div>
+          <div class="card-body">
+            <div id="plotOutput"></div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyPlot()">
+                <i class="fas fa-copy me-2"></i>Copy Plot
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="savePlot()">
+                <i class="fas fa-save me-2"></i>Save Plot
+              </button>
+              <button class="btn btn-outline-danger" onclick="generateNew()">
+                <i class="fas fa-sync me-2"></i>Generate New
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Saved Plots -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-bookmark me-2"></i>Saved Plots</h5>
+          </div>
+          <div class="card-body">
+            <div id="savedPlotsList"></div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger" onclick="clearAllPlots()">
+                <i class="fas fa-trash me-2"></i>Clear All Plots
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Plot Structure Guide -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-info-circle me-2"></i>Story Structure Guide</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <h6 class="text-danger">Three-Act Structure:</h6>
+                <ul class="list-unstyled">
+                  <li>• <strong>Act 1:</strong> Setup and inciting incident</li>
+                  <li>• <strong>Act 2:</strong> Rising action and complications</li>
+                  <li>• <strong>Act 3:</strong> Climax and resolution</li>
+                </ul>
+              </div>
+              <div class="col-md-6 mb-3">
+                <h6 class="text-danger">Key Elements:</h6>
+                <ul class="list-unstyled">
+                  <li>• <strong>Hook:</strong> Opening that grabs attention</li>
+                  <li>• <strong>Conflict:</strong> Central problem to solve</li>
+                  <li>• <strong>Resolution:</strong> How the conflict ends</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        `;
+        document.getElementById('resultsBox').style.display = 'block';
+      }
+    }
+    function deletePlot(id) {
+      if (confirm('Are you sure you want to delete this plot?')) {
+        savedPlots = savedPlots.filter(p => p.id !== id);
+        localStorage.setItem('storyPlots', JSON.stringify(savedPlots));
+        updateSavedPlotsList();
+      }
+    }
+    function clearAllPlots() {
+      if (confirm('Are you sure you want to clear all saved plots?')) {
+        savedPlots = [];
+        localStorage.setItem('storyPlots', JSON.stringify(savedPlots));
+        updateSavedPlotsList();
+      }
+    }
+    function generateNew() {
+      generatePlot();
+    }
+    // Initialize saved plots list on page load
+    window.onload = function() {
+      updateSavedPlotsList();
+    };
+  </script>
+</body>
+</html>
+

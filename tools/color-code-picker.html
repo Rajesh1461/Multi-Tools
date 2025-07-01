@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Color Code Picker - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .compact-card { margin-bottom: 0.5rem !important; }
+    .compact-card .card-body { padding: 0.75rem; }
+    .compact-card .card-header { padding: 0.5rem 0.75rem; }
+    .compact-table { font-size: 0.9rem; }
+    .compact-table td, .compact-table th { padding: 0.5rem; }
+    .color-preview { width: 120px; height: 120px; }
+    .palette-btn { padding: 0.25rem 0.5rem; font-size: 0.8rem; }
+  </style>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-3">
+    <div class="mb-2">
+      <a href="../index.html" class="btn btn-outline-danger btn-sm">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-3">Color Code Picker</h1>
+    
+    <div class="row">
+      <!-- Left Column - Controls and Preview -->
+      <div class="col-lg-6">
+        <!-- Color Controls -->
+        <div class="card bg-black border-danger compact-card">
+          <div class="card-header text-danger">
+            <h6 class="mb-0"><i class="fas fa-palette me-2"></i>Color Controls</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-2">
+              <div class="col-md-6">
+                <label for="colorPicker" class="form-label small">Color Picker:</label>
+                <input type="color" id="colorPicker" class="form-control form-control-color bg-dark text-light border-danger" value="#ff0000" onchange="updateColor()">
+              </div>
+              <div class="col-md-6">
+                <label for="colorInput" class="form-label small">Color Input:</label>
+                <input type="text" id="colorInput" class="form-control bg-dark text-light border-danger" placeholder="#ff0000" onchange="updateFromInput()">
+              </div>
+            </div>
+            
+            <div class="row g-2 mt-2">
+              <div class="col-md-6">
+                <label for="colorFormat" class="form-label small">Output Format:</label>
+                <select id="colorFormat" class="form-select bg-dark text-light border-danger" onchange="updateColor()">
+                  <option value="hex">Hexadecimal (#RRGGBB)</option>
+                  <option value="rgb">RGB (r, g, b)</option>
+                  <option value="rgba">RGBA (r, g, b, a)</option>
+                  <option value="hsl">HSL (h, s%, l%)</option>
+                  <option value="hsla">HSLA (h, s%, l%, a)</option>
+                  <option value="name">Color Name</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="opacity" class="form-label small">Opacity: <span id="opacityValue" class="text-danger">100%</span></label>
+                <input type="range" id="opacity" class="form-range" min="0" max="100" value="100" oninput="updateOpacity()">
+              </div>
+            </div>
+            
+            <div class="text-center mt-2">
+              <button class="btn btn-danger btn-sm me-1" onclick="pickRandomColor()">Random</button>
+              <button class="btn btn-outline-danger btn-sm me-1" onclick="copyColor()">Copy</button>
+              <button class="btn btn-outline-danger btn-sm" onclick="saveColor()">Save</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Color Preview -->
+        <div class="card bg-dark border-danger compact-card">
+          <div class="card-header text-danger">
+            <h6 class="mb-0"><i class="fas fa-eye me-2"></i>Color Preview</h6>
+          </div>
+          <div class="card-body">
+            <div class="row align-items-center">
+              <div class="col-md-4 text-center">
+                <div id="previewBox" class="color-preview mx-auto" style="border: 2px solid #fff; border-radius: 8px; background-color: #ff0000;"></div>
+              </div>
+              <div class="col-md-8">
+                <div class="row g-1 text-center">
+                  <div class="col-3">
+                    <div class="card bg-secondary border-danger">
+                      <div class="card-body p-2">
+                        <small class="text-danger">Red</small>
+                        <div id="redValue" class="fw-bold">255</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="card bg-secondary border-danger">
+                      <div class="card-body p-2">
+                        <small class="text-danger">Green</small>
+                        <div id="greenValue" class="fw-bold">0</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="card bg-secondary border-danger">
+                      <div class="card-body p-2">
+                        <small class="text-danger">Blue</small>
+                        <div id="blueValue" class="fw-bold">0</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-3">
+                    <div class="card bg-secondary border-danger">
+                      <div class="card-body p-2">
+                        <small class="text-danger">Alpha</small>
+                        <div id="alphaValue" class="fw-bold">1.0</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row g-1 text-center mt-1">
+                  <div class="col-4">
+                    <div class="card bg-secondary border-danger">
+                      <div class="card-body p-2">
+                        <small class="text-danger">Hue</small>
+                        <div id="hueValue" class="fw-bold">0°</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="card bg-secondary border-danger">
+                      <div class="card-body p-2">
+                        <small class="text-danger">Saturation</small>
+                        <div id="saturationValue" class="fw-bold">100%</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-4">
+                    <div class="card bg-secondary border-danger">
+                      <div class="card-body p-2">
+                        <small class="text-danger">Lightness</small>
+                        <div id="lightnessValue" class="fw-bold">50%</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Color Palette -->
+        <div class="card bg-dark border-danger compact-card">
+          <div class="card-header text-danger">
+            <h6 class="mb-0"><i class="fas fa-palette me-2"></i>Quick Palette</h6>
+          </div>
+          <div class="card-body">
+            <div class="row g-1">
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('red')">Red</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('green')">Green</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('blue')">Blue</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('yellow')">Yellow</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('purple')">Purple</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('orange')">Orange</button>
+              </div>
+            </div>
+            <div class="row g-1 mt-1">
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('pink')">Pink</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('cyan')">Cyan</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('brown')">Brown</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('black')">Black</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('white')">White</button>
+              </div>
+              <div class="col-2">
+                <button class="btn btn-outline-danger palette-btn w-100" onclick="usePalette('gray')">Gray</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column - Output and Info -->
+      <div class="col-lg-6">
+        <!-- Color Codes Output -->
+        <div id="colorCodesBox" class="card bg-dark border-danger compact-card">
+          <div class="card-header text-danger">
+            <h6 class="mb-0"><i class="fas fa-code me-2"></i>Color Codes</h6>
+          </div>
+          <div class="card-body">
+            <div class="mb-2">
+              <label for="colorOutput" class="form-label small">Selected Format:</label>
+              <div class="input-group input-group-sm">
+                <input type="text" id="colorOutput" class="form-control bg-dark text-light border-danger" readonly>
+                <button class="btn btn-outline-danger" onclick="copyOutput()">Copy</button>
+              </div>
+            </div>
+            
+            <div class="mb-2">
+              <h6 class="text-danger small">All Formats:</h6>
+              <div class="table-responsive">
+                <table class="table table-dark table-striped compact-table">
+                  <thead>
+                    <tr>
+                      <th>Format</th>
+                      <th>Code</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="allFormatsTable">
+                    <!-- All color formats will be displayed here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Saved Colors -->
+        <div id="savedColorsBox" class="card bg-dark border-danger compact-card" style="display: none;">
+          <div class="card-header text-danger">
+            <h6 class="mb-0"><i class="fas fa-bookmark me-2"></i>Saved Colors</h6>
+          </div>
+          <div class="card-body">
+            <div id="savedColorsList" class="row g-2">
+              <!-- Saved colors will be displayed here -->
+            </div>
+          </div>
+        </div>
+        
+        <!-- Color Information -->
+        <div class="card bg-dark border-danger compact-card">
+          <div class="card-header text-danger">
+            <h6 class="mb-0"><i class="fas fa-info-circle me-2"></i>Format Reference</h6>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table table-dark table-striped compact-table">
+                <thead>
+                  <tr>
+                    <th>Format</th>
+                    <th>Example</th>
+                    <th>Description</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Hexadecimal</td>
+                    <td>#FF0000</td>
+                    <td>6-digit hex code (RRGGBB)</td>
+                  </tr>
+                  <tr>
+                    <td>RGB</td>
+                    <td>rgb(255, 0, 0)</td>
+                    <td>Red, Green, Blue values (0-255)</td>
+                  </tr>
+                  <tr>
+                    <td>RGBA</td>
+                    <td>rgba(255, 0, 0, 0.5)</td>
+                    <td>RGB with alpha transparency (0-1)</td>
+                  </tr>
+                  <tr>
+                    <td>HSL</td>
+                    <td>hsl(0, 100%, 50%)</td>
+                    <td>Hue, Saturation, Lightness</td>
+                  </tr>
+                  <tr>
+                    <td>HSLA</td>
+                    <td>hsla(0, 100%, 50%, 0.5)</td>
+                    <td>HSL with alpha transparency</td>
+                  </tr>
+                  <tr>
+                    <td>Color Name</td>
+                    <td>red</td>
+                    <td>CSS color keyword</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let currentColor = '#ff0000';
+    let savedColors = [];
+    
+    function updateColor() {
+      const colorPicker = document.getElementById('colorPicker');
+      const colorInput = document.getElementById('colorInput');
+      const format = document.getElementById('colorFormat').value;
+      const opacity = document.getElementById('opacity').value / 100;
+      
+      currentColor = colorPicker.value;
+      colorInput.value = currentColor;
+      
+      // Update preview
+      document.getElementById('previewBox').style.backgroundColor = currentColor;
+      
+      // Parse RGB values
+      const r = parseInt(currentColor.substr(1, 2), 16);
+      const g = parseInt(currentColor.substr(3, 2), 16);
+      const b = parseInt(currentColor.substr(5, 2), 16);
+      
+      // Update RGB values
+      document.getElementById('redValue').textContent = r;
+      document.getElementById('greenValue').textContent = g;
+      document.getElementById('blueValue').textContent = b;
+      document.getElementById('alphaValue').textContent = opacity.toFixed(1);
+      
+      // Calculate HSL
+      const hsl = rgbToHsl(r, g, b);
+      document.getElementById('hueValue').textContent = Math.round(hsl.h) + '°';
+      document.getElementById('saturationValue').textContent = Math.round(hsl.s) + '%';
+      document.getElementById('lightnessValue').textContent = Math.round(hsl.l) + '%';
+      
+      // Generate color codes
+      generateColorCodes(r, g, b, opacity, format);
+    }
+    
+    function updateFromInput() {
+      const colorInput = document.getElementById('colorInput').value;
+      if (isValidColor(colorInput)) {
+        document.getElementById('colorPicker').value = colorInput;
+        updateColor();
+      }
+    }
+    
+    function updateOpacity() {
+      const opacity = document.getElementById('opacity').value;
+      document.getElementById('opacityValue').textContent = opacity + '%';
+      updateColor();
+    }
+    
+    function generateColorCodes(r, g, b, a, selectedFormat) {
+      const codes = {
+        hex: `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`,
+        rgb: `rgb(${r}, ${g}, ${b})`,
+        rgba: `rgba(${r}, ${g}, ${b}, ${a})`,
+        hsl: rgbToHslString(r, g, b),
+        hsla: rgbToHslaString(r, g, b, a),
+        name: rgbToColorName(r, g, b)
+      };
+      
+      // Update selected format output
+      document.getElementById('colorOutput').value = codes[selectedFormat];
+      
+      // Update all formats table
+      const tableBody = document.getElementById('allFormatsTable');
+      tableBody.innerHTML = '';
+      
+      Object.entries(codes).forEach(([format, code]) => {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+          <td>${format.toUpperCase()}</td>
+          <td><code>${code}</code></td>
+          <td><button class="btn btn-sm btn-outline-danger" onclick="copyToClipboard('${code}')">Copy</button></td>
+        `;
+      });
+      
+      document.getElementById('colorCodesBox').style.display = 'block';
+    }
+    
+    function rgbToHsl(r, g, b) {
+      r /= 255;
+      g /= 255;
+      b /= 255;
+      
+      const max = Math.max(r, g, b);
+      const min = Math.min(r, g, b);
+      let h, s, l = (max + min) / 2;
+      
+      if (max === min) {
+        h = s = 0;
+      } else {
+        const d = max - min;
+        s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+        
+        switch (max) {
+          case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+          case g: h = (b - r) / d + 2; break;
+          case b: h = (r - g) / d + 4; break;
+        }
+        h /= 6;
+      }
+      
+      return {
+        h: h * 360,
+        s: s * 100,
+        l: l * 100
+      };
+    }
+    
+    function rgbToHslString(r, g, b) {
+      const hsl = rgbToHsl(r, g, b);
+      return `hsl(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%)`;
+    }
+    
+    function rgbToHslaString(r, g, b, a) {
+      const hsl = rgbToHsl(r, g, b);
+      return `hsla(${Math.round(hsl.h)}, ${Math.round(hsl.s)}%, ${Math.round(hsl.l)}%, ${a})`;
+    }
+    
+    function rgbToColorName(r, g, b) {
+      const colorNames = {
+        '#000000': 'black',
+        '#FFFFFF': 'white',
+        '#FF0000': 'red',
+        '#00FF00': 'lime',
+        '#0000FF': 'blue',
+        '#FFFF00': 'yellow',
+        '#FF00FF': 'magenta',
+        '#00FFFF': 'cyan',
+        '#FFA500': 'orange',
+        '#800080': 'purple',
+        '#FFC0CB': 'pink',
+        '#A52A2A': 'brown',
+        '#808080': 'gray'
+      };
+      
+      const hex = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`.toUpperCase();
+      return colorNames[hex] || 'custom';
+    }
+    
+    function isValidColor(color) {
+      const s = new Option().style;
+      s.color = color;
+      return s.color !== '';
+    }
+    
+    function pickRandomColor() {
+      const r = Math.floor(Math.random() * 256);
+      const g = Math.floor(Math.random() * 256);
+      const b = Math.floor(Math.random() * 256);
+      const hex = `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+      
+      document.getElementById('colorPicker').value = hex;
+      updateColor();
+    }
+    
+    function copyColor() {
+      const output = document.getElementById('colorOutput').value;
+      navigator.clipboard.writeText(output).then(() => {
+        alert('Color code copied to clipboard!');
+      });
+    }
+    
+    function copyOutput() {
+      const output = document.getElementById('colorOutput').value;
+      navigator.clipboard.writeText(output).then(() => {
+        alert('Color code copied to clipboard!');
+      });
+    }
+    
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        alert('Color code copied to clipboard!');
+      });
+    }
+    
+    function saveColor() {
+      const color = document.getElementById('colorOutput').value;
+      const name = prompt('Enter a name for this color:');
+      
+      if (name && color) {
+        savedColors.push({ name, color, hex: currentColor });
+        updateSavedColors();
+        document.getElementById('savedColorsBox').style.display = 'block';
+      }
+    }
+    
+    function updateSavedColors() {
+      const container = document.getElementById('savedColorsList');
+      container.innerHTML = '';
+      
+      savedColors.forEach((savedColor, index) => {
+        const col = document.createElement('div');
+        col.className = 'col-md-4 mb-2';
+        col.innerHTML = `
+          <div class="card bg-secondary border-danger">
+            <div class="card-body text-center p-2">
+              <div style="width: 100%; height: 40px; background-color: ${savedColor.hex}; border-radius: 3px; margin-bottom: 5px;"></div>
+              <h6 class="text-danger small mb-1">${savedColor.name}</h6>
+              <small class="text-muted d-block mb-1">${savedColor.color}</small>
+              <div>
+                <button class="btn btn-sm btn-outline-danger me-1" onclick="useSavedColor(${index})">Use</button>
+                <button class="btn btn-sm btn-outline-danger" onclick="removeSavedColor(${index})">Remove</button>
+              </div>
+            </div>
+          </div>
+        `;
+        container.appendChild(col);
+      });
+    }
+    
+    function useSavedColor(index) {
+      const savedColor = savedColors[index];
+      document.getElementById('colorPicker').value = savedColor.hex;
+      updateColor();
+    }
+    
+    function removeSavedColor(index) {
+      savedColors.splice(index, 1);
+      updateSavedColors();
+      if (savedColors.length === 0) {
+        document.getElementById('savedColorsBox').style.display = 'none';
+      }
+    }
+    
+    function usePalette(colorName) {
+      const colors = {
+        red: '#FF0000',
+        green: '#00FF00',
+        blue: '#0000FF',
+        yellow: '#FFFF00',
+        purple: '#800080',
+        orange: '#FFA500',
+        pink: '#FFC0CB',
+        cyan: '#00FFFF',
+        brown: '#A52A2A',
+        black: '#000000',
+        white: '#FFFFFF',
+        gray: '#808080'
+      };
+      
+      if (colors[colorName]) {
+        document.getElementById('colorPicker').value = colors[colorName];
+        updateColor();
+      }
+    }
+    
+    // Initialize
+    updateColor();
+  </script>
+</body>
+</html>

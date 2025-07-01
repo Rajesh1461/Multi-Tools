@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Case Converter - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <style>
+    .form-check-label {
+      opacity: 0.9 !important;
+      color: #fff !important;
+      font-weight: 500;
+    }
+    .form-check-input {
+      opacity: 0.9 !important;
+    }
+    .col-md-6 .form-label {
+      opacity: 0.9 !important;
+      color: #fff !important;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Case Converter</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="inputText" class="form-label">Input Text:</label>
+              <textarea id="inputText" class="form-control bg-dark text-light border-danger" rows="6" placeholder="Enter text to convert case"></textarea>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="caseType" class="form-label">Case Type:</label>
+                <select id="caseType" class="form-select bg-dark text-light border-danger">
+                  <option value="lowercase">lowercase</option>
+                  <option value="uppercase">UPPERCASE</option>
+                  <option value="titlecase">Title Case</option>
+                  <option value="sentencecase">Sentence case</option>
+                  <option value="camelcase">camelCase</option>
+                  <option value="pascalcase">PascalCase</option>
+                  <option value="snakecase">snake_case</option>
+                  <option value="kebabcase">kebab-case</option>
+                  <option value="alternating">aLtErNaTiNg</option>
+                  <option value="inverted">InVeRtEd</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="preserveFormatting" class="form-label">Options:</label>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="preserveFormatting" checked>
+                  <label class="form-check-label" for="preserveFormatting">
+                    Preserve line breaks
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="preserveSpacing" checked>
+                  <label class="form-check-label" for="preserveSpacing">
+                    Preserve spacing
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="preservePunctuation" checked>
+                  <label class="form-check-label" for="preservePunctuation">
+                    Preserve punctuation
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="convertCase()">Convert Case</button>
+              <button class="btn btn-outline-danger me-2" onclick="clearText()">Clear</button>
+              <button class="btn btn-outline-danger" onclick="swapText()">Swap</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Converted Text</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="outputText" class="form-label">Output:</label>
+              <textarea id="outputText" class="form-control bg-dark text-light border-danger" rows="6" readonly></textarea>
+            </div>
+            
+            <div class="row text-center mb-3">
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Characters</h6>
+                    <h4 id="charCountResult">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Words</h6>
+                    <h4 id="wordCountResult">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Lines</h6>
+                    <h4 id="lineCountResult">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Case Type</h6>
+                    <h4 id="caseTypeResult">-</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="copyOutput()">Copy Output</button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadOutput()">Download</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Conversions -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Quick Conversions</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('title')">Title Case</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('camel')">camelCase</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('snake')">snake_case</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('kebab')">kebab-case</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('pascal')">PascalCase</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('sentence')">Sentence case</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function convertCase() {
+      const input = document.getElementById('inputText').value;
+      const caseType = document.getElementById('caseType').value;
+      const preserveFormatting = document.getElementById('preserveFormatting').checked;
+      const preserveSpacing = document.getElementById('preserveSpacing').checked;
+      const preservePunctuation = document.getElementById('preservePunctuation').checked;
+      
+      if (!input.trim()) {
+        alert('Please enter text to convert.');
+        return;
+      }
+      
+      let output = '';
+      
+      switch (caseType) {
+        case 'lowercase':
+          output = input.toLowerCase();
+          break;
+        case 'uppercase':
+          output = input.toUpperCase();
+          break;
+        case 'titlecase':
+          output = toTitleCase(input);
+          break;
+        case 'sentencecase':
+          output = toSentenceCase(input);
+          break;
+        case 'camelcase':
+          output = toCamelCase(input);
+          break;
+        case 'pascalcase':
+          output = toPascalCase(input);
+          break;
+        case 'snakecase':
+          output = toSnakeCase(input);
+          break;
+        case 'kebabcase':
+          output = toKebabCase(input);
+          break;
+        case 'alternating':
+          output = toAlternatingCase(input);
+          break;
+        case 'inverted':
+          output = toInvertedCase(input);
+          break;
+        default:
+          output = input;
+      }
+      
+      // Apply preservation options
+      if (!preserveFormatting) {
+        output = output.replace(/\n/g, ' ');
+      }
+      if (!preserveSpacing) {
+        output = output.replace(/\s+/g, ' ');
+      }
+      if (!preservePunctuation) {
+        output = output.replace(/[^\w\s]/g, '');
+      }
+      
+      document.getElementById('outputText').value = output;
+      
+      // Update statistics
+      document.getElementById('charCountResult').textContent = output.length;
+      document.getElementById('wordCountResult').textContent = output.trim().split(/\s+/).filter(word => word.length > 0).length;
+      document.getElementById('lineCountResult').textContent = output.split('\n').length;
+      document.getElementById('caseTypeResult').textContent = caseType;
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function toTitleCase(text) {
+      return text.replace(/\w\S*/g, function(txt) {
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      });
+    }
+    
+    function toSentenceCase(text) {
+      return text.toLowerCase().replace(/(^\w|\.\s+\w)/g, function(letter) {
+        return letter.toUpperCase();
+      });
+    }
+    
+    function toCamelCase(text) {
+      return text.toLowerCase()
+        .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+        .replace(/^[A-Z]/, c => c.toLowerCase());
+    }
+    
+    function toPascalCase(text) {
+      return text.toLowerCase()
+        .replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase())
+        .replace(/^[a-z]/, c => c.toUpperCase());
+    }
+    
+    function toSnakeCase(text) {
+      return text.toLowerCase()
+        .replace(/[^a-zA-Z0-9]+/g, '_')
+        .replace(/^_|_$/g, '');
+    }
+    
+    function toKebabCase(text) {
+      return text.toLowerCase()
+        .replace(/[^a-zA-Z0-9]+/g, '-')
+        .replace(/^-|-$/g, '');
+    }
+    
+    function toAlternatingCase(text) {
+      return text.split('').map((char, index) => {
+        return index % 2 === 0 ? char.toLowerCase() : char.toUpperCase();
+      }).join('');
+    }
+    
+    function toInvertedCase(text) {
+      return text.split('').map(char => {
+        return char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase();
+      }).join('');
+    }
+    
+    function clearText() {
+      document.getElementById('inputText').value = '';
+      document.getElementById('outputText').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+    
+    function swapText() {
+      const input = document.getElementById('inputText').value;
+      const output = document.getElementById('outputText').value;
+      
+      if (output) {
+        document.getElementById('inputText').value = output;
+        document.getElementById('outputText').value = input;
+      }
+    }
+    
+    function copyOutput() {
+      const output = document.getElementById('outputText');
+      output.select();
+      document.execCommand('copy');
+      alert('Converted text copied to clipboard!');
+    }
+    
+    function downloadOutput() {
+      const output = document.getElementById('outputText').value;
+      if (!output) {
+        alert('No output to download.');
+        return;
+      }
+      
+      const blob = new Blob([output], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'converted-text.txt';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function useTemplate(type) {
+      let template = '';
+      let caseType = 'lowercase';
+      
+      switch (type) {
+        case 'title':
+          template = 'hello world example text';
+          caseType = 'titlecase';
+          break;
+        case 'camel':
+          template = 'hello world example text';
+          caseType = 'camelcase';
+          break;
+        case 'snake':
+          template = 'hello world example text';
+          caseType = 'snakecase';
+          break;
+        case 'kebab':
+          template = 'hello world example text';
+          caseType = 'kebabcase';
+          break;
+        case 'pascal':
+          template = 'hello world example text';
+          caseType = 'pascalcase';
+          break;
+        case 'sentence':
+          template = 'hello world. this is an example.';
+          caseType = 'sentencecase';
+          break;
+      }
+      
+      document.getElementById('inputText').value = template;
+      document.getElementById('caseType').value = caseType;
+      convertCase();
+    }
+    
+    // Auto-convert on input change
+    document.getElementById('inputText').addEventListener('input', function() {
+      if (this.value.trim() !== '') {
+        convertCase();
+      }
+    });
+    
+    document.getElementById('caseType').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        convertCase();
+      }
+    });
+    
+    // Auto-convert on option changes
+    document.getElementById('preserveFormatting').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        convertCase();
+      }
+    });
+    
+    document.getElementById('preserveSpacing').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        convertCase();
+      }
+    });
+    
+    document.getElementById('preservePunctuation').addEventListener('change', function() {
+      if (document.getElementById('inputText').value.trim() !== '') {
+        convertCase();
+      }
+    });
+  </script>
+</body>
+</html>

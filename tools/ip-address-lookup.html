@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Address Lookup - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .info-card {
+            border-left: 4px solid #dc3545;
+            background: #212529;
+        }
+        .location-info {
+            background: linear-gradient(135deg, #dc3545 0%, #6f42c1 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .flag-icon {
+            width: 24px;
+            height: 16px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">IP Address Lookup</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-header text-danger">
+            <h3 class="mb-0"><i class="fas fa-search-location me-2"></i>IP Address Lookup</h3>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> This tool uses external APIs to provide IP address information. Results may vary based on the data available.
+            </div>
+            <div class="row mb-4">
+              <div class="col-md-8">
+                <div class="input-group">
+                  <input type="text" class="form-control bg-dark text-light border-danger" id="ipInput" placeholder="Enter IP address (e.g., 8.8.8.8) or leave empty for your IP">
+                  <button class="btn btn-danger" onclick="lookupIP()">
+                    <i class="fas fa-search me-2"></i>Lookup
+                  </button>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <button class="btn btn-outline-danger w-100" onclick="getMyIP()">
+                  <i class="fas fa-user me-2"></i>My IP
+                </button>
+              </div>
+            </div>
+            <div id="loadingSection" style="display: none;">
+              <div class="text-center">
+                <div class="spinner-border text-danger" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2 text-light">Looking up IP information...</p>
+              </div>
+            </div>
+            <div id="resultsSection" style="display: none;">
+              <div class="location-info mb-4">
+                <div class="row">
+                  <div class="col-md-6">
+                    <h5><i class="fas fa-map-marker-alt me-2"></i>Location</h5>
+                    <p class="mb-1" id="locationText">--</p>
+                    <p class="mb-0" id="coordinatesText">--</p>
+                  </div>
+                  <div class="col-md-6 text-end">
+                    <h5><i class="fas fa-flag me-2"></i>Country</h5>
+                    <p class="mb-0" id="countryText">--</p>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card info-card mb-3">
+                    <div class="card-body">
+                      <h6 class="text-danger"><i class="fas fa-network-wired me-2"></i>Network Information</h6>
+                      <table class="table table-sm table-dark">
+                        <tr>
+                          <td><strong>IP Address:</strong></td>
+                          <td id="ipAddress">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>ISP:</strong></td>
+                          <td id="isp">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Organization:</strong></td>
+                          <td id="org">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>AS Number:</strong></td>
+                          <td id="asn">--</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card info-card mb-3">
+                    <div class="card-body">
+                      <h6 class="text-danger"><i class="fas fa-globe me-2"></i>Geographic Details</h6>
+                      <table class="table table-sm table-dark">
+                        <tr>
+                          <td><strong>City:</strong></td>
+                          <td id="city">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Region:</strong></td>
+                          <td id="region">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Country:</strong></td>
+                          <td id="country">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Timezone:</strong></td>
+                          <td id="timezone">--</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="card info-card mb-3">
+                    <div class="card-body">
+                      <h6 class="text-danger"><i class="fas fa-info-circle me-2"></i>Additional Info</h6>
+                      <table class="table table-sm table-dark">
+                        <tr>
+                          <td><strong>Hostname:</strong></td>
+                          <td id="hostname">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Postal Code:</strong></td>
+                          <td id="postal">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Latitude:</strong></td>
+                          <td id="latitude">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Longitude:</strong></td>
+                          <td id="longitude">--</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="card info-card mb-3">
+                    <div class="card-body">
+                      <h6 class="text-danger"><i class="fas fa-shield-alt me-2"></i>Security Info</h6>
+                      <table class="table table-sm table-dark">
+                        <tr>
+                          <td><strong>Proxy/VPN:</strong></td>
+                          <td id="proxy">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Mobile:</strong></td>
+                          <td id="mobile">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Hosting:</strong></td>
+                          <td id="hosting">--</td>
+                        </tr>
+                        <tr>
+                          <td><strong>Tor Exit:</strong></td>
+                          <td id="tor">--</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-center mt-3">
+                <button class="btn btn-danger me-2" onclick="copyResults()">
+                  <i class="fas fa-copy me-2"></i>Copy Results
+                </button>
+                <button class="btn btn-outline-danger" onclick="viewOnMap()">
+                  <i class="fas fa-map me-2"></i>View on Map
+                </button>
+              </div>
+            </div>
+            <div id="errorSection" style="display: none;">
+              <div class="alert alert-danger bg-dark border-danger">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <span id="errorMessage">An error occurred while looking up the IP address.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let currentIPData = null;
+
+    async function getMyIP() {
+      showLoading();
+      hideResults();
+      hideError();
+      
+      try {
+        // Use ipify.org to get IPv4 address
+        const response = await fetch('https://api.ipify.org?format=json');
+        const data = await response.json();
+        
+        if (!data.ip) {
+          throw new Error('Failed to get your IP address');
+        }
+        
+        // Fill the input box with the user's IP
+        document.getElementById('ipInput').value = data.ip;
+        
+        // Now perform the lookup with the filled IP
+        await lookupIP();
+        
+      } catch (error) {
+        console.error('Get My IP error:', error);
+        showError(error.message || 'Failed to get your IP address. Please try again.');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    async function lookupIP() {
+      const ipInput = document.getElementById('ipInput').value.trim();
+      
+      showLoading();
+      hideResults();
+      hideError();
+      
+      try {
+        let url = 'https://ipapi.co/json/';
+        if (ipInput) {
+          url = `https://ipapi.co/${ipInput}/json/`;
+        }
+        
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        if (data.error) {
+          throw new Error(data.reason || 'Invalid IP address');
+        }
+        
+        currentIPData = data;
+        displayResults(data);
+        
+      } catch (error) {
+        console.error('IP lookup error:', error);
+        showError(error.message || 'Failed to lookup IP address. Please try again.');
+      } finally {
+        hideLoading();
+      }
+    }
+
+    function displayResults(data) {
+      // Location info
+      document.getElementById('locationText').textContent = 
+        `${data.city || 'Unknown'}, ${data.region || 'Unknown'}`;
+      document.getElementById('coordinatesText').textContent = 
+        `${data.latitude || 'N/A'}, ${data.longitude || 'N/A'}`;
+      document.getElementById('countryText').textContent = 
+        `${data.country_name || 'Unknown'} (${data.country || 'N/A'})`;
+      
+      // Network info
+      document.getElementById('ipAddress').textContent = data.ip || '--';
+      document.getElementById('isp').textContent = data.org || '--';
+      document.getElementById('org').textContent = data.org || '--';
+      document.getElementById('asn').textContent = data.asn || '--';
+      
+      // Geographic details
+      document.getElementById('city').textContent = data.city || '--';
+      document.getElementById('region').textContent = data.region || '--';
+      document.getElementById('country').textContent = data.country_name || '--';
+      document.getElementById('timezone').textContent = data.timezone || '--';
+      
+      // Additional info
+      document.getElementById('hostname').textContent = data.hostname || '--';
+      document.getElementById('postal').textContent = data.postal || '--';
+      document.getElementById('latitude').textContent = data.latitude || '--';
+      document.getElementById('longitude').textContent = data.longitude || '--';
+      
+      // Security info (using additional API for more details)
+      document.getElementById('proxy').textContent = 'Unknown';
+      document.getElementById('mobile').textContent = 'Unknown';
+      document.getElementById('hosting').textContent = 'Unknown';
+      document.getElementById('tor').textContent = 'Unknown';
+      
+      showResults();
+    }
+
+    function showLoading() {
+      document.getElementById('loadingSection').style.display = 'block';
+    }
+
+    function hideLoading() {
+      document.getElementById('loadingSection').style.display = 'none';
+    }
+
+    function showResults() {
+      document.getElementById('resultsSection').style.display = 'block';
+    }
+
+    function hideResults() {
+      document.getElementById('resultsSection').style.display = 'none';
+    }
+
+    function showError(message) {
+      document.getElementById('errorMessage').textContent = message;
+      document.getElementById('errorSection').style.display = 'block';
+    }
+
+    function hideError() {
+      document.getElementById('errorSection').style.display = 'none';
+    }
+
+    function copyResults() {
+      if (!currentIPData) return;
+      
+      const results = `IP Address Lookup Results:
+IP: ${currentIPData.ip}
+Location: ${currentIPData.city}, ${currentIPData.region}, ${currentIPData.country_name}
+Coordinates: ${currentIPData.latitude}, ${currentIPData.longitude}
+ISP: ${currentIPData.org}
+Timezone: ${currentIPData.timezone}`;
+      
+      navigator.clipboard.writeText(results).then(() => {
+        alert('Results copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy results. Please copy manually.');
+      });
+    }
+
+    function viewOnMap() {
+      if (!currentIPData || !currentIPData.latitude || !currentIPData.longitude) {
+        alert('Location data not available for mapping.');
+        return;
+      }
+      
+      const url = `https://www.google.com/maps?q=${currentIPData.latitude},${currentIPData.longitude}`;
+      window.open(url, '_blank');
+    }
+
+    // Handle Enter key
+    document.getElementById('ipInput').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        lookupIP();
+      }
+    });
+
+    // Auto-lookup user's IP on page load
+    window.addEventListener('load', function() {
+      getMyIP();
+    });
+  </script>
+</body>
+</html>

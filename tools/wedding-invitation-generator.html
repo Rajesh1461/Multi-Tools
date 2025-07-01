@@ -1,0 +1,243 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding Invitation Generator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    .invitation-preview {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border: 2px solid #dee2e6;
+      border-radius: 15px;
+      padding: 30px;
+      margin: 20px 0;
+      font-family: 'Georgia', serif;
+      color: #333;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      min-height: 400px;
+      position: relative;
+    }
+    .invitation-preview.elegant {
+      background: linear-gradient(135deg, #fff5f5 0%, #fef2f2 100%);
+      border-color: #fecaca;
+    }
+    .invitation-preview.modern {
+      background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+      border-color: #7dd3fc;
+    }
+    .invitation-preview.romantic {
+      background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+      border-color: #f9a8d4;
+    }
+    .invitation-preview.classic {
+      background: linear-gradient(135deg, #fefce8 0%, #fef3c7 100%);
+      border-color: #fde68a;
+    }
+    .invitation-preview.vintage {
+      background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+      border-color: #f59e0b;
+    }
+    .invitation-header {
+      text-align: center;
+      margin-bottom: 30px;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: #8b5cf6;
+    }
+    .couple-names {
+      text-align: center;
+      font-size: 2.5em;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #1f2937;
+      font-family: 'Playfair Display', serif;
+    }
+    .invitation-text {
+      text-align: center;
+      line-height: 1.8;
+      margin: 20px 0;
+      font-size: 1.1em;
+    }
+    .date-time {
+      text-align: center;
+      font-size: 1.3em;
+      font-weight: bold;
+      margin: 25px 0;
+      color: #374151;
+    }
+    .venue {
+      text-align: center;
+      font-size: 1.2em;
+      margin: 20px 0;
+      color: #4b5563;
+    }
+    .rsvp-info {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #d1d5db;
+      font-style: italic;
+      color: #6b7280;
+    }
+    .decorative-border {
+      border: 2px solid #d1d5db;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 10px;
+    }
+    .floral-decoration {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 1.5em;
+      color: #8b5cf6;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Wedding Invitation Generator</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Create beautiful wedding invitations with customizable templates, fonts, and designs. Perfect for couples planning their special day.
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="groomName" class="form-label">Groom's Name:</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="groomName" placeholder="Enter groom's name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="brideName" class="form-label">Bride's Name:</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="brideName" placeholder="Enter bride's name">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="weddingDate" class="form-label">Wedding Date:</label>
+                <input type="date" class="form-control bg-dark text-light border-danger" id="weddingDate">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="weddingTime" class="form-label">Wedding Time:</label>
+                <input type="time" class="form-control bg-dark text-light border-danger" id="weddingTime">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="venueName" class="form-label">Venue Name:</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="venueName" placeholder="Enter venue name">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="venueAddress" class="form-label">Venue Address:</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="venueAddress" placeholder="Enter venue address">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="receptionVenue" class="form-label">Reception Venue (Optional):</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="receptionVenue" placeholder="Enter reception venue">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="receptionTime" class="form-label">Reception Time (Optional):</label>
+                <input type="time" class="form-control bg-dark text-light border-danger" id="receptionTime">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="rsvpContact" class="form-label">RSVP Contact:</label>
+                <input type="text" class="form-control bg-dark text-light border-danger" id="rsvpContact" placeholder="Enter RSVP contact">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="rsvpDeadline" class="form-label">RSVP Deadline:</label>
+                <input type="date" class="form-control bg-dark text-light border-danger" id="rsvpDeadline">
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="additionalInfo" class="form-label">Additional Information:</label>
+              <textarea class="form-control bg-dark text-light border-danger" id="additionalInfo" rows="3" placeholder="Enter any additional information (dress code, parking info, etc.)"></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="templateStyle" class="form-label">Template Style:</label>
+                <select class="form-select bg-dark text-light border-danger" id="templateStyle" onchange="updatePreview()">
+                  <option value="elegant">Elegant</option>
+                  <option value="modern">Modern</option>
+                  <option value="vintage">Vintage</option>
+                  <option value="romantic">Romantic</option>
+                  <option value="minimalist">Minimalist</option>
+                  <option value="rustic">Rustic</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="colorScheme" class="form-label">Color Scheme:</label>
+                <select class="form-select bg-dark text-light border-danger" id="colorScheme" onchange="updatePreview()">
+                  <option value="gold">Gold & White</option>
+                  <option value="rose">Rose Gold & Blush</option>
+                  <option value="navy">Navy & Silver</option>
+                  <option value="burgundy">Burgundy & Gold</option>
+                  <option value="sage">Sage & Cream</option>
+                  <option value="black">Black & White</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="generateInvitation()">
+                <i class="fas fa-magic me-2"></i>Generate Invitation
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearForm()">
+                <i class="fas fa-trash me-2"></i>Clear Form
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="loadExample()">
+                <i class="fas fa-lightbulb me-2"></i>Load Example
+              </button>
+              <button class="btn btn-outline-danger" onclick="downloadInvitation()">
+                <i class="fas fa-download me-2"></i>Download PDF
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Preview Box -->
+        <div id="previewBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-eye me-2"></i>Invitation Preview</h5>
+          </div>
+          <div class="card-body">
+            <div id="invitationPreview" class="text-center mb-3"></div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copyInvitation()">
+                <i class="fas fa-copy me-2"></i>Copy Text
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="printInvitation()">
+                <i class="fas fa-print me-2"></i>Print
+              </button>
+              <button class="btn btn-outline-danger" onclick="shareInvitation()">
+                <i class="fas fa-share me-2"></i>Share
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+</body>
+</html>

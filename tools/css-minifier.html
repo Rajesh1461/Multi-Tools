@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Minifier - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">CSS Minifier</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="cssInput" class="form-label">Input CSS:</label>
+              <textarea id="cssInput" class="form-control bg-dark text-light border-danger" rows="12" placeholder="Paste your CSS code here to minify it..."></textarea>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="minificationLevel" class="form-label">Minification Level:</label>
+                <select id="minificationLevel" class="form-select bg-dark text-light border-danger">
+                  <option value="basic">Basic (Remove comments & whitespace)</option>
+                  <option value="aggressive">Aggressive (Remove comments, whitespace & optimize)</option>
+                  <option value="extreme">Extreme (Maximum compression)</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="outputFormat" class="form-label">Output Format:</label>
+                <select id="outputFormat" class="form-select bg-dark text-light border-danger">
+                  <option value="minified">Minified (Single line)</option>
+                  <option value="formatted">Formatted (Readable)</option>
+                  <option value="compressed">Compressed (No spaces)</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="removeComments" checked>
+                  <label class="form-check-label" for="removeComments">
+                    Remove comments
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="removeWhitespace" checked>
+                  <label class="form-check-label" for="removeWhitespace">
+                    Remove unnecessary whitespace
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="optimizeColors" checked>
+                  <label class="form-check-label" for="optimizeColors">
+                    Optimize color values
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="optimizeUnits" checked>
+                  <label class="form-check-label" for="optimizeUnits">
+                    Optimize units (0px → 0)
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="minifyCSS()">Minify CSS</button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">Clear</button>
+              <button class="btn btn-outline-danger" onclick="downloadMinified()">Download Minified</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5>Minified CSS Results</h5>
+          </div>
+          <div class="card-body">
+            <div class="mb-3">
+              <label for="cssOutput" class="form-label">Minified CSS:</label>
+              <div class="input-group">
+                <textarea id="cssOutput" class="form-control bg-dark text-light border-danger" rows="8" readonly></textarea>
+                <button class="btn btn-outline-danger" onclick="copyMinified()">Copy</button>
+              </div>
+            </div>
+            
+            <div class="row text-center mb-3">
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Original Size</h6>
+                    <h4 id="originalSizeResult">0 KB</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Minified Size</h6>
+                    <h4 id="minifiedSizeResult">0 KB</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Compression</h6>
+                    <h4 id="compressionResult">0%</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Characters</h6>
+                    <h4 id="charactersResult">0</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Detailed Analysis -->
+            <div class="mb-3">
+              <h6 class="text-danger">Detailed Analysis:</h6>
+              <div class="table-responsive">
+                <table class="table table-dark table-striped">
+                  <tbody id="analysisTable">
+                    <!-- Analysis data will be displayed here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadAsCSS()">Download as .css</button>
+              </div>
+              <div class="col-md-6 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="downloadAsMinCSS()">Download as .min.css</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- CSS Beautifier -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>CSS Beautifier</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="indentation" class="form-label">Indentation:</label>
+                <select id="indentation" class="form-select bg-dark text-light border-danger">
+                  <option value="2">2 spaces</option>
+                  <option value="4" selected>4 spaces</option>
+                  <option value="tab">Tab</option>
+                </select>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="lineBreaks" class="form-label">Line Breaks:</label>
+                <select id="lineBreaks" class="form-select bg-dark text-light border-danger">
+                  <option value="lf">LF (Unix)</option>
+                  <option value="crlf" selected>CRLF (Windows)</option>
+                  <option value="cr">CR (Mac)</option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger" onclick="beautifyCSS()">Beautify CSS</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Quick Templates -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5>Quick Templates</h5>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('reset')">CSS Reset</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('grid')">CSS Grid</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('flexbox')">Flexbox</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('buttons')">Button Styles</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('forms')">Form Styles</button>
+              </div>
+              <div class="col-md-4 mb-2">
+                <button class="btn btn-outline-danger w-100" onclick="useTemplate('responsive')">Responsive</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function minifyCSS() {
+      const css = document.getElementById('cssInput').value.trim();
+      const level = document.getElementById('minificationLevel').value;
+      const format = document.getElementById('outputFormat').value;
+      
+      if (!css) {
+        alert('Please enter CSS code to minify.');
+        return;
+      }
+      
+      let minified = css;
+      
+      // Remove comments
+      if (document.getElementById('removeComments').checked) {
+        minified = minified.replace(/\/\*[\s\S]*?\*\//g, '');
+        minified = minified.replace(/\/\/.*$/gm, '');
+      }
+      
+      // Remove unnecessary whitespace
+      if (document.getElementById('removeWhitespace').checked) {
+        minified = minified.replace(/\s+/g, ' ');
+        minified = minified.replace(/\s*{\s*/g, '{');
+        minified = minified.replace(/\s*}\s*/g, '}');
+        minified = minified.replace(/\s*:\s*/g, ':');
+        minified = minified.replace(/\s*;\s*/g, ';');
+        minified = minified.replace(/\s*,\s*/g, ',');
+        minified = minified.replace(/\s*>\s*/g, '>');
+        minified = minified.replace(/\s*\+\s*/g, '+');
+        minified = minified.replace(/\s*~\s*/g, '~');
+      }
+      
+      // Optimize colors
+      if (document.getElementById('optimizeColors').checked) {
+        minified = minified.replace(/#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, '#$1$2$3');
+        minified = minified.replace(/rgb\(0,\s*0,\s*0\)/g, '#000');
+        minified = minified.replace(/rgb\(255,\s*255,\s*255\)/g, '#fff');
+      }
+      
+      // Optimize units
+      if (document.getElementById('optimizeUnits').checked) {
+        minified = minified.replace(/(\d+)px\b/g, '$1');
+        minified = minified.replace(/(\d+)em\b/g, '$1em');
+        minified = minified.replace(/(\d+)rem\b/g, '$1rem');
+        minified = minified.replace(/(\d+)%\b/g, '$1%');
+      }
+      
+      // Apply minification level
+      switch (level) {
+        case 'aggressive':
+          // Remove all unnecessary characters
+          minified = minified.replace(/\s+/g, '');
+          minified = minified.replace(/;\}/g, '}');
+          break;
+        case 'extreme':
+          // Maximum compression
+          minified = minified.replace(/\s+/g, '');
+          minified = minified.replace(/;\}/g, '}');
+          minified = minified.replace(/:\s*/g, ':');
+          minified = minified.replace(/;\s*/g, ';');
+          minified = minified.replace(/,\s*/g, ',');
+          break;
+      }
+      
+      // Apply output format
+      switch (format) {
+        case 'formatted':
+          minified = formatCSS(minified);
+          break;
+        case 'compressed':
+          minified = minified.replace(/\s+/g, '');
+          break;
+      }
+      
+      // Update output
+      document.getElementById('cssOutput').value = minified;
+      
+      // Update statistics
+      updateStatistics(css, minified);
+      
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function formatCSS(css) {
+      // Basic formatting
+      let formatted = css;
+      formatted = formatted.replace(/\s*{\s*/g, ' {\n\t');
+      formatted = formatted.replace(/\s*}\s*/g, '\n}\n');
+      formatted = formatted.replace(/\s*;\s*/g, ';\n\t');
+      formatted = formatted.replace(/;\n\t}/g, '\n}');
+      formatted = formatted.replace(/\t\n}/g, '\n}');
+      
+      return formatted;
+    }
+    
+    function updateStatistics(original, minified) {
+      const originalSize = original.length;
+      const minifiedSize = minified.length;
+      const compression = ((originalSize - minifiedSize) / originalSize * 100).toFixed(1);
+      
+      // Update statistics
+      document.getElementById('originalSizeResult').textContent = (originalSize / 1024).toFixed(2) + ' KB';
+      document.getElementById('minifiedSizeResult').textContent = (minifiedSize / 1024).toFixed(2) + ' KB';
+      document.getElementById('compressionResult').textContent = compression + '%';
+      document.getElementById('charactersResult').textContent = minifiedSize.toLocaleString();
+      
+      // Update analysis table
+      updateAnalysisTable(original, minified);
+    }
+    
+    function updateAnalysisTable(original, minified) {
+      const tableBody = document.getElementById('analysisTable');
+      tableBody.innerHTML = '';
+      
+      const originalSize = original.length;
+      const minifiedSize = minified.length;
+      const compression = ((originalSize - minifiedSize) / originalSize * 100).toFixed(1);
+      const savings = originalSize - minifiedSize;
+      
+      const rows = [
+        ['Original characters', originalSize.toLocaleString(), ''],
+        ['Minified characters', minifiedSize.toLocaleString(), ''],
+        ['Characters saved', savings.toLocaleString(), `${compression}% reduction`],
+        ['Original size', (originalSize / 1024).toFixed(2) + ' KB', ''],
+        ['Minified size', (minifiedSize / 1024).toFixed(2) + ' KB', ''],
+        ['Size reduction', (savings / 1024).toFixed(2) + ' KB', `${compression}% smaller`]
+      ];
+      
+      rows.forEach(row => {
+        const tr = tableBody.insertRow();
+        row.forEach((cell, index) => {
+          const td = tr.insertCell();
+          td.textContent = cell;
+          if (index === 2 && cell.includes('%')) {
+            td.className = 'text-success';
+          }
+        });
+      });
+    }
+    
+    function clearInput() {
+      document.getElementById('cssInput').value = '';
+      document.getElementById('cssOutput').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+    
+    function copyMinified() {
+      const minified = document.getElementById('cssOutput').value;
+      if (minified) {
+        navigator.clipboard.writeText(minified).then(() => {
+          alert('Minified CSS copied to clipboard!');
+        });
+      }
+    }
+    
+    function downloadMinified() {
+      const minified = document.getElementById('cssOutput').value;
+      if (!minified) {
+        alert('Please minify CSS first.');
+        return;
+      }
+      
+      const blob = new Blob([minified], { type: 'text/css' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'minified.css';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function downloadAsCSS() {
+      const minified = document.getElementById('cssOutput').value;
+      if (!minified) {
+        alert('Please minify CSS first.');
+        return;
+      }
+      
+      const blob = new Blob([minified], { type: 'text/css' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'styles.css';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function downloadAsMinCSS() {
+      const minified = document.getElementById('cssOutput').value;
+      if (!minified) {
+        alert('Please minify CSS first.');
+        return;
+      }
+      
+      const blob = new Blob([minified], { type: 'text/css' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'styles.min.css';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function beautifyCSS() {
+      const css = document.getElementById('cssInput').value.trim();
+      if (!css) {
+        alert('Please enter CSS code to beautify.');
+        return;
+      }
+      
+      const indentation = document.getElementById('indentation').value;
+      const lineBreaks = document.getElementById('lineBreaks').value;
+      
+      let beautified = css;
+      
+      // Remove existing formatting
+      beautified = beautified.replace(/\s+/g, ' ');
+      beautified = beautified.replace(/\s*{\s*/g, '{');
+      beautified = beautified.replace(/\s*}\s*/g, '}');
+      beautified = beautified.replace(/\s*:\s*/g, ':');
+      beautified = beautified.replace(/\s*;\s*/g, ';');
+      
+      // Apply formatting
+      beautified = beautified.replace(/\s*{\s*/g, ' {\n');
+      beautified = beautified.replace(/\s*}\s*/g, '\n}\n');
+      beautified = beautified.replace(/\s*;\s*/g, ';\n');
+      beautified = beautified.replace(/;\n}/g, '\n}');
+      
+      // Apply indentation
+      const indent = indentation === 'tab' ? '\t' : ' '.repeat(parseInt(indentation));
+      beautified = beautified.replace(/\n/g, '\n' + indent);
+      beautified = beautified.replace(/\n\t}/g, '\n}');
+      
+      // Apply line breaks
+      if (lineBreaks === 'crlf') {
+        beautified = beautified.replace(/\n/g, '\r\n');
+      } else if (lineBreaks === 'cr') {
+        beautified = beautified.replace(/\n/g, '\r');
+      }
+      
+      document.getElementById('cssOutput').value = beautified;
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function useTemplate(type) {
+      let template = '';
+      
+      switch (type) {
+        case 'reset':
+          template = `/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: Arial, sans-serif;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}`;
+          break;
+        case 'grid':
+          template = `/* CSS Grid System */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 20px;
+}
+
+.col-1 { grid-column: span 1; }
+.col-2 { grid-column: span 2; }
+.col-3 { grid-column: span 3; }
+.col-4 { grid-column: span 4; }
+.col-6 { grid-column: span 6; }
+.col-8 { grid-column: span 8; }
+.col-12 { grid-column: span 12; }
+
+@media (max-width: 768px) {
+    .row {
+        grid-template-columns: 1fr;
+    }
+    .col-1, .col-2, .col-3, .col-4, .col-6, .col-8, .col-12 {
+        grid-column: span 1;
+    }
+}`;
+          break;
+        case 'flexbox':
+          template = `/* Flexbox Utilities */
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.align-start {
+    align-items: flex-start;
+}
+
+.align-end {
+    align-items: flex-end;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-auto {
+    flex: auto;
+}`;
+          break;
+        case 'buttons':
+          template = `/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #1e7e34;
+}`;
+          break;
+        case 'forms':
+          template = `/* Form Styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+}
+
+.form-control.error {
+    border-color: #dc3545;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 14px;
+    margin-top: 5px;
+}`;
+          break;
+        case 'responsive':
+          template = `/* Responsive Design */
+/* Mobile First Approach */
+
+/* Base styles (mobile) */
+.container {
+    width: 100%;
+    padding: 0 15px;
+    margin: 0 auto;
+}
+
+/* Tablet (768px and up) */
+@media (min-width: 768px) {
+    .container {
+        max-width: 750px;
+    }
+}
+
+/* Desktop (992px and up) */
+@media (min-width: 992px) {
+    .container {
+        max-width: 970px;
+    }
+}
+
+/* Large Desktop (1200px and up) */
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1170px;
+    }
+}
+
+/* Hide elements on mobile */
+.mobile-hidden {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .mobile-hidden {
+        display: block;
+    }
+    
+    .desktop-hidden {
+        display: none;
+    }
+}`;
+          break;
+      }
+      
+      document.getElementById('cssInput').value = template;
+      minifyCSS();
+    }
+    
+    // Auto-minify on input change
+    document.getElementById('cssInput').addEventListener('input', function() {
+      if (this.value.trim() !== '') {
+        minifyCSS();
+      }
+    });
+    
+    document.getElementById('minificationLevel').addEventListener('change', function() {
+      if (document.getElementById('cssInput').value.trim() !== '') {
+        minifyCSS();
+      }
+    });
+    
+    document.getElementById('outputFormat').addEventListener('change', function() {
+      if (document.getElementById('cssInput').value.trim() !== '') {
+        minifyCSS();
+      }
+    });
+  </script>
+</body>
+</html>

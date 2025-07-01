@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Volume Calculator - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="icon" type="image/png" href="../assets/img/Rajesh Kumar S.jpg">
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3712069892669914" crossorigin="anonymous"></script>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+      <h1 class="text-danger mb-0">Volume Calculator</h1>
+      <div style="width: 120px;"></div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Calculate the volume of various 3D shapes quickly and accurately.
+            </div>
+            <div class="mb-4">
+              <label class="form-label">Select Shape</label>
+              <select class="form-select bg-dark text-light border-danger" id="shapeType" onchange="showShapeInputs()">
+                <option value="cube">Cube</option>
+                <option value="sphere">Sphere</option>
+                <option value="cylinder">Cylinder</option>
+                <option value="cone">Cone</option>
+                <option value="rectangular-prism">Rectangular Prism</option>
+                <option value="pyramid">Pyramid</option>
+                <option value="hemisphere">Hemisphere</option>
+                <option value="torus">Torus</option>
+              </select>
+            </div>
+            <div id="shapeInputs">
+              <!-- Cube Inputs -->
+              <div id="cubeInputs" class="shape-inputs">
+                <div class="mb-3">
+                  <label class="form-label">Side Length</label>
+                  <input type="number" class="form-control bg-dark text-light border-danger" id="cubeSide" step="0.01" placeholder="Enter side length">
+                </div>
+              </div>
+            </div>
+            <div class="text-center mb-4">
+              <button class="btn btn-danger btn-lg" onclick="calculateVolume()">
+                <i class="fas fa-calculator me-2"></i>Calculate Volume
+              </button>
+            </div>
+            <div id="resultSection" style="display: none;">
+              <div class="card bg-dark border-danger">
+                <div class="card-body text-center">
+                  <h5 class="text-danger">Volume Result</h5>
+                  <div class="text-light fs-4 fw-bold" id="volumeResult"></div>
+                </div>
+              </div>
+            </div>
+            <div class="mt-4">
+              <h5 class="text-danger"><i class="fas fa-info-circle me-2"></i>Volume Formulas</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <ul class="text-light">
+                    <li>Cube: V = side³</li>
+                    <li>Sphere: V = 4/3 × π × radius³</li>
+                    <li>Cylinder: V = π × radius² × height</li>
+                    <li>Cone: V = 1/3 × π × radius² × height</li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <ul class="text-light">
+                    <li>Rectangular Prism: V = length × width × height</li>
+                    <li>Pyramid: V = 1/3 × base area × height</li>
+                    <li>Hemisphere: V = 2/3 × π × radius³</li>
+                    <li>Torus: V = 2π² × R × r²</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function showShapeInputs() {
+      const shapeType = document.getElementById('shapeType').value;
+      const container = document.getElementById('shapeInputs');
+      
+      // Clear previous inputs
+      container.innerHTML = '';
+      
+      switch (shapeType) {
+        case 'cube':
+          container.innerHTML = `
+            <div class="mb-3">
+              <label class="form-label">Side Length</label>
+              <input type="number" class="form-control bg-dark text-light border-danger" id="cubeSide" step="0.01" placeholder="Enter side length">
+            </div>
+          `;
+          break;
+        case 'sphere':
+          container.innerHTML = `
+            <div class="mb-3">
+              <label class="form-label">Radius</label>
+              <input type="number" class="form-control bg-dark text-light border-danger" id="sphereRadius" step="0.01" placeholder="Enter radius">
+            </div>
+          `;
+          break;
+        case 'cylinder':
+          container.innerHTML = `
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Radius</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="cylinderRadius" step="0.01" placeholder="Enter radius">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Height</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="cylinderHeight" step="0.01" placeholder="Enter height">
+              </div>
+            </div>
+          `;
+          break;
+        case 'cone':
+          container.innerHTML = `
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Radius</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="coneRadius" step="0.01" placeholder="Enter radius">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Height</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="coneHeight" step="0.01" placeholder="Enter height">
+              </div>
+            </div>
+          `;
+          break;
+        case 'rectangular-prism':
+          container.innerHTML = `
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Length</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="prismLength" step="0.01" placeholder="Enter length">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Width</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="prismWidth" step="0.01" placeholder="Enter width">
+              </div>
+              <div class="col-md-4 mb-3">
+                <label class="form-label">Height</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="prismHeight" step="0.01" placeholder="Enter height">
+              </div>
+            </div>
+          `;
+          break;
+        case 'pyramid':
+          container.innerHTML = `
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Base Area</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="pyramidBaseArea" step="0.01" placeholder="Enter base area">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Height</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="pyramidHeight" step="0.01" placeholder="Enter height">
+              </div>
+            </div>
+          `;
+          break;
+        case 'hemisphere':
+          container.innerHTML = `
+            <div class="mb-3">
+              <label class="form-label">Radius</label>
+              <input type="number" class="form-control bg-dark text-light border-danger" id="hemisphereRadius" step="0.01" placeholder="Enter radius">
+            </div>
+          `;
+          break;
+        case 'torus':
+          container.innerHTML = `
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Major Radius (R)</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="torusMajorRadius" step="0.01" placeholder="Enter major radius">
+              </div>
+              <div class="col-md-6 mb-3">
+                <label class="form-label">Minor Radius (r)</label>
+                <input type="number" class="form-control bg-dark text-light border-danger" id="torusMinorRadius" step="0.01" placeholder="Enter minor radius">
+              </div>
+            </div>
+          `;
+          break;
+      }
+    }
+
+    function calculateVolume() {
+      const shapeType = document.getElementById('shapeType').value;
+      let volume = 0;
+      let resultText = '';
+
+      switch (shapeType) {
+        case 'cube':
+          const side = parseFloat(document.getElementById('cubeSide').value);
+          if (isNaN(side) || side <= 0) {
+            alert('Please enter a valid positive number for side length.');
+            return;
+          }
+          volume = Math.pow(side, 3);
+          resultText = `Cube Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+        case 'sphere':
+          const radius = parseFloat(document.getElementById('sphereRadius').value);
+          if (isNaN(radius) || radius <= 0) {
+            alert('Please enter a valid positive number for radius.');
+            return;
+          }
+          volume = (4/3) * Math.PI * Math.pow(radius, 3);
+          resultText = `Sphere Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+        case 'cylinder':
+          const cylRadius = parseFloat(document.getElementById('cylinderRadius').value);
+          const cylHeight = parseFloat(document.getElementById('cylinderHeight').value);
+          if (isNaN(cylRadius) || isNaN(cylHeight) || cylRadius <= 0 || cylHeight <= 0) {
+            alert('Please enter valid positive numbers for radius and height.');
+            return;
+          }
+          volume = Math.PI * Math.pow(cylRadius, 2) * cylHeight;
+          resultText = `Cylinder Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+        case 'cone':
+          const coneRadius = parseFloat(document.getElementById('coneRadius').value);
+          const coneHeight = parseFloat(document.getElementById('coneHeight').value);
+          if (isNaN(coneRadius) || isNaN(coneHeight) || coneRadius <= 0 || coneHeight <= 0) {
+            alert('Please enter valid positive numbers for radius and height.');
+            return;
+          }
+          volume = (1/3) * Math.PI * Math.pow(coneRadius, 2) * coneHeight;
+          resultText = `Cone Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+        case 'rectangular-prism':
+          const length = parseFloat(document.getElementById('prismLength').value);
+          const width = parseFloat(document.getElementById('prismWidth').value);
+          const height = parseFloat(document.getElementById('prismHeight').value);
+          if (isNaN(length) || isNaN(width) || isNaN(height) || length <= 0 || width <= 0 || height <= 0) {
+            alert('Please enter valid positive numbers for length, width, and height.');
+            return;
+          }
+          volume = length * width * height;
+          resultText = `Rectangular Prism Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+        case 'pyramid':
+          const baseArea = parseFloat(document.getElementById('pyramidBaseArea').value);
+          const pyramidHeight = parseFloat(document.getElementById('pyramidHeight').value);
+          if (isNaN(baseArea) || isNaN(pyramidHeight) || baseArea <= 0 || pyramidHeight <= 0) {
+            alert('Please enter valid positive numbers for base area and height.');
+            return;
+          }
+          volume = (1/3) * baseArea * pyramidHeight;
+          resultText = `Pyramid Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+        case 'hemisphere':
+          const hemRadius = parseFloat(document.getElementById('hemisphereRadius').value);
+          if (isNaN(hemRadius) || hemRadius <= 0) {
+            alert('Please enter a valid positive number for radius.');
+            return;
+          }
+          volume = (2/3) * Math.PI * Math.pow(hemRadius, 3);
+          resultText = `Hemisphere Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+        case 'torus':
+          const majorRadius = parseFloat(document.getElementById('torusMajorRadius').value);
+          const minorRadius = parseFloat(document.getElementById('torusMinorRadius').value);
+          if (isNaN(majorRadius) || isNaN(minorRadius) || majorRadius <= 0 || minorRadius <= 0) {
+            alert('Please enter valid positive numbers for major and minor radii.');
+            return;
+          }
+          volume = 2 * Math.pow(Math.PI, 2) * majorRadius * Math.pow(minorRadius, 2);
+          resultText = `Torus Volume: ${volume.toFixed(2)} cubic units`;
+          break;
+      }
+
+      document.getElementById('volumeResult').textContent = resultText;
+      document.getElementById('resultSection').style.display = 'block';
+    }
+
+    // Initialize shape inputs
+    showShapeInputs();
+  </script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Minifier - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-editor {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.4;
+            min-height: 300px;
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #dc3545 0%, #6f42c1 100%);
+            color: white;
+            border-radius: 10px;
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">JavaScript Minifier</h1>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-header text-danger">
+            <h3 class="mb-0"><i class="fas fa-code me-2"></i>JavaScript Minifier</h3>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> This tool removes unnecessary whitespace, comments, and optimizes your JavaScript code for production use.
+            </div>
+            <div class="mb-3">
+              <label class="form-label text-light">Input JavaScript Code</label>
+              <textarea class="form-control code-editor bg-dark text-light border-danger" id="inputCode" placeholder="Paste your JavaScript code here..."></textarea>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="removeComments" checked>
+                  <label class="form-check-label text-light" for="removeComments">
+                    Remove Comments
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="removeWhitespace" checked>
+                  <label class="form-check-label text-light" for="removeWhitespace">
+                    Remove Whitespace
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="mangleNames" checked>
+                  <label class="form-check-label text-light" for="mangleNames">
+                    Mangle Variable Names
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="preserveLicense" checked>
+                  <label class="form-check-label text-light" for="preserveLicense">
+                    Preserve License Comments
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-danger btn-lg me-2" onclick="minifyCode()">
+                <i class="fas fa-compress me-2"></i>Minify Code
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="loadSample()">
+                <i class="fas fa-file-code me-2"></i>Load Sample
+              </button>
+              <button class="btn btn-outline-danger" onclick="clearCode()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-header text-danger">
+            <h4 class="mb-0"><i class="fas fa-file-code me-2"></i>Minified Output</h4>
+          </div>
+          <div class="card-body">
+            <div class="stats-card p-3 mb-3">
+              <div class="row text-center">
+                <div class="col-md-4">
+                  <h6>Original Size</h6>
+                  <div id="originalSize">0 bytes</div>
+                </div>
+                <div class="col-md-4">
+                  <h6>Minified Size</h6>
+                  <div id="minifiedSize">0 bytes</div>
+                </div>
+                <div class="col-md-4">
+                  <h6>Reduction</h6>
+                  <div id="reduction">0%</div>
+                </div>
+              </div>
+            </div>
+            <div class="position-relative">
+              <textarea class="form-control code-editor bg-dark text-light border-danger" id="outputCode" placeholder="Minified code will appear here..." readonly></textarea>
+              <button class="btn btn-sm btn-outline-danger copy-btn" onclick="copyOutput()" id="copyBtn" style="display: none;">
+                <i class="fas fa-copy"></i>
+              </button>
+            </div>
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="downloadFile()" id="downloadBtn" style="display: none;">
+                <i class="fas fa-download me-2"></i>Download Minified
+              </button>
+              <button class="btn btn-outline-danger" onclick="formatCode()" id="formatBtn" style="display: none;">
+                <i class="fas fa-indent me-2"></i>Format Code
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function minifyCode() {
+        const inputCode = document.getElementById('inputCode').value;
+        if (!inputCode.trim()) {
+            alert('Please enter some JavaScript code to minify.');
+            return;
+        }
+
+        const removeComments = document.getElementById('removeComments').checked;
+        const removeWhitespace = document.getElementById('removeWhitespace').checked;
+        const mangleNames = document.getElementById('mangleNames').checked;
+        const preserveLicense = document.getElementById('preserveLicense').checked;
+
+        try {
+            let minifiedCode = inputCode;
+
+            // Remove comments (except license comments if preserved)
+            if (removeComments) {
+                if (preserveLicense) {
+                    // Preserve license comments (/*! ... */)
+                    minifiedCode = minifiedCode.replace(/\/\*![\s\S]*?\*\//g, function(match) {
+                        return match.replace(/\s+/g, ' ');
+                    });
+                }
+                // Remove single-line comments
+                minifiedCode = minifiedCode.replace(/\/\/.*$/gm, '');
+                // Remove multi-line comments
+                minifiedCode = minifiedCode.replace(/\/\*[\s\S]*?\*\//g, '');
+            }
+
+            // Remove unnecessary whitespace
+            if (removeWhitespace) {
+                // Remove leading/trailing whitespace from lines
+                minifiedCode = minifiedCode.replace(/^\s+|\s+$/gm, '');
+                // Remove empty lines
+                minifiedCode = minifiedCode.replace(/^\s*[\r\n]/gm, '');
+                // Replace multiple spaces with single space
+                minifiedCode = minifiedCode.replace(/\s+/g, ' ');
+                // Remove spaces around operators
+                minifiedCode = minifiedCode.replace(/\s*([{}();,=+\-*/<>!&|])\s*/g, '$1');
+                // Remove spaces before semicolons
+                minifiedCode = minifiedCode.replace(/\s*;/g, ';');
+                // Remove spaces after semicolons
+                minifiedCode = minifiedCode.replace(/;\s*/g, ';');
+            }
+
+            // Simple variable name mangling (basic implementation)
+            if (mangleNames) {
+                minifiedCode = mangleVariableNames(minifiedCode);
+            }
+
+            // Clean up any remaining whitespace
+            minifiedCode = minifiedCode.trim();
+
+            // Update output
+            document.getElementById('outputCode').value = minifiedCode;
+            
+            // Update statistics
+            updateStats(inputCode, minifiedCode);
+            
+            // Show action buttons
+            document.getElementById('copyBtn').style.display = 'block';
+            document.getElementById('downloadBtn').style.display = 'inline-block';
+            document.getElementById('formatBtn').style.display = 'inline-block';
+
+        } catch (error) {
+            console.error('Minification error:', error);
+            alert('Error during minification. Please check your code syntax.');
+        }
+    }
+
+    function mangleVariableNames(code) {
+        // This is a simplified variable name mangler
+        // In a real implementation, you'd want a more sophisticated approach
+        
+        // Create a mapping of variable names to short names
+        const variableMap = new Map();
+        let counter = 0;
+        
+        // Find variable declarations and function parameters
+        const varPattern = /\b(?:var|let|const)\s+([a-zA-Z_$][a-zA-Z0-9_$]*)\b/g;
+        const funcPattern = /function\s*\(([^)]*)\)/g;
+        const paramPattern = /\b([a-zA-Z_$][a-zA-Z0-9_$]*)\b/g;
+        
+        // Collect variable names
+        let match;
+        while ((match = varPattern.exec(code)) !== null) {
+            const varName = match[1];
+            if (!variableMap.has(varName) && varName.length > 1) {
+                variableMap.set(varName, `_${counter++}`);
+            }
+        }
+        
+        // Replace variable names (simplified - doesn't handle scope properly)
+        let mangledCode = code;
+        variableMap.forEach((shortName, originalName) => {
+            const regex = new RegExp(`\\b${originalName}\\b`, 'g');
+            mangledCode = mangledCode.replace(regex, shortName);
+        });
+        
+        return mangledCode;
+    }
+
+    function updateStats(originalCode, minifiedCode) {
+        const originalSize = new Blob([originalCode]).size;
+        const minifiedSize = new Blob([minifiedCode]).size;
+        const reduction = originalSize > 0 ? Math.round((1 - minifiedSize / originalSize) * 100) : 0;
+
+        document.getElementById('originalSize').textContent = formatBytes(originalSize);
+        document.getElementById('minifiedSize').textContent = formatBytes(minifiedSize);
+        document.getElementById('reduction').textContent = `${reduction}%`;
+    }
+
+    function formatBytes(bytes) {
+        if (bytes === 0) return '0 bytes';
+        const k = 1024;
+        const sizes = ['bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    function copyOutput() {
+        const outputCode = document.getElementById('outputCode').value;
+        if (!outputCode) {
+            alert('No code to copy.');
+            return;
+        }
+
+        navigator.clipboard.writeText(outputCode).then(() => {
+            const btn = document.getElementById('copyBtn');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i>';
+            btn.classList.remove('btn-outline-danger');
+            btn.classList.add('btn-success');
+            
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.classList.remove('btn-success');
+                btn.classList.add('btn-outline-danger');
+            }, 2000);
+        }).catch(() => {
+            alert('Failed to copy code. Please copy manually.');
+        });
+    }
+
+    function downloadFile() {
+        const minifiedCode = document.getElementById('outputCode').value;
+        if (!minifiedCode) {
+            alert('No code to download.');
+            return;
+        }
+
+        const blob = new Blob([minifiedCode], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'minified.js';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function formatCode() {
+        const minifiedCode = document.getElementById('outputCode').value;
+        if (!minifiedCode) {
+            alert('No code to format.');
+            return;
+        }
+
+        try {
+            // Basic code formatting (adds some spacing for readability)
+            let formatted = minifiedCode
+                .replace(/;/g, ';\n')
+                .replace(/{/g, ' {\n')
+                .replace(/}/g, '\n}')
+                .replace(/\n\s*\n/g, '\n')
+                .trim();
+
+            document.getElementById('outputCode').value = formatted;
+        } catch (error) {
+            alert('Error formatting code.');
+        }
+    }
+
+    function loadSample() {
+        const sampleCode = `// Sample JavaScript code for minification
+function calculateTotal(items) {
+    var total = 0;
+    var tax = 0.1; // 10% tax
+    
+    for (var i = 0; i < items.length; i++) {
+        total = total + items[i].price;
+    }
+    
+    var finalTotal = total + (total * tax);
+    
+    return finalTotal;
+}
+
+// Example usage
+var shoppingCart = [
+    { name: "Product 1", price: 25.99 },
+    { name: "Product 2", price: 15.50 },
+    { name: "Product 3", price: 32.75 }
+];
+
+var result = calculateTotal(shoppingCart);
+console.log("Total with tax: $" + result.toFixed(2));`;
+
+        document.getElementById('inputCode').value = sampleCode;
+    }
+
+    function clearCode() {
+        if (confirm('Are you sure you want to clear all code?')) {
+            document.getElementById('inputCode').value = '';
+            document.getElementById('outputCode').value = '';
+            document.getElementById('originalSize').textContent = '0 bytes';
+            document.getElementById('minifiedSize').textContent = '0 bytes';
+            document.getElementById('reduction').textContent = '0%';
+            document.getElementById('copyBtn').style.display = 'none';
+            document.getElementById('downloadBtn').style.display = 'none';
+            document.getElementById('formatBtn').style.display = 'none';
+        }
+    }
+
+    // Handle Enter key in textarea
+    document.getElementById('inputCode').addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'Enter') {
+            minifyCode();
+        }
+    });
+  </script>
+</body>
+</html>

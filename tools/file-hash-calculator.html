@@ -1,0 +1,178 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Hash Calculator - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <!-- Header -->
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">File Hash Calculator</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="fileInput" class="form-label">Select a file:</label>
+                            <input type="file" class="form-control bg-dark text-light border-danger mb-3" id="fileInput" accept="*/*">
+                        </div>
+                        <div class="mb-3">
+                            <label for="hashType" class="form-label">Hash Algorithm:</label>
+                            <select class="form-select bg-dark text-light border-danger mb-3" id="hashType">
+                                <option value="md5">MD5</option>
+                                <option value="sha1">SHA-1</option>
+                                <option value="sha256">SHA-256</option>
+                                <option value="sha512">SHA-512</option>
+                                <option value="crc32">CRC32</option>
+                            </select>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="calculateHash()">
+                                <i class="fas fa-hashtag"></i> Calculate Hash
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="clearFile()">
+                                <i class="fas fa-trash"></i> Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Result Box -->
+                <div id="resultBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5>Hash Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="hashResult" class="form-label">Hash Value:</label>
+                            <input type="text" class="form-control bg-dark text-light border-danger mb-3" id="hashResult" readonly>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-outline-danger me-2" onclick="copyHash()">
+                                <i class="fas fa-copy"></i> Copy Hash
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="verifyHash()">
+                                <i class="fas fa-check"></i> Verify Hash
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <div id="footer"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        let currentFile = null;
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                currentFile = file;
+                displayFileInfo(file);
+            }
+        });
+        function displayFileInfo(file) {
+            document.getElementById('fileName').textContent = file.name;
+            document.getElementById('fileSize').textContent = formatFileSize(file.size);
+            document.getElementById('fileType').textContent = file.type || 'Unknown';
+            document.getElementById('fileModified').textContent = new Date(file.lastModified).toLocaleString();
+            document.getElementById('fileInfo').style.display = 'block';
+        }
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        function calculateHash() {
+            if (!currentFile) {
+                alert('Please select a file first');
+                return;
+            }
+            const algorithm = document.getElementById('hashType').value;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const arrayBuffer = e.target.result;
+                const hash = calculateHashValue(arrayBuffer, algorithm);
+                displayHashResult(hash);
+            };
+            reader.readAsArrayBuffer(currentFile);
+        }
+        function calculateHashValue(arrayBuffer, algorithm) {
+            const wordArray = CryptoJS.lib.WordArray.create(arrayBuffer);
+            switch (algorithm) {
+                case 'md5':
+                    return CryptoJS.MD5(wordArray).toString();
+                case 'sha1':
+                    return CryptoJS.SHA1(wordArray).toString();
+                case 'sha256':
+                    return CryptoJS.SHA256(wordArray).toString();
+                case 'sha512':
+                    return CryptoJS.SHA512(wordArray).toString();
+                case 'crc32':
+                    return calculateCRC32(arrayBuffer);
+                default:
+                    return 'Unsupported algorithm';
+            }
+        }
+        function calculateCRC32(arrayBuffer) {
+            const uint8Array = new Uint8Array(arrayBuffer);
+            let crc = 0xFFFFFFFF;
+            for (let i = 0; i < uint8Array.length; i++) {
+                crc ^= uint8Array[i];
+                for (let j = 0; j < 8; j++) {
+                    crc = (crc & 1) ? (0xEDB88320 ^ (crc >>> 1)) : (crc >>> 1);
+                }
+            }
+            return (crc ^ 0xFFFFFFFF).toString(16).toUpperCase().padStart(8, '0');
+        }
+        function displayHashResult(hash) {
+            document.getElementById('hashResult').value = hash;
+            document.getElementById('resultBox').style.display = 'block';
+        }
+        function copyHash() {
+            const hash = document.getElementById('hashResult').value;
+            navigator.clipboard.writeText(hash).then(() => {
+                alert('Hash copied to clipboard!');
+            });
+        }
+        function verifyHash() {
+            const hash = document.getElementById('hashResult').value;
+            const compareHash = document.getElementById('compareHash').value.trim();
+            const isMatch = compareHash && hash.toLowerCase() === compareHash.toLowerCase();
+            if (isMatch) {
+                alert('Hash verified successfully!');
+            } else {
+                alert('Hash verification failed!');
+            }
+        }
+        function clearFile() {
+            document.getElementById('fileInput').value = '';
+            document.getElementById('compareHash').value = '';
+            document.getElementById('fileInfo').style.display = 'none';
+            document.getElementById('resultBox').style.display = 'none';
+            currentFile = null;
+        }
+    </script>
+</body>
+</html>
+

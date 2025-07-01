@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Encryption/Decryption Tool - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Encryption/Decryption Tool</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="encryptText" class="form-label">Text to Encrypt:</label>
+                  <textarea class="form-control bg-dark text-light border-danger mb-3" id="encryptText" rows="4" placeholder="Enter text to encrypt..."></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="encryptKey" class="form-label">Encryption Key:</label>
+                  <input type="text" class="form-control bg-dark text-light border-danger mb-3" id="encryptKey" placeholder="Enter encryption key">
+                </div>
+                <div class="text-center mb-3">
+                  <button class="btn btn-danger me-2" onclick="encryptText()">
+                    <i class="fas fa-lock"></i> Encrypt
+                  </button>
+                  <button class="btn btn-outline-danger" onclick="generateKey()">
+                    <i class="fas fa-key"></i> Generate Key
+                  </button>
+                </div>
+                <div class="mb-3">
+                  <label for="encryptedResult" class="form-label">Encrypted Result:</label>
+                  <textarea class="form-control bg-dark text-light border-danger mb-3" id="encryptedResult" rows="4" readonly></textarea>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label for="decryptText" class="form-label">Text to Decrypt:</label>
+                  <textarea class="form-control bg-dark text-light border-danger mb-3" id="decryptText" rows="4" placeholder="Enter text to decrypt..."></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="decryptKey" class="form-label">Decryption Key:</label>
+                  <input type="text" class="form-control bg-dark text-light border-danger mb-3" id="decryptKey" placeholder="Enter decryption key">
+                </div>
+                <div class="text-center mb-3">
+                  <button class="btn btn-danger me-2" onclick="decryptText()">
+                    <i class="fas fa-unlock"></i> Decrypt
+                  </button>
+                  <button class="btn btn-outline-danger" onclick="clearAll()">
+                    <i class="fas fa-trash"></i> Clear All
+                  </button>
+                </div>
+                <div class="mb-3">
+                  <label for="decryptedResult" class="form-label">Decrypted Result:</label>
+                  <textarea class="form-control bg-dark text-light border-danger mb-3" id="decryptedResult" rows="4" readonly></textarea>
+                </div>
+              </div>
+            </div>
+            
+            <div class="text-center mt-3">
+              <button class="btn btn-outline-danger me-2" onclick="copyToClipboard()">
+                <i class="fas fa-copy"></i> Copy Result
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Info Card -->
+        <div class="card bg-dark border-danger mb-4">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-info-circle"></i> How to use:</h5>
+          </div>
+          <div class="card-body">
+            <ul class="mb-0">
+              <li>Enter the text you want to encrypt/decrypt</li>
+              <li>Provide a secure key (same key needed for decryption)</li>
+              <li>Click the respective button to encrypt or decrypt</li>
+              <li>Copy the result for safe storage or transmission</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script>
+    function encryptText() {
+      const text = document.getElementById('encryptText').value;
+      const key = document.getElementById('encryptKey').value;
+      
+      if (!text || !key) {
+        alert('Please enter both text and key');
+        return;
+      }
+      
+      try {
+        const encrypted = CryptoJS.AES.encrypt(text, key).toString();
+        document.getElementById('encryptedResult').value = encrypted;
+      } catch (error) {
+        alert('Encryption failed: ' + error.message);
+      }
+    }
+    
+    function decryptText() {
+      const text = document.getElementById('decryptText').value;
+      const key = document.getElementById('decryptKey').value;
+      
+      if (!text || !key) {
+        alert('Please enter both text and key');
+        return;
+      }
+      
+      try {
+        const decrypted = CryptoJS.AES.decrypt(text, key).toString(CryptoJS.enc.Utf8);
+        if (decrypted) {
+          document.getElementById('decryptedResult').value = decrypted;
+        } else {
+          alert('Decryption failed. Check your key and encrypted text.');
+        }
+      } catch (error) {
+        alert('Decryption failed: ' + error.message);
+      }
+    }
+    
+    function clearAll() {
+      document.getElementById('encryptText').value = '';
+      document.getElementById('encryptKey').value = '';
+      document.getElementById('encryptedResult').value = '';
+      document.getElementById('decryptText').value = '';
+      document.getElementById('decryptKey').value = '';
+      document.getElementById('decryptedResult').value = '';
+    }
+    
+    function generateKey() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+      let key = '';
+      for (let i = 0; i < 32; i++) {
+        key += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      document.getElementById('encryptKey').value = key;
+      document.getElementById('decryptKey').value = key;
+    }
+    
+    function copyToClipboard() {
+      const encryptedResult = document.getElementById('encryptedResult').value;
+      const decryptedResult = document.getElementById('decryptedResult').value;
+      
+      if (encryptedResult) {
+        navigator.clipboard.writeText(encryptedResult);
+        alert('Encrypted result copied to clipboard!');
+      } else if (decryptedResult) {
+        navigator.clipboard.writeText(decryptedResult);
+        alert('Decrypted result copied to clipboard!');
+      } else {
+        alert('No result to copy');
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

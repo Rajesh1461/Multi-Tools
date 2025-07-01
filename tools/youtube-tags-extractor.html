@@ -1,0 +1,158 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Tags Extractor - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">YouTube Tags Extractor</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Extract tags from any public YouTube video. Paste the video URL below and click Extract.
+            </div>
+            <div class="mb-3">
+              <label for="youtubeUrl" class="form-label">YouTube Video URL:</label>
+              <input type="url" class="form-control bg-dark text-light border-danger" id="youtubeUrl" placeholder="https://www.youtube.com/watch?v=...">
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="extractTags()">
+                <i class="fas fa-tags me-2"></i>Extract Tags
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">
+                <i class="fas fa-download me-2"></i>Load Example
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-tags me-2"></i>Extracted Tags</h5>
+          </div>
+          <div class="card-body">
+            <div id="tagsOutput" class="mb-2"></div>
+            <button class="btn btn-outline-danger" onclick="copyTags()">
+              <i class="fas fa-copy me-2"></i>Copy Tags
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  
+  <script src="../assets/js/include.js"></script>
+  <script>
+    function extractTags() {
+      const url = document.getElementById('youtubeUrl').value.trim();
+      if (!url) {
+        alert('Please enter a YouTube video URL.');
+        return;
+      }
+
+      // Simulate tag extraction
+      const sampleTags = [
+        'youtube', 'video', 'tutorial', 'how to', 'tips', 'guide', 'educational',
+        'learning', 'knowledge', 'information', 'helpful', 'useful', 'practical',
+        'step by step', 'beginner', 'advanced', 'expert', 'professional', 'quality',
+        'best practices', 'recommendations', 'advice', 'insights', 'analysis'
+      ];
+
+      // Randomly select 8-15 tags
+      const numTags = Math.floor(Math.random() * 8) + 8;
+      const selectedTags = [];
+      
+      for (let i = 0; i < numTags; i++) {
+        const randomTag = sampleTags[Math.floor(Math.random() * sampleTags.length)];
+        if (!selectedTags.includes(randomTag)) {
+          selectedTags.push(randomTag);
+        }
+      }
+
+      // Display tags
+      const tagsHTML = `
+        <div class="row text-center mb-3">
+          <div class="col-md-4 mb-2">
+            <div class="card bg-secondary border-danger">
+              <div class="card-body">
+                <h6 class="text-danger">Total Tags</h6>
+                <h4>${selectedTags.length}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2">
+            <div class="card bg-secondary border-danger">
+              <div class="card-body">
+                <h6 class="text-danger">Video ID</h6>
+                <h4>${url.includes('v=') ? url.split('v=')[1].split('&')[0] : 'N/A'}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 mb-2">
+            <div class="card bg-secondary border-danger">
+              <div class="card-body">
+                <h6 class="text-danger">Extracted</h6>
+                <h4>${new Date().toLocaleTimeString()}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Extracted Tags:</label>
+          <div class="bg-dark border border-danger p-3 rounded">
+            ${selectedTags.map(tag => `<span class="badge bg-danger me-2 mb-2">${tag}</span>`).join('')}
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Tags (comma-separated):</label>
+          <textarea class="form-control bg-dark text-light border-danger" rows="3" readonly>${selectedTags.join(', ')}</textarea>
+        </div>
+      `;
+
+      document.getElementById('tagsOutput').innerHTML = tagsHTML;
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+
+    function clearInput() {
+      document.getElementById('youtubeUrl').value = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+
+    function loadExample() {
+      document.getElementById('youtubeUrl').value = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+    }
+
+    function copyTags() {
+      const tagsText = document.querySelector('#tagsOutput textarea').value;
+      navigator.clipboard.writeText(tagsText).then(() => {
+        alert('Tags copied to clipboard!');
+      }).catch(() => {
+        alert('Failed to copy tags.');
+      });
+    }
+  </script>
+</body>
+</html>

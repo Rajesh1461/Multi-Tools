@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Speech to Text - MultiTools</title>
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+  <!-- Sticky Side Ads -->
+  <div class="sticky-side-ad left">
+    <div class="ad-placeholder">AdSense Left</div>
+  </div>
+  <div class="sticky-side-ad right">
+    <div class="ad-placeholder">AdSense Right</div>
+  </div>
+  <div id="header"></div>
+  <div class="container py-4">
+    <div class="mb-3">
+      <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+    </div>
+    <h1 class="text-danger mb-4">Speech to Text</h1>
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger">
+              <i class="fas fa-info-circle me-2"></i>
+              <strong>Note:</strong> Convert your speech to text using your device's microphone. Click the microphone button to start recording.
+            </div>
+            <div class="text-center mb-4">
+              <button id="startBtn" class="btn btn-danger btn-lg me-3" onclick="startRecording()">
+                <i class="fas fa-microphone me-2"></i>Start Recording
+              </button>
+              <button id="stopBtn" class="btn btn-outline-danger btn-lg me-3" onclick="stopRecording()" style="display: none;">
+                <i class="fas fa-stop me-2"></i>Stop Recording
+              </button>
+              <button class="btn btn-outline-danger btn-lg" onclick="clearText()">
+                <i class="fas fa-trash me-2"></i>Clear Text
+              </button>
+            </div>
+            <div class="mb-3">
+              <label for="language" class="form-label">Language:</label>
+              <select class="form-select bg-dark text-light border-danger" id="language">
+                <option value="en-US">English (US)</option>
+                <option value="en-GB">English (UK)</option>
+                <option value="es-ES">Spanish</option>
+                <option value="fr-FR">French</option>
+                <option value="de-DE">German</option>
+                <option value="it-IT">Italian</option>
+                <option value="pt-BR">Portuguese (Brazil)</option>
+                <option value="ja-JP">Japanese</option>
+                <option value="ko-KR">Korean</option>
+                <option value="zh-CN">Chinese (Simplified)</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="transcript" class="form-label">Transcript:</label>
+              <textarea class="form-control bg-dark text-light border-danger" id="transcript" rows="8" placeholder="Your speech will appear here..." readonly></textarea>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copyText()">
+                <i class="fas fa-copy me-2"></i>Copy Text
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="downloadText()">
+                <i class="fas fa-download me-2"></i>Download
+              </button>
+              <button class="btn btn-outline-danger" onclick="saveToNotes()">
+                <i class="fas fa-save me-2"></i>Save to Notes
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Status Card -->
+        <div id="statusCard" class="card bg-dark border-danger mb-4" style="display: none;">
+          <div class="card-header text-danger">
+            <h5><i class="fas fa-info-circle me-2"></i>Recording Status</h5>
+          </div>
+          <div class="card-body">
+            <div id="statusText" class="text-center"></div>
+            <div class="progress mt-3" style="height: 20px;">
+              <div id="volumeBar" class="progress-bar bg-danger" role="progressbar" style="width: 0%"></div>
+            </div>
+          </div>
+        </div>
+        <!-- Notes Section -->        
+      </div>
+    </div>
+  </div>
+  <div id="footer"></div>
+  <script src="../assets/js/include.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    let recognition;
+    let isRecording = false;
+
+    // Initialize speech recognition
+    function initSpeechRecognition() {
+      if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.continuous = true;
+        recognition.interimResults = true;
+        recognition.lang = document.getElementById('language').value;
+
+        recognition.onstart = function() {
+          isRecording = true;
+          document.getElementById('startBtn').style.display = 'none';
+          document.getElementById('stopBtn').style.display = 'inline-block';
+          document.getElementById('statusCard').style.display = 'block';
+          document.getElementById('statusText').textContent = 'Recording... Speak now!';
+        };
+
+        recognition.onresult = function(event) {
+          let finalTranscript = '';
+          let interimTranscript = '';
+
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript;
+            } else {
+              interimTranscript += transcript;
+            }
+          }
+
+          const currentText = document.getElementById('transcript').value;
+          document.getElementById('transcript').value = currentText + finalTranscript;
+        };
+
+        recognition.onerror = function(event) {
+          console.error('Speech recognition error:', event.error);
+          document.getElementById('statusText').textContent = 'Error: ' + event.error;
+        };
+
+        recognition.onend = function() {
+          isRecording = false;
+          document.getElementById('startBtn').style.display = 'inline-block';
+          document.getElementById('stopBtn').style.display = 'none';
+          document.getElementById('statusText').textContent = 'Recording stopped.';
+        };
+      } else {
+        alert('Speech recognition is not supported in this browser.');
+      }
+    }
+
+    function startRecording() {
+      if (!recognition) {
+        initSpeechRecognition();
+      }
+      if (recognition) {
+        recognition.lang = document.getElementById('language').value;
+        recognition.start();
+      }
+    }
+
+    function stopRecording() {
+      if (recognition && isRecording) {
+        recognition.stop();
+      }
+    }
+
+    function clearText() {
+      document.getElementById('transcript').value = '';
+      document.getElementById('statusCard').style.display = 'none';
+    }
+
+    function copyText() {
+      const transcript = document.getElementById('transcript').value;
+      if (!transcript.trim()) {
+        alert('No text to copy.');
+        return;
+      }
+      
+      navigator.clipboard.writeText(transcript).then(() => {
+        alert('Text copied to clipboard!');
+      }).catch(() => {
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = transcript;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Text copied to clipboard!');
+      });
+    }
+
+    function downloadText() {
+      const transcript = document.getElementById('transcript').value;
+      if (!transcript.trim()) {
+        alert('No text to download.');
+        return;
+      }
+      
+      const blob = new Blob([transcript], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'speech-transcript.txt';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function saveToNotes() {
+      const transcript = document.getElementById('transcript').value;
+      if (!transcript.trim()) {
+        alert('No text to save.');
+        return;
+      }
+      
+      // Save to localStorage as a simple notes system
+      const notes = JSON.parse(localStorage.getItem('speechNotes') || '[]');
+      const note = {
+        id: Date.now(),
+        text: transcript,
+        timestamp: new Date().toLocaleString(),
+        language: document.getElementById('language').value
+      };
+      notes.push(note);
+      localStorage.setItem('speechNotes', JSON.stringify(notes));
+      alert('Text saved to notes!');
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+      initSpeechRecognition();
+    });
+  </script>
+</body>
+</html>

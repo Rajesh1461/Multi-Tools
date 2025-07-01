@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Generator - Multi-Tools</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="../assets/css/style.css" rel="stylesheet">
+    <style>
+        .key-display {
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            word-break: break-all;
+            position: relative;
+        }
+        .key-type-card {
+            border-left: 4px solid #007bff;
+            transition: all 0.3s ease;
+        }
+        .key-type-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        .strength-meter {
+            height: 8px;
+            border-radius: 4px;
+            background: #e9ecef;
+            overflow: hidden;
+        }
+        .strength-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Key Generator</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0"><i class="fas fa-key me-2"></i>Key Generator</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Generate various types of keys, codes, and identifiers for different purposes. All generated keys are created locally in your browser.
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card key-type-card mb-3">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-random me-2"></i>Random Keys</h5>
+                                        <div class="mb-3">
+                                            <label class="form-label">Length</label>
+                                            <input type="number" class="form-control" id="randomLength" value="16" min="1" max="100">
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="randomUppercase" checked>
+                                                <label class="form-check-label" for="randomUppercase">Uppercase (A-Z)</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="randomLowercase" checked>
+                                                <label class="form-check-label" for="randomLowercase">Lowercase (a-z)</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="randomNumbers" checked>
+                                                <label class="form-check-label" for="randomNumbers">Numbers (0-9)</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="randomSymbols">
+                                                <label class="form-check-label" for="randomSymbols">Symbols (!@#$%^&*)</label>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary w-100" onclick="generateRandomKey()">
+                                            <i class="fas fa-dice me-2"></i>Generate Random
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card key-type-card mb-3">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-fingerprint me-2"></i>UUID/GUID</h5>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="uuidType" id="uuidV4" value="v4" checked>
+                                                <label class="form-check-label" for="uuidV4">UUID v4 (Random)</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="uuidType" id="uuidV1" value="v1">
+                                                <label class="form-check-label" for="uuidV1">UUID v1 (Time-based)</label>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="uuidUppercase" checked>
+                                                <label class="form-check-label" for="uuidUppercase">Uppercase</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="uuidBrackets">
+                                                <label class="form-check-label" for="uuidBrackets">Include brackets</label>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-success w-100" onclick="generateUUID()">
+                                            <i class="fas fa-id-card me-2"></i>Generate UUID
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card key-type-card mb-3">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-hashtag me-2"></i>Hash Codes</h5>
+                                        <div class="mb-3">
+                                            <label class="form-label">Input Text</label>
+                                            <input type="text" class="form-control" id="hashInput" placeholder="Enter text to hash">
+                                        </div>
+                                        <div class="mb-3">
+                                            <select class="form-control" id="hashType">
+                                                <option value="md5">MD5</option>
+                                                <option value="sha1">SHA-1</option>
+                                                <option value="sha256">SHA-256</option>
+                                                <option value="sha512">SHA-512</option>
+                                            </select>
+                                        </div>
+                                        <button class="btn btn-info w-100" onclick="generateHash()">
+                                            <i class="fas fa-hash me-2"></i>Generate Hash
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card key-type-card mb-3">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-barcode me-2"></i>Product Codes</h5>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="productType" id="sku" value="sku" checked>
+                                                <label class="form-check-label" for="sku">SKU Code</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="productType" id="ean" value="ean">
+                                                <label class="form-check-label" for="ean">EAN-13</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="productType" id="upc" value="upc">
+                                                <label class="form-check-label" for="upc">UPC-A</label>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-warning w-100" onclick="generateProductCode()">
+                                            <i class="fas fa-box me-2"></i>Generate Product Code
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card key-type-card mb-3">
+                                    <div class="card-body">
+                                        <h5><i class="fas fa-ticket-alt me-2"></i>License Keys</h5>
+                                        <div class="mb-3">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="licenseType" id="windows" value="windows" checked>
+                                                <label class="form-check-label" for="windows">Windows Style</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="licenseType" id="office" value="office">
+                                                <label class="form-check-label" for="office">Office Style</label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" name="licenseType" id="custom" value="custom">
+                                                <label class="form-check-label" for="custom">Custom Format</label>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-secondary w-100" onclick="generateLicenseKey()">
+                                            <i class="fas fa-certificate me-2"></i>Generate License
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="fas fa-keyboard me-2"></i>Generated Key</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="position-relative">
+                                            <div class="key-display" id="generatedKey">
+                                                <div class="text-center text-muted">
+                                                    <i class="fas fa-key fa-2x mb-2"></i>
+                                                    <p>Generated key will appear here</p>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-sm btn-outline-primary copy-btn" onclick="copyKey()" id="copyBtn" style="display: none;">
+                                                <i class="fas fa-copy"></i>
+                                            </button>
+                                        </div>
+                                        <div class="mt-3" id="strengthSection" style="display: none;">
+                                            <label class="form-label">Key Strength</label>
+                                            <div class="strength-meter">
+                                                <div class="strength-fill" id="strengthFill"></div>
+                                            </div>
+                                            <small class="text-muted" id="strengthText">Strength indicator</small>
+                                        </div>
+                                        <div class="text-center mt-3">
+                                            <button class="btn btn-success me-2" onclick="downloadKey()" id="downloadBtn" style="display: none;">
+                                                <i class="fas fa-download me-2"></i>Download Key
+                                            </button>
+                                            <button class="btn btn-info" onclick="generateMultiple()" id="multipleBtn" style="display: none;">
+                                                <i class="fas fa-list me-2"></i>Generate Multiple
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h5><i class="fas fa-info-circle me-2"></i>Key Types Explained</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Random Keys:</h6>
+                                    <ul>
+                                        <li><strong>Customizable length and character sets</strong></li>
+                                        <li>Perfect for passwords, API keys, and tokens</li>
+                                        <li>High entropy for security applications</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>UUID/GUID:</h6>
+                                    <ul>
+                                        <li><strong>Universally unique identifiers</strong></li>
+                                        <li>Used in databases, APIs, and distributed systems</li>
+                                        <li>Extremely low collision probability</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h6>Hash Codes:</h6>
+                                    <ul>
+                                        <li><strong>Cryptographic hash functions</strong></li>
+                                        <li>Used for data integrity and verification</li>
+                                        <li>One-way functions (cannot be reversed)</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6>Product Codes:</h6>
+                                    <ul>
+                                        <li><strong>Standardized product identifiers</strong></li>
+                                        <li>Used in retail and inventory systems</li>
+                                        <li>Include check digits for validation</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h5><i class="fas fa-shield-alt me-2"></i>Security Notes</h5>
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle me-2"></i>
+                                <strong>Important:</strong> 
+                                <ul class="mb-0 mt-2">
+                                    <li>Generated keys are created locally in your browser</li>
+                                    <li>For production use, consider using cryptographically secure random generators</li>
+                                    <li>Store generated keys securely and never share them publicly</li>
+                                    <li>Use appropriate key lengths for your security requirements</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        let currentKey = '';
+        let currentKeyType = '';
+
+        function generateRandomKey() {
+            const length = parseInt(document.getElementById('randomLength').value);
+            const useUppercase = document.getElementById('randomUppercase').checked;
+            const useLowercase = document.getElementById('randomLowercase').checked;
+            const useNumbers = document.getElementById('randomNumbers').checked;
+            const useSymbols = document.getElementById('randomSymbols').checked;
+
+            let chars = '';
+            if (useUppercase) chars += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            if (useLowercase) chars += 'abcdefghijklmnopqrstuvwxyz';
+            if (useNumbers) chars += '0123456789';
+            if (useSymbols) chars += '!@#$%^&*()_+-=[]{}|;:,.<>?';
+
+            if (chars === '') {
+                alert('Please select at least one character type.');
+                return;
+            }
+
+            let result = '';
+            for (let i = 0; i < length; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+
+            displayKey(result, 'Random Key');
+            currentKeyType = 'random';
+        }
+
+        function generateUUID() {
+            const uuidType = document.querySelector('input[name="uuidType"]:checked').value;
+            const uppercase = document.getElementById('uuidUppercase').checked;
+            const brackets = document.getElementById('uuidBrackets').checked;
+
+            let uuid;
+            if (uuidType === 'v4') {
+                uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                    const r = Math.random() * 16 | 0;
+                    const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                    return v.toString(16);
+                });
+            } else {
+                // Simple v1-like UUID (not cryptographically secure)
+                const timestamp = Date.now();
+                const random = Math.random().toString(16).substr(2, 8);
+                uuid = timestamp.toString(16) + '-xxxx-1xxx-yxxx-' + random;
+            }
+
+            if (uppercase) uuid = uuid.toUpperCase();
+            if (brackets) uuid = '{' + uuid + '}';
+
+            displayKey(uuid, 'UUID');
+            currentKeyType = 'uuid';
+        }
+
+        function generateHash() {
+            const input = document.getElementById('hashInput').value.trim();
+            const hashType = document.getElementById('hashType').value;
+
+            if (!input) {
+                alert('Please enter text to hash.');
+                return;
+            }
+
+            let hash;
+            switch (hashType) {
+                case 'md5':
+                    hash = CryptoJS.MD5(input).toString();
+                    break;
+                case 'sha1':
+                    hash = CryptoJS.SHA1(input).toString();
+                    break;
+                case 'sha256':
+                    hash = CryptoJS.SHA256(input).toString();
+                    break;
+                case 'sha512':
+                    hash = CryptoJS.SHA512(input).toString();
+                    break;
+                default:
+                    hash = CryptoJS.MD5(input).toString();
+            }
+
+            displayKey(hash, hashType.toUpperCase() + ' Hash');
+            currentKeyType = 'hash';
+        }
+
+        function generateProductCode() {
+            const productType = document.querySelector('input[name="productType"]:checked').value;
+            let code;
+
+            switch (productType) {
+                case 'sku':
+                    code = 'SKU-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+                    break;
+                case 'ean':
+                    code = generateEAN13();
+                    break;
+                case 'upc':
+                    code = generateUPCA();
+                    break;
+                default:
+                    code = 'PROD-' + Math.random().toString(36).substr(2, 6).toUpperCase();
+            }
+
+            displayKey(code, productType.toUpperCase() + ' Code');
+            currentKeyType = 'product';
+        }
+
+        function generateEAN13() {
+            // Generate 12 random digits
+            let digits = '';
+            for (let i = 0; i < 12; i++) {
+                digits += Math.floor(Math.random() * 10);
+            }
+            
+            // Calculate check digit
+            let sum = 0;
+            for (let i = 0; i < 12; i++) {
+                sum += parseInt(digits[i]) * (i % 2 === 0 ? 1 : 3);
+            }
+            const checkDigit = (10 - (sum % 10)) % 10;
+            
+            return digits + checkDigit;
+        }
+
+        function generateUPCA() {
+            // Generate 11 random digits
+            let digits = '';
+            for (let i = 0; i < 11; i++) {
+                digits += Math.floor(Math.random() * 10);
+            }
+            
+            // Calculate check digit
+            let sum = 0;
+            for (let i = 0; i < 11; i++) {
+                sum += parseInt(digits[i]) * (i % 2 === 0 ? 3 : 1);
+            }
+            const checkDigit = (10 - (sum % 10)) % 10;
+            
+            return digits + checkDigit;
+        }
+
+        function generateLicenseKey() {
+            const licenseType = document.querySelector('input[name="licenseType"]:checked').value;
+            let key;
+
+            switch (licenseType) {
+                case 'windows':
+                    key = generateWindowsKey();
+                    break;
+                case 'office':
+                    key = generateOfficeKey();
+                    break;
+                case 'custom':
+                    key = generateCustomKey();
+                    break;
+                default:
+                    key = generateWindowsKey();
+            }
+
+            displayKey(key, 'License Key');
+            currentKeyType = 'license';
+        }
+
+        function generateWindowsKey() {
+            const groups = [];
+            for (let i = 0; i < 5; i++) {
+                groups.push(Math.random().toString(36).substr(2, 5).toUpperCase());
+            }
+            return groups.join('-');
+        }
+
+        function generateOfficeKey() {
+            const groups = [];
+            for (let i = 0; i < 4; i++) {
+                groups.push(Math.random().toString(36).substr(2, 4).toUpperCase());
+            }
+            return groups.join('-');
+        }
+
+        function generateCustomKey() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let key = '';
+            for (let i = 0; i < 16; i++) {
+                if (i > 0 && i % 4 === 0) key += '-';
+                key += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return key;
+        }
+
+        function displayKey(key, type) {
+            currentKey = key;
+            document.getElementById('generatedKey').innerHTML = `
+                <div class="text-center">
+                    <h6 class="text-muted mb-2">${type}</h6>
+                    <div class="font-monospace fs-5">${key}</div>
+                </div>
+            `;
+            
+            document.getElementById('copyBtn').style.display = 'block';
+            document.getElementById('downloadBtn').style.display = 'inline-block';
+            document.getElementById('multipleBtn').style.display = 'inline-block';
+            
+            // Show strength meter for random keys
+            if (type === 'Random Key') {
+                showStrengthMeter(key);
+            } else {
+                document.getElementById('strengthSection').style.display = 'none';
+            }
+        }
+
+        function showStrengthMeter(key) {
+            let strength = 0;
+            let strengthText = '';
+            
+            // Check length
+            if (key.length >= 12) strength += 25;
+            else if (key.length >= 8) strength += 15;
+            
+            // Check character variety
+            if (/[A-Z]/.test(key)) strength += 20;
+            if (/[a-z]/.test(key)) strength += 20;
+            if (/[0-9]/.test(key)) strength += 20;
+            if (/[^A-Za-z0-9]/.test(key)) strength += 15;
+            
+            // Determine strength level
+            if (strength >= 80) {
+                strengthText = 'Very Strong';
+                document.getElementById('strengthFill').style.backgroundColor = '#28a745';
+            } else if (strength >= 60) {
+                strengthText = 'Strong';
+                document.getElementById('strengthFill').style.backgroundColor = '#17a2b8';
+            } else if (strength >= 40) {
+                strengthText = 'Medium';
+                document.getElementById('strengthFill').style.backgroundColor = '#ffc107';
+            } else {
+                strengthText = 'Weak';
+                document.getElementById('strengthFill').style.backgroundColor = '#dc3545';
+            }
+            
+            document.getElementById('strengthFill').style.width = strength + '%';
+            document.getElementById('strengthText').textContent = strengthText;
+            document.getElementById('strengthSection').style.display = 'block';
+        }
+
+        function copyKey() {
+            if (!currentKey) {
+                alert('No key to copy.');
+                return;
+            }
+
+            navigator.clipboard.writeText(currentKey).then(() => {
+                const btn = document.getElementById('copyBtn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '<i class="fas fa-check"></i>';
+                btn.classList.remove('btn-outline-primary');
+                btn.classList.add('btn-success');
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-outline-primary');
+                }, 2000);
+            }).catch(() => {
+                alert('Failed to copy key. Please copy manually.');
+            });
+        }
+
+        function downloadKey() {
+            if (!currentKey) {
+                alert('No key to download.');
+                return;
+            }
+
+            const content = `Generated Key (${currentKeyType})\n${currentKey}\n\nGenerated on: ${new Date().toLocaleString()}`;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${currentKeyType}_key.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function generateMultiple() {
+            if (currentKeyType === 'random') {
+                generateRandomKey();
+            } else if (currentKeyType === 'uuid') {
+                generateUUID();
+            } else if (currentKeyType === 'product') {
+                generateProductCode();
+            } else if (currentKeyType === 'license') {
+                generateLicenseKey();
+            }
+        }
+    </script>
+</body>
+</html>

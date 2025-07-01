@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Electric Bill Calculator - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="mb-3">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+        </div>
+        <h1 class="text-danger mb-4">Electric Bill Calculator</h1>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="currentReading" class="form-label">Current Meter Reading (kWh):</label>
+                                <input type="number" id="currentReading" class="form-control bg-dark text-light border-danger" placeholder="Enter current reading" step="0.01" min="0">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="previousReading" class="form-label">Previous Meter Reading (kWh):</label>
+                                <input type="number" id="previousReading" class="form-control bg-dark text-light border-danger" placeholder="Enter previous reading" step="0.01" min="0">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="ratePerKwh" class="form-label">Rate per kWh ($):</label>
+                                <input type="number" id="ratePerKwh" class="form-control bg-dark text-light border-danger" placeholder="Enter rate per kWh" step="0.001" min="0" value="0.12">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="serviceCharge" class="form-label">Service Charge ($):</label>
+                                <input type="number" id="serviceCharge" class="form-control bg-dark text-light border-danger" placeholder="Enter service charge" step="0.01" min="0" value="15.00">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="taxRate" class="form-label">Tax Rate (%):</label>
+                                <input type="number" id="taxRate" class="form-control bg-dark text-light border-danger" placeholder="Enter tax rate" step="0.01" min="0" max="100" value="8.5">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="billingDays" class="form-label">Billing Period (Days):</label>
+                                <input type="number" id="billingDays" class="form-control bg-dark text-light border-danger" placeholder="Enter billing days" step="1" min="1" max="365" value="30">
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="calculateBill()">Calculate Bill</button>
+                            <button class="btn btn-outline-danger" onclick="clearInput()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Results Output Box -->
+                <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5>Electric Bill Calculation Results</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center mb-3">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Usage (kWh)</h6>
+                                        <h3 id="usageKwh">0</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Energy Cost</h6>
+                                        <h3 id="energyCost">$0.00</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Total Bill</h6>
+                                        <h3 id="totalBill">$0.00</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Daily Usage</h6>
+                                        <h4 id="dailyUsage">0 kWh</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Tax Amount</h6>
+                                        <h4 id="taxAmount">$0.00</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Cost per Day</h6>
+                                        <h4 id="costPerDay">$0.00</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-3">
+                            <button class="btn btn-outline-danger me-2" onclick="copyResults()">Copy Results</button>
+                            <button class="btn btn-outline-danger" onclick="exportResults()">Export Results</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Usage Comparison -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5>Usage Comparison</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Low Usage</h6>
+                                        <h4 id="lowUsage">0 kWh</h4>
+                                        <small class="text-muted">≤ 500 kWh/month</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Medium Usage</h6>
+                                        <h4 id="mediumUsage">0 kWh</h4>
+                                        <small class="text-muted">501-1000 kWh/month</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">High Usage</h6>
+                                        <h4 id="highUsage">0 kWh</h4>
+                                        <small class="text-muted">1001-2000 kWh/month</small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Very High</h6>
+                                        <h4 id="veryHighUsage">0 kWh</h4>
+                                        <small class="text-muted">> 2000 kWh/month</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Energy Saving Tips -->
+                <div class="card bg-dark border-danger mb-4">
+                    <div class="card-header text-danger">
+                        <h5>Energy Saving Tips</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Home Appliances:</h6>
+                                <ul class="list-unstyled">
+                                    <li>• Use LED bulbs instead of incandescent</li>
+                                    <li>• Unplug devices when not in use</li>
+                                    <li>• Use energy-efficient appliances</li>
+                                    <li>• Clean air filters regularly</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-danger">Heating & Cooling:</h6>
+                                <ul class="list-unstyled">
+                                    <li>• Adjust thermostat by 1-2 degrees</li>
+                                    <li>• Use ceiling fans to circulate air</li>
+                                    <li>• Seal windows and doors</li>
+                                    <li>• Maintain HVAC systems</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../assets/js/include.js"></script>
+    <script>
+        function calculateBill() {
+            const currentReading = parseFloat(document.getElementById('currentReading').value);
+            const previousReading = parseFloat(document.getElementById('previousReading').value);
+            const ratePerKwh = parseFloat(document.getElementById('ratePerKwh').value);
+            const serviceCharge = parseFloat(document.getElementById('serviceCharge').value);
+            const taxRate = parseFloat(document.getElementById('taxRate').value);
+            const billingDays = parseInt(document.getElementById('billingDays').value);
+            
+            if (isNaN(currentReading) || isNaN(previousReading) || isNaN(ratePerKwh) || isNaN(serviceCharge) || isNaN(taxRate) || isNaN(billingDays)) {
+                alert('Please fill in all fields with valid numbers.');
+                return;
+            }
+            
+            if (currentReading < previousReading) {
+                alert('Current reading should be greater than or equal to previous reading.');
+                return;
+            }
+            
+            // Calculate usage
+            const usageKwh = currentReading - previousReading;
+            const dailyUsage = usageKwh / billingDays;
+            
+            // Calculate costs
+            const energyCost = usageKwh * ratePerKwh;
+            const subtotal = energyCost + serviceCharge;
+            const taxAmount = subtotal * (taxRate / 100);
+            const totalBill = subtotal + taxAmount;
+            const costPerDay = totalBill / billingDays;
+            
+            // Display results
+            document.getElementById('usageKwh').textContent = usageKwh.toFixed(2);
+            document.getElementById('energyCost').textContent = '$' + energyCost.toFixed(2);
+            document.getElementById('totalBill').textContent = '$' + totalBill.toFixed(2);
+            document.getElementById('dailyUsage').textContent = dailyUsage.toFixed(2) + ' kWh';
+            document.getElementById('taxAmount').textContent = '$' + taxAmount.toFixed(2);
+            document.getElementById('costPerDay').textContent = '$' + costPerDay.toFixed(2);
+            
+            // Calculate usage comparisons (monthly basis)
+            const monthlyUsage = (usageKwh / billingDays) * 30;
+            document.getElementById('lowUsage').textContent = Math.min(monthlyUsage, 500).toFixed(0) + ' kWh';
+            document.getElementById('mediumUsage').textContent = Math.max(0, Math.min(monthlyUsage - 500, 500)).toFixed(0) + ' kWh';
+            document.getElementById('highUsage').textContent = Math.max(0, Math.min(monthlyUsage - 1000, 1000)).toFixed(0) + ' kWh';
+            document.getElementById('veryHighUsage').textContent = Math.max(0, monthlyUsage - 2000).toFixed(0) + ' kWh';
+            
+            document.getElementById('resultsBox').style.display = 'block';
+        }
+        
+        function clearInput() {
+            document.getElementById('currentReading').value = '';
+            document.getElementById('previousReading').value = '';
+            document.getElementById('ratePerKwh').value = '0.12';
+            document.getElementById('serviceCharge').value = '15.00';
+            document.getElementById('taxRate').value = '8.5';
+            document.getElementById('billingDays').value = '30';
+            document.getElementById('resultsBox').style.display = 'none';
+        }
+        
+        function copyResults() {
+            const currentReading = document.getElementById('currentReading').value;
+            const previousReading = document.getElementById('previousReading').value;
+            const usageKwh = document.getElementById('usageKwh').textContent;
+            const energyCost = document.getElementById('energyCost').textContent;
+            const totalBill = document.getElementById('totalBill').textContent;
+            const dailyUsage = document.getElementById('dailyUsage').textContent;
+            const taxAmount = document.getElementById('taxAmount').textContent;
+            const costPerDay = document.getElementById('costPerDay').textContent;
+            
+            const results = `Electric Bill Calculator Results:
+Current Reading: ${currentReading} kWh
+Previous Reading: ${previousReading} kWh
+Usage: ${usageKwh} kWh
+Energy Cost: ${energyCost}
+Tax Amount: ${taxAmount}
+Total Bill: ${totalBill}
+Daily Usage: ${dailyUsage}
+Cost per Day: ${costPerDay}`;
+            
+            navigator.clipboard.writeText(results).then(() => {
+                alert('Results copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy results. Please copy manually.');
+            });
+        }
+        
+        function exportResults() {
+            const currentReading = document.getElementById('currentReading').value;
+            const previousReading = document.getElementById('previousReading').value;
+            const ratePerKwh = document.getElementById('ratePerKwh').value;
+            const serviceCharge = document.getElementById('serviceCharge').value;
+            const taxRate = document.getElementById('taxRate').value;
+            const billingDays = document.getElementById('billingDays').value;
+            const usageKwh = document.getElementById('usageKwh').textContent;
+            const energyCost = document.getElementById('energyCost').textContent;
+            const totalBill = document.getElementById('totalBill').textContent;
+            const dailyUsage = document.getElementById('dailyUsage').textContent;
+            const taxAmount = document.getElementById('taxAmount').textContent;
+            const costPerDay = document.getElementById('costPerDay').textContent;
+            
+            const exportText = `Electric Bill Analysis Report
+
+Input Parameters:
+- Current Reading: ${currentReading} kWh
+- Previous Reading: ${previousReading} kWh
+- Rate per kWh: $${ratePerKwh}
+- Service Charge: $${serviceCharge}
+- Tax Rate: ${taxRate}%
+- Billing Period: ${billingDays} days
+
+Calculation Results:
+- Usage: ${usageKwh} kWh
+- Energy Cost: ${energyCost}
+- Tax Amount: ${taxAmount}
+- Total Bill: ${totalBill}
+- Daily Usage: ${dailyUsage}
+- Cost per Day: ${costPerDay}
+
+Generated on: ${new Date().toLocaleString()}`;
+            
+            const blob = new Blob([exportText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'electric-bill-analysis.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+        
+        // Auto-calculate when inputs change
+        document.getElementById('currentReading').addEventListener('input', function() {
+            if (this.value && document.getElementById('previousReading').value) {
+                calculateBill();
+            }
+        });
+        
+        document.getElementById('previousReading').addEventListener('input', function() {
+            if (this.value && document.getElementById('currentReading').value) {
+                calculateBill();
+            }
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Length Converter - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Length Converter</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Convert between different length units quickly and accurately.
+                        </div>
+                        <div class="row mb-4">
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">From Unit</label>
+                                <select class="form-select bg-dark text-light border-danger" id="fromUnit">
+                                    <option value="meters">Meters (m)</option>
+                                    <option value="kilometers">Kilometers (km)</option>
+                                    <option value="centimeters">Centimeters (cm)</option>
+                                    <option value="millimeters">Millimeters (mm)</option>
+                                    <option value="inches">Inches (in)</option>
+                                    <option value="feet">Feet (ft)</option>
+                                    <option value="yards">Yards (yd)</option>
+                                    <option value="miles">Miles (mi)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Value</label>
+                                <input type="number" class="form-control bg-dark text-light border-danger" id="inputValue" placeholder="Enter value" step="any">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">To Unit</label>
+                                <select class="form-select bg-dark text-light border-danger" id="toUnit">
+                                    <option value="meters">Meters (m)</option>
+                                    <option value="kilometers">Kilometers (km)</option>
+                                    <option value="centimeters">Centimeters (cm)</option>
+                                    <option value="millimeters">Millimeters (mm)</option>
+                                    <option value="inches">Inches (in)</option>
+                                    <option value="feet">Feet (ft)</option>
+                                    <option value="yards">Yards (yd)</option>
+                                    <option value="miles">Miles (mi)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="text-center mb-4">
+                            <button class="btn btn-danger btn-lg" onclick="convertLength()">
+                                <i class="fas fa-exchange-alt me-2"></i>Convert
+                            </button>
+                        </div>
+                        <div id="resultSection" style="display: none;">
+                            <div class="card bg-dark border-danger">
+                                <div class="card-body text-center">
+                                    <h5 class="text-danger">Conversion Result</h5>
+                                    <div class="text-light fs-4 fw-bold" id="resultDisplay"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <h5 class="text-danger"><i class="fas fa-info-circle me-2"></i>Common Conversions</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="text-light">
+                                        <li>1 meter = 100 centimeters</li>
+                                        <li>1 kilometer = 1000 meters</li>
+                                        <li>1 inch = 2.54 centimeters</li>
+                                        <li>1 foot = 12 inches</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="text-light">
+                                        <li>1 yard = 3 feet</li>
+                                        <li>1 mile = 5280 feet</li>
+                                        <li>1 mile = 1.60934 kilometers</li>
+                                        <li>1 meter = 39.3701 inches</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    <script src="../assets/js/include.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function convertLength() {
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            const inputValue = parseFloat(document.getElementById('inputValue').value);
+
+            if (isNaN(inputValue)) {
+                alert('Please enter a valid number.');
+                return;
+            }
+
+            // Convert to meters first (base unit)
+            const meters = convertToMeters(inputValue, fromUnit);
+            
+            // Convert from meters to target unit
+            const result = convertFromMeters(meters, toUnit);
+
+            // Display result
+            document.getElementById('resultDisplay').textContent = 
+                `${inputValue} ${fromUnit} = ${result.toFixed(6)} ${toUnit}`;
+            document.getElementById('resultSection').style.display = 'block';
+        }
+
+        function convertToMeters(value, unit) {
+            switch (unit) {
+                case 'meters': return value;
+                case 'kilometers': return value * 1000;
+                case 'centimeters': return value / 100;
+                case 'millimeters': return value / 1000;
+                case 'inches': return value * 0.0254;
+                case 'feet': return value * 0.3048;
+                case 'yards': return value * 0.9144;
+                case 'miles': return value * 1609.34;
+                default: return value;
+            }
+        }
+
+        function convertFromMeters(meters, unit) {
+            switch (unit) {
+                case 'meters': return meters;
+                case 'kilometers': return meters / 1000;
+                case 'centimeters': return meters * 100;
+                case 'millimeters': return meters * 1000;
+                case 'inches': return meters / 0.0254;
+                case 'feet': return meters / 0.3048;
+                case 'yards': return meters / 0.9144;
+                case 'miles': return meters / 1609.34;
+                default: return meters;
+            }
+        }
+
+        // Handle Enter key
+        document.getElementById('inputValue').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                convertLength();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meta Tag Generator - MultiTools</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .code-output {
+            background-color: #212529;
+            border: 1px solid #dc3545;
+            border-radius: 0.375rem;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            color: #ffffff;
+        }
+        .preview-card {
+            border-left: 4px solid #dc3545;
+            transition: all 0.3s ease;
+        }
+        .preview-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(220, 53, 69, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-dark text-light">
+    <!-- Sticky Side Ads -->
+    <div class="sticky-side-ad left">
+        <div class="ad-placeholder">AdSense Left</div>
+    </div>
+    <div class="sticky-side-ad right">
+        <div class="ad-placeholder">AdSense Right</div>
+    </div>
+    <div id="header"></div>
+    <div class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="../index.html" class="btn btn-outline-danger">&larr; Back to Home</a>
+            <h1 class="text-danger mb-0">Meta Tag Generator</h1>
+            <div style="width: 120px;"></div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Generate comprehensive meta tags for better SEO and social media sharing.
+                        </div>
+                        <!-- Basic Information -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-info-circle me-2"></i>Basic Information</h5>
+                                <div class="mb-3">
+                                    <label for="pageTitle" class="form-label">Page Title</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="pageTitle" placeholder="Enter page title">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="pageDescription" class="form-label">Page Description</label>
+                                    <textarea class="form-control bg-dark text-light border-danger" id="pageDescription" rows="3" placeholder="Enter page description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="keywords" class="form-label">Keywords (comma-separated)</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="keywords" placeholder="Enter keywords">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="author" class="form-label">Author</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="author" placeholder="Enter author name">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-globe me-2"></i>URL & Language</h5>
+                                <div class="mb-3">
+                                    <label for="pageUrl" class="form-label">Page URL</label>
+                                    <input type="url" class="form-control bg-dark text-light border-danger" id="pageUrl" placeholder="Enter page URL">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="language" class="form-label">Language</label>
+                                    <select class="form-select bg-dark text-light border-danger" id="language">
+                                        <option value="en">English</option>
+                                        <option value="es">Spanish</option>
+                                        <option value="fr">French</option>
+                                        <option value="de">German</option>
+                                        <option value="it">Italian</option>
+                                        <option value="pt">Portuguese</option>
+                                        <option value="ru">Russian</option>
+                                        <option value="ja">Japanese</option>
+                                        <option value="ko">Korean</option>
+                                        <option value="zh">Chinese</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="robots" class="form-label">Robots</label>
+                                    <select class="form-select bg-dark text-light border-danger" id="robots">
+                                        <option value="index,follow">Index, Follow</option>
+                                        <option value="noindex,nofollow">No Index, No Follow</option>
+                                        <option value="index,nofollow">Index, No Follow</option>
+                                        <option value="noindex,follow">No Index, Follow</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="viewport" class="form-label">Viewport</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="viewport" value="width=device-width, initial-scale=1.0">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Social Media -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5><i class="fab fa-facebook me-2"></i>Facebook (Open Graph)</h5>
+                                <div class="mb-3">
+                                    <label for="ogTitle" class="form-label">OG Title</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="ogTitle" placeholder="Facebook title">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ogDescription" class="form-label">OG Description</label>
+                                    <textarea class="form-control bg-dark text-light border-danger" id="ogDescription" rows="2" placeholder="Facebook description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ogImage" class="form-label">OG Image URL</label>
+                                    <input type="url" class="form-control bg-dark text-light border-danger" id="ogImage" placeholder="Facebook image URL">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="ogType" class="form-label">OG Type</label>
+                                    <select class="form-select bg-dark text-light border-danger" id="ogType">
+                                        <option value="website">Website</option>
+                                        <option value="article">Article</option>
+                                        <option value="book">Book</option>
+                                        <option value="profile">Profile</option>
+                                        <option value="music.song">Music Song</option>
+                                        <option value="music.album">Music Album</option>
+                                        <option value="video.movie">Video Movie</option>
+                                        <option value="video.episode">Video Episode</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fab fa-twitter me-2"></i>Twitter Card</h5>
+                                <div class="mb-3">
+                                    <label for="twitterCard" class="form-label">Twitter Card Type</label>
+                                    <select class="form-select bg-dark text-light border-danger" id="twitterCard">
+                                        <option value="summary">Summary</option>
+                                        <option value="summary_large_image">Summary Large Image</option>
+                                        <option value="app">App</option>
+                                        <option value="player">Player</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="twitterTitle" class="form-label">Twitter Title</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="twitterTitle" placeholder="Twitter title">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="twitterDescription" class="form-label">Twitter Description</label>
+                                    <textarea class="form-control bg-dark text-light border-danger" id="twitterDescription" rows="2" placeholder="Twitter description"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="twitterImage" class="form-label">Twitter Image URL</label>
+                                    <input type="url" class="form-control bg-dark text-light border-danger" id="twitterImage" placeholder="Twitter image URL">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="twitterUsername" class="form-label">Twitter Username</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="twitterUsername" placeholder="@username">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Additional Meta Tags -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-cog me-2"></i>Additional Meta Tags</h5>
+                                <div class="mb-3">
+                                    <label for="canonicalUrl" class="form-label">Canonical URL</label>
+                                    <input type="url" class="form-control bg-dark text-light border-danger" id="canonicalUrl" placeholder="Canonical URL">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="themeColor" class="form-label">Theme Color</label>
+                                    <input type="color" class="form-control" id="themeColor" value="#dc3545">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="charset" class="form-label">Charset</label>
+                                    <select class="form-select bg-dark text-light border-danger" id="charset">
+                                        <option value="UTF-8">UTF-8</option>
+                                        <option value="ISO-8859-1">ISO-8859-1</option>
+                                        <option value="UTF-16">UTF-16</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5><i class="fas fa-chart-line me-2"></i>Analytics & Tracking</h5>
+                                <div class="mb-3">
+                                    <label for="googleAnalytics" class="form-label">Google Analytics ID</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="googleAnalytics" placeholder="GA-XXXXXXXXX-X">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="googleVerification" class="form-label">Google Site Verification</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="googleVerification" placeholder="Verification code">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="bingVerification" class="form-label">Bing Webmaster Tools</label>
+                                    <input type="text" class="form-control bg-dark text-light border-danger" id="bingVerification" placeholder="Verification code">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="generateMetaTags()">
+                                <i class="fas fa-magic me-2"></i>Generate Meta Tags
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="clearForm()">
+                                <i class="fas fa-trash me-2"></i>Clear Form
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="loadExample()">
+                                <i class="fas fa-lightbulb me-2"></i>Load Example
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Results Output Box -->
+                <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-code me-2"></i>Generated Meta Tags</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center mb-3">
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Basic Tags</h6>
+                                        <h4 id="basicTagCount">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Social Tags</h6>
+                                        <h4 id="socialTagCount">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-2">
+                                <div class="card bg-secondary border-danger">
+                                    <div class="card-body">
+                                        <h6 class="text-danger">Total Tags</h6>
+                                        <h4 id="totalTagCount">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="metaTagsOutput" class="form-label">Meta Tags Code:</label>
+                            <div id="metaTagsOutput" class="code-output"></div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-outline-danger me-2" onclick="copyMetaTags()">
+                                <i class="fas fa-copy me-2"></i>Copy Code
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="downloadMetaTags()">
+                                <i class="fas fa-download me-2"></i>Download HTML
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="previewMetaTags()">
+                                <i class="fas fa-eye me-2"></i>Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Preview Section -->
+                <div id="previewSection" class="card bg-dark border-danger mb-4" style="display: none;">
+                    <div class="card-header text-danger">
+                        <h5><i class="fas fa-eye me-2"></i>Social Media Preview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="preview-card card bg-light text-dark">
+                                    <div class="card-body">
+                                        <h6><i class="fab fa-facebook me-2"></i>Facebook Preview</h6>
+                                        <div id="facebookPreview">
+                                            <div class="mb-2">
+                                                <strong id="fbTitle">Page Title</strong>
+                                            </div>
+                                            <div class="text-muted small" id="fbDescription">Page description will appear here...</div>
+                                            <div class="mt-2">
+                                                <small class="text-muted" id="fbUrl">example.com</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="preview-card card bg-light text-dark">
+                                    <div class="card-body">
+                                        <h6><i class="fab fa-twitter me-2"></i>Twitter Preview</h6>
+                                        <div id="twitterPreview">
+                                            <div class="mb-2">
+                                                <strong id="twTitle">Page Title</strong>
+                                            </div>
+                                            <div class="text-muted small" id="twDescription">Page description will appear here...</div>
+                                            <div class="mt-2">
+                                                <small class="text-muted" id="twUrl">example.com</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer"></div>
+    
+    <script src="../assets/js/include.js"></script>
+    <script>
+        function generateMetaTags() {
+            // Get form values
+            const pageTitle = document.getElementById('pageTitle').value;
+            const pageDescription = document.getElementById('pageDescription').value;
+            const keywords = document.getElementById('keywords').value;
+            const author = document.getElementById('author').value;
+            const pageUrl = document.getElementById('pageUrl').value;
+            const language = document.getElementById('language').value;
+            const robots = document.getElementById('robots').value;
+            const viewport = document.getElementById('viewport').value;
+            const ogTitle = document.getElementById('ogTitle').value;
+            const ogDescription = document.getElementById('ogDescription').value;
+            const ogImage = document.getElementById('ogImage').value;
+            const ogType = document.getElementById('ogType').value;
+            const twitterCard = document.getElementById('twitterCard').value;
+            const twitterTitle = document.getElementById('twitterTitle').value;
+            const twitterDescription = document.getElementById('twitterDescription').value;
+            const twitterImage = document.getElementById('twitterImage').value;
+            const twitterUsername = document.getElementById('twitterUsername').value;
+            const canonicalUrl = document.getElementById('canonicalUrl').value;
+            const themeColor = document.getElementById('themeColor').value;
+            const charset = document.getElementById('charset').value;
+            const googleAnalytics = document.getElementById('googleAnalytics').value;
+            const googleVerification = document.getElementById('googleVerification').value;
+            const bingVerification = document.getElementById('bingVerification').value;
+
+            // Generate meta tags
+            let metaTags = '';
+            let basicCount = 0;
+            let socialCount = 0;
+
+            // Basic meta tags
+            if (pageTitle) {
+                metaTags += `<title>${pageTitle}</title>\n`;
+                basicCount++;
+            }
+            if (pageDescription) {
+                metaTags += `<meta name="description" content="${pageDescription}">\n`;
+                basicCount++;
+            }
+            if (keywords) {
+                metaTags += `<meta name="keywords" content="${keywords}">\n`;
+                basicCount++;
+            }
+            if (author) {
+                metaTags += `<meta name="author" content="${author}">\n`;
+                basicCount++;
+            }
+            if (robots) {
+                metaTags += `<meta name="robots" content="${robots}">\n`;
+                basicCount++;
+            }
+            if (viewport) {
+                metaTags += `<meta name="viewport" content="${viewport}">\n`;
+                basicCount++;
+            }
+            if (charset) {
+                metaTags += `<meta charset="${charset}">\n`;
+                basicCount++;
+            }
+            if (themeColor) {
+                metaTags += `<meta name="theme-color" content="${themeColor}">\n`;
+                basicCount++;
+            }
+            if (canonicalUrl) {
+                metaTags += `<link rel="canonical" href="${canonicalUrl}">\n`;
+                basicCount++;
+            }
+
+            // Open Graph tags
+            if (ogTitle || ogDescription || ogImage || ogType) {
+                if (ogTitle) {
+                    metaTags += `<meta property="og:title" content="${ogTitle}">\n`;
+                    socialCount++;
+                }
+                if (ogDescription) {
+                    metaTags += `<meta property="og:description" content="${ogDescription}">\n`;
+                    socialCount++;
+                }
+                if (ogImage) {
+                    metaTags += `<meta property="og:image" content="${ogImage}">\n`;
+                    socialCount++;
+                }
+                if (ogType) {
+                    metaTags += `<meta property="og:type" content="${ogType}">\n`;
+                    socialCount++;
+                }
+                if (pageUrl) {
+                    metaTags += `<meta property="og:url" content="${pageUrl}">\n`;
+                    socialCount++;
+                }
+            }
+
+            // Twitter Card tags
+            if (twitterCard || twitterTitle || twitterDescription || twitterImage || twitterUsername) {
+                if (twitterCard) {
+                    metaTags += `<meta name="twitter:card" content="${twitterCard}">\n`;
+                    socialCount++;
+                }
+                if (twitterTitle) {
+                    metaTags += `<meta name="twitter:title" content="${twitterTitle}">\n`;
+                    socialCount++;
+                }
+                if (twitterDescription) {
+                    metaTags += `<meta name="twitter:description" content="${twitterDescription}">\n`;
+                    socialCount++;
+                }
+                if (twitterImage) {
+                    metaTags += `<meta name="twitter:image" content="${twitterImage}">\n`;
+                    socialCount++;
+                }
+                if (twitterUsername) {
+                    metaTags += `<meta name="twitter:site" content="${twitterUsername}">\n`;
+                    socialCount++;
+                }
+            }
+
+            // Analytics and verification
+            if (googleAnalytics) {
+                metaTags += `<!-- Google Analytics -->
+&lt;script async src="https://www.googletagmanager.com/gtag/js?id=${googleAnalytics}"&gt;&lt;/script&gt;
+&lt;script&gt;
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '${googleAnalytics}');
+&lt;/script&gt;\n`;
+            }
+            if (googleVerification) {
+                metaTags += `<meta name="google-site-verification" content="${googleVerification}">\n`;
+            }
+            if (bingVerification) {
+                metaTags += `<meta name="msvalidate.01" content="${bingVerification}">\n`;
+            }
+
+            // Update counters
+            document.getElementById('basicTagCount').textContent = basicCount;
+            document.getElementById('socialTagCount').textContent = socialCount;
+            document.getElementById('totalTagCount').textContent = basicCount + socialCount;
+
+            // Display results
+            document.getElementById('metaTagsOutput').textContent = metaTags;
+            document.getElementById('resultsBox').style.display = 'block';
+        }
+
+        function clearForm() {
+            // Clear all form fields
+            const formElements = document.querySelectorAll('input, textarea, select');
+            formElements.forEach(element => {
+                if (element.type === 'color') {
+                    element.value = '#dc3545';
+                } else if (element.type === 'text' || element.type === 'url' || element.type === 'textarea') {
+                    element.value = '';
+                } else if (element.tagName === 'SELECT') {
+                    element.selectedIndex = 0;
+                }
+            });
+            document.getElementById('viewport').value = 'width=device-width, initial-scale=1.0';
+            document.getElementById('resultsBox').style.display = 'none';
+        }
+
+        function loadExample() {
+            document.getElementById('pageTitle').value = 'MultiTools - Free Online Tools';
+            document.getElementById('pageDescription').value = 'Free online tools for developers, designers, and digital professionals. Convert, generate, and analyze with our comprehensive toolset.';
+            document.getElementById('keywords').value = 'online tools, web tools, developer tools, free tools, converter, generator';
+            document.getElementById('author').value = 'MultiTools Team';
+            document.getElementById('pageUrl').value = 'https://multitools.com';
+            document.getElementById('ogTitle').value = 'MultiTools - Free Online Tools for Everyone';
+            document.getElementById('ogDescription').value = 'Discover our collection of free online tools designed to make your digital work easier and more efficient.';
+            document.getElementById('ogImage').value = 'https://multitools.com/og-image.jpg';
+            document.getElementById('twitterTitle').value = 'MultiTools - Free Online Tools';
+            document.getElementById('twitterDescription').value = 'Free online tools for developers, designers, and digital professionals.';
+            document.getElementById('twitterImage').value = 'https://multitools.com/twitter-image.jpg';
+            document.getElementById('twitterUsername').value = '@multitools';
+        }
+
+        function copyMetaTags() {
+            const metaTags = document.getElementById('metaTagsOutput').textContent;
+            navigator.clipboard.writeText(metaTags).then(() => {
+                alert('Meta tags copied to clipboard!');
+            }).catch(() => {
+                alert('Failed to copy meta tags.');
+            });
+        }
+
+        function downloadMetaTags() {
+            const metaTags = document.getElementById('metaTagsOutput').textContent;
+            const blob = new Blob([metaTags], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'meta-tags.html';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function previewMetaTags() {
+            const ogTitle = document.getElementById('ogTitle').value || document.getElementById('pageTitle').value;
+            const ogDescription = document.getElementById('ogDescription').value || document.getElementById('pageDescription').value;
+            const pageUrl = document.getElementById('pageUrl').value || 'example.com';
+            const twitterTitle = document.getElementById('twitterTitle').value || document.getElementById('pageTitle').value;
+            const twitterDescription = document.getElementById('twitterDescription').value || document.getElementById('pageDescription').value;
+
+            // Update Facebook preview
+            document.getElementById('fbTitle').textContent = ogTitle || 'Page Title';
+            document.getElementById('fbDescription').textContent = ogDescription || 'Page description will appear here...';
+            document.getElementById('fbUrl').textContent = pageUrl || 'example.com';
+
+            // Update Twitter preview
+            document.getElementById('twTitle').textContent = twitterTitle || 'Page Title';
+            document.getElementById('twDescription').textContent = twitterDescription || 'Page description will appear here...';
+            document.getElementById('twUrl').textContent = pageUrl || 'example.com';
+
+            document.getElementById('previewSection').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
