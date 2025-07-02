@@ -92,21 +92,6 @@ body {
   transform: scale(1.01) !important;
 }
 
-/* Video element for live wallpaper */
-body::after {
-  content: '';
-  position: fixed;
-  top: 0; 
-  left: 0; 
-  right: 0; 
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: -5;
-  pointer-events: none;
-}
-
 /* Additional animated elements */
 .container, .ad-placeholder, .card, .tool-btn, .bg-black, .bg-dark {
   position: relative;
@@ -201,8 +186,6 @@ body::after {
   will-change: transform;
   margin: 0;
   padding: 0;
-  /* Prevent any other animations from affecting positioning */
-  animation: none !important;
 }
 
 /* Left and right ads positioned at same vertical level */
@@ -446,4 +429,28 @@ body.index-page .sticky-side-ad.left .developer-info {
   /* Move a little up from previous position */
   top: calc(8.5rem - 3.5in);
   z-index: 1100;
+}
+
+.card-title {
+  color: #fff !important;
+}
+
+.card-body {
+  border-radius: 0.5rem;
+  transition: background 0.3s;
+}
+
+/* Cyber wallpaper for index page */
+body.index-page {
+  background: url('../img/cyber.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
+}
+
+body.index-page::before {
+  content: none !important;
+}
+
+body.index-page > * {
+  position: relative;
+  z-index: 1;
 } 

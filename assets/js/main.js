@@ -123,4 +123,18 @@ document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', function() {
     requestAnimationFrame(positionStickyAds);
   });
+
+  // Pastel color palette for card bodies
+  const pastelColors = [
+    '#ffe0b2', // light orange
+    '#b2ebf2', // light cyan
+    '#c8e6c9', // light green
+    '#fff9c4', // light yellow
+    '#f8bbd0', // light pink
+    '#d1c4e9'  // light purple
+  ];
+  const cardBodies = document.querySelectorAll('.card-body');
+  cardBodies.forEach((body, idx) => {
+    body.style.background = pastelColors[idx % pastelColors.length];
+  });
 }); 
