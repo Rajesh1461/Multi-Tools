@@ -16,8 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const scrollOffset = scrollY * 0.3; // Adjust speed here (0.3 = 30% of scroll speed)
       
       // Apply transform to move ads up and down
-      leftAd.style.transform = `translateY(${scrollOffset}px)`;
-      rightAd.style.transform = `translateY(${scrollOffset}px)`;
+      // leftAd.style.transform = `translateY(${scrollOffset}px)`;
+      // rightAd.style.transform = `translateY(${scrollOffset}px)`;
     }
     ticking = false;
   }
@@ -73,9 +73,9 @@ document.addEventListener('DOMContentLoaded', function() {
     searchInput.focus();
   }
 
-  searchBtn.addEventListener('click', filterTools);
-  clearBtn.addEventListener('click', clearSearch);
-  searchInput.addEventListener('keyup', function(e) {
+  if (searchBtn) searchBtn.addEventListener('click', filterTools);
+  if (clearBtn) clearBtn.addEventListener('click', clearSearch);
+  if (searchInput) searchInput.addEventListener('keyup', function(e) {
     if (e.key === 'Enter') {
       filterTools();
     } else {
@@ -106,8 +106,8 @@ document.addEventListener('DOMContentLoaded', function() {
       rightAd.style.top = containerCenter + 'px';
       
       // Remove transform since we're using absolute positioning
-      leftAd.style.transform = 'translateY(-50%)';
-      rightAd.style.transform = 'translateY(-50%)';
+      // leftAd.style.transform = 'translateY(-50%)';
+      // rightAd.style.transform = 'translateY(-50%)';
     }
   }
 
@@ -122,19 +122,5 @@ document.addEventListener('DOMContentLoaded', function() {
   // Reposition ads on scroll (optional, for better responsiveness)
   window.addEventListener('scroll', function() {
     requestAnimationFrame(positionStickyAds);
-  });
-
-  // Pastel color palette for card bodies
-  const pastelColors = [
-    '#ffe0b2', // light orange
-    '#b2ebf2', // light cyan
-    '#c8e6c9', // light green
-    '#fff9c4', // light yellow
-    '#f8bbd0', // light pink
-    '#d1c4e9'  // light purple
-  ];
-  const cardBodies = document.querySelectorAll('.card-body');
-  cardBodies.forEach((body, idx) => {
-    body.style.background = pastelColors[idx % pastelColors.length];
   });
 }); 

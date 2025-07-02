@@ -60,8 +60,8 @@ function positionStickyAds() {
       // On index page: move ads 20% down from the top of the viewport
       leftAd.style.top = '20vh';
       rightAd.style.top = '20vh';
-      leftAd.style.transform = 'none';
-      rightAd.style.transform = 'none';
+      // leftAd.style.transform = 'none';
+      // rightAd.style.transform = 'none';
     } else {
       console.log('positionStickyAds: On tools page, using container-centered positioning');
       // On other pages: keep the current behavior (centered on container)
@@ -72,8 +72,8 @@ function positionStickyAds() {
       const targetY = containerTop + (containerHeight * 0.05);
       leftAd.style.top = targetY + 'px';
       rightAd.style.top = targetY + 'px';
-      leftAd.style.transform = 'translateY(-50%)';
-      rightAd.style.transform = 'translateY(-50%)';
+      // leftAd.style.transform = 'translateY(-50%)';
+      // rightAd.style.transform = 'translateY(-50%)';
     }
   } else {
     console.log('positionStickyAds: One or more ad/container elements not found');

@@ -132,7 +132,7 @@ body {
   /* transition: all 0.3s ease; */
   position: relative;
   overflow: hidden;
-  background: linear-gradient(135deg, #0d6efd, #0b5ed7) !important;
+  background: rgba(0,0,0,0.1) !important;
   border: 1px solid rgba(255, 255, 255, 0.3) !important;
 }
 
@@ -154,14 +154,14 @@ body {
 .tool-btn:hover {
   /* transform: translateY(-5px) scale(1.03); */
   /* box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5); */
-  background: linear-gradient(135deg, #0b5ed7, #0a58ca) !important;
+  background: rgba(0,0,0,0.15) !important;
 }
 
 /* Sticky side ads - positioned at same vertical level */
 .sticky-side-ad {
   position: fixed !important;
   top: 50% !important;
-  transform: translateY(-50%) !important;
+  transform: translateY(-50%);
   width: 160px;
   height: 600px;
   z-index: 1000;
@@ -183,13 +183,13 @@ body {
 .sticky-side-ad.left {
   left: 10px !important;
   top: 50% !important;
-  transform: translateY(-50%) !important;
+  transform: translateY(-50%);
 }
 
 .sticky-side-ad.right {
   right: 10px !important;
   top: 50% !important;
-  transform: translateY(-50%) !important;
+  transform: translateY(-50%);
 }
 
 /* Enhanced form elements */
@@ -269,12 +269,12 @@ input[type="file"]:focus, input[type="text"]:focus, input[type="number"]:focus, 
 .tool-btn {
   min-width: 220px;
   margin-bottom: 10px;
-  background: #0d6efd !important;
+  background: rgba(0,0,0,0.1) !important;
   color: #fff !important;
   border: none !important;
 }
 .tool-btn:hover {
-  background: #0b5ed7 !important;
+  background: rgba(0,0,0,0.15) !important;
   color: #fff !important;
 }
 @media (max-width: 1200px) {
@@ -444,4 +444,11 @@ body.index-page::before {
 body.index-page > * {
   position: relative;
   z-index: 1;
+}
+
+.sticky-side-ad.left:hover,
+.sticky-side-ad.right:hover {
+  transform: translateY(calc(-50% - 100px)) scale(1.05);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1), box-shadow 0.4s cubic-bezier(0.4,0,0.2,1);
 } 
