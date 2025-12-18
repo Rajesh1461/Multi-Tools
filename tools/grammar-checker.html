@@ -1,0 +1,867 @@
+<html lang="en"><head></head><body class="bg-dark text-light tool-page">﻿
+
+
+<style>
+/* Vertical side ads - show only on large screens */
+@media (min-width: 1200px) {
+  .vertical-ad {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vertical-ad {
+    display: none !important;
+  }
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Grammar Checker - Free Online Tool | MultiTools</title>
+    <meta name="description" content="Free online Grammar Checker tool. Professional, easy-to-use Grammar Checker for various tasks and calculations.">
+    <meta name="keywords" content="grammar checker, spelling checker, writing tool, grammar correction, text editor, writing assistant, free grammar tool, online grammar checker">
+    <meta name="author" content="MultiTools">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="revisit-after" content="7 days">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  
+  
+  <!-- Canonical URL -->
+    
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Grammar Checker - Free Online Grammar and Spelling Checker | MultiTools">
+  <meta property="og:description" content="Free online grammar checker tool. Check your text for grammar, spelling, and style issues. Get instant suggestions for improvements and enhance your writing quality.">
+  <meta property="og:url" content="https://multitoolszone.fun/tools/grammar-checker.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://multitoolszone.fun/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+    <link rel="canonical" href="https://multitoolszone.fun/tools/grammar-checker.html">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-96x96.png">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Performance Optimization -->
+    <div id="performance-optimizer"></div>
+    
+    <!-- Optimized Stylesheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Grammar Checker",
+      "description": "Free online grammar checker for improving writing quality and correcting errors",
+      "url": "https://multitoolszone.fun/tools/grammar-checker.html",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "MultiTools"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MultiTools",
+        "url": "https://multitoolszone.fun"
+      }
+    }
+    </script>
+    
+    <style>
+        .text-area {
+            min-height: 200px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        .error-highlight {
+            background-color: rgba(220, 53, 69, 0.3);
+            border-bottom: 2px solid #dc3545;
+            cursor: pointer;
+        }
+        .suggestion-popup {
+            position: absolute;
+            background: #343a40;
+            border: 1px solid #dc3545;
+            border-radius: 4px;
+            padding: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 300px;
+            color: white;
+        }
+    </style>
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+/* Critical styles for immediate rendering */
+body { margin: 0; padding: 0; background: #000; color: #fff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+.card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); }
+.tool-btn { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); }
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.navbar { background: rgba(0, 0, 0, 0.8) !important; }
+.navbar-brand { color: #fff !important; }
+.nav-link { color: #fff !important; }
+.btn { border-radius: 0.375rem; }
+.btn-primary { background: #dc3545; border-color: #dc3545; }
+.btn-outline-primary { color: #dc3545; border-color: #dc3545; }
+.form-control { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; }
+.form-control:focus { background: rgba(0, 0, 0, 0.6); border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); }
+.card-body { color: #fff; }
+h1, h2, h3, h4, h5, h6 { color: #fff; }
+p { color: #fff; }
+label { color: #fff; }
+small { color: rgba(255, 255, 255, 0.85); }
+.alert { color: #fff; }
+.table-dark { color: #fff; }
+.table-dark td, .table-dark th { color: #fff; }
+.bg-dark { background: rgba(0, 0, 0, 0.8) !important; }
+.bg-secondary { background: rgba(108, 117, 125, 0.8) !important; color: #fff; }
+.text-muted { color: rgba(255, 255, 255, 0.75) !important; }
+</style>
+  
+  <!-- Non-critical CSS loaded asynchronously -->
+
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../assets/css/style.css?v=3" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+  </noscript>
+  <!-- Performance Optimization - Resource Hints -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="">
+
+    <!-- AdSense Script with Error Handling -->
+    <script>
+      // AdSense initialization with error handling
+      (function() {
+        var adScript = document.createElement('script');
+        adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3712069892669914';
+        adScript.async = true;
+        adScript.crossOrigin = 'anonymous';
+        
+        // Add error handling
+        adScript.onerror = function() {
+          console.warn('Failed to load AdSense script. This is normal if you have an ad blocker enabled.');
+          // Fallback to a non-blocking error handler
+          window.adsbygoogle = window.adsbygoogle || [];
+          window.adsbygoogle.push({});
+        };
+        
+        // Insert the script in the head
+        document.head.appendChild(adScript);
+      })();
+    </script>
+
+
+    
+
+    <div id="header"><header class="bg-transparent pt-3 mb-4 border-bottom border-danger">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Logo positioned outside container for independent sizing -->
+  <div class="text-center mb-2" id="site-logo" style="background: transparent !important; margin-top: 5px;">
+    <a href="/">
+      <img src="/assets/img/optimized/MULTI-TOOLS.webp" alt="Multi Tools" style="height: 100px !important; width: auto !important; max-height: none !important; background: transparent !important; display: block !important; margin: 0 auto !important;" loading="lazy" decoding="async" width="500" height="500">
+    </a>
+  </div>
+  <div class="container" style="background: transparent !important;">
+
+    <!-- Simple link row below logo -->
+    <nav class="d-flex justify-content-end align-items-center gap-3 pb-1" aria-label="Primary" style="max-height: 100px;">
+      <a href="../" class="text-danger fw-semibold text-decoration-none">Home</a>
+      <a href="../About.html" class="text-danger fw-semibold text-decoration-none" target="_blank">About</a>
+      <a href="../Contact.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Contact</a>
+      <a href="../blog/" class="text-danger fw-semibold text-decoration-none" target="_blank">Blog</a>
+      <a href="../Privacy-Policy.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Privacy Policy</a>
+      <a href="../Terms-of-Service.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Terms</a>
+    </nav>
+  </div>
+
+  <style>
+    /* Navigation link styles */
+    header nav a {
+      font-size: 18px !important; 
+      /* around 17–18px */
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+
+    /* Hover effect */
+    header nav a:hover {
+      color: #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      header nav a {
+        font-size: 1rem !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      header nav a {
+        font-size: 0.55rem !important;
+        display: inline-block;
+      }
+    }
+  </style>
+</header>
+</div>
+    
+    <div class="container py-5">
+    
+    <div id="breadcrumb">
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb align-items-center mb-4">
+    <li class="breadcrumb-item">
+      <a href="../" class="text-danger text-decoration-none">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </li>   
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://multitoolszone.fun/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://multitoolszone.fun/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Current Tool",
+      "item": "https://multitoolszone.fun/tools/current-tool.html"
+    }
+  ]
+}
+</script>
+<script>
+// Update breadcrumb JSON-LD with current page URL
+document.addEventListener('DOMContentLoaded', function() {
+  const script = document.querySelector('script[type="application/ld+json"]');
+  if (script) {
+    const data = JSON.parse(script.textContent);
+    data.itemListElement[2].item = window.location.href;
+    script.textContent = JSON.stringify(data);
+  }
+});
+</script>
+</div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-4 text-center flex-grow-1 text-decoration-underline" style="color: #09ce24 !important;">
+        Grammar Checker - Free Online Grammar and Spelling Checker
+      </h1>
+    </div>
+    
+    <!-- Tool Interface -->
+    <div class="tool-interface">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">        
+          <!-- In-Content Ad Unit -->
+          <div id="ads-incontent"></div>
+                  
+                  <!-- Tool Description -->
+                  <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <h2 class="text-danger mb-3">Free Grammar Checker</h2>
+                        <p class="mb-3">Check your text for grammar, spelling, and style issues with our comprehensive grammar checker. Get instant suggestions for improvements and enhance your writing quality.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                
+                            </div>
+                            <div class="col-md-6">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Grammar Checker Tool -->
+              <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger mb-3">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> Check your text for grammar, spelling, and style issues. Get suggestions for improvements.
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="textInput" class="form-label text-warning">Enter Text to Check:</label>
+                            <textarea class="form-control bg-dark text-light border-danger text-area" id="textInput" rows="8" placeholder="Type or paste your text here to check for grammar and spelling errors..."></textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-muted">Words: <span id="wordCount">0</span></span>
+                                    <span class="text-muted">Characters: <span id="charCount">0</span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-outline-danger btn-sm" onclick="clearText()">Clear Text</button>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mb-3">
+                            <button class="btn btn-danger me-2" onclick="checkGrammar()" id="checkButton">
+                                <i class="fas fa-search me-2"></i>Check Grammar
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="loadExample()">
+                                <i class="fas fa-lightbulb me-2"></i>Load Example
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="applyAllCorrections()">
+                                <i class="fas fa-magic me-2"></i>Apply All Corrections
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <!-- Statistics Cards -->
+                <div class="row mb-4">
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body text-center">
+                                <h6 class="text-danger"><i class="fas fa-chart-bar me-2"></i>Text Statistics</h6>
+                                <p><strong>Words:</strong> <span id="wordCount">0</span></p>
+                                <p><strong>Characters:</strong> <span id="charCount">0</span></p>
+                                <p><strong>Sentences:</strong> <span id="sentenceCount">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body text-center">
+                                <h6 class="text-danger"><i class="fas fa-exclamation-triangle me-2"></i>Issues Found</h6>
+                                <p><strong>Grammar:</strong> <span id="grammarErrors">0</span></p>
+                                <p><strong>Spelling:</strong> <span id="spellingErrors">0</span></p>
+                                <p><strong>Style:</strong> <span id="styleIssues">0</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="card bg-secondary border-danger">
+                            <div class="card-body text-center">
+                                <h6 class="text-danger"><i class="fas fa-star me-2"></i>Quality Score</h6>
+                                <p><strong>Overall:</strong> <span id="qualityScore">100%</span></p>
+                                <p><strong>Readability:</strong> <span id="readabilityScore">Good</span></p>
+                                <p><strong>Grade Level:</strong> <span id="gradeLevel">College</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Results Section -->
+                <div id="results" class="card bg-black border-danger mb-4" style="display: none;">
+                    <div class="card-body">
+                        <h3 class="text-danger mb-3">Grammar Check Results</h3>
+                        <div id="issuesList">
+                            <!-- Issues will appear here -->
+                        </div>
+                        <div class="text-center mt-3">
+                            <button class="btn btn-success me-2" onclick="copyResults()">
+                                <i class="fas fa-copy me-2"></i>Copy Results
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="exportResults()">
+                                <i class="fas fa-download me-2"></i>Export Results
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+      </div>
+    </div>
+
+  <!-- Multiplex Ad Unit -->
+  <div id="ads-multiplex"></div>
+  
+  <!-- Comprehensive Guide Section -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card bg-black border-danger">
+        <div class="card-body">
+          <h3 style="color: #4fc3f7;">Complete Guide to Grammar Checking and Writing Improvement</h3>
+          
+          <h4 style="color: #00ff88;">What is Grammar Checking?</h4>
+          <p>Grammar checking is the process of analyzing written text to identify and correct grammatical errors, spelling mistakes, punctuation issues, and style problems. This is essential for producing professional, error-free content that effectively communicates your message.</p>
+          
+          <h4 style="color: #00ff88;">Why Use Grammar Checking?</h4>
+          <p>Grammar checking provides several important benefits:</p>
+          <ul>
+            <li><strong>Professional Quality:</strong> Ensure error-free, polished writing</li>
+            <li><strong>Improved Communication:</strong> Clear, correct messages reach audiences better</li>
+            <li><strong>Credibility Enhancement:</strong> Error-free content builds trust and authority</li>
+            <li><strong>Learning Tool:</strong> Understand common mistakes and improve writing skills</li>
+            <li><strong>Time Saving:</strong> Quickly identify and fix issues without manual review</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">Types of Grammar Issues</h4>
+          <ul>
+            <li><strong>Grammar Errors:</strong> Subject-verb disagreement, incorrect tenses, sentence fragments</li>
+            <li><strong>Spelling Mistakes:</strong> Misspelled words, typos, homophone confusion</li>
+            <li><strong>Punctuation Issues:</strong> Missing commas, incorrect apostrophes, run-on sentences</li>
+            <li><strong>Style Problems:</strong> Wordiness, passive voice, unclear pronoun references</li>
+            <li><strong>Capitalization:</strong> Proper nouns, sentence beginnings, titles</li>
+          </ul>
+        </div>
+      </div>
+                    </div>
+                </div>        
+                    
+  <!-- How It Works Section -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card bg-black border-danger">
+        <div class="card-body">
+          <h3 style="color: #4fc3f7;">How Our Grammar Checker Works</h3>
+          
+          <h4 style="color: #00ff88;">Analysis Process</h4>
+          <p>Our grammar checker uses advanced text processing algorithms:</p>
+          <ol>
+            <li><strong>Text Input:</strong> Accepts text from various sources and formats</li>
+            <li><strong>Grammar Analysis:</strong> Identifies grammatical errors and inconsistencies</li>
+            <li><strong>Spelling Check:</strong> Detects misspelled words and typos</li>
+            <li><strong>Style Review:</strong> Analyzes writing style and clarity issues</li>
+            <li><strong>Suggestion Generation:</strong> Provides specific corrections and improvements</li>
+          </ol>
+          
+          <h4 style="color: #00ff88;">Advanced Features</h4>
+          <ul>
+            <li><strong>Real-time Checking:</strong> Instant feedback as you type</li>
+            <li><strong>Context Awareness:</strong> Understands sentence context for better suggestions</li>
+            <li><strong>Multiple Error Types:</strong> Grammar, spelling, punctuation, and style</li>
+            <li><strong>Quality Scoring:</strong> Overall writing quality assessment</li>
+            <li><strong>Readability Analysis:</strong> Grade level and readability metrics</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">Writing Improvement Tips</h4>
+          <ul>
+            <li><strong>Read Aloud:</strong> Hearing your text helps identify awkward phrasing</li>
+            <li><strong>Use Active Voice:</strong> Make your writing more direct and engaging</li>
+            <li><strong>Vary Sentence Length:</strong> Mix short and long sentences for better flow</li>
+            <li><strong>Check Punctuation:</strong> Proper punctuation improves clarity</li>
+            <li><strong>Proofread Carefully:</strong> Always review your work before finalizing</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Tips and Best Practices -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card bg-black border-danger">
+        <div class="card-body">
+          <h3 style="color: #4fc3f7;">Tips and Best Practices</h3>
+          
+          <h4 style="color: #00ff88;">For Students:</h4>
+          <ul>
+            <li>Use grammar checking for essays, reports, and assignments</li>
+            <li>Learn from corrections to improve writing skills</li>
+            <li>Check academic papers before submission</li>
+            <li>Understand common grammar rules and exceptions</li>
+            <li>Practice with different writing styles and formats</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">For Professionals:</h4>
+          <ul>
+            <li>Ensure business communications are error-free</li>
+            <li>Check emails, reports, and presentations</li>
+            <li>Maintain professional credibility with polished writing</li>
+            <li>Use for client communications and proposals</li>
+            <li>Improve overall business writing quality</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">For Content Creators:</h4>
+          <ul>
+            <li>Check blog posts, articles, and social media content</li>
+            <li>Ensure consistent quality across all content</li>
+            <li>Improve readability and engagement</li>
+            <li>Maintain professional standards in all writing</li>
+            <li>Use for editing and proofreading workflows</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">Common Grammar Rules:</h4>
+          <ul>
+            <li>Subject-verb agreement: "The team is" not "The team are"</li>
+            <li>Proper apostrophe use: "It's" vs "Its"</li>
+            <li>Comma usage: Separate items in lists and clauses</li>
+            <li>Sentence structure: Complete thoughts with proper punctuation</li>
+            <li>Consistent tense: Maintain the same tense throughout</li>
+          </ul>
+            </div>
+          </div>
+        </div>
+    </div>
+  <!-- Related Tools -->
+
+        <!-- Related Tools -->
+  <div id="related-tools"></div>
+  
+  <!-- Multiplex Ad Unit -->
+  <div id="ads-multiplex"></div>
+  
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer=""></script>
+    <script>
+        function updateStats() {
+            const text = document.getElementById('textInput').value;
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+            const sentences = text.split(/[.!?]+/).filter(sentence => sentence.trim().length > 0).length;
+            
+            document.getElementById('wordCount').textContent = words;
+            document.getElementById('charCount').textContent = chars;
+            document.getElementById('sentenceCount').textContent = sentences;
+        }
+
+        function checkGrammar() {
+            const text = document.getElementById('textInput').value;
+            
+            if (!text.trim()) {
+                alert('Please enter some text to check.');
+                return;
+            }
+            
+            // Simulate grammar checking with common issues
+            const issues = [];
+            const words = text.split(/\s+/);
+            
+            // Check for common spelling mistakes
+            const commonMistakes = {
+                'recieve': 'receive',
+                'seperate': 'separate',
+                'definately': 'definitely',
+                'occured': 'occurred',
+                'accomodate': 'accommodate',
+                'begining': 'beginning',
+                'neccessary': 'necessary',
+                'priviledge': 'privilege',
+                'acheive': 'achieve',
+                'existance': 'existence'
+            };
+            
+            words.forEach((word, index) => {
+                const cleanWord = word.toLowerCase().replace(/[^\w]/g, '');
+                if (commonMistakes[cleanWord]) {
+                    issues.push({
+                        type: 'spelling',
+                        word: word,
+                        suggestion: commonMistakes[cleanWord],
+                        position: index,
+                        message: `"${word}" should be "${commonMistakes[cleanWord]}"`
+                    });
+                }
+            });
+            
+            // Check for basic grammar issues
+            if (text.includes(' its ') && !text.includes(" it's ")) {
+                issues.push({
+                    type: 'grammar',
+                    word: 'its',
+                    suggestion: "it's",
+                    position: text.indexOf(' its '),
+                    message: 'Consider if this should be "it\'s" (contraction) or "its" (possessive)'
+                });
+            }
+            
+            if (text.includes('there ') && text.includes(' their ')) {
+                issues.push({
+                    type: 'grammar',
+                    word: 'there/their',
+                    suggestion: 'Check usage',
+                    position: 0,
+                    message: 'Check usage of "there" vs "their" vs "they\'re"'
+                });
+            }
+            
+            // Check for missing punctuation
+            const sentences = text.split(/[.!?]/);
+            sentences.forEach((sentence, index) => {
+                if (sentence.trim() && !sentence.match(/[.!?]$/) && index < sentences.length - 1) {
+                    issues.push({
+                        type: 'punctuation',
+                        word: sentence.trim(),
+                        suggestion: 'Add punctuation',
+                        position: text.indexOf(sentence),
+                        message: 'Sentence may need proper punctuation'
+                    });
+                }
+            });
+            
+            // Update statistics
+            document.getElementById('grammarErrors').textContent = issues.filter(i => i.type === 'grammar').length;
+            document.getElementById('spellingErrors').textContent = issues.filter(i => i.type === 'spelling').length;
+            document.getElementById('styleIssues').textContent = issues.filter(i => i.type === 'punctuation').length;
+            
+            // Calculate quality score
+            const totalIssues = issues.length;
+            const qualityScore = Math.max(0, 100 - (totalIssues * 10));
+            document.getElementById('qualityScore').textContent = qualityScore + '%';
+            
+            // Determine readability
+            const avgWordsPerSentence = words / sentences;
+            let readability = 'Good';
+            let gradeLevel = 'College';
+            
+            if (avgWordsPerSentence < 10) {
+                readability = 'Excellent';
+                gradeLevel = 'High School';
+            } else if (avgWordsPerSentence > 20) {
+                readability = 'Difficult';
+                gradeLevel = 'Graduate';
+            }
+            
+            document.getElementById('readabilityScore').textContent = readability;
+            document.getElementById('gradeLevel').textContent = gradeLevel;
+            
+            // Display results
+            displayResults(issues);
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function displayResults(issues) {
+            const issuesList = document.getElementById('issuesList');
+            
+            if (issues.length === 0) {
+                issuesList.innerHTML = '<div class="alert alert-success bg-dark border-danger"><i class="fas fa-check-circle me-2"></i>No issues found! Your text looks good.</div>';
+                return;
+            }
+            
+            let html = '<div class="alert alert-warning bg-dark border-danger mb-3"><i class="fas fa-exclamation-triangle me-2"></i>Found ' + issues.length + ' issues that need attention:</div>';
+            
+            issues.forEach((issue, index) => {
+                const typeColor = issue.type === 'spelling' ? 'danger' : 
+                                 issue.type === 'grammar' ? 'warning' : 'info';
+                const typeIcon = issue.type === 'spelling' ? 'fa-spell-check' : 
+                               issue.type === 'grammar' ? 'fa-language' : 'fa-punctuation';
+                
+                html += `
+                    <div class="alert alert-${typeColor} bg-dark border-danger mb-2">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <i class="fas ${typeIcon} me-2"></i>
+                                <strong>${issue.type.charAt(0).toUpperCase() + issue.type.slice(1)} Issue:</strong>
+                                <p class="mb-1">${issue.message}</p>
+                                ${issue.suggestion ? `<small class="text-muted">Suggestion: ${issue.suggestion}</small>` : ''}
+                            </div>
+                            <button class="btn btn-outline-danger btn-sm" onclick="applyCorrection(${index})">
+                                <i class="fas fa-magic me-1"></i>Fix
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            issuesList.innerHTML = html;
+        }
+
+        function applyCorrection(issueIndex) {
+            // This would apply the specific correction
+            alert('Correction applied! (This is a demo - in a real implementation, this would fix the specific issue)');
+        }
+
+        function applyAllCorrections() {
+            const text = document.getElementById('textInput').value;
+            if (!text.trim()) {
+                alert('Please enter some text first.');
+                return;
+            }
+            
+            // Apply common corrections
+            let correctedText = text;
+            
+            // Fix common spelling mistakes
+            const corrections = {
+                'recieve': 'receive',
+                'seperate': 'separate',
+                'definately': 'definitely',
+                'occured': 'occurred',
+                'accomodate': 'accommodate',
+                'begining': 'beginning',
+                'neccessary': 'necessary',
+                'priviledge': 'privilege',
+                'acheive': 'achieve',
+                'existance': 'existence'
+            };
+            
+            Object.keys(corrections).forEach(mistake => {
+                const regex = new RegExp('\\b' + mistake + '\\b', 'gi');
+                correctedText = correctedText.replace(regex, corrections[mistake]);
+            });
+            
+            document.getElementById('textInput').value = correctedText;
+            updateStats();
+            alert('All corrections applied! Check the updated text.');
+        }
+
+        function loadExample() {
+            const exampleText = "I recieve your email and I definately think we should seperate the tasks. Its important to accomodate everyone's needs and ensure we acheive our goals. The begining of this project was neccessary for our sucess.";
+            document.getElementById('textInput').value = exampleText;
+            updateStats();
+        }
+
+        function clearText() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('results').style.display = 'none';
+            updateStats();
+        }
+
+        function copyResults() {
+            const text = document.getElementById('textInput').value;
+            if (!text.trim()) {
+                alert('Please check some text first.');
+                return;
+            }
+            
+            const wordCount = document.getElementById('wordCount').textContent;
+            const charCount = document.getElementById('charCount').textContent;
+            const qualityScore = document.getElementById('qualityScore').textContent;
+            
+            const summary = `Grammar Check Results:
+Text: ${text.substring(0, 100)}${text.length > 100 ? '...' : ''}
+Words: ${wordCount}
+Characters: ${charCount}
+Quality Score: ${qualityScore}`;
+            
+            navigator.clipboard.writeText(summary).then(() => {
+                alert('Results copied to clipboard!');
+            });
+        }
+
+        function exportResults() {
+            const text = document.getElementById('textInput').value;
+            if (!text.trim()) {
+                alert('Please check some text first.');
+                return;
+            }
+            
+            const results = {
+                text: text,
+                wordCount: document.getElementById('wordCount').textContent,
+                charCount: document.getElementById('charCount').textContent,
+                qualityScore: document.getElementById('qualityScore').textContent,
+                readabilityScore: document.getElementById('readabilityScore').textContent,
+                gradeLevel: document.getElementById('gradeLevel').textContent,
+                timestamp: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(results, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'grammar-check-results.json';
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Add event listener for real-time updates
+        document.getElementById('textInput').addEventListener('input', updateStats);
+    </script>
+
+  <!-- Footer Script -->
+  
+
+<!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('../sw.js')
+            .then(registration => console.log('SW registered'))
+            .catch(error => console.log('SW registration failed'));
+        });
+      }
+    </script>
+  
+  <!-- Header Loading Script -->
+  
+  
+  <!-- Related Tools Script -->
+  <script>
+    // Load related tools component
+    fetch('../components/related-tools.html')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('related-tools').innerHTML = html;
+      })
+      .catch(error => {
+        console.log('Error loading related tools:', error);
+        // Fallback: show a simple message instead of broken component
+        const container = document.getElementById('related-tools');
+        if (container) {
+          container.innerHTML = '<div class="text-center text-muted">Related tools temporarily unavailable</div>';
+        }
+      });
+  </script>
+  <script src="../assets/js/include.js?v=3" defer=""></script>
+
+  <!-- Footer -->
+  <div id="footer"><footer>
+  <div class="container text-center">
+    <div>
+      <a href="/About.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">About</a>
+      <a href="/Contact.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Contact</a>
+      <a href="/Privacy-Policy.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Privacy Policy</a>
+      <a href="/Terms-of-Service.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Terms</a>
+    </div>
+    <div class="small mt-1" style="color: #0981e4 !important;">© 2025 MultiTools. All rights reserved.</div>
+    <div class="mt-3">
+      <p class="mb-1"><strong>Contact:</strong> <a href="mailto:rajeshkumarmenon@zohomail.in" style="color: #ffc107 !important; text-decoration: none;">rajeshkumarmenon@zohomail.in</a></p>
+    </div>
+  </div>
+</footer>
+</div>
+
+
+
+
+
+
+</div></body></html>

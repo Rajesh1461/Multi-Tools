@@ -1,0 +1,1357 @@
+<html lang="en"><head></head><body class="bg-dark text-light tool-page">﻿
+
+
+<style>
+/* Vertical side ads - show only on large screens */
+@media (min-width: 1200px) {
+  .vertical-ad {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vertical-ad {
+    display: none !important;
+  }
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Image Resizer - Free Online Image Resizing Tool | MultiTools - FIXED</title>
+    <meta name="description" content="Free online Image Resizer tool. Professional, easy-to-use Image Resizer for various tasks and calculations.">
+    <meta name="keywords" content="image resizer, image resize tool, resize images online, image scaling tool, free image resizer, image dimension tool, photo resizer">
+    <meta name="author" content="MultiTools">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="revisit-after" content="7 days">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  
+  
+  <!-- Canonical URL -->
+    
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Image Resizer - Free Online Image Resizing Tool | MultiTools">
+  <meta property="og:description" content="Free online image resizer tool. Resize images to any dimensions while maintaining quality. Support for various formats. Perfect for web optimization and social media requirements.">
+  <meta property="og:url" content="https://multitoolszone.fun/tools/image-resizer.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://multitoolszone.fun/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+    <!-- Open Graph Meta Tags -->
+  <link rel="canonical" href="https://multitoolszone.fun/tools/image-resizer.html">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-96x96.png">
+    
+    <!-- AdSense Script with Error Handling -->
+    <script>
+      // AdSense initialization with error handling
+      (function() {
+        var adScript = document.createElement('script');
+        adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3712069892669914';
+        adScript.async = true;
+        adScript.crossOrigin = 'anonymous';
+        
+        // Add error handling
+        adScript.onerror = function() {
+          console.warn('Failed to load AdSense script. This is normal if you have an ad blocker enabled.');
+          // Fallback to a non-blocking error handler
+          window.adsbygoogle = window.adsbygoogle || [];
+          window.adsbygoogle.push({});
+        };
+        
+        // Insert the script in the head
+        document.head.appendChild(adScript);
+      })();
+    </script>
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-96x96.png">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Optimized Stylesheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Image Resizer",
+      "description": "Free online image resizer tool for resizing images to any dimensions while maintaining quality",
+      "url": "https://multitoolszone.fun/tools/image-resizer.html",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+      "author": {"@type": "Organization", "name": "MultiTools"},
+      "publisher": {"@type": "Organization", "name": "MultiTools", "url": "https://multitoolszone.fun"}
+    }
+    </script>
+    
+    <style>
+        .upload-area { border: 2px dashed #dc3545; border-radius: 10px; padding: 40px; text-align: center; background: #212529; transition: all 0.3s ease; cursor: pointer; }
+        .upload-area:hover { border-color: #dc3545; background: #343a40; }
+        .upload-area.dragover { border-color: #28a745; background: #1e7e34; }
+        .image-preview { max-width: 300px; max-height: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        
+        /* Aspect ratio presets */
+        .aspect-ratio-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .aspect-btn {
+            padding: 6px 12px;
+            border: 1px solid #dc3545;
+            background: transparent;
+            color: #dc3545;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+        .aspect-btn:hover, .aspect-btn.active {
+            background: #dc3545;
+            color: white;
+        }
+        
+        /* Preview section */
+        .preview-section {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(220, 53, 69, 0.3);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 150px;
+            border: 1px solid #dc3545;
+            border-radius: 4px;
+        }
+        
+        /* Loading states */
+        .loading {
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #dc3545;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Error states */
+        .error-message {
+            background: rgba(220, 53, 69, 0.1);
+            border: 1px solid #dc3545;
+            color: #dc3545;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        /* Mobile touch improvements */
+        @media (max-width: 768px) {
+            .aspect-ratio-presets {
+                justify-content: center;
+            }
+            .aspect-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+/* Critical styles for immediate rendering */
+body { margin: 0; padding: 0; background: #000 url('../assets/img/assets/img/optimized/og-image.webp') no-repeat center center fixed; background-size: cover; color: #fff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+.card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); }
+.tool-btn { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); }
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.navbar { background: rgba(0, 0, 0, 0.8) !important; }
+.navbar-brand { color: #fff !important; }
+.nav-link { color: #fff !important; }
+.btn { border-radius: 0.375rem; }
+.btn-primary { background: #dc3545; border-color: #dc3545; }
+.btn-outline-primary { color: #dc3545; border-color: #dc3545; }
+.form-control { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; }
+.form-control:focus { background: rgba(0, 0, 0, 0.6); border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); }
+.card-body { color: #fff; }
+h1, h2, h3, h4, h5, h6 { color: #fff; }
+p { color: #fff; }
+label { color: #fff; }
+small { color: rgba(255, 255, 255, 0.85); }
+.alert { color: #fff; }
+.table-dark { color: #fff; }
+.table-dark td, .table-dark th { color: #fff; }
+.bg-dark { background: rgba(0, 0, 0, 0.8) !important; }
+.bg-secondary { background: rgba(108, 117, 125, 0.8) !important; color: #fff; }
+.text-muted { color: rgba(255, 255, 255, 0.75) !important; }
+</style>
+  
+  <!-- Non-critical CSS loaded asynchronously -->
+
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../assets/css/style.css?v=3" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  </noscript>
+  <!-- Performance Optimization - Resource Hints -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="">
+
+
+    
+
+    <div id="header"><header class="bg-transparent pt-3 mb-4 border-bottom border-danger">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Logo positioned outside container for independent sizing -->
+  <div class="text-center mb-2" id="site-logo" style="background: transparent !important; margin-top: 5px;">
+    <a href="/">
+      <img src="/assets/img/optimized/MULTI-TOOLS.webp" alt="Multi Tools" style="height: 100px !important; width: auto !important; max-height: none !important; background: transparent !important; display: block !important; margin: 0 auto !important;" loading="lazy" decoding="async" width="500" height="500">
+    </a>
+  </div>
+  <div class="container" style="background: transparent !important;">
+
+    <!-- Simple link row below logo -->
+    <nav class="d-flex justify-content-end align-items-center gap-3 pb-1" aria-label="Primary" style="max-height: 100px;">
+      <a href="../" class="text-danger fw-semibold text-decoration-none">Home</a>
+      <a href="../About.html" class="text-danger fw-semibold text-decoration-none" target="_blank">About</a>
+      <a href="../Contact.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Contact</a>
+      <a href="../blog/" class="text-danger fw-semibold text-decoration-none" target="_blank">Blog</a>
+      <a href="../Privacy-Policy.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Privacy Policy</a>
+      <a href="../Terms-of-Service.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Terms</a>
+    </nav>
+  </div>
+
+  <style>
+    /* Navigation link styles */
+    header nav a {
+      font-size: 18px !important; 
+      /* around 17–18px */
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+
+    /* Hover effect */
+    header nav a:hover {
+      color: #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      header nav a {
+        font-size: 1rem !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      header nav a {
+        font-size: 0.55rem !important;
+        display: inline-block;
+      }
+    }
+  </style>
+</header>
+</div>
+    <div class="container py-4">
+    
+    <div id="breadcrumb">
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb align-items-center mb-4">
+    <li class="breadcrumb-item">
+      <a href="../" class="text-danger text-decoration-none">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </li>   
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://multitoolszone.fun/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://multitoolszone.fun/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Current Tool",
+      "item": "https://multitoolszone.fun/tools/current-tool.html"
+    }
+  ]
+}
+</script>
+<script>
+// Update breadcrumb JSON-LD with current page URL
+document.addEventListener('DOMContentLoaded', function() {
+  const script = document.querySelector('script[type="application/ld+json"]');
+  if (script) {
+    const data = JSON.parse(script.textContent);
+    data.itemListElement[2].item = window.location.href;
+    script.textContent = JSON.stringify(data);
+  }
+});
+</script>
+</div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-4 text-center flex-grow-1 text-decoration-underline" style="color: #09ce24 !important;">
+        Image Resizer - Free Online Image Resizing Tool
+      </h1>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <!-- In-Content Ad Unit -->
+        <div id="ads-incontent"></div>
+        <div class="row justify-content-center">
+            <div class="col-md-10 col-lg-8">
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="alert alert-info bg-dark border-danger">
+                            <i class="fas fa-info-circle me-2"></i>
+                            <strong>Note:</strong> This tool resizes images in your browser. No files are uploaded to any server.
+                        </div>
+                        
+                        <div id="status" class="alert bg-dark border-danger" style="display:none;">Status: Ready</div>
+
+                        <div class="mb-4">
+                            <h5><i class="fas fa-upload me-2"></i>Upload Image</h5>
+                            <div id="uploadArea" class="upload-area">
+                                <i class="fas fa-cloud-upload-alt fa-3x text-danger mb-3"></i>
+                                <h5>Drag &amp; Drop Image Here</h5>
+                                <p class="text-muted">or click to select file</p>
+                                <input type="file" id="imageInput" accept="image/*" style="display: none;">
+                            </div>
+                        </div>
+                        
+                        
+                        <div id="resizeControls" style="display: none;">
+                            <h5><i class="fas fa-cog me-2"></i>Resize Controls</h5>
+                            
+                            <!-- Aspect Ratio Presets -->
+                            <div class="mb-3">
+                                <label class="form-label">Aspect Ratio Presets:</label>
+                                <div class="aspect-ratio-presets">
+                                    <button class="aspect-btn" data-ratio="free" onclick="setAspectRatio('free')">Free</button>
+                                    <button class="aspect-btn" data-ratio="1:1" onclick="setAspectRatio('1:1')">1:1 (Square)</button>
+                                    <button class="aspect-btn" data-ratio="16:9" onclick="setAspectRatio('16:9')">16:9 (Widescreen)</button>
+                                    <button class="aspect-btn" data-ratio="4:3" onclick="setAspectRatio('4:3')">4:3 (Standard)</button>
+                                    <button class="aspect-btn" data-ratio="3:2" onclick="setAspectRatio('3:2')">3:2 (Photo)</button>
+                                    <button class="aspect-btn" data-ratio="9:16" onclick="setAspectRatio('9:16')">9:16 (Portrait)</button>
+                                    <button class="aspect-btn" data-ratio="2:3" onclick="setAspectRatio('2:3')">2:3 (Portrait)</button>
+                                </div>
+                            </div>
+                            
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label for="newWidth" class="form-label">New Width (px)</label>
+                                    <input type="number" id="newWidth" class="form-control bg-dark text-light border-danger" min="1" value="300">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="newHeight" class="form-label">New Height (px)</label>
+                                    <input type="number" id="newHeight" class="form-control bg-dark text-light border-danger" min="1" value="200">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="outputFormat" class="form-label">Output Format</label>
+                                    <select id="outputFormat" class="form-select bg-dark text-light border-danger">
+                                        <option value="jpeg">JPEG</option>
+                                        <option value="png">PNG</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label">Quality</label>
+                                    <select id="quality" class="form-select bg-dark text-light border-danger">
+                                        <option value="0.9">High (90%)</option>
+                                        <option value="0.8">Medium (80%)</option>
+                                        <option value="0.7">Low (70%)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-3">
+                                <button class="btn btn-danger me-2" onclick="resizeImage()" id="resizeBtn">
+                                    <i class="fas fa-expand-arrows-alt me-2"></i>Resize Image
+                                </button>
+                                <button class="btn btn-outline-danger me-2" onclick="resetResize()">
+                                    <i class="fas fa-undo me-2"></i>Reset
+                                </button>
+                            </div>
+                            
+                            <!-- Keyboard shortcuts info -->
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-keyboard me-1"></i>
+                                    Keyboard shortcuts: Ctrl+R (Resize), Ctrl+U (Reset)
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div id="previewSection" style="display: none;">
+                            <h5><i class="fas fa-eye me-2"></i>Live Preview</h5>
+                            
+                            <!-- Enhanced Preview Section -->
+                            <div class="preview-section" id="enhancedPreviewSection" style="display: none;">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6 class="text-center mb-2">Original Preview</h6>
+                                        <img id="livePreviewImage" class="preview-image" alt="Live preview">
+                                        <div class="mt-2">
+                                            <small class="text-muted">Original Dimensions: <span id="previewDimensions">-</span></small><br>
+                                            <small class="text-muted">Original Aspect Ratio: <span id="previewAspectRatio">-</span></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6 class="text-center mb-2">Resized Preview</h6>
+                                        <img id="liveResizedPreviewImage" class="preview-image" alt="Live resized preview">
+                                        <div class="mt-2">
+                                            <small class="text-muted">Resized Dimensions: <span id="previewResizedDimensions">-</span></small><br>
+                                            <small class="text-muted">Resized Aspect Ratio: <span id="previewResizedAspectRatio">-</span></small><br>
+                                            <small class="text-muted">Estimated File Size: <span id="previewFileSize">-</span></small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center mt-3">
+                                <button class="btn btn-outline-danger" onclick="downloadImage()">
+                                    <i class="fas fa-download me-2"></i>Download Resized Image
+                                </button>
+                                <button class="btn btn-outline-danger ms-2" onclick="clearAll()">
+                                    <i class="fas fa-trash me-2"></i>Clear All
+                                </button>
+                            </div>
+                        </div>
+
+                        <div id="console" class="card bg-dark border-danger mt-4" style="display:none;">
+                            <div class="card-body" style="font-family: monospace; max-height: 200px; overflow-y: auto;">
+                                <strong>Console Log:</strong>
+                                <div id="consoleOutput"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        </div>
+    </div>
+    
+    
+    
+    <!-- Educational Content Section -->
+    <div class="row mb-4">
+      <div class="col-lg-8 mx-auto">
+        <div class="card bg-black border-danger">
+          <div class="card-body">
+            <h3 style="color: #4fc3f7;">Complete Guide to Image Resizing</h3>
+            
+            <h4 style="color: #00ff88;">What is Image Resizing?</h4>
+            <p>Image resizing is the process of changing the dimensions of a digital image. This can involve scaling up (increasing size) or scaling down (decreasing size) while maintaining or adjusting the aspect ratio.</p>
+            
+            <h4 style="color: #00ff88;">Common Use Cases</h4>
+            <ul>
+              <li><strong>Web Development:</strong> Create thumbnails and optimized images for websites</li>
+              <li><strong>Social Media:</strong> Meet platform-specific size requirements</li>
+              <li><strong>Print Media:</strong> Resize images for specific print dimensions</li>
+              <li><strong>Email Marketing:</strong> Optimize images for email campaigns</li>
+              <li><strong>Mobile Apps:</strong> Generate multiple resolutions for different devices</li>
+            </ul>
+            
+            <h4 style="color: #00ff88;">Image Formats and Their Uses</h4>
+            <ul>
+              <li><strong>JPEG:</strong> Best for photographs and complex images with many colors</li>
+              <li><strong>PNG:</strong> Ideal for graphics, logos, and images with transparency</li>
+              <li><strong>WebP:</strong> Modern format with excellent compression</li>
+            </ul>
+            
+            <h4 style="color: #00ff88;">Best Practices</h4>
+            <ul>
+              <li>Always maintain aspect ratio unless specifically needed</li>
+              <li>Use appropriate formats for your content type</li>
+              <li>Consider the target platform's requirements</li>
+              <li>Test resized images on different devices</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Content enhancer containers -->
+    <div id="description-container" style="display: none;"></div>
+    <div id="usage-container" style="display: none;"></div>
+    <div id="faq-container" style="display: none;"></div>
+    
+    </div>
+
+  <!-- Footer -->
+  <div id="footer"><footer>
+  <div class="container text-center">
+    <div>
+      <a href="/About.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">About</a>
+      <a href="/Contact.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Contact</a>
+      <a href="/Privacy-Policy.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Privacy Policy</a>
+      <a href="/Terms-of-Service.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Terms</a>
+    </div>
+    <div class="small mt-1" style="color: #0981e4 !important;">© 2025 MultiTools. All rights reserved.</div>
+    <div class="mt-3">
+      <p class="mb-1"><strong>Contact:</strong> <a href="mailto:rajeshkumarmenon@zohomail.in" style="color: #ffc107 !important; text-decoration: none;">rajeshkumarmenon@zohomail.in</a></p>
+    </div>
+  </div>
+</footer>
+</div>
+
+  <!-- Related Tools -->
+  <div id="related-tools"></div>
+
+  <!-- Multiplex Ad Unit -->
+  <div id="ads-multiplex"></div>
+  
+  <script>
+    // Load related tools component
+    const relatedToolsContainer = document.getElementById('related-tools');
+    if (relatedToolsContainer) {
+      fetch('../components/related-tools.html')
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          return response.text();
+        })
+        .then(html => {
+          relatedToolsContainer.innerHTML = html;
+        })
+        .catch(error => {
+          console.log('Error loading related tools:', error);
+          // Fallback: show a simple message instead of broken component
+          relatedToolsContainer.innerHTML = '<div class="text-center text-muted">Related tools temporarily unavailable</div>';
+        });
+    } else {
+      console.log('Related tools container not found - skipping load');
+    }
+  </script>
+
+    <script>
+        let originalImage = null;
+        let resizedImageBlob = null;
+        let currentAspectRatio = 'free';
+        let previewMode = false;
+        
+        function log(message, type = 'info') {
+            const consoleOutput = document.getElementById('consoleOutput');
+            if (!consoleOutput) { console.log(message); return; }
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = document.createElement('div');
+            logEntry.innerHTML = `<span style="color: #666;">[${timestamp}]</span> ${message}`;
+            if (type === 'error') logEntry.style.color = 'red';
+            if (type === 'success') logEntry.style.color = 'green';
+            consoleOutput.appendChild(logEntry);
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+            console.log(message);
+        }
+        
+        function updateStatus(message, type = 'info') {
+            const statusDiv = document.getElementById('status');
+            if (!statusDiv) return;
+            statusDiv.style.display = 'block';
+            statusDiv.textContent = `Status: ${message}`;
+        }
+        
+        // File input change handler
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+        
+        // Drag and drop handlers will be added in DOMContentLoaded
+        // Drag and drop handlers
+        const uploadArea = document.getElementById('uploadArea');
+        
+        uploadArea.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+        
+        uploadArea.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+        });
+        
+        uploadArea.addEventListener('drop', function(e) {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+            if (files.length > 0) {
+                handleFile(files[0]);
+            } else {
+                log('No valid image files found in drop', 'error');
+            }
+        });
+        
+        uploadArea.addEventListener('click', function() {
+            document.getElementById('imageInput').click();
+        });
+        function handleFile(file) {
+            // Enhanced file validation
+            const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/bmp', 'image/svg+xml'];
+            const maxSize = 10 * 1024 * 1024; // 10MB
+            
+            if (!allowedTypes.includes(file.type)) {
+                showError('Please select a valid image file (JPEG, PNG, GIF, WebP, BMP, SVG)');
+                return;
+            }
+            
+            if (file.size > maxSize) {
+                showError('File size too large. Please select an image smaller than 10MB');
+                return;
+            }
+            
+            // Clear any previous errors
+            clearError();
+            
+            // Show loading state
+            setLoadingState(true);
+            
+            log(`Processing file: ${file.name} (${file.type}, ${file.size} bytes)`);
+            updateStatus('Processing image...', 'info');
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    originalImage = {
+                        file: file,
+                        dataUrl: e.target.result,
+                        name: file.name
+                    };
+                    
+                    log('File loaded successfully', 'success');
+                    displayImageInfo();
+                    updateStatus('Image loaded successfully', 'success');
+                    setLoadingState(false);
+                    
+                } catch (error) {
+                    log(`Error processing file: ${error.message}`, 'error');
+                    updateStatus('Error processing file', 'error');
+                    setLoadingState(false);
+                }
+            };
+            
+            reader.onerror = function() {
+                log('Error reading file', 'error');
+                updateStatus('Error reading file', 'error');
+                setLoadingState(false);
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function adjustCardWidths(img) {
+            const imageWidth = img.naturalWidth;
+            const imageHeight = img.naturalHeight;
+            const aspectRatio = imageWidth / imageHeight;
+            
+            console.log('Adjusting card widths for image:', imageWidth, 'x', imageHeight, 'aspect ratio:', aspectRatio);
+            
+            // Calculate optimal card width based on image dimensions - more aggressive sizing
+            let cardWidth;
+            if (aspectRatio > 1.5) {
+                // Wide images - use much larger cards
+                cardWidth = Math.min(imageWidth * 1.2, 800);
+            } else if (aspectRatio < 0.7) {
+                // Tall images - use larger cards
+                cardWidth = Math.min(imageWidth * 1.5, 700);
+            } else {
+                // Square or balanced images - use larger cards
+                cardWidth = Math.min(imageWidth * 1.3, 750);
+            }
+            
+            // Ensure minimum and maximum widths - increased ranges
+            cardWidth = Math.max(cardWidth, 400); // Increased minimum
+            cardWidth = Math.min(cardWidth, 900); // Increased maximum
+            
+            console.log('Calculated card width:', cardWidth);
+            
+            // Apply width to all card-bodies in the page
+            const allCardBodies = document.querySelectorAll('.card-body');
+            allCardBodies.forEach(cardBody => {
+                cardBody.style.width = cardWidth + 'px';
+                cardBody.style.maxWidth = '100%';
+                cardBody.style.margin = '0 auto';
+                cardBody.style.transition = 'width 0.3s ease';
+            });
+            
+            // Apply width to all cards
+            const allCards = document.querySelectorAll('.card');
+            allCards.forEach(card => {
+                card.style.width = (cardWidth + 40) + 'px'; // 40px for padding
+                card.style.maxWidth = '100%';
+                card.style.margin = '0 auto';
+                card.style.transition = 'width 0.3s ease';
+            });
+            
+            // Adjust image preview max-width to fit the card
+            const imagePreviews = document.querySelectorAll('.image-preview');
+            imagePreviews.forEach(img => {
+                img.style.maxWidth = (cardWidth - 40) + 'px'; // 40px for padding
+                img.style.width = '100%';
+                img.style.height = 'auto';
+            });
+            
+            // Also adjust the main container width
+            const mainContainer = document.querySelector('.container');
+            if (mainContainer) {
+                mainContainer.style.maxWidth = (cardWidth + 100) + 'px';
+                mainContainer.style.transition = 'max-width 0.3s ease';
+            }
+        }
+        
+        function displayImageInfo() {
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('resizeControls').style.display = 'block';
+                
+                // Show the preview section
+                document.getElementById('previewSection').style.display = 'block';
+                
+                // Set default resize dimensions
+                document.getElementById('newWidth').value = Math.round(img.naturalWidth * 0.5);
+                document.getElementById('newHeight').value = Math.round(img.naturalHeight * 0.5);
+                
+                log(`Image displayed: ${img.naturalWidth}Ã—${img.naturalHeight}`, 'success');
+                
+                // Increase card-body width by 50% after loading image
+                setTimeout(() => {
+                    increaseCardBodyWidth();
+                }, 500);
+                
+                // Automatically show live preview after image loads
+                previewMode = true;
+                const previewSection = document.getElementById('enhancedPreviewSection');
+                if (previewSection) {
+                    previewSection.style.display = 'block';
+                }
+                
+                // Update live preview with initial dimensions
+                setTimeout(() => {
+                    updateLivePreview();
+                }, 200);
+            };
+            
+            img.onerror = function() {
+                log('Error loading image for display', 'error');
+                updateStatus('Error displaying image', 'error');
+            };
+            
+            img.src = originalImage.dataUrl;
+        }
+        
+        
+        function downloadImage() {
+            if (!resizedImageBlob) {
+                log('No resized image to download', 'error');
+                return;
+            }
+            
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(resizedImageBlob);
+            link.download = originalImage.name.replace(/\.[^/.]+$/, '') + '_resized.' + document.getElementById('outputFormat').value;
+            link.click();
+            
+            log('Download started', 'success');
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        // New functions for enhanced functionality
+        function setAspectRatio(ratio) {
+            currentAspectRatio = ratio;
+            
+            // Update button states
+            document.querySelectorAll('.aspect-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-ratio="${ratio}"]`).classList.add('active');
+            
+            if (ratio !== 'free' && originalImage) {
+                applyAspectRatio(ratio);
+            }
+        }
+        
+        function applyAspectRatio(ratio) {
+            if (!originalImage) return;
+            
+            const img = new Image();
+            img.onload = function() {
+                const [widthRatio, heightRatio] = ratio.split(':').map(Number);
+                const aspectRatio = widthRatio / heightRatio;
+                
+                const originalWidth = img.naturalWidth;
+                const originalHeight = img.naturalHeight;
+                const originalAspectRatio = originalWidth / originalHeight;
+                
+                let newWidth, newHeight;
+                
+                if (originalAspectRatio > aspectRatio) {
+                    // Original is wider, fit by height
+                    newHeight = Math.min(originalHeight, 800);
+                    newWidth = Math.round(newHeight * aspectRatio);
+                } else {
+                    // Original is taller, fit by width
+                    newWidth = Math.min(originalWidth, 1200);
+                    newHeight = Math.round(newWidth / aspectRatio);
+                }
+                
+                document.getElementById('newWidth').value = newWidth;
+                document.getElementById('newHeight').value = newHeight;
+                
+                // Update preview if enabled
+                if (previewMode) {
+                    updateLivePreview();
+                }
+            };
+            img.src = originalImage.dataUrl;
+        }
+        
+        
+        function updateLivePreview() {
+            if (!previewMode || !originalImage) {
+                console.log('Preview mode off or no original image');
+                return;
+            }
+            
+            const newWidth = parseInt(document.getElementById('newWidth').value);
+            const newHeight = parseInt(document.getElementById('newHeight').value);
+            
+            if (newWidth <= 0 || newHeight <= 0) {
+                console.log('Invalid dimensions for preview:', newWidth, newHeight);
+                return;
+            }
+            
+            console.log('Updating live preview with dimensions:', newWidth, 'x', newHeight);
+            
+            const img = new Image();
+            img.onload = function() {
+                try {
+                    // Show original image in left preview
+                    const livePreviewImage = document.getElementById('livePreviewImage');
+                    if (livePreviewImage) {
+                        livePreviewImage.src = originalImage.dataUrl;
+                        console.log('Original preview image updated');
+                    }
+                    
+                    // Update original image info
+                    const previewDimensions = document.getElementById('previewDimensions');
+                    const previewAspectRatio = document.getElementById('previewAspectRatio');
+                    
+                    if (previewDimensions) {
+                        previewDimensions.textContent = `${img.naturalWidth} Ã— ${img.naturalHeight}`;
+                    }
+                    
+                    if (previewAspectRatio) {
+                        previewAspectRatio.textContent = `${img.naturalWidth}:${img.naturalHeight}`;
+                    }
+                    
+                    // Create resized preview
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+                    
+                    if (!ctx) {
+                        console.error('Canvas 2D context not available');
+                        return;
+                    }
+                    
+                    canvas.width = newWidth;
+                    canvas.height = newHeight;
+                    
+                    console.log('Drawing resized image to preview canvas');
+                    ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                    
+                    const resizedPreviewUrl = canvas.toDataURL('image/png');
+                    console.log('Resized preview URL generated:', resizedPreviewUrl.substring(0, 50) + '...');
+                    
+                    // Show resized image in right preview
+                    const liveResizedPreviewImage = document.getElementById('liveResizedPreviewImage');
+                    const previewResizedDimensions = document.getElementById('previewResizedDimensions');
+                    const previewResizedAspectRatio = document.getElementById('previewResizedAspectRatio');
+                    const previewFileSize = document.getElementById('previewFileSize');
+                    
+                    if (liveResizedPreviewImage) {
+                        liveResizedPreviewImage.src = resizedPreviewUrl;
+                        console.log('Live resized preview image updated');
+                    } else {
+                        console.error('liveResizedPreviewImage element not found');
+                    }
+                    
+                    if (previewResizedDimensions) {
+                        previewResizedDimensions.textContent = `${newWidth} Ã— ${newHeight}`;
+                    }
+                    
+                    if (previewResizedAspectRatio) {
+                        previewResizedAspectRatio.textContent = `${newWidth}:${newHeight}`;
+                    }
+                    
+                    if (previewFileSize) {
+                        const estimatedSize = Math.round((newWidth * newHeight * 3) / 1024);
+                        previewFileSize.textContent = `${estimatedSize} KB`;
+                    }
+                    
+                } catch (error) {
+                    console.error('Error in preview update:', error);
+                }
+            };
+            
+            img.onerror = function() {
+                console.error('Error loading image for preview');
+            };
+            
+            img.src = originalImage.dataUrl;
+        }
+        
+        function resetResize() {
+            if (!originalImage) return;
+            
+            const img = new Image();
+            img.onload = function() {
+                document.getElementById('newWidth').value = Math.round(img.naturalWidth * 0.5);
+                document.getElementById('newHeight').value = Math.round(img.naturalHeight * 0.5);
+                
+                if (previewMode) {
+                    updateLivePreview();
+                }
+            };
+            img.src = originalImage.dataUrl;
+        }
+        
+        function clearAll() {
+            document.getElementById('resizeControls').style.display = 'none';
+            document.getElementById('previewSection').style.display = 'none';
+            document.getElementById('enhancedPreviewSection').style.display = 'none';
+            
+            // Clear live preview images
+            const livePreviewImage = document.getElementById('livePreviewImage');
+            const liveResizedPreviewImage = document.getElementById('liveResizedPreviewImage');
+            
+            if (livePreviewImage) {
+                livePreviewImage.src = '';
+            }
+            if (liveResizedPreviewImage) {
+                liveResizedPreviewImage.src = '';
+            }
+            
+            // Reset card widths to default
+            const cardBodies = document.querySelectorAll('.card-body');
+            cardBodies.forEach(cardBody => {
+                cardBody.style.width = '';
+                cardBody.style.maxWidth = '';
+                cardBody.style.margin = '';
+            });
+            
+            if (resizedImageBlob) {
+                URL.revokeObjectURL(resizedImageBlob);
+                resizedImageBlob = null;
+            }
+            originalImage = null;
+            previewMode = false; // Reset preview mode
+            currentAspectRatio = 'free';
+            
+            // Reset aspect ratio buttons
+            document.querySelectorAll('.aspect-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('[data-ratio="free"]').classList.add('active');
+            
+            // Clear file input
+            document.getElementById('imageInput').value = '';
+        }
+        
+        function showError(message) {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.innerHTML = `<i class="fas fa-exclamation-triangle me-2"></i>${message}`;
+            
+            const uploadArea = document.getElementById('uploadArea');
+            uploadArea.parentNode.insertBefore(errorDiv, uploadArea.nextSibling);
+            
+            // Auto-remove after 5 seconds
+            setTimeout(() => {
+                if (errorDiv.parentNode) {
+                    errorDiv.parentNode.removeChild(errorDiv);
+                }
+            }, 5000);
+        }
+        
+        function clearError() {
+            const existingError = document.querySelector('.error-message');
+            if (existingError) {
+                existingError.remove();
+            }
+        }
+        
+        function setLoadingState(loading) {
+            const uploadArea = document.getElementById('uploadArea');
+            if (loading) {
+                uploadArea.classList.add('loading');
+            } else {
+                uploadArea.classList.remove('loading');
+            }
+        }
+        
+        // Enhanced resize function with loading state
+        function resizeImage() {
+            if (!originalImage) {
+                log('No image loaded', 'error');
+                return;
+            }
+            
+            // Show loading state
+            const resizeBtn = document.getElementById('resizeBtn');
+            const originalText = resizeBtn.innerHTML;
+            resizeBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Resizing...';
+            resizeBtn.disabled = true;
+            
+            log('Starting image resize...');
+            updateStatus('Resizing image...', 'info');
+            
+            try {
+                const newWidth = parseInt(document.getElementById('newWidth').value);
+                const newHeight = parseInt(document.getElementById('newHeight').value);
+                const outputFormat = document.getElementById('outputFormat').value;
+                const quality = parseFloat(document.getElementById('quality').value);
+                
+                if (newWidth <= 0 || newHeight <= 0) {
+                    log('Invalid dimensions', 'error');
+                    updateStatus('Invalid dimensions', 'error');
+                    resizeBtn.innerHTML = originalText;
+                    resizeBtn.disabled = false;
+                    return;
+                }
+                
+                log(`Resizing to ${newWidth}Ã—${newHeight} pixels, format: ${outputFormat}`);
+                
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                
+                if (!ctx) {
+                    log('Canvas 2D context not supported', 'error');
+                    updateStatus('Canvas not supported', 'error');
+                    resizeBtn.innerHTML = originalText;
+                    resizeBtn.disabled = false;
+                    return;
+                }
+                
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+                
+                // Ensure high quality
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                
+                const img = new Image();
+                img.onload = function() {
+                    try {
+                        console.log('Drawing image to canvas:', img.width, 'x', img.height, '->', newWidth, 'x', newHeight);
+                        ctx.drawImage(img, 0, 0, newWidth, newHeight);
+                        console.log('Canvas drawing completed');
+                        
+                        const mimeType = outputFormat === 'png' ? 'image/png' : 'image/jpeg';
+                        const outputQuality = outputFormat === 'png' ? undefined : quality;
+                        
+                        // First, try to create a data URL as fallback
+                        const dataUrl = canvas.toDataURL(mimeType, outputQuality);
+                        console.log('Canvas data URL created:', dataUrl.substring(0, 50) + '...');
+                        
+                        // Show preview section
+                        document.getElementById('previewSection').style.display = 'block';
+                        
+                        // Update live preview if it's enabled
+                        if (previewMode) {
+                            setTimeout(() => {
+                                updateLivePreview();
+                            }, 100);
+                        }
+                        
+                        // Then try to create blob for download
+                        canvas.toBlob(function(blob) {
+                            console.log('Canvas toBlob callback called, blob:', blob);
+                            if (blob) {
+                                resizedImageBlob = blob;
+                                console.log('Blob created successfully for download');
+                                log(`Resize completed successfully. New size: ${formatFileSize(blob.size)}`, 'success');
+                                updateStatus('Image resized successfully', 'success');
+                            } else {
+                                console.log('Blob creation failed, but data URL preview should work');
+                                log('Resize completed (preview only)', 'success');
+                                updateStatus('Image resized successfully', 'success');
+                            }
+                            
+                            // Reset button state
+                            resizeBtn.innerHTML = originalText;
+                            resizeBtn.disabled = false;
+                        }, mimeType, outputQuality);
+                        
+                    } catch (error) {
+                        log(`Error during resize: ${error.message}`, 'error');
+                        updateStatus('Resize error', 'error');
+                        resizeBtn.innerHTML = originalText;
+                        resizeBtn.disabled = false;
+                    }
+                };
+                
+                img.onerror = function() {
+                    log('Error loading image for resize', 'error');
+                    updateStatus('Resize failed', 'error');
+                    resizeBtn.innerHTML = originalText;
+                    resizeBtn.disabled = false;
+                };
+                
+                img.src = originalImage.dataUrl;
+                
+            } catch (error) {
+                log(`Resize error: ${error.message}`, 'error');
+                updateStatus('Resize error', 'error');
+                resizeBtn.innerHTML = originalText;
+                resizeBtn.disabled = false;
+            }
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'r':
+                        e.preventDefault();
+                        if (document.getElementById('resizeControls').style.display !== 'none') {
+                            resizeImage();
+                        }
+                        break;
+                    case 'u':
+                        e.preventDefault();
+                        if (document.getElementById('resizeControls').style.display !== 'none') {
+                            resetResize();
+                        }
+                        break;
+                }
+            }
+        });
+        
+        // Function to increase card-body width by 50%
+        function increaseCardBodyWidth() {
+            console.log('=== INCREASING CARD-BODY WIDTH BY 50% ===');
+            
+            // Get all card-bodies
+            const allCardBodies = document.querySelectorAll('.card-body');
+            const allCards = document.querySelectorAll('.card');
+            
+            console.log('Found', allCardBodies.length, 'card-bodies and', allCards.length, 'cards');
+            
+            // Use a fixed base width for more predictable results
+            const baseWidth = 800; // Base width for card-bodies
+            const increasedWidth = Math.round(baseWidth * 1.5); // 50% increase = 1200px
+            
+            allCardBodies.forEach((cardBody, index) => {
+                console.log('Processing card-body', index, 'current width:', cardBody.offsetWidth);
+                
+                // Remove all width constraints and set explicit width
+                cardBody.style.maxWidth = 'none !important';
+                cardBody.style.minWidth = 'none !important';
+                cardBody.style.width = increasedWidth + 'px !important';
+                cardBody.style.margin = '0 auto';
+                cardBody.style.transition = 'width 0.3s ease';
+                
+                // Force a reflow
+                cardBody.offsetHeight;
+                
+                console.log('Card-body', index, 'width set to', increasedWidth, 'actual width:', cardBody.offsetWidth);
+            });
+            
+            // Also adjust cards to match
+            const cardBaseWidth = 840; // Slightly larger for cards
+            const increasedCardWidth = Math.round(cardBaseWidth * 1.5); // 50% increase = 1260px
+            
+            allCards.forEach((card, index) => {
+                console.log('Processing card', index, 'current width:', card.offsetWidth);
+                
+                // Remove all width constraints and set explicit width
+                card.style.maxWidth = 'none !important';
+                card.style.minWidth = 'none !important';
+                card.style.width = increasedCardWidth + 'px !important';
+                card.style.margin = '0 auto';
+                card.style.transition = 'width 0.3s ease';
+                
+                // Force a reflow
+                card.offsetHeight;
+                
+                console.log('Card', index, 'width set to', increasedCardWidth, 'actual width:', card.offsetWidth);
+            });
+            
+            // Adjust main container
+            const mainContainer = document.querySelector('.container');
+            if (mainContainer) {
+                const containerMaxWidth = 1400; // Large enough to accommodate the increased cards
+                mainContainer.style.maxWidth = containerMaxWidth + 'px !important';
+                mainContainer.style.transition = 'max-width 0.3s ease';
+                
+                console.log('Container max-width set to', containerMaxWidth, 'actual width:', mainContainer.offsetWidth);
+            }
+            
+            console.log('=== WIDTH INCREASE COMPLETE ===');
+        }
+        
+        // Function to automatically increase card widths
+        function autoIncreaseCardWidths() {
+            console.log('Auto-increasing card widths...');
+            
+            // Get all cards and increase their width
+            const allCards = document.querySelectorAll('.card');
+            const allCardBodies = document.querySelectorAll('.card-body');
+            
+            // Calculate base width increase
+            const baseWidth = 600; // Base width for cards
+            const increasedWidth = Math.min(baseWidth * 1.5, 900); // 50% increase, max 900px
+            
+            allCards.forEach(card => {
+                card.style.width = increasedWidth + 'px';
+                card.style.maxWidth = '100%';
+                card.style.margin = '0 auto';
+                card.style.transition = 'width 0.3s ease';
+            });
+            
+            allCardBodies.forEach(cardBody => {
+                cardBody.style.width = (increasedWidth - 40) + 'px'; // Account for padding
+                cardBody.style.maxWidth = '100%';
+                cardBody.style.margin = '0 auto';
+                cardBody.style.transition = 'width 0.3s ease';
+            });
+            
+            // Adjust main container
+            const mainContainer = document.querySelector('.container');
+            if (mainContainer) {
+                mainContainer.style.maxWidth = (increasedWidth + 100) + 'px';
+                mainContainer.style.transition = 'max-width 0.3s ease';
+            }
+            
+            console.log('Card widths increased to:', increasedWidth + 'px');
+        }
+        
+        // Initialize aspect ratio buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            log('Page loaded successfully', 'success');
+            updateStatus('Ready', 'success');
+            
+            // Set free as default active
+            document.querySelector('[data-ratio="free"]').classList.add('active');
+            
+            // Add event listeners for dimension changes
+            document.getElementById('newWidth').addEventListener('input', function() {
+                console.log('Width input changed');
+                if (previewMode) {
+                    updateLivePreview();
+                }
+            });
+            document.getElementById('newHeight').addEventListener('input', function() {
+                console.log('Height input changed');
+                if (previewMode) {
+                    updateLivePreview();
+                }
+            });
+            // Add upload area event listeners
+            const uploadArea = document.getElementById('uploadArea');
+            
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = Array.from(e.dataTransfer.files).filter(file => file.type.startsWith('image/'));
+                if (files.length > 0) {
+                    handleFile(files[0]);
+                } else {
+                    log('No valid image files found in drop', 'error');
+                }
+            });
+        });
+    </script>
+
+  <!-- Footer Script -->
+  
+
+<!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js').catch(()=>{});
+      });
+    }
+  </script>
+  <script src="../assets/js/include.js?v=3" defer=""></script>
+
+
+
+
+
+
+
+</div></body></html>

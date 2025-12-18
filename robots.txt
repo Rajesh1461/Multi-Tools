@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+Allow: /tools/
+Allow: /blog/
+# Allow components for rendering, but noindex them via .htaccess headers
+# Disallow: /components/
+Disallow: /fun/
+Disallow: /api/
+Disallow: /*?search=*
+Disallow: /cdn-cgi/
+Disallow: /home.multitoolszone.fun/
+Disallow: /finance.multitoolszone.fun/
+Disallow: /www.multitoolszone.fun/
+
+Sitemap: https://multitoolszone.fun/sitemap.xml

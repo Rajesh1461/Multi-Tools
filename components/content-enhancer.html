@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Multi-Tools Component - Professional web tools and utilities">
+    <meta name="keywords" content="component, tools, utilities, web development">
+    <meta name="author" content="MultiTools">
+    <title>Multi-Tools Component</title>
+    <link rel="canonical" href="https://multitools.tech/components/">
+    
+    <meta name="robots" content="index, follow">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+<body>
+  
+    
+<script>
+// Comprehensive tool content database
+const toolContent = {
+  // Security Tools
+  '2fa-generator.html': {
+    description: `<p>The 2FA Generator creates secure two-factor authentication codes using TOTP algorithm. This tool enhances your account security by generating time-sensitive codes that expire every 30 seconds.</p><p><strong>Key Features:</strong></p><ul><li>Generate TOTP codes for any 2FA-enabled service</li><li>Real-time countdown timer showing code validity</li><li>Support for Base32 encoded secrets</li><li>Copy to clipboard functionality</li><li>Works with popular authenticator apps</li><li>No data storage - codes generated locally</li></ul>`,
+    usage: `<ol><li><strong>Enter TOTP Secret:</strong> Input your Base32 encoded secret key</li><li><strong>Generate Code:</strong> Click "Generate Code" to create the current 2FA code</li><li><strong>Use Code:</strong> Enter the generated code in your 2FA-enabled service</li><li><strong>Monitor Timer:</strong> Watch the countdown - codes expire every 30 seconds</li></ol>`,
+    faq: [
+      { question: "What is TOTP and how does it work?", answer: "TOTP (Time-based One-Time Password) is a standard algorithm that generates time-sensitive codes using a shared secret and current time. Codes change every 30 seconds for enhanced security." },
+      { question: "Where do I get my TOTP secret key?", answer: "You get the secret key when setting up 2FA on a service. It's usually displayed as a QR code or Base32 string during the initial 2FA setup process." },
+      { question: "Is this tool secure and private?", answer: "Yes, all processing happens locally in your browser. Your secret keys are never transmitted or stored on our servers, ensuring complete privacy and security." },
+      { question: "Why do the codes expire every 30 seconds?", answer: "30-second expiration is the TOTP standard that balances security and usability. It prevents code reuse while giving you enough time to enter the code." },
+      { question: "Can I use this with any 2FA-enabled service?", answer: "Yes, this tool works with any service that uses TOTP-based 2FA, including Google, Microsoft, GitHub, and most other major platforms." },
+      { question: "What if my code doesn't work?", answer: "Check that your secret key is correct, ensure your device's time is synchronized, and try generating a new code. The service might also have a small time window tolerance." },
+      { question: "Can I use this as a backup authenticator?", answer: "Yes, this can serve as a backup if your primary authenticator app is unavailable, but we recommend using dedicated authenticator apps for regular use." }
+    ]
+  },
+  'password-generator.html': {
+    description: `<p>Generate strong, secure passwords instantly with our Password Generator tool. Create passwords that are difficult to crack while remaining memorable.</p><p><strong>Key Features:</strong></p><ul><li>Customizable password length (8-128 characters)</li><li>Include/exclude uppercase letters, lowercase letters, numbers, and symbols</li><li>Exclude similar characters (0, O, 1, l, I)</li><li>Password strength indicator</li><li>Copy to clipboard functionality</li></ul>`,
+    usage: `<ol><li><strong>Set Password Length:</strong> Choose the desired length using the slider</li><li><strong>Select Character Types:</strong> Check the boxes for the character types you want to include</li><li><strong>Generate Password:</strong> Click "Generate Password" to create a new password</li><li><strong>Copy Password:</strong> Use the copy button to copy the password to your clipboard</li></ol>`,
+    faq: [
+      { question: "What makes a password strong?", answer: "A strong password should be at least 12-16 characters long, include uppercase and lowercase letters, numbers, and special characters, and avoid common words or patterns." },
+      { question: "How long should my password be?", answer: "We recommend at least 12-16 characters for strong passwords. Longer passwords (20+ characters) provide even better security." },
+      { question: "Should I include special characters?", answer: "Yes, including special characters like !@#$%^&* significantly increases password strength and makes it harder to crack." },
+      { question: "What are similar characters and why exclude them?", answer: "Similar characters like 0/O, 1/l/I can be confusing. Excluding them prevents user errors while maintaining security." },
+      { question: "Are the generated passwords truly random?", answer: "Yes, our generator uses cryptographically secure random number generation to create truly random passwords." },
+      { question: "Can I generate multiple passwords at once?", answer: "Yes, you can generate multiple passwords by clicking the generate button multiple times or using the regenerate feature." },
+      { question: "Should I use the same password for multiple accounts?", answer: "No, always use unique passwords for each account. Consider using a password manager to store and organize your passwords securely." },
+      { question: "How do I remember complex passwords?", answer: "Use a password manager to store complex passwords securely. You only need to remember one master password for your password manager." }
+    ]
+  },
+  'password-strength-checker.html': {
+    description: `<p>Test the strength of your passwords with our Password Strength Checker. Get detailed feedback on password security and suggestions for improvement.</p><p><strong>Key Features:</strong></p><ul><li>Real-time password strength analysis</li><li>Multiple strength indicators</li><li>Detailed feedback and suggestions</li><li>Common password detection</li><li>Security tips and best practices</li></ul>`,
+    usage: `<ol><li><strong>Enter Password:</strong> Type or paste your password in the input field</li><li><strong>View Analysis:</strong> See real-time strength assessment</li><li><strong>Check Feedback:</strong> Read detailed suggestions for improvement</li><li><strong>Follow Tips:</strong> Apply security recommendations</li></ol>`,
+    faq: [
+      { question: "How is password strength calculated?", answer: "Password strength is calculated based on length, character variety, complexity, and resistance to common attack patterns like dictionary attacks and brute force." },
+      { question: "What makes a password weak?", answer: "Weak passwords are short, use common words, contain personal information, have simple patterns, or lack character variety (only letters or only numbers)." },
+      { question: "What's the difference between weak, medium, and strong passwords?", answer: "Weak passwords are easily cracked, medium passwords provide basic protection, and strong passwords offer maximum security against various attack methods." },
+      { question: "Should I be concerned about common passwords?", answer: "Yes, common passwords like 'password123' or 'qwerty' are easily cracked. Our checker identifies and warns about these vulnerable patterns." },
+      { question: "How long does it take to crack different password strengths?", answer: "Weak passwords can be cracked in seconds to minutes, medium passwords in hours to days, while strong passwords may take years or decades to crack." },
+      { question: "What if my password contains personal information?", answer: "Avoid using personal information like names, birthdays, or addresses in passwords, as this information is often publicly available and makes passwords easier to guess." },
+      { question: "Is it safe to check my password strength online?", answer: "Our tool processes passwords locally in your browser without transmitting them to our servers, ensuring your passwords remain private and secure." },
+      { question: "What should I do if my password is weak?", answer: "Use our password generator to create a strong password, or follow the improvement suggestions provided by the strength checker to enhance your current password." }
+    ]
+  },
+  'encryption-decryption.html': {
+    description: `<p>Encrypt and decrypt text messages using our secure Encryption Tool. Protect sensitive information with strong encryption algorithms.</p><p><strong>Key Features:</strong></p><ul><li>Multiple encryption algorithms</li><li>Secure key generation</li><li>Text and file encryption</li><li>Password-based encryption</li><li>Copy encrypted/decrypted text</li></ul>`,
+    usage: `<ol><li><strong>Select Mode:</strong> Choose between encryption or decryption</li><li><strong>Enter Text:</strong> Input the text you want to encrypt/decrypt</li><li><strong>Set Password:</strong> Choose a strong password for encryption</li><li><strong>Process:</strong> Click encrypt/decrypt button</li><li><strong>Copy Result:</strong> Copy the result to clipboard</li></ol>`,
+    faq: [
+      { question: "What is encryption and why is it important?", answer: "Encryption converts readable text into scrambled data that can only be read with the correct key. It protects sensitive information from unauthorized access." },
+      { question: "Which encryption algorithms are supported?", answer: "Our tool supports multiple encryption algorithms including AES, RSA, and other industry-standard methods for maximum security." },
+      { question: "How secure is the encryption?", answer: "We use military-grade encryption algorithms that are virtually impossible to break without the correct password or key." },
+      { question: "What happens if I forget my encryption password?", answer: "Unfortunately, if you forget your encryption password, the encrypted data cannot be recovered. Always store your passwords securely." },
+      { question: "Is my data safe when using this tool?", answer: "Yes, all encryption/decryption happens locally in your browser. Your data is never transmitted to our servers, ensuring complete privacy." },
+      { question: "Can I encrypt files as well as text?", answer: "Yes, our tool supports both text and file encryption. You can upload files and encrypt them with the same secure algorithms." },
+      { question: "How do I share encrypted data with others?", answer: "Share both the encrypted data and the password through separate, secure channels. Never send the password in the same message as the encrypted data." },
+      { question: "What's the difference between encryption and encoding?", answer: "Encryption requires a key to decrypt and is secure, while encoding (like Base64) is just a format conversion that can be easily reversed without a key." }
+    ]
+  },
+  // Calculator Tools
+  'age-calculator.html': {
+    description: `<p>Calculate your exact age, time until next birthday, and other age-related information with our precise Age Calculator. Perfect for planning events, calculating benefits, or simply satisfying curiosity.</p><p><strong>Key Features:</strong></p><ul><li>Calculate exact age in years, months, and days</li><li>Countdown to next birthday</li><li>Calculate age on specific dates</li><li>Support for leap years</li><li>Multiple date format support</li></ul>`,
+    usage: `<ol><li><strong>Enter Birth Date:</strong> Select your date of birth using the date picker</li><li><strong>Choose Calculation Date:</strong> Select the date you want to calculate age for</li><li><strong>Calculate Age:</strong> Click "Calculate Age" to see your results</li><li><strong>View Results:</strong> See your exact age and time until next birthday</li></ol>`,
+    faq: [
+      { question: "How accurate is the age calculation?", answer: "Our age calculator provides precise calculations down to the day, accounting for leap years and different month lengths for maximum accuracy." },
+      { question: "Does the calculator handle leap years correctly?", answer: "Yes, our calculator properly accounts for leap years, including the complex rules for century years and 400-year cycles." },
+      { question: "Can I calculate age for any date in the past or future?", answer: "Yes, you can calculate age for any date, whether it's in the past, present, or future, making it useful for historical or planning purposes." },
+      { question: "What's the difference between chronological age and biological age?", answer: "Chronological age is the time elapsed since birth, while biological age refers to your body's condition. Our calculator shows chronological age." },
+      { question: "How does the calculator handle different time zones?", answer: "The calculator uses the dates you provide without time zone conversion. For precise calculations, ensure you're using consistent date references." },
+      { question: "Can I calculate age in different units?", answer: "Yes, our calculator can show age in years, months, days, and even provide a countdown to your next birthday." },
+      { question: "Is there a limit to how far back I can calculate?", answer: "You can calculate age for any reasonable date range, from ancient dates to future dates, though very old dates may have calendar system limitations." },
+      { question: "Can I use this for calculating age of historical figures?", answer: "Yes, you can calculate the age of historical figures by entering their birth date and the date you want to calculate their age for." }
+    ]
+  },
+  'bmi-calculator.html': {
+    description: `<p>Calculate your Body Mass Index (BMI) quickly and accurately with our BMI Calculator. Understand your weight category and get insights into your health status based on standard BMI classifications.</p><p><strong>Key Features:</strong></p><ul><li>Calculate BMI using height and weight</li><li>Multiple unit support (metric and imperial)</li><li>BMI category classification</li><li>Health recommendations based on results</li><li>Visual BMI chart reference</li></ul>`,
+    usage: `<ol><li><strong>Select Units:</strong> Choose between metric (kg/cm) or imperial (lbs/inches)</li><li><strong>Enter Height:</strong> Input your height in the selected units</li><li><strong>Enter Weight:</strong> Input your weight in the selected units</li><li><strong>Calculate BMI:</strong> Click "Calculate BMI" to see your results</li></ol>`,
+    faq: [
+      { question: "What is BMI and what does it measure?", answer: "BMI (Body Mass Index) is a measure of body fat based on height and weight. It's calculated as weight in kilograms divided by height in meters squared." },
+      { question: "What do the BMI categories mean?", answer: "BMI categories are: Underweight (<18.5), Normal weight (18.5-24.9), Overweight (25-29.9), and Obese (≥30). These are general guidelines for adults." },
+      { question: "Is BMI accurate for everyone?", answer: "BMI is a useful screening tool but may not be accurate for athletes with high muscle mass, older adults, or people with certain medical conditions." },
+      { question: "What's the difference between metric and imperial units?", answer: "Metric uses kilograms and centimeters, while imperial uses pounds and inches. The BMI calculation is the same regardless of units used." },
+      { question: "Can I use BMI for children and teenagers?", answer: "BMI calculations for children and teens require age and sex-specific percentile charts, as their BMI changes with growth and development." },
+      { question: "What should I do if my BMI is outside the normal range?", answer: "Consult with a healthcare professional for personalized advice. BMI is just one indicator of health and should be considered alongside other factors." },
+      { question: "How often should I check my BMI?", answer: "BMI can change over time, so checking it periodically (monthly or quarterly) can help track your health progress, but don't obsess over daily fluctuations." },
+      { question: "Are there limitations to using BMI?", answer: "Yes, BMI doesn't distinguish between muscle and fat mass, doesn't account for bone density, and may not be suitable for certain populations or body types." }
+    ]
+  },
+  'percentage-calculator.html': {
+    description: `<p>Calculate percentages quickly and easily with our Percentage Calculator. Perfect for discounts, markups, tips, and other percentage-based calculations.</p><p><strong>Key Features:</strong></p><ul><li>Calculate percentage of a number</li><li>Find percentage change</li><li>Calculate discounts and markups</li><li>Tip calculator functionality</li><li>Multiple calculation modes</li></ul>`,
+    usage: `<ol><li><strong>Select Calculation Type:</strong> Choose the type of percentage calculation you need</li><li><strong>Enter Values:</strong> Input the required numbers</li><li><strong>Calculate:</strong> Click calculate to see results</li><li><strong>View Results:</strong> See detailed breakdown of calculations</li></ol>`,
+    faq: [
+      { question: "What types of percentage calculations can I perform?", answer: "You can calculate percentage of a number, percentage change, discounts, markups, tips, and various other percentage-based calculations." },
+      { question: "How do I calculate a percentage of a number?", answer: "Multiply the number by the percentage and divide by 100. For example, 20% of 100 = (100 × 20) ÷ 100 = 20." },
+      { question: "What's the difference between percentage increase and decrease?", answer: "Percentage increase shows how much a value has grown, while percentage decrease shows how much it has reduced from the original amount." },
+      { question: "How do I calculate percentage change?", answer: "Percentage change = ((New Value - Old Value) ÷ Old Value) × 100. This shows the relative change between two values." },
+      { question: "Can I calculate compound percentages?", answer: "Yes, our calculator can handle multiple percentage calculations, including compound interest, multiple discounts, and sequential percentage changes." },
+      { question: "What's the difference between markup and discount?", answer: "Markup is the percentage added to cost price to get selling price, while discount is the percentage reduced from selling price." },
+      { question: "How accurate are the percentage calculations?", answer: "Our calculator provides precise calculations with multiple decimal places, ensuring accuracy for financial and mathematical calculations." },
+      { question: "Can I use this for business calculations?", answer: "Yes, this tool is perfect for business calculations including profit margins, tax calculations, commission rates, and financial analysis." }
+    ]
+  },
+  'tip-calculator.html': {
+    description: `<p>Calculate tips quickly and accurately with our Tip Calculator. Split bills, calculate different tip percentages, and handle tax calculations with ease.</p><p><strong>Key Features:</strong></p><ul><li>Calculate tips for any bill amount</li><li>Multiple tip percentage options</li><li>Split bill functionality</li><li>Tax calculation support</li><li>Round up/down options</li></ul>`,
+    usage: `<ol><li><strong>Enter Bill Amount:</strong> Input the total bill amount</li><li><strong>Select Tip Percentage:</strong> Choose your desired tip percentage</li><li><strong>Add Tax (Optional):</strong> Include tax if applicable</li><li><strong>Split Bill:</strong> Divide among multiple people if needed</li><li><strong>View Results:</strong> See tip amount and total per person</li></ol>`,
+    faq: [
+      { question: "What are standard tip percentages?", answer: "Standard tip percentages are: 15% for basic service, 18% for good service, 20% for excellent service, and 25% for exceptional service." },
+      { question: "Should I tip on the pre-tax or post-tax amount?", answer: "It's customary to tip on the pre-tax amount, but some people prefer to tip on the total including tax. Our calculator can handle both scenarios." },
+      { question: "How do I split a bill with multiple people?", answer: "Enter the total bill amount, select your tip percentage, and specify how many people are splitting the bill. The calculator will show each person's share." },
+      { question: "What if the service was poor?", answer: "While tipping is generally expected, you can adjust the percentage based on service quality. Some people tip 10-15% for poor service or speak with management." },
+      { question: "Can I round up the tip amount?", answer: "Yes, our calculator includes rounding options to make payment easier. You can round up to the nearest dollar or to a convenient amount." },
+      { question: "How do I handle tax in tip calculations?", answer: "You can choose to calculate the tip on the pre-tax amount (recommended) or include tax in the tip calculation. The calculator shows both options." },
+      { question: "What's the difference between tip and gratuity?", answer: "Tip and gratuity are essentially the same - both refer to the extra money given to service staff. Some establishments use 'gratuity' for automatic charges." },
+      { question: "Can I save tip calculations for future reference?", answer: "While our calculator doesn't store calculations, you can copy the results or take a screenshot for your records." }
+    ]
+  },
+  // Converter Tools
+  'unit-converter.html': {
+    description: `<p>Convert between different units of measurement quickly and accurately with our comprehensive Unit Converter. Support for length, weight, volume, temperature, and many more measurement types.</p><p><strong>Key Features:</strong></p><ul><li>Convert between multiple unit types</li><li>Real-time conversion as you type</li><li>Support for metric, imperial, and other systems</li><li>Precise calculations with multiple decimal places</li><li>Mobile-friendly interface</li></ul>`,
+    usage: `<ol><li><strong>Select Unit Type:</strong> Choose the category of units you want to convert</li><li><strong>Enter Value:</strong> Input the value you want to convert</li><li><strong>Select From Unit:</strong> Choose the unit you're converting from</li><li><strong>Select To Unit:</strong> Choose the unit you want to convert to</li><li><strong>View Result:</strong> See the converted value instantly</li></ol>`,
+    faq: [
+      { question: "What unit types are supported?", answer: "We support length, weight, volume, temperature, area, speed, pressure, energy, and many other measurement categories with hundreds of units." },
+      { question: "How accurate are the conversions?", answer: "Our conversions are highly accurate, using official conversion factors and supporting multiple decimal places for precise calculations." },
+      { question: "What's the difference between metric and imperial systems?", answer: "Metric uses base-10 units (meters, kilograms, liters), while imperial uses traditional units (feet, pounds, gallons) with different conversion factors." },
+      { question: "Can I convert between different measurement systems?", answer: "Yes, you can convert between any supported units, including metric to imperial, imperial to metric, and between different systems." },
+      { question: "How do I know which unit to choose?", answer: "Select the unit type category first, then choose the specific unit from the dropdown. Common units are listed first for easy selection." },
+      { question: "Are the conversion factors up-to-date?", answer: "Yes, we use the latest official conversion factors and standards to ensure accuracy and compliance with international measurement standards." },
+      { question: "Can I convert multiple values at once?", answer: "While the basic converter handles one conversion at a time, you can perform multiple conversions by changing the values and units as needed." },
+      { question: "What if I need a unit that's not listed?", answer: "If you need a specific unit not listed, you can often convert through intermediate units or contact us to suggest adding new units." }
+    ]
+  },
+  'currency-converter.html': {
+    description: `<p>Convert between different world currencies with real-time exchange rates using our Currency Converter. Get accurate conversion rates for over 150+ currencies worldwide.</p><p><strong>Key Features:</strong></p><ul><li>Real-time exchange rates</li><li>Support for 150+ world currencies</li><li>Historical rate charts</li><li>Offline conversion capabilities</li><li>Mobile-responsive design</li></ul>`,
+    usage: `<ol><li><strong>Enter Amount:</strong> Input the amount you want to convert</li><li><strong>Select From Currency:</strong> Choose the currency you're converting from</li><li><strong>Select To Currency:</strong> Choose the currency you want to convert to</li><li><strong>View Conversion:</strong> See the converted amount with current exchange rate</li></ol>`,
+    faq: [
+      { question: "How often are exchange rates updated?", answer: "Exchange rates are updated in real-time from reliable financial data sources to ensure you get the most current conversion rates." },
+      { question: "Which currencies are supported?", answer: "We support over 150+ world currencies including major currencies like USD, EUR, GBP, JPY, and many regional and emerging market currencies." },
+      { question: "Are the exchange rates accurate?", answer: "Yes, we use official exchange rates from reputable financial institutions and central banks to ensure accuracy and reliability." },
+      { question: "Can I see historical exchange rates?", answer: "Yes, our converter includes historical rate charts so you can see how exchange rates have changed over time." },
+      { question: "What's the difference between buy and sell rates?", answer: "Buy rates are what banks charge to buy currency, while sell rates are what they charge to sell. Our converter typically shows mid-market rates." },
+      { question: "Do exchange rates include fees?", answer: "Our converter shows the base exchange rate without fees. Banks and currency exchanges typically charge additional fees for currency conversion." },
+      { question: "Can I use this for business transactions?", answer: "Yes, our converter is suitable for business use, but always verify rates with your financial institution for large transactions." },
+      { question: "What if a currency is not listed?", answer: "If you need a currency not listed, you can often convert through a major currency like USD or EUR as an intermediate step." }
+    ]
+  },
+  'temperature-converter.html': {
+    description: `<p>Convert between different temperature scales with our Temperature Converter. Support for Celsius, Fahrenheit, Kelvin, and other temperature units.</p><p><strong>Key Features:</strong></p><ul><li>Convert between Celsius, Fahrenheit, and Kelvin</li><li>Real-time conversion</li><li>Precise calculations</li><li>Common temperature reference points</li><li>Mobile-friendly interface</li></ul>`,
+    usage: `<ol><li><strong>Enter Temperature:</strong> Input the temperature value you want to convert</li><li><strong>Select From Unit:</strong> Choose the temperature scale you're converting from</li><li><strong>Select To Unit:</strong> Choose the temperature scale you want to convert to</li><li><strong>View Result:</strong> See the converted temperature instantly</li></ol>`,
+    faq: [
+      { question: "What are the main temperature scales?", answer: "The main temperature scales are Celsius (°C), Fahrenheit (°F), and Kelvin (K). Celsius is used in most countries, Fahrenheit in the US, and Kelvin in scientific applications." },
+      { question: "How do I convert between Celsius and Fahrenheit?", answer: "To convert Celsius to Fahrenheit: F = (C × 9/5) + 32. To convert Fahrenheit to Celsius: C = (F - 32) × 5/9." },
+      { question: "What is Kelvin and how is it different?", answer: "Kelvin is the scientific temperature scale where 0K is absolute zero. To convert: K = C + 273.15, or C = K - 273.15." },
+      { question: "What are some common temperature reference points?", answer: "Water freezes at 0°C (32°F), boils at 100°C (212°F), and room temperature is about 20°C (68°F). Absolute zero is -273.15°C (0K)." },
+      { question: "Why do different countries use different temperature scales?", answer: "Historical reasons - Fahrenheit was developed in Germany, Celsius in Sweden, and Kelvin for scientific precision. Most countries now use Celsius except the US." },
+      { question: "Can I convert to other temperature units?", answer: "Yes, our converter supports various temperature units including Rankine, Réaumur, and other specialized temperature scales." },
+      { question: "How accurate are the temperature conversions?", answer: "Our conversions are highly accurate, using precise mathematical formulas and supporting multiple decimal places for scientific applications." },
+      { question: "What's the difference between temperature and heat?", answer: "Temperature measures the average kinetic energy of particles, while heat is the total energy transfer. Temperature is measured in degrees, heat in joules or calories." }
+    ]
+  },
+  // Generator Tools
+  'qr-code-generator.html': {
+    description: `<p>Create QR codes instantly for any text, URL, contact information, or data with our QR Code Generator. Perfect for business cards, marketing materials, and digital sharing.</p><p><strong>Key Features:</strong></p><ul><li>Generate QR codes for text, URLs, phone numbers, and email addresses</li><li>Customizable QR code size and error correction level</li><li>Download QR codes in PNG, SVG, or PDF format</li><li>Real-time QR code preview</li><li>Support for various QR code types</li></ul>`,
+    usage: `<ol><li><strong>Select QR Code Type:</strong> Choose the type of data you want to encode</li><li><strong>Enter Content:</strong> Input the text, URL, or information you want to encode</li><li><strong>Customize Settings:</strong> Adjust size, error correction level, and format options</li><li><strong>Generate QR Code:</strong> Click "Generate QR Code" to create your QR code</li></ol>`,
+    faq: [
+      { question: "What types of data can I encode in QR codes?", answer: "You can encode text, URLs, phone numbers, email addresses, WiFi credentials, contact information (vCard), and any other text-based data." },
+      { question: "What is error correction level?", answer: "Error correction level determines how much damage the QR code can sustain while still being readable. Higher levels (H) can handle more damage but create larger codes." },
+      { question: "Can I customize the colors of my QR code?", answer: "Yes, you can customize both the foreground (data) and background colors of your QR code to match your brand or design preferences." },
+      { question: "What file formats are available for download?", answer: "You can download your QR codes in PNG format for raster images or SVG format for scalable vector graphics." },
+      { question: "How do I use the generated QR code?", answer: "Simply download the QR code image and use it in your documents, websites, or print materials. Anyone can scan it with their smartphone camera or QR code reader app." }
+    ]
+  },
+  'hash-generator.html': {
+    description: `<p>Generate cryptographic hashes for text, files, and data using our Hash Generator. Support for MD5, SHA-1, SHA-256, and other popular hash algorithms.</p><p><strong>Key Features:</strong></p><ul><li>Multiple hash algorithms (MD5, SHA-1, SHA-256, SHA-512)</li><li>Text and file hash generation</li><li>Real-time hash calculation</li><li>Copy hash values to clipboard</li><li>Secure local processing</li><li>Support for large files</li></ul>`,
+    usage: `<ol><li><strong>Select Algorithm:</strong> Choose the hash algorithm you want to use</li><li><strong>Input Data:</strong> Enter text or upload a file</li><li><strong>Generate Hash:</strong> Click "Generate Hash" to calculate the hash value</li><li><strong>Copy Result:</strong> Use the copy button to copy the hash to clipboard</li></ol>`,
+  },
+  'random-number-generator.html': {
+    description: `<p>Generate random numbers for various purposes with our Random Number Generator. Perfect for games, simulations, statistical sampling, and other applications requiring randomness.</p><p><strong>Key Features:</strong></p><ul><li>Generate random integers within specified ranges</li><li>Customizable minimum and maximum values</li><li>Generate multiple random numbers at once</li><li>Exclude specific numbers if needed</li><li>Copy results to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Set Range:</strong> Enter minimum and maximum values for your range</li><li><strong>Choose Quantity:</strong> Select how many random numbers you want</li><li><strong>Generate:</strong> Click "Generate Numbers" to create random values</li><li><strong>Copy Results:</strong> Use copy button to copy numbers to clipboard</li></ol>`,
+    faq: [
+      { question: "Are the numbers truly random?", answer: "Our generator uses cryptographically secure random number generation for high-quality randomness." },
+      { question: "Can I generate the same number twice?", answer: "Yes, random generation can produce duplicates, especially with smaller ranges or larger quantities." }
+    ]
+  },
+  'name-to-numerology.html': {
+    description: `<p>Discover the hidden meanings and vibrations behind names using our Name to Numerology Calculator. Explore ancient numerology principles including Pythagorean, Chaldean, and Hebrew methods to understand your life path, expression, and soul numbers.</p><p><strong>Key Features:</strong></p><ul><li>Calculate Life Path, Expression, and Soul numbers</li><li>Support for Pythagorean, Chaldean, and Hebrew numerology systems</li><li>Detailed letter breakdown and number meanings</li><li>Include or exclude middle names in calculations</li><li>Comprehensive interpretations and characteristics</li></ul>`,
+    usage: `<ol><li><strong>Enter Full Name:</strong> Input your complete name (first, middle, last)</li><li><strong>Select Method:</strong> Choose between Pythagorean, Chaldean, or Hebrew numerology</li><li><strong>Configure Options:</strong> Choose whether to include middle name</li><li><strong>Calculate:</strong> Click "Calculate" to generate your numerology numbers</li><li><strong>Review Results:</strong> Explore your Life Path, Expression, and Soul numbers with detailed meanings</li></ol>`,
+    faq: [
+      { question: "What is the difference between Pythagorean and Chaldean numerology?", answer: "Pythagorean numerology assigns numbers 1-9 to letters A-Z in sequence, while Chaldean numerology uses a different ancient Babylonian system with varying letter values." },
+      { question: "Should I include my middle name in the calculation?", answer: "Including your middle name provides a more complete analysis, but you can exclude it if you prefer to focus on your first and last name only." },
+      { question: "What do Life Path, Expression, and Soul numbers mean?", answer: "Life Path represents your life's purpose, Expression reveals your natural talents, and Soul number shows your inner desires and motivations." },
+      { question: "Are numerology calculations accurate?", answer: "Numerology is a metaphysical practice for self-discovery and reflection. The accuracy depends on personal interpretation and belief in the system." },
+      { question: "Can I calculate numerology for someone else?", answer: "Yes, you can calculate numerology for any name, but remember that the person should be aware and consent to having their name analyzed." }
+    ]
+  },
+  'daily-planner.html': {
+    description: `<p>Organize your day efficiently with our Daily Planner tool. Create, manage, and track your daily tasks with priority levels, time scheduling, and progress monitoring. Perfect for boosting productivity and staying organized.</p><p><strong>Key Features:</strong></p><ul><li>Add tasks with descriptions, time, and priority levels</li><li>Mark tasks as completed with visual feedback</li><li>Track progress with real-time statistics</li><li>Sort tasks by time and priority</li><li>Persistent storage - tasks saved locally</li><li>Clear all tasks with confirmation</li></ul>`,
+    usage: `<ol><li><strong>Add Task:</strong> Enter task description in the input field</li><li><strong>Set Time:</strong> Choose a specific time for the task (optional)</li><li><strong>Set Priority:</strong> Select Low, Medium, or High priority</li><li><strong>Add Task:</strong> Click "Add Task" to add it to your list</li><li><strong>Manage Tasks:</strong> Check off completed tasks or delete unwanted ones</li><li><strong>Track Progress:</strong> Monitor your completion rate and statistics</li></ol>`,
+    faq: [
+      { question: "Are my tasks saved automatically?", answer: "Yes, all your tasks are automatically saved to your browser's local storage, so they persist between sessions." },
+      { question: "Can I set specific times for tasks?", answer: "Yes, you can set specific times for tasks using the time picker. Tasks will be sorted by time when displayed." },
+      { question: "What do the priority levels mean?", answer: "Priority levels help you organize tasks: High (red) for urgent tasks, Medium (yellow) for important tasks, and Low (green) for less urgent tasks." },
+      { question: "How do I delete a task?", answer: "Click the 'Delete' button next to any task to remove it from your list permanently." },
+      { question: "Can I clear all tasks at once?", answer: "Yes, use the 'Clear All' button to remove all tasks. You'll be asked to confirm before clearing everything." },
+      { question: "Does the planner work on mobile devices?", answer: "Yes, the daily planner is fully responsive and works on all devices including smartphones and tablets." }
+    ]
+  },
+  'social-media-scheduler.html': {
+    description: `<p>Plan and schedule your social media posts across multiple platforms with our Social Media Scheduler. Organize your content calendar, set posting times, and maintain consistent engagement with your audience.</p><p><strong>Key Features:</strong></p><ul><li>Schedule posts for multiple social media platforms</li><li>Content calendar with visual timeline</li><li>Bulk upload and scheduling capabilities</li><li>Post preview and editing tools</li><li>Analytics and performance tracking</li><li>Team collaboration features</li></ul>`,
+    usage: `<ol><li><strong>Create Post:</strong> Write your content and add media</li><li><strong>Select Platforms:</strong> Choose which social media platforms to post to</li><li><strong>Set Schedule:</strong> Pick date and time for your post</li><li><strong>Preview:</strong> Review how your post will appear</li><li><strong>Schedule:</strong> Add to your content calendar</li><li><strong>Monitor:</strong> Track performance and engagement</li></ol>`,
+    faq: [
+      { question: "Which social media platforms are supported?", answer: "Our scheduler supports major platforms including Facebook, Twitter, Instagram, LinkedIn, TikTok, and more." },
+      { question: "Can I schedule posts in advance?", answer: "Yes, you can schedule posts days, weeks, or even months in advance to maintain consistent posting." },
+      { question: "Is there a limit to how many posts I can schedule?", answer: "The free plan includes basic scheduling limits, while premium plans offer unlimited scheduling capabilities." },
+      { question: "Can I edit scheduled posts?", answer: "Yes, you can edit or delete scheduled posts before they go live on your social media platforms." },
+      { question: "Do I need to connect my social media accounts?", answer: "Yes, you'll need to authorize the tool to access your social media accounts for posting and analytics." },
+      { question: "Can I schedule different content for different platforms?", answer: "Yes, you can customize your content for each platform's specific requirements and audience." }
+    ]
+  },
+  'hashtag-generator.html': {
+    description: `<p>Generate relevant and trending hashtags for your social media posts with our Hashtag Generator. Increase your reach and engagement by using the right hashtags for Instagram, Twitter, TikTok, and other platforms.</p><p><strong>Key Features:</strong></p><ul><li>Generate hashtags based on keywords and topics</li><li>Platform-specific hashtag suggestions</li><li>Trending hashtag discovery</li><li>Hashtag analytics and performance tracking</li><li>Bulk hashtag generation</li><li>Hashtag research and optimization</li></ul>`,
+    usage: `<ol><li><strong>Enter Keywords:</strong> Type your main topic or keywords</li><li><strong>Select Platform:</strong> Choose your target social media platform</li><li><strong>Generate Hashtags:</strong> Click to generate relevant hashtags</li><li><strong>Review Results:</strong> Browse through suggested hashtags</li><li><strong>Copy Hashtags:</strong> Select and copy the hashtags you want to use</li><li><strong>Track Performance:</strong> Monitor which hashtags work best for your content</li></ol>`,
+    faq: [
+      { question: "How many hashtags should I use?", answer: "It depends on the platform: Instagram allows up to 30, Twitter works best with 1-2, and TikTok performs well with 3-5 hashtags." },
+      { question: "Are the hashtags automatically updated with trends?", answer: "Yes, our generator uses real-time data to suggest trending and popular hashtags for better reach." },
+      { question: "Can I save hashtag sets for reuse?", answer: "Yes, you can save hashtag collections and reuse them for similar content types or campaigns." },
+      { question: "Do you provide hashtag analytics?", answer: "Yes, we provide insights on hashtag performance, reach, and engagement metrics." },
+      { question: "Are there any banned or inappropriate hashtags filtered out?", answer: "Yes, our system filters out banned, inappropriate, or spam hashtags to protect your account." },
+      { question: "Can I generate hashtags in different languages?", answer: "Yes, you can generate hashtags in multiple languages based on your target audience and content." }
+    ]
+  },
+  'facebook-video-downloader.html': {
+    description: `<p>Download Facebook videos in high quality with our Facebook Video Downloader. Save videos from Facebook posts, pages, and groups to your device for offline viewing or sharing.</p><p><strong>Key Features:</strong></p><ul><li>Download videos in multiple quality options</li><li>Support for public Facebook videos</li><li>Fast and secure downloading</li><li>No software installation required</li><li>Batch download capabilities</li><li>Video format conversion options</li></ul>`,
+    usage: `<ol><li><strong>Copy Video URL:</strong> Copy the Facebook video link you want to download</li><li><strong>Paste URL:</strong> Paste the link into our downloader tool</li><li><strong>Select Quality:</strong> Choose your preferred video quality</li><li><strong>Download:</strong> Click download to save the video</li><li><strong>Save File:</strong> Choose where to save the video on your device</li></ol>`,
+    faq: [
+      { question: "Is it legal to download Facebook videos?", answer: "You can only download public videos that you have permission to access. Always respect copyright and privacy laws." },
+      { question: "What video qualities are available?", answer: "We support various qualities including 720p, 1080p, and original quality depending on the source video." },
+      { question: "Can I download private or restricted videos?", answer: "No, you can only download public videos that are accessible to everyone." },
+      { question: "Do I need to install any software?", answer: "No, our Facebook video downloader works entirely in your web browser without requiring any software installation." },
+      { question: "Are there any download limits?", answer: "Free users have basic download limits, while premium users enjoy unlimited downloads." },
+      { question: "Can I download videos from Facebook groups?", answer: "Yes, as long as the video is public and you have access to view it." }
+    ]
+  },
+  'twitter-video-downloader.html': {
+    description: `<p>Download Twitter videos and GIFs with our Twitter Video Downloader. Save videos from tweets, including Twitter Spaces recordings, to your device for offline viewing.</p><p><strong>Key Features:</strong></p><ul><li>Download Twitter videos and GIFs</li><li>Multiple quality options available</li><li>Fast and secure processing</li><li>No registration required</li><li>Support for various video formats</li><li>Mobile-friendly interface</li></ul>`,
+    usage: `<ol><li><strong>Find Video:</strong> Locate the Twitter video you want to download</li><li><strong>Copy Link:</strong> Copy the tweet URL containing the video</li><li><strong>Paste URL:</strong> Paste the link into our downloader</li><li><strong>Select Format:</strong> Choose your preferred video format and quality</li><li><strong>Download:</strong> Click download to save the video</li></ol>`,
+    faq: [
+      { question: "Can I download any Twitter video?", answer: "You can download public videos from tweets. Private or protected account videos cannot be downloaded." },
+      { question: "What video formats are supported?", answer: "We support MP4, MOV, and other common video formats depending on the original video." },
+      { question: "Is there a file size limit?", answer: "There are reasonable limits based on the original video size and our processing capabilities." },
+      { question: "Can I download Twitter Spaces recordings?", answer: "Yes, if the Spaces recording is publicly available, you can download it using our tool." },
+      { question: "Do I need a Twitter account?", answer: "No, you don't need a Twitter account to download public videos." },
+      { question: "Are downloads anonymous?", answer: "Yes, we don't store your personal information or track your download history." }
+    ]
+  },
+  'url-shortener.html': {
+    description: `<p>Shorten long URLs with our URL Shortener tool. Create short, memorable links that are perfect for social media, marketing campaigns, and easy sharing. Track clicks and analytics for your shortened URLs.</p><p><strong>Key Features:</strong></p><ul><li>Create short, custom URLs</li><li>Custom alias options</li><li>Click tracking and analytics</li><li>QR code generation</li><li>Bulk URL shortening</li><li>Password protection for links</li></ul>`,
+    usage: `<ol><li><strong>Enter URL:</strong> Paste the long URL you want to shorten</li><li><strong>Custom Alias:</strong> Optionally create a custom short link</li><li><strong>Generate:</strong> Click to create your shortened URL</li><li><strong>Copy Link:</strong> Copy the shortened URL to share</li><li><strong>Track Analytics:</strong> Monitor clicks and performance</li></ol>`,
+    faq: [
+      { question: "Are shortened URLs permanent?", answer: "Yes, our shortened URLs are permanent and will continue to work as long as our service is active." },
+      { question: "Can I customize the short URL?", answer: "Yes, you can create custom aliases for your shortened URLs to make them more memorable." },
+      { question: "Is there a limit on URL length?", answer: "You can shorten URLs of any length, but very long URLs may take slightly longer to process." },
+      { question: "Can I track clicks on my shortened URLs?", answer: "Yes, we provide analytics including click counts, geographic data, and referral sources." },
+      { question: "Are shortened URLs safe to use?", answer: "Yes, our service uses secure protocols and we scan URLs for malicious content." },
+      { question: "Can I password-protect my shortened URLs?", answer: "Yes, premium users can add password protection to their shortened URLs for added security." }
+    ]
+  },
+  'password-generator.html': {
+    description: `<p>Generate strong, secure passwords with our Password Generator. Create random passwords with customizable length, character types, and security options for maximum protection of your accounts.</p><p><strong>Key Features:</strong></p><ul><li>Customizable password length</li><li>Include/exclude character types</li><li>Password strength indicator</li><li>Multiple password generation</li><li>Copy to clipboard functionality</li><li>Secure random generation</li></ul>`,
+    usage: `<ol><li><strong>Set Length:</strong> Choose your desired password length</li><li><strong>Select Characters:</strong> Choose which character types to include</li><li><strong>Configure Options:</strong> Set any special requirements</li><li><strong>Generate:</strong> Click to create your secure password</li><li><strong>Copy Password:</strong> Copy the generated password to use</li><li><strong>Regenerate:</strong> Create new passwords as needed</li></ol>`,
+    faq: [
+      { question: "How strong are the generated passwords?", answer: "Our passwords use cryptographically secure random generation and can be configured for maximum strength." },
+      { question: "Can I customize the password requirements?", answer: "Yes, you can choose length, character types, and special requirements for your passwords." },
+      { question: "Are the passwords stored anywhere?", answer: "No, passwords are generated locally in your browser and never stored on our servers." },
+      { question: "What's the recommended password length?", answer: "We recommend at least 12-16 characters for strong passwords, with longer passwords being more secure." },
+      { question: "Can I generate multiple passwords at once?", answer: "Yes, you can generate multiple passwords simultaneously for different accounts." },
+      { question: "Should I use special characters in passwords?", answer: "Yes, including special characters, numbers, and mixed case letters significantly increases password security." }
+    ]
+  },
+  'hash-generator.html': {
+    description: `<p>Generate cryptographic hashes for text, files, and data using our Hash Generator. Support for MD5, SHA-1, SHA-256, SHA-512, and other popular hash algorithms for data integrity and security verification.</p><p><strong>Key Features:</strong></p><ul><li>Multiple hash algorithms (MD5, SHA-1, SHA-256, SHA-512)</li><li>Text and file hash generation</li><li>Real-time hash calculation</li><li>Copy hash values to clipboard</li><li>Secure local processing</li><li>Support for large files</li></ul>`,
+    usage: `<ol><li><strong>Select Algorithm:</strong> Choose the hash algorithm you want to use</li><li><strong>Input Data:</strong> Enter text or upload a file</li><li><strong>Generate Hash:</strong> Click "Generate Hash" to calculate the hash value</li><li><strong>Copy Result:</strong> Use the copy button to copy the hash to clipboard</li></ol>`,
+    faq: [
+      { question: "What's the difference between MD5 and SHA-256?", answer: "SHA-256 is more secure than MD5. MD5 is faster but vulnerable to collisions, while SHA-256 provides better security." },
+      { question: "Can I hash large files?", answer: "Yes, our tool can process large files, though very large files may take longer to process." },
+      { question: "Are my files uploaded to your servers?", answer: "No, all processing is done locally in your browser. Your files never leave your device." },
+      { question: "What are hash values used for?", answer: "Hash values are used for data integrity verification, password hashing, digital signatures, and file verification." },
+      { question: "Can I compare two hash values?", answer: "Yes, you can generate hashes for two files or texts and compare them to verify if they're identical." },
+      { question: "Which hash algorithm should I use?", answer: "For security purposes, use SHA-256 or SHA-512. For simple checksums, MD5 or SHA-1 may be sufficient." }
+    ]
+  },
+  'base64-encoder-decoder.html': {
+    description: `<p>Convert text, files, and images to Base64 format and vice versa with our Base64 Encoder/Decoder. Perfect for data encoding, web development, and API integrations.</p><p><strong>Key Features:</strong></p><ul><li>Encode text and files to Base64</li><li>Decode Base64 back to original format</li><li>Support for images and binary files</li><li>Copy results to clipboard</li><li>File upload and download</li><li>Real-time encoding/decoding</li></ul>`,
+    usage: `<ol><li><strong>Choose Mode:</strong> Select Encode or Decode</li><li><strong>Input Data:</strong> Enter text or upload a file</li><li><strong>Process:</strong> Click to encode or decode</li><li><strong>Copy Result:</strong> Copy the result to clipboard</li><li><strong>Download:</strong> Save decoded files if applicable</li></ol>`,
+    faq: [
+      { question: "What is Base64 encoding used for?", answer: "Base64 is commonly used for encoding binary data in text-based protocols like email, web APIs, and data storage." },
+      { question: "Can I encode images to Base64?", answer: "Yes, you can upload images and convert them to Base64 format for embedding in web pages or APIs." },
+      { question: "Is Base64 encoding secure?", answer: "Base64 is not encryption - it's encoding. It's not secure for sensitive data and can be easily decoded." },
+      { question: "What's the size increase with Base64?", answer: "Base64 encoding increases data size by approximately 33% due to the encoding process." },
+      { question: "Can I decode any Base64 string?", answer: "You can decode any valid Base64 string, but the result may not be meaningful if it wasn't originally Base64 encoded." },
+      { question: "Are there file size limits?", answer: "There are reasonable limits for file uploads, but most common files can be processed without issues." }
+    ]
+  },
+  'checksum-calculator.html': {
+    description: `<p>Calculate MD5, SHA-1, SHA-256, and SHA-512 checksums for files and text with our Checksum Calculator. Verify file integrity, detect corruption, and ensure data authenticity.</p><p><strong>Key Features:</strong></p><ul><li>Multiple checksum algorithms (MD5, SHA-1, SHA-256, SHA-512)</li><li>File and text checksum calculation</li><li>Checksum verification and comparison</li><li>Batch file processing</li><li>Copy checksums to clipboard</li><li>File integrity verification</li></ul>`,
+    usage: `<ol><li><strong>Select Algorithm:</strong> Choose the checksum algorithm (MD5, SHA-1, SHA-256, or SHA-512)</li><li><strong>Upload File or Enter Text:</strong> Upload a file or enter text to calculate checksum</li><li><strong>Calculate:</strong> Click to generate the checksum</li><li><strong>Copy Result:</strong> Copy the checksum value</li><li><strong>Verify:</strong> Compare checksums to verify file integrity</li></ol>`,
+    faq: [
+      { question: "What's the difference between MD5 and SHA-256 checksums?", answer: "SHA-256 is more secure and resistant to collisions than MD5. Use SHA-256 for critical security applications." },
+      { question: "Why would I need to calculate checksums?", answer: "Checksums help verify file integrity, detect corruption, and ensure files haven't been tampered with." },
+      { question: "Can I verify if two files are identical?", answer: "Yes, calculate checksums for both files. If the checksums match, the files are identical." },
+      { question: "Are checksums case-sensitive?", answer: "Checksums are typically displayed in lowercase hexadecimal format, but comparison should be case-insensitive." },
+      { question: "How long does checksum calculation take?", answer: "Calculation time depends on file size and algorithm. SHA-256 takes longer than MD5 but provides better security." },
+      { question: "Can I calculate checksums for multiple files at once?", answer: "Yes, you can upload multiple files and calculate checksums for all of them simultaneously." }
+    ]
+  },
+  // Image Tools
+  'image-compressor.html': {
+    description: `<p>Compress your images without losing quality using our advanced Image Compressor. Reduce file sizes for faster uploads, better website performance, and efficient storage.</p><p><strong>Key Features:</strong></p><ul><li>Compress images up to 80% without visible quality loss</li><li>Support for JPG, PNG, WebP, and GIF formats</li><li>Adjustable compression levels</li><li>Batch processing for multiple images</li><li>Preview before and after compression</li><li>Download compressed images instantly</li></ul>`,
+    usage: `<ol><li><strong>Upload Image:</strong> Drag and drop or click to select your image file</li><li><strong>Adjust Settings:</strong> Choose compression level and quality settings</li><li><strong>Compress:</strong> Click "Compress Image" to process your file</li><li><strong>Preview Results:</strong> Compare original and compressed versions</li><li><strong>Download:</strong> Save your compressed image</li></ol>`,
+    faq: [
+      { question: "Will compression affect image quality?", answer: "Our compression maintains visual quality while reducing file size. You can adjust compression levels to balance quality and size." },
+      { question: "What file formats are supported?", answer: "We support JPG, PNG, WebP, and GIF formats for compression." }
+    ]
+  },
+  'image-resizer.html': {
+    description: `<p>Resize your images to any dimensions with our Image Resizer. Maintain aspect ratio, crop images, and optimize for different platforms and devices.</p><p><strong>Key Features:</strong></p><ul><li>Resize images to specific dimensions</li><li>Maintain aspect ratio options</li><li>Support for multiple image formats</li><li>Batch processing capabilities</li><li>Preview before and after resizing</li><li>Download resized images instantly</li></ul>`,
+    usage: `<ol><li><strong>Upload Image:</strong> Select the image file you want to resize</li><li><strong>Set Dimensions:</strong> Enter desired width and height</li><li><strong>Choose Options:</strong> Select aspect ratio and quality settings</li><li><strong>Resize:</strong> Click "Resize Image" to process</li><li><strong>Download:</strong> Save your resized image</li></ol>`,
+    faq: [
+      { question: "Will resizing affect image quality?", answer: "Resizing can affect quality, but our tool uses high-quality algorithms to minimize quality loss." },
+      { question: "Can I maintain aspect ratio?", answer: "Yes, you can choose to maintain the original aspect ratio or set custom dimensions." }
+    ]
+  },
+  // Text Tools
+  'word-counter.html': {
+    description: `<p>Count words, characters, sentences, and paragraphs in your text with our Word Counter tool. Perfect for writers, students, and professionals who need accurate text analysis.</p><p><strong>Key Features:</strong></p><ul><li>Count words, characters (with and without spaces)</li><li>Count sentences and paragraphs</li><li>Reading time estimation</li><li>Real-time counting as you type</li><li>Copy and paste support</li><li>Mobile-friendly interface</li></ul>`,
+    usage: `<ol><li><strong>Enter Text:</strong> Type or paste your text into the input area</li><li><strong>View Counts:</strong> See real-time word, character, and sentence counts</li><li><strong>Check Reading Time:</strong> View estimated reading time for your text</li><li><strong>Copy Results:</strong> Use the copy button to copy your text</li></ol>`,
+    faq: [
+      { question: "How accurate is the word count?", answer: "Our word counter provides accurate counts by properly identifying word boundaries and handling various text formats." },
+      { question: "Does it count special characters?", answer: "You can choose to count or exclude special characters, numbers, and spaces based on your needs." }
+    ]
+  },
+  'text-case-converter.html': {
+    description: `<p>Convert text between different cases with our Text Case Converter. Transform text to uppercase, lowercase, title case, sentence case, and more.</p><p><strong>Key Features:</strong></p><ul><li>Convert to uppercase, lowercase, title case</li><li>Sentence case and camel case options</li><li>Real-time conversion as you type</li><li>Copy converted text to clipboard</li><li>Support for large text blocks</li><li>Preserve formatting options</li></ul>`,
+    usage: `<ol><li><strong>Enter Text:</strong> Type or paste the text you want to convert</li><li><strong>Select Case:</strong> Choose the desired text case</li><li><strong>View Conversion:</strong> See the converted text instantly</li><li><strong>Copy Result:</strong> Use copy button to copy converted text</li></ol>`,
+    faq: [
+      { question: "What is title case?", answer: "Title case capitalizes the first letter of each major word, commonly used for titles and headings." },
+      { question: "What is camel case?", answer: "Camel case combines words without spaces, capitalizing the first letter of each subsequent word (e.g., camelCase)." }
+    ]
+  },
+  'grammar-checker.html': {
+    description: `<p>Check your text for grammar, spelling, and style issues with our comprehensive Grammar Checker. Get instant suggestions for improvements and enhance your writing quality.</p><p><strong>Key Features:</strong></p><ul><li>Grammar error detection and correction</li><li>Spelling mistake identification</li><li>Style and punctuation suggestions</li><li>Real-time text analysis</li><li>Quality score assessment</li><li>Readability analysis</li></ul>`,
+    usage: `<ol><li><strong>Enter Text:</strong> Type or paste your text into the input area</li><li><strong>Check Grammar:</strong> Click "Check Grammar" to analyze your text</li><li><strong>Review Issues:</strong> Examine the identified grammar and spelling issues</li><li><strong>Apply Corrections:</strong> Use suggestions to improve your writing</li><li><strong>Export Results:</strong> Save or copy your analysis results</li></ol>`,
+    faq: [
+      { question: "How accurate is the grammar checking?", answer: "Our grammar checker identifies common grammar, spelling, and style issues. While it catches many errors, it's always good to review suggestions and use your judgment." },
+      { question: "What types of errors can it detect?", answer: "The tool detects spelling mistakes, grammar errors, punctuation issues, and basic style problems. It provides suggestions for improvements." },
+      { question: "Is my text stored or saved?", answer: "No, all text processing happens in your browser. We don't store or save any of your text for privacy and security." },
+      { question: "Can I use this for academic writing?", answer: "Yes, this tool is helpful for academic writing, but always review suggestions carefully and follow your institution's guidelines." },
+      { question: "What is the quality score based on?", answer: "The quality score is calculated based on the number of issues found, readability metrics, and overall text structure." }
+    ]
+  },
+  // SEO Tools
+  'meta-tag-generator.html': {
+    description: `<p>Generate optimized meta tags for your website with our Meta Tag Generator. Create compelling titles, descriptions, and other meta tags to improve SEO and social media sharing.</p><p><strong>Key Features:</strong></p><ul><li>Generate meta title and description</li><li>Open Graph tags for social media</li><li>Twitter Card meta tags</li><li>Keyword optimization suggestions</li><li>Character count validation</li><li>Copy HTML code instantly</li></ul>`,
+    usage: `<ol><li><strong>Enter Page Title:</strong> Input your page title (50-60 characters recommended)</li><li><strong>Write Description:</strong> Create a compelling description (150-160 characters)</li><li><strong>Add Keywords:</strong> Include relevant keywords for your page</li><li><strong>Generate Tags:</strong> Click "Generate Meta Tags" to create your HTML</li><li><strong>Copy Code:</strong> Copy the generated HTML to your website</li></ol>`,
+    faq: [
+      { question: "How long should meta descriptions be?", answer: "Meta descriptions should be between 150-160 characters to avoid truncation in search results." },
+      { question: "Do meta tags affect SEO?", answer: "Yes, well-optimized meta tags can improve click-through rates and search engine visibility." }
+    ]
+  },
+  'keyword-density-checker.html': {
+    description: `<p>Analyze keyword density in your content with our Keyword Density Checker. Optimize your content for search engines by understanding keyword usage patterns.</p><p><strong>Key Features:</strong></p><ul><li>Check keyword density for multiple terms</li><li>Analyze content for SEO optimization</li><li>Identify over-optimization issues</li><li>Export analysis results</li><li>Compare multiple content pieces</li></ul>`,
+    usage: `<ol><li><strong>Enter Content:</strong> Paste your text content for analysis</li><li><strong>Add Keywords:</strong> Input the keywords you want to check</li><li><strong>Analyze:</strong> Click "Check Density" to analyze your content</li><li><strong>Review Results:</strong> View keyword density percentages and suggestions</li></ol>`,
+    faq: [
+      { question: "What is keyword density?", answer: "Keyword density is the percentage of times a keyword appears in your content relative to the total word count." },
+      { question: "What is the ideal keyword density?", answer: "Generally, aim for 1-2% keyword density to avoid over-optimization while maintaining relevance." }
+    ]
+  },
+  // Additional tools with default content structure
+  'mobile-friendly-test.html': {
+    description: `<p>The Mobile-Friendly Test tool helps you check if your website is optimized for mobile devices. This is crucial for SEO and user experience, as Google uses mobile-first indexing.</p><p><strong>Key Features:</strong></p><ul><li>Test website responsiveness across different device types</li><li>Check viewport meta tag implementation</li><li>Analyze touch target sizes and accessibility</li><li>Evaluate text readability on mobile screens</li><li>Assess loading speed and performance</li><li>Get detailed improvement recommendations</li></ul>`,
+    usage: `<ol><li><strong>Enter Website URL:</strong> Input the complete URL of the website you want to test</li><li><strong>Select Device Type:</strong> Choose the device type you want to simulate</li><li><strong>Click Test:</strong> Click the "Test Website" button to start the analysis</li><li><strong>Review Results:</strong> Examine the overall score and individual test results</li></ol>`,
+    faq: [
+      { question: "What is mobile-friendly testing?", answer: "Mobile-friendly testing evaluates how well a website works on mobile devices, checking factors like responsive design and touch targets." },
+      { question: "Why is mobile optimization important?", answer: "Mobile optimization is crucial because most users browse on mobile devices and Google uses mobile-first indexing." }
+    ]
+  },
+  // Additional Calculator Tools
+  'compound-interest-calculator.html': {
+    description: `<p>Calculate compound interest with our Compound Interest Calculator. Understand how your investments grow over time with compound interest calculations.</p><p><strong>Key Features:</strong></p><ul><li>Calculate compound interest for any time period</li><li>Support for different compounding frequencies</li><li>Visual growth charts and projections</li><li>Compare different investment scenarios</li><li>Export results for financial planning</li></ul>`,
+    usage: `<ol><li><strong>Enter Principal Amount:</strong> Input your initial investment amount</li><li><strong>Set Interest Rate:</strong> Enter the annual interest rate</li><li><strong>Choose Time Period:</strong> Select investment duration in years</li><li><strong>Select Compounding:</strong> Choose compounding frequency</li><li><strong>Calculate:</strong> View your compound interest results</li></ol>`,
+    faq: [
+      { question: "What is compound interest?", answer: "Compound interest is interest earned on both the principal amount and accumulated interest from previous periods." },
+      { question: "How often should interest compound?", answer: "More frequent compounding (daily, monthly) results in higher returns compared to annual compounding." }
+    ]
+  },
+  'loan-emi-calculator.html': {
+    description: `<p>Calculate your loan EMI (Equated Monthly Installment) with our Loan EMI Calculator. Plan your loan payments and understand the total cost of borrowing.</p><p><strong>Key Features:</strong></p><ul><li>Calculate EMI for any loan amount</li><li>Support for different loan types</li><li>Amortization schedule generation</li><li>Compare different loan terms</li><li>Export payment schedule</li></ul>`,
+    usage: `<ol><li><strong>Enter Loan Amount:</strong> Input the total loan amount</li><li><strong>Set Interest Rate:</strong> Enter the annual interest rate</li><li><strong>Choose Loan Term:</strong> Select loan duration in years</li><li><strong>Calculate EMI:</strong> View monthly payment and total cost</li></ol>`,
+    faq: [
+      { question: "What is EMI?", answer: "EMI (Equated Monthly Installment) is the fixed monthly payment amount that includes both principal and interest." },
+      { question: "How is EMI calculated?", answer: "EMI is calculated using the formula that considers loan amount, interest rate, and loan term." }
+    ]
+  },
+  // Additional Converter Tools
+  'length-converter.html': {
+    description: `<p>Convert between different length units with our Length Converter. Support for metric, imperial, and other length measurement systems.</p><p><strong>Key Features:</strong></p><ul><li>Convert between meters, feet, inches, yards, miles</li><li>Support for metric and imperial systems</li><li>Real-time conversion as you type</li><li>Precise calculations with multiple decimal places</li><li>Common length reference points</li></ul>`,
+    usage: `<ol><li><strong>Enter Length:</strong> Input the length value you want to convert</li><li><strong>Select From Unit:</strong> Choose the length unit you're converting from</li><li><strong>Select To Unit:</strong> Choose the length unit you want to convert to</li><li><strong>View Result:</strong> See the converted length instantly</li></ol>`,
+    faq: [
+      { question: "What is the difference between metric and imperial?", answer: "Metric uses meters as the base unit, while imperial uses feet and inches as primary units." },
+      { question: "Which system is more accurate?", answer: "Both systems are equally accurate; the choice depends on your location and preference." }
+    ]
+  },
+  'weight-converter.html': {
+    description: `<p>Convert between different weight units with our Weight Converter. Support for metric, imperial, and other weight measurement systems.</p><p><strong>Key Features:</strong></p><ul><li>Convert between kilograms, pounds, ounces, grams</li><li>Support for metric and imperial systems</li><li>Real-time conversion as you type</li><li>Precise calculations with multiple decimal places</li><li>Common weight reference points</li></ul>`,
+    usage: `<ol><li><strong>Enter Weight:</strong> Input the weight value you want to convert</li><li><strong>Select From Unit:</strong> Choose the weight unit you're converting from</li><li><strong>Select To Unit:</strong> Choose the weight unit you want to convert to</li><li><strong>View Result:</strong> See the converted weight instantly</li></ol>`,
+    faq: [
+      { question: "What is the difference between mass and weight?", answer: "Mass is the amount of matter, while weight is the force of gravity on that mass." },
+      { question: "Which units are most common?", answer: "Kilograms (metric) and pounds (imperial) are the most commonly used weight units." }
+    ]
+  },
+  // Additional Generator Tools
+  'random-string-generator.html': {
+    description: `<p>Generate random strings for various purposes with our Random String Generator. Create secure tokens, passwords, or test data with customizable options.</p><p><strong>Key Features:</strong></p><ul><li>Generate random strings of any length</li><li>Customizable character sets</li><li>Exclude similar characters option</li><li>Generate multiple strings at once</li><li>Copy results to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Set String Length:</strong> Choose the desired length of your random string</li><li><strong>Select Character Types:</strong> Choose which characters to include</li><li><strong>Configure Options:</strong> Set any exclusion rules</li><li><strong>Generate:</strong> Click to create random strings</li><li><strong>Copy Results:</strong> Use copy button to copy strings</li></ol>`,
+    faq: [
+      { question: "What are random strings used for?", answer: "Random strings are used for generating passwords, tokens, IDs, and test data." },
+      { question: "How random are the generated strings?", answer: "Our generator uses cryptographically secure random generation for high-quality randomness." }
+    ]
+  },
+  'key-generator.html': {
+    description: `<p>Generate cryptographic keys for various security applications with our Key Generator. Create secure keys for encryption, authentication, and other security needs.</p><p><strong>Key Features:</strong></p><ul><li>Generate keys of various lengths</li><li>Support for different key formats</li><li>Secure random generation</li><li>Export keys in multiple formats</li><li>Copy to clipboard functionality</li></ul>`,
+    usage: `<ol><li><strong>Select Key Type:</strong> Choose the type of key you need</li><li><strong>Set Key Length:</strong> Choose the desired key length</li><li><strong>Generate Key:</strong> Click to create a new key</li><li><strong>Copy Key:</strong> Use copy button to copy the key</li></ol>`,
+    faq: [
+      { question: "What is a cryptographic key?", answer: "A cryptographic key is a piece of information used to control cryptographic operations like encryption and decryption." },
+      { question: "How long should my key be?", answer: "Key length depends on the application, but longer keys generally provide better security." }
+    ]
+  },
+  // Additional Image Tools
+  'image-cropper.html': {
+    description: `<p>Crop your images to any dimensions with our Image Cropper. Remove unwanted areas, focus on specific parts, and create perfectly sized images.</p><p><strong>Key Features:</strong></p><ul><li>Crop images to any aspect ratio</li><li>Maintain aspect ratio options</li><li>Support for multiple image formats</li><li>Real-time preview of cropped area</li><li>Download cropped images instantly</li></ul>`,
+    usage: `<ol><li><strong>Upload Image:</strong> Select the image file you want to crop</li><li><strong>Select Crop Area:</strong> Drag to select the area you want to keep</li><li><strong>Adjust Selection:</strong> Fine-tune the crop area as needed</li><li><strong>Crop Image:</strong> Click "Crop Image" to process</li><li><strong>Download:</strong> Save your cropped image</li></ol>`,
+    faq: [
+      { question: "Will cropping affect image quality?", answer: "Cropping doesn't reduce image quality, but it does reduce the overall image dimensions." },
+      { question: "Can I crop to specific dimensions?", answer: "Yes, you can set exact dimensions or use preset aspect ratios for cropping." }
+    ]
+  },
+  'color-picker.html': {
+    description: `<p>Pick colors from images or create custom colors with our Color Picker. Get hex codes, RGB values, and other color formats for your design projects.</p><p><strong>Key Features:</strong></p><ul><li>Pick colors from uploaded images</li><li>Create custom colors with color wheel</li><li>Multiple color format support (HEX, RGB, HSL)</li><li>Color palette management</li><li>Copy color values to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Upload Image (Optional):</strong> Upload an image to pick colors from</li><li><strong>Pick Color:</strong> Click on any area to select a color</li><li><strong>View Color Values:</strong> See HEX, RGB, and HSL values</li><li><strong>Copy Values:</strong> Use copy button to copy color codes</li></ol>`,
+    faq: [
+      { question: "What color formats are supported?", answer: "We support HEX, RGB, HSL, and other common color formats." },
+      { question: "Can I save color palettes?", answer: "Yes, you can save and manage multiple color palettes for your projects." }
+    ]
+  },
+  // Additional Text Tools
+  'character-counter.html': {
+    description: `<p>Count characters, words, and lines in your text with our Character Counter. Perfect for social media posts, essays, and content creation.</p><p><strong>Key Features:</strong></p><ul><li>Count characters with and without spaces</li><li>Count words, sentences, and paragraphs</li><li>Real-time counting as you type</li><li>Character limit tracking</li><li>Copy and paste support</li></ul>`,
+    usage: `<ol><li><strong>Enter Text:</strong> Type or paste your text into the input area</li><li><strong>View Counts:</strong> See real-time character and word counts</li><li><strong>Set Limits:</strong> Set character limits for tracking</li><li><strong>Copy Results:</strong> Use copy button to copy your text</li></ol>`,
+    faq: [
+      { question: "What's the difference between characters and words?", answer: "Characters include every single letter, number, and symbol, while words are groups of characters separated by spaces." },
+      { question: "Do spaces count as characters?", answer: "Yes, spaces are counted as characters, but you can toggle this option on/off." }
+    ]
+  },
+  'fancy-text-generator.html': {
+    description: `<p>Convert your text into fancy, stylized fonts with our Fancy Text Generator. Create unique text for social media, gaming, and creative projects.</p><p><strong>Key Features:</strong></p><ul><li>Convert text to various fancy fonts</li><li>Support for symbols and special characters</li><li>Multiple style categories</li><li>Copy fancy text to clipboard</li><li>Preview all font styles</li></ul>`,
+    usage: `<ol><li><strong>Enter Text:</strong> Type the text you want to convert</li><li><strong>Browse Styles:</strong> Scroll through available font styles</li><li><strong>Select Style:</strong> Click on your preferred fancy font</li><li><strong>Copy Text:</strong> Use copy button to copy the fancy text</li></ol>`,
+    faq: [
+      { question: "What are fancy fonts?", answer: "Fancy fonts are stylized text variations that use special characters and symbols to create decorative text." },
+      { question: "Will fancy text work everywhere?", answer: "Fancy text works on most modern platforms, but some older systems may not display it correctly." }
+    ]
+  },
+  // Additional SEO Tools
+  'backlink-checker.html': {
+    description: `<p>Check your website's backlinks with our Backlink Checker. Analyze your link profile and identify opportunities for improving your SEO.</p><p><strong>Key Features:</strong></p><ul><li>Check backlinks for any domain</li><li>Analyze link quality and authority</li><li>Identify dofollow vs nofollow links</li><li>Export backlink data</li><li>Track link changes over time</li></ul>`,
+    usage: `<ol><li><strong>Enter Domain:</strong> Input the website domain you want to check</li><li><strong>Start Analysis:</strong> Click "Check Backlinks" to begin</li><li><strong>Review Results:</strong> View backlink count and quality metrics</li><li><strong>Analyze Data:</strong> Examine individual backlink details</li></ol>`,
+    faq: [
+      { question: "What are backlinks?", answer: "Backlinks are links from other websites that point to your site, important for SEO and domain authority." },
+      { question: "How many backlinks do I need?", answer: "Quality matters more than quantity. Focus on getting relevant, authoritative backlinks." }
+    ]
+  },
+  'domain-authority-checker.html': {
+    description: `<p>Check the domain authority of any website with our Domain Authority Checker. Understand the strength and credibility of domains for SEO analysis.</p><p><strong>Key Features:</strong></p><ul><li>Check domain authority scores</li><li>Compare multiple domains</li><li>Historical authority tracking</li><li>Authority factors analysis</li><li>Export authority data</li></ul>`,
+    usage: `<ol><li><strong>Enter Domain:</strong> Input the website domain you want to check</li><li><strong>Check Authority:</strong> Click "Check Authority" to analyze</li><li><strong>View Score:</strong> See the domain authority score (0-100)</li><li><strong>Analyze Factors:</strong> Review factors affecting authority</li></ol>`,
+    faq: [
+      { question: "What is domain authority?", answer: "Domain authority is a search engine ranking score that predicts how likely a website is to rank in search results." },
+      { question: "What's a good domain authority score?", answer: "Scores above 50 are considered good, above 70 are excellent, and above 90 are exceptional." }
+    ]
+  },
+  // Social Media Tools
+  'facebook-video-downloader.html': {
+    description: `<p>Download Facebook videos with our Facebook Video Downloader. Save videos from Facebook posts, stories, and reels for offline viewing.</p><p><strong>Key Features:</strong></p><ul><li>Download videos from Facebook posts</li><li>Support for various video qualities</li><li>Download private videos (with permission)</li><li>Batch download multiple videos</li><li>Convert to different formats</li></ul>`,
+    usage: `<ol><li><strong>Copy Video URL:</strong> Copy the Facebook video URL you want to download</li><li><strong>Paste URL:</strong> Paste the URL into our downloader</li><li><strong>Select Quality:</strong> Choose your preferred video quality</li><li><strong>Download:</strong> Click download to save the video</li></ol>`,
+    faq: [
+      { question: "Is it legal to download Facebook videos?", answer: "Only download videos you have permission to download, such as your own content or content shared with you." },
+      { question: "What video formats are supported?", answer: "We support MP4, AVI, and other common video formats for download." }
+    ]
+  },
+  'instagram-photo-downloader.html': {
+    description: `<p>Download Instagram photos and images with our Instagram Photo Downloader. Save high-quality images from Instagram posts and stories.</p><p><strong>Key Features:</strong></p><ul><li>Download photos from Instagram posts</li><li>Save stories and highlights</li><li>High-quality image downloads</li><li>Batch download support</li><li>Multiple format options</li></ul>`,
+    usage: `<ol><li><strong>Copy Post URL:</strong> Copy the Instagram post URL</li><li><strong>Paste URL:</strong> Paste the URL into our downloader</li><li><strong>Select Quality:</strong> Choose image quality preference</li><li><strong>Download:</strong> Click to download the image</li></ol>`,
+    faq: [
+      { question: "Can I download private Instagram photos?", answer: "No, you can only download photos from public accounts or content you have access to." },
+      { question: "What image quality will I get?", answer: "You'll get the highest available quality of the original Instagram post." }
+    ]
+  },
+  'youtube-video-downloader.html': {
+    description: `<p>Download YouTube videos with our YouTube Video Downloader. Save videos in various qualities and formats for offline viewing.</p><p><strong>Key Features:</strong></p><ul><li>Download videos from any YouTube URL</li><li>Multiple quality options (HD, Full HD, 4K)</li><li>Audio-only download option</li><li>Convert to different formats</li><li>Batch download support</li></ul>`,
+    usage: `<ol><li><strong>Copy Video URL:</strong> Copy the YouTube video URL</li><li><strong>Paste URL:</strong> Paste the URL into our downloader</li><li><strong>Select Format:</strong> Choose video or audio format</li><li><strong>Choose Quality:</strong> Select your preferred quality</li><li><strong>Download:</strong> Click to start downloading</li></ol>`,
+    faq: [
+      { question: "What video qualities are available?", answer: "Available qualities depend on the original video, typically ranging from 144p to 4K." },
+      { question: "Can I download audio only?", answer: "Yes, you can download just the audio in MP3 format to save bandwidth." }
+    ]
+  },
+  // Utility Tools
+  'url-shortener.html': {
+    description: `<p>Shorten long URLs with our URL Shortener. Create short, shareable links for social media, marketing campaigns, and easy sharing.</p><p><strong>Key Features:</strong></p><ul><li>Shorten any long URL</li><li>Custom alias options</li><li>Click tracking and analytics</li><li>QR code generation</li><li>Link expiration settings</li></ul>`,
+    usage: `<ol><li><strong>Enter Long URL:</strong> Paste the long URL you want to shorten</li><li><strong>Customize (Optional):</strong> Add a custom alias if desired</li><li><strong>Shorten URL:</strong> Click "Shorten URL" to create short link</li><li><strong>Copy Link:</strong> Use copy button to copy the short URL</li></ol>`,
+    faq: [
+      { question: "Are shortened URLs permanent?", answer: "Yes, our shortened URLs are permanent unless you set an expiration date." },
+      { question: "Can I track clicks on my short URLs?", answer: "Yes, you can view click statistics and analytics for your shortened URLs." }
+    ]
+  },
+  'base64-encoder-decoder.html': {
+    description: `<p>Encode and decode Base64 strings with our Base64 Encoder/Decoder. Convert text, images, and files to Base64 format and vice versa.</p><p><strong>Key Features:</strong></p><ul><li>Encode text to Base64</li><li>Decode Base64 to text</li><li>File to Base64 conversion</li><li>Base64 to file conversion</li><li>Copy results to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Select Mode:</strong> Choose encode or decode mode</li><li><strong>Input Data:</strong> Enter text or upload file</li><li><strong>Process:</strong> Click encode/decode button</li><li><strong>Copy Result:</strong> Use copy button to copy result</li></ol>`,
+    faq: [
+      { question: "What is Base64 encoding?", answer: "Base64 is a binary-to-text encoding scheme that represents binary data in ASCII string format." },
+      { question: "When is Base64 used?", answer: "Base64 is commonly used for encoding images in HTML, email attachments, and data transmission." }
+    ]
+  },
+  'convert-image-to-base64.html': {
+    description: `<p>Convert images to Base64 format instantly with our Image to Base64 Converter. Perfect for web development, email embedding, and data URI creation. Transform any image file into a Base64 encoded string that can be used directly in HTML, CSS, or JavaScript.</p><p><strong>Key Features:</strong></p><ul><li>Convert images to Base64 format</li><li>Support for JPG, PNG, GIF, WebP, and other image formats</li><li>Generate data URIs for direct embedding</li><li>Copy Base64 strings to clipboard</li><li>Download Base64 as text file</li><li>Preview converted images</li><li>No file size limits</li><li>Secure local processing</li></ul>`,
+    usage: `<ol><li><strong>Select Image:</strong> Choose an image file from your device</li><li><strong>Upload Image:</strong> Click to upload or drag and drop your image</li><li><strong>Convert to Base64:</strong> Click "Convert to Base64" to process your image</li><li><strong>View Results:</strong> See the Base64 string and data URI</li><li><strong>Copy or Download:</strong> Copy the Base64 string or download as text file</li></ol>`,
+    faq: [
+      { question: "What is Base64 encoding for images?", answer: "Base64 encoding converts binary image data into a text string that can be embedded directly in HTML, CSS, or JavaScript without needing separate image files." },
+      { question: "What image formats are supported?", answer: "We support all common image formats including JPG, PNG, GIF, WebP, BMP, and TIFF files." },
+      { question: "What is a data URI?", answer: "A data URI is a way to embed data directly in a web page using the format 'data:image/type;base64,encoded_data'. It allows images to be included without separate files." },
+      { question: "Is there a file size limit?", answer: "There are no strict file size limits, but very large images may take longer to process and generate very long Base64 strings." },
+      { question: "Can I use Base64 images in email?", answer: "Yes, Base64 encoded images can be embedded directly in HTML emails, but some email clients may have size restrictions." },
+      { question: "Are my images stored or uploaded to servers?", answer: "No, all processing happens locally in your browser. Your images never leave your device, ensuring complete privacy and security." },
+      { question: "How do I use the generated Base64 string?", answer: "You can use the Base64 string in HTML img tags (src='data:image/type;base64,string'), CSS background images, or JavaScript for dynamic image loading." },
+      { question: "What's the difference between Base64 string and data URI?", answer: "The Base64 string is just the encoded data, while the data URI includes the MIME type prefix (data:image/jpeg;base64,) making it ready to use in web pages." }
+    ]
+  },
+  'binary-decimal-converter.html': {
+    description: `<p>Convert between binary and decimal numbers with our Binary-Decimal Converter. Perfect for programming, computer science, and digital electronics.</p><p><strong>Key Features:</strong></p><ul><li>Convert binary to decimal</li><li>Convert decimal to binary</li><li>Support for large numbers</li><li>Real-time conversion</li><li>Copy results to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Select Conversion:</strong> Choose binary to decimal or decimal to binary</li><li><strong>Enter Number:</strong> Input the number you want to convert</li><li><strong>Convert:</strong> Click convert to see result</li><li><strong>Copy Result:</strong> Use copy button to copy the result</li></ol>`,
+    faq: [
+      { question: "What is binary numbering?", answer: "Binary is a base-2 number system that uses only 0 and 1, fundamental to computer operations." },
+      { question: "How do I read binary numbers?", answer: "Each position represents a power of 2, from right to left (1, 2, 4, 8, 16, etc.)." }
+    ]
+  },
+  // Creative Tools
+  'meme-generator.html': {
+    description: `<p>Create memes instantly with our Meme Generator. Add text to popular meme templates or upload your own images to create viral content.</p><p><strong>Key Features:</strong></p><ul><li>Popular meme templates</li><li>Custom text overlay options</li><li>Upload your own images</li><li>Multiple font styles</li><li>Download in high quality</li></ul>`,
+    usage: `<ol><li><strong>Choose Template:</strong> Select a meme template or upload your image</li><li><strong>Add Text:</strong> Enter your meme text in the input fields</li><li><strong>Customize:</strong> Adjust font, size, and position</li><li><strong>Generate:</strong> Click "Generate Meme" to create</li><li><strong>Download:</strong> Save your meme image</li></ol>`,
+    faq: [
+      { question: "Can I use my own images?", answer: "Yes, you can upload your own images to create custom memes." },
+      { question: "What image formats are supported?", answer: "We support JPG, PNG, and GIF formats for meme creation." }
+    ]
+  },
+  'business-name-generator.html': {
+    description: `<p>Generate creative business names with our Business Name Generator. Get unique, memorable names for your startup, company, or brand.</p><p><strong>Key Features:</strong></p><ul><li>Generate business names by industry</li><li>Check domain availability</li><li>Name meaning explanations</li><li>Save favorite names</li><li>Export name lists</li></ul>`,
+    usage: `<ol><li><strong>Select Industry:</strong> Choose your business industry or category</li><li><strong>Set Preferences:</strong> Choose name style and length</li><li><strong>Generate Names:</strong> Click to generate business name suggestions</li><li><strong>Save Favorites:</strong> Save names you like for later</li></ol>`,
+    faq: [
+      { question: "How many names will I get?", answer: "You'll get multiple name suggestions that you can regenerate for more options." },
+      { question: "Are the names trademarked?", answer: "Generated names are suggestions only. Always check trademark databases before using." }
+    ]
+  },
+  // Development Tools
+  'json-formatter.html': {
+    description: `<p>Format and validate JSON data with our JSON Formatter. Make your JSON code readable and check for syntax errors.</p><p><strong>Key Features:</strong></p><ul><li>Format JSON with proper indentation</li><li>Validate JSON syntax</li><li>Minify JSON code</li><li>Syntax highlighting</li><li>Copy formatted JSON</li></ul>`,
+    usage: `<ol><li><strong>Paste JSON:</strong> Paste your JSON code into the input area</li><li><strong>Format:</strong> Click "Format JSON" to beautify the code</li><li><strong>Validate:</strong> Check for syntax errors</li><li><strong>Copy Result:</strong> Use copy button to copy formatted JSON</li></ol>`,
+    faq: [
+      { question: "What is JSON formatting?", answer: "JSON formatting adds proper indentation and spacing to make JSON code more readable." },
+      { question: "Can I validate JSON?", answer: "Yes, our tool checks for syntax errors and validates JSON structure." }
+    ]
+  },
+  'sql-formatter.html': {
+    description: `<p>Format SQL queries with our SQL Formatter. Make your SQL code readable and properly structured for better development.</p><p><strong>Key Features:</strong></p><ul><li>Format SQL with proper indentation</li><li>Support for multiple SQL dialects</li><li>Syntax highlighting</li><li>Query optimization suggestions</li><li>Copy formatted SQL</li></ul>`,
+    usage: `<ol><li><strong>Paste SQL:</strong> Paste your SQL query into the input area</li><li><strong>Select Dialect:</strong> Choose your SQL database type</li><li><strong>Format:</strong> Click "Format SQL" to beautify the query</li><li><strong>Copy Result:</strong> Use copy button to copy formatted SQL</li></ol>`,
+    faq: [
+      { question: "What SQL dialects are supported?", answer: "We support MySQL, PostgreSQL, SQL Server, Oracle, and other major SQL dialects." },
+      { question: "Will formatting change my query logic?", answer: "No, formatting only changes the appearance, not the functionality of your SQL query." }
+    ]
+  },
+  // Additional Tools
+  'dice-roller.html': {
+    description: `<p>Roll virtual dice with our Dice Roller. Perfect for tabletop games, RPGs, and random number generation.</p><p><strong>Key Features:</strong></p><ul><li>Roll various dice types (d4, d6, d8, d10, d12, d20, d100)</li><li>Roll multiple dice at once</li><li>Custom dice with any number of sides</li><li>Roll history tracking</li><li>Copy results to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Select Dice Type:</strong> Choose the type of dice you want to roll</li><li><strong>Set Quantity:</strong> Choose how many dice to roll</li><li><strong>Roll Dice:</strong> Click "Roll Dice" to generate results</li><li><strong>View Results:</strong> See individual dice results and total</li></ol>`,
+    faq: [
+      { question: "What does d20 mean?", answer: "d20 means a 20-sided die, commonly used in tabletop role-playing games." },
+      { question: "Are the rolls truly random?", answer: "Yes, our dice roller uses cryptographically secure random number generation." }
+    ]
+  },
+  'flip-a-coin.html': {
+    description: `<p>Flip a virtual coin with our Coin Flipper. Get random heads or tails results for decision making and games.</p><p><strong>Key Features:</strong></p><ul><li>Flip virtual coins</li><li>Multiple coin types</li><li>Flip history tracking</li><li>Statistics and results</li><li>Copy results to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Select Coin Type:</strong> Choose your preferred coin design</li><li><strong>Flip Coin:</strong> Click "Flip Coin" to toss</li><li><strong>View Result:</strong> See heads or tails result</li><li><strong>Check History:</strong> View previous flip results</li></ol>`,
+    faq: [
+      { question: "Is the coin flip fair?", answer: "Yes, our coin flipper provides truly random results with 50/50 probability." },
+      { question: "Can I flip multiple coins?", answer: "Yes, you can flip multiple coins at once for multiple results." }
+    ]
+  },
+  'lottery-number-generator.html': {
+    description: `<p>Generate random lottery numbers with our Lottery Number Generator. Create number combinations for various lottery games and contests.</p><p><strong>Key Features:</strong></p><ul><li>Generate numbers for popular lottery games</li><li>Custom number range options</li><li>Exclude specific numbers</li><li>Generate multiple combinations</li><li>Copy results to clipboard</li></ul>`,
+    usage: `<ol><li><strong>Select Lottery Type:</strong> Choose your lottery game or set custom range</li><li><strong>Set Parameters:</strong> Choose how many numbers to generate</li><li><strong>Generate Numbers:</strong> Click to create random number combinations</li><li><strong>Copy Results:</strong> Use copy button to copy numbers</li></ol>`,
+    faq: [
+      { question: "Are the numbers truly random?", answer: "Yes, our generator uses cryptographically secure random number generation." },
+      { question: "Can I exclude certain numbers?", answer: "Yes, you can exclude specific numbers if you have preferences." }
+    ]
+  },
+  'ai-chatbot-demo.html': {
+    description: `<p>Experience the power of AI with our interactive AI Chatbot Demo. Chat with an advanced AI assistant that can answer questions, provide information, and engage in meaningful conversations.</p><p><strong>Key Features:</strong></p><ul><li>Natural language processing</li><li>Intelligent conversation flow</li><li>Context-aware responses</li><li>Multiple conversation topics</li><li>Real-time chat interface</li><li>Learning capabilities</li></ul>`,
+    usage: `<ol><li><strong>Start Conversation:</strong> Type your message in the chat input</li><li><strong>Send Message:</strong> Click send or press Enter to submit</li><li><strong>View Response:</strong> Read the AI's intelligent response</li><li><strong>Continue Chat:</strong> Keep the conversation going with follow-up questions</li><li><strong>Explore Topics:</strong> Try different topics and questions</li></ol>`,
+    faq: [
+      { question: "What can the AI chatbot help me with?", answer: "The AI chatbot can help with general questions, provide information on various topics, assist with problem-solving, and engage in meaningful conversations on a wide range of subjects." },
+      { question: "How intelligent is the AI chatbot?", answer: "Our AI chatbot uses advanced natural language processing to understand context, provide relevant responses, and maintain coherent conversations across multiple topics." },
+      { question: "Can I use the chatbot for specific tasks?", answer: "Yes, the chatbot can assist with research, writing, calculations, explanations, and many other tasks. Just ask it what you need help with." },
+      { question: "Is the conversation history saved?", answer: "Conversations are typically not saved for privacy reasons. Each session starts fresh, ensuring your conversations remain private and secure." },
+      { question: "What languages does the chatbot support?", answer: "The chatbot primarily supports English but can understand and respond to basic queries in other languages as well." },
+      { question: "Can the chatbot learn from our conversation?", answer: "The chatbot uses advanced AI models that can understand context within the current conversation, but it doesn't retain information between separate sessions." },
+      { question: "Are there any limitations to what I can ask?", answer: "The chatbot is designed to be helpful and informative while maintaining appropriate boundaries. It can discuss most topics but will politely decline inappropriate requests." },
+      { question: "How accurate are the AI responses?", answer: "The AI provides generally accurate information, but for critical decisions or professional advice, it's always best to verify information from authoritative sources." }
+    ]
+  },
+  'angle-converter.html': {
+    description: `<p>Convert between different angle units with our Angle Converter. Support for degrees, radians, gradians, and other angle measurement systems used in mathematics, engineering, and navigation.</p><p><strong>Key Features:</strong></p><ul><li>Convert between degrees, radians, and gradians</li><li>Support for arcminutes and arcseconds</li><li>Real-time conversion as you type</li><li>Precise calculations with multiple decimal places</li><li>Common angle reference points</li><li>Mobile-friendly interface</li></ul>`,
+    usage: `<ol><li><strong>Enter Angle Value:</strong> Input the angle value you want to convert</li><li><strong>Select From Unit:</strong> Choose the angle unit you're converting from</li><li><strong>Select To Unit:</strong> Choose the angle unit you want to convert to</li><li><strong>View Result:</strong> See the converted angle instantly</li><li><strong>Check Reference:</strong> Compare with common angle values</li></ol>`,
+    faq: [
+      { question: "What are the main angle units supported?", answer: "We support degrees (°), radians (rad), gradians (gon), arcminutes ('), and arcseconds (\") for comprehensive angle conversion." },
+      { question: "How do I convert degrees to radians?", answer: "To convert degrees to radians: multiply by π/180. For example, 90° = 90 × π/180 = π/2 radians." },
+      { question: "What's the difference between degrees and radians?", answer: "Degrees use a 360° circle, while radians use 2π for a full circle. Radians are preferred in mathematics and physics for their natural properties." },
+      { question: "What are gradians used for?", answer: "Gradians divide a circle into 400 units instead of 360. They're used in some surveying and engineering applications, particularly in Europe." },
+      { question: "Can I convert very small angles?", answer: "Yes, our converter supports arcminutes and arcseconds for precise angle measurements, useful in astronomy and surveying." },
+      { question: "What are some common angle reference points?", answer: "Common angles include: 0° (0 rad), 30° (π/6 rad), 45° (π/4 rad), 60° (π/3 rad), 90° (π/2 rad), 180° (π rad), and 360° (2π rad)." },
+      { question: "How accurate are the angle conversions?", answer: "Our converter provides highly accurate conversions with multiple decimal places, suitable for scientific and engineering applications." },
+      { question: "Can I use this for navigation calculations?", answer: "Yes, the angle converter is perfect for navigation, surveying, astronomy, and any application requiring precise angle measurements." }
+    ]
+  }
+};
+// Function to get tool content based on current page
+function getToolContent() {
+  const currentPath = window.location.pathname;
+  const fileName = currentPath.split('/').pop();
+  return toolContent[fileName] || getDefaultContent();
+}
+// Default content for tools not in the database
+function getDefaultContent() {
+  return {
+    description: `<p>This tool provides essential functionality for your online needs. It's designed to be user-friendly, fast, and reliable.</p><p><strong>Features:</strong></p><ul><li>Easy to use interface</li><li>Fast processing</li><li>No registration required</li><li>Free to use</li><li>Works on all devices</li></ul>`,
+    usage: `<ol><li>Enter your data in the input fields</li><li>Configure any settings as needed</li><li>Click the process button</li><li>View your results</li><li>Download or copy the output</li></ol>`,
+  };
+}
+// Function to populate content
+function populateContent() {
+    console.log('Content enhancer: Starting content population...');
+    
+    const content = getToolContent();
+    console.log('Content enhancer: Retrieved content:', content);
+    
+    // Populate description
+    const descriptionContainer = document.getElementById('tool-description');
+    if (descriptionContainer) {
+        descriptionContainer.innerHTML = content.description;
+        console.log('Content enhancer: Description populated');
+    } else {
+        console.log('Content enhancer: Description container not found');
+    }
+    
+    // Populate usage guide
+    const usageContainer = document.getElementById('usage-guide');
+    if (usageContainer) {
+        usageContainer.innerHTML = content.usage;
+        console.log('Content enhancer: Usage guide populated');
+    } else {
+        console.log('Content enhancer: Usage guide container not found');
+    }
+    
+    // Populate FAQ section
+    const faqContent = document.getElementById('faq-content');
+    
+    if (content.faq && content.faq.length > 0) {
+        if (faqContent) {
+            let faqHtml = '<div class="accordion" id="faqAccordion">';
+            content.faq.forEach((item, index) => {
+                const accordionId = `faq-${index}`;
+                const collapseId = `collapse-${index}`;
+                
+                faqHtml += `
+                    <div class="accordion-item bg-dark border-danger">
+                        <h2 class="accordion-header" id="heading-${index}">
+                            <button class="accordion-button collapsed bg-dark text-light border-danger" type="button" 
+                                    data-bs-toggle="collapse" data-bs-target="#${collapseId}" 
+                                    aria-expanded="false" aria-controls="${collapseId}">
+                                ${item.question}
+                            </button>
+                        </h2>
+                        <div id="${collapseId}" class="accordion-collapse collapse" 
+                             aria-labelledby="heading-${index}" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body bg-dark text-light">
+                                ${item.answer}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            faqHtml += '</div>';
+            
+            faqContent.innerHTML = faqHtml;
+            console.log('Content enhancer: FAQ populated');
+        }
+    }
+    
+}
+
+// Initialize content whether injected before or after DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', populateContent);
+} else {
+    // If DOM is already loaded, wait a bit to ensure all elements are available
+    setTimeout(populateContent, 100);
+}
+
+// Also try to populate when the component is loaded dynamically
+window.addEventListener('load', populateContent);
+</script>
+
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+.accordion-button:not(.collapsed) {
+    background-color: #dc3545;
+    color: white;
+}
+.accordion-button:focus {
+    box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+.accordion-button::after {
+    filter: invert(1);
+}
+.accordion-item {
+    border: 1px solid #dc3545 !important;
+    margin-bottom: 0.5rem;
+    border-radius: 0.375rem;
+}
+.accordion-button {
+    border: none !important;
+    border-bottom: 1px solid #dc3545 !important;
+    padding: 1rem 1.25rem;
+    text-align: left;
+    font-weight: 500;
+    border-radius: 0.375rem;
+}
+.accordion-button:not(.collapsed) {
+    border-bottom: 1px solid #dc3545 !important;
+    border-radius: 0.375rem 0.375rem 0 0;
+}
+.accordion-body {
+    border-top: 1px solid #dc3545 !important;
+    padding: 1rem 1.25rem;
+}
+
+/* Constrain width when injected into host pages */
+#content-enhancer .card {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Tab styling */
+.nav-tabs {
+    border-bottom: none !important;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.nav-tabs .nav-link {
+    border: 1px solid #dc3545 !important;
+    border-bottom: none !important;
+    border-radius: 0.375rem 0.375rem 0 0 !important;
+    margin-right: 0.25rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.nav-tabs .nav-link.active {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border-color: #dc3545 !important;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    background-color: rgba(220, 53, 69, 0.1) !important;
+    color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.tab-content {
+    border: none !important;
+}
+
+.tab-pane {
+    padding: 1.5rem 0;
+}
+
+/* Responsive adjustments for tabs */
+@media (max-width: 768px) {
+    .nav-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .nav-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 0.875rem;
+        padding: 0.5rem 0.75rem;
+        margin-right: 0.125rem;
+    }
+}
+
+/* Ensure consistent alignment with page layout */
+#faq-content .accordion-item {
+    margin-bottom: 1rem;
+}
+#faq-content .accordion-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive adjustments for better mobile alignment */
+@media (max-width: 768px) {
+    .accordion-button {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+    }
+    .accordion-body {
+        padding: 0.75rem 1rem;
+        font-size: 0.9rem;
+    }
+    #faq-content .accordion-item {
+        margin-bottom: 0.75rem;
+    }
+}
+
+/* Ensure consistent alignment with page layout */
+.card {
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+/* Improve visual hierarchy and spacing */
+.accordion-item h2 {
+    margin: 0;
+}
+
+.accordion-button {
+    font-size: 1rem;
+    letter-spacing: 0.025em;
+}
+
+.accordion-body {
+    font-size: 0.95rem;
+}
+
+/* Better focus states for accessibility */
+.accordion-button:focus {
+    outline: 2px solid #dc3545;
+    outline-offset: 2px;
+}
+
+.nav-tabs .nav-link:focus {
+    outline: 2px solid #dc3545;
+    outline-offset: 2px;
+}
+</style>
+ 
+ </body>
+ </html>

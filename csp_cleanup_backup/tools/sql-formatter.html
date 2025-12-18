@@ -1,0 +1,659 @@
+<!DOCTYPE html><html lang="en"><head>
+<style>
+/* Vertical side ads - show only on large screens */
+@media (min-width: 1200px) {
+  .vertical-ad {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vertical-ad {
+    display: none !important;
+  }
+}
+</style>
+  <meta charset="UTF-8">
+      <link rel="canonical" href="https://multitoolszone.fun/tools/sql-formatter.html">
+  <meta name="robots" content="index, follow">
+  <meta name="description" content="Free online Sql Formatter tool. Professional, easy-to-use Sql Formatter for various tasks and calculations.">
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-96x96.png">
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="SQL Formatter - MultiTools">
+  <meta property="og:description" content="Free online Sql Formatter tool for various tasks and calculations.">
+  <meta property="og:url" content="https://multitoolszone.fun/tools/sql-formatter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://multitoolszone.fun/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Security Headers -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com; frame-src 'none'; object-src 'none'; base-uri 'self';"><title>SQL Formatter - MultiTools</title>
+  
+  
+  
+          
+        <!-- Related Tools -->
+
+        <!-- Related Tools -->
+  </head><body class="bg-dark text-light index-page"><div id="related-tools"></div>
+  
+  <!-- Multiplex Ad Unit -->
+  <div id="ads-multiplex"></div><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" defer=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" defer=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-sql.min.js" defer=""></script>
+  <style>
+    .code-editor {
+      background: #1e1e1e;
+      border: 1px solid #dc3545;
+      border-radius: 5px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .formatted-output {
+      background: #1e1e1e;
+      border: 1px solid #28a745;
+      border-radius: 5px;
+      padding: 15px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+  </style>
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Sql Formatter",
+    "description": "Free online Sql Formatter tool for various tasks and calculations",
+    "url": "https://multitoolszone.fun/tools/sql-formatter.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "MultiTools"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MultiTools",
+      "url": "https://multitoolszone.fun"
+    }
+  }
+  </script>
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+/* Critical styles for immediate rendering */
+body { margin: 0; padding: 0; background: #000; color: #fff !important; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+.card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); }
+.tool-btn { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); }
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.navbar { background: rgba(0, 0, 0, 0.8) !important; }
+.navbar-brand { color: #fff !important; }
+.nav-link { color: #fff !important; }
+.btn { border-radius: 0.375rem; }
+.btn-primary { background: #dc3545 !important; border-color: #dc3545 !important; }
+.btn-outline-primary { color: #dc3545 !important; border-color: #dc3545 !important; }
+.form-control { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff !important; }
+.form-control:focus { background: rgba(0, 0, 0, 0.6); border-color: #dc3545 !important; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); }
+.card-body { color: #fff !important; }
+h1, h2, h3, h4, h5, h6 { color: #fff !important; }
+p { color: #fff !important; }
+label { color: #fff !important; }
+small { color: rgba(255, 255, 255, 0.85) !important; }
+.alert { color: #fff !important; }
+.table-dark { color: #fff !important; }
+.table-dark td, .table-dark th { color: #fff !important; }
+.bg-dark { background: rgba(0, 0, 0, 0.8) !important; }
+.bg-secondary { background: rgba(108, 117, 125, 0.8) !important; color: #fff !important; }
+.text-muted { color: rgba(255, 255, 255, 0.75) !important; }
+</style>
+  
+  <!-- Non-critical CSS loaded asynchronously -->
+
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../assets/css/style.css?v=3" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  </noscript>
+  <!-- Performance Optimization - Resource Hints -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="">
+  <meta name="language" content="en">
+  
+  <!-- Performance Optimization -->
+  <div id="performance-optimizer"></div>
+
+
+  
+
+  <div id="header"><header class="bg-transparent pt-3 mb-4 border-bottom border-danger">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Logo positioned outside container for independent sizing -->
+  <div class="text-center mb-2" id="site-logo" style="background: transparent !important; margin-top: 5px;">
+    <a href="/">
+      <img src="/assets/img/optimized/MULTI-TOOLS.webp" alt="Multi Tools" style="height: 100px !important; width: auto !important; max-height: none !important; background: transparent !important; display: block !important; margin: 0 auto !important;" loading="lazy" decoding="async" width="500" height="500">
+    </a>
+  </div>
+  <div class="container" style="background: transparent !important;">
+
+    <!-- Simple link row below logo -->
+    <nav class="d-flex justify-content-end align-items-center gap-3 pb-1" aria-label="Primary" style="max-height: 100px;">
+      <a href="../" class="text-danger fw-semibold text-decoration-none">Home</a>
+      <a href="../About.html" class="text-danger fw-semibold text-decoration-none" target="_blank">About</a>
+      <a href="../Contact.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Contact</a>
+      <a href="../blog/" class="text-danger fw-semibold text-decoration-none" target="_blank">Blog</a>
+      <a href="../Privacy-Policy.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Privacy Policy</a>
+      <a href="../Terms-of-Service.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Terms</a>
+    </nav>
+  </div>
+
+  <style>
+    /* Navigation link styles */
+    header nav a {
+      font-size: 18px !important; 
+      /* around 17–18px */
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+
+    /* Hover effect */
+    header nav a:hover {
+      color: #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      header nav a {
+        font-size: 1rem !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      header nav a {
+        font-size: 0.55rem !important;
+        display: inline-block;
+      }
+    }
+  </style>
+</header>
+</div>
+  <div class="container py-4">
+    
+    <div id="breadcrumb">
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb align-items-center mb-4">
+    <li class="breadcrumb-item">
+      <a href="../" class="text-danger text-decoration-none">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </li>   
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://multitoolszone.fun/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://multitoolszone.fun/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Current Tool",
+      "item": "https://multitoolszone.fun/tools/current-tool.html"
+    }
+  ]
+}
+</script>
+<script>
+// Update breadcrumb JSON-LD with current page URL
+document.addEventListener('DOMContentLoaded', function() {
+  const script = document.querySelector('script[type="application/ld+json"]');
+  if (script) {
+    const data = JSON.parse(script.textContent);
+    data.itemListElement[2].item = window.location.href;
+    script.textContent = JSON.stringify(data);
+  }
+});
+</script>
+</div>
+
+    <div class="mb-3">
+      
+    </div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-4 text-center flex-grow-1 text-decoration-underline" style="color: #09ce24 !important;">
+        SQL Formatter - Free Online SQL Code Formatter
+      </h1>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <!-- In-Content Ad Unit -->
+        <div id="ads-incontent"></div>
+      <div class="col-md-10 col-lg-8">
+        <div class="card bg-black border-danger mb-4">
+          <div class="card-body">
+            <div class="alert alert-info bg-dark border-danger text-light">
+              <strong>About this tool:</strong> Format and beautify your SQL queries for better readability and maintainability.
+              <br><strong>How to use:</strong> Paste your SQL code, select formatting options, and click 'Format SQL' to see the formatted output and stats.
+            </div>
+            <div class="mb-3">
+              <label for="sqlInput" class="form-label">Enter SQL Query:</label>
+              <textarea id="sqlInput" class="form-control code-editor text-light" rows="8" placeholder="SELECT * FROM users WHERE age > 18 AND status = 'active' ORDER BY name ASC;"></textarea>
+            </div>
+            <div class="row mb-3">
+              <div class="col-md-6">
+                <label for="sqlDialect" class="form-label">SQL Dialect:</label>
+                <select class="form-select bg-dark text-light border-danger" id="sqlDialect">
+                  <option value="standard">Standard SQL</option>
+                  <option value="mysql">MySQL</option>
+                  <option value="postgresql">PostgreSQL</option>
+                  <option value="sqlserver">SQL Server</option>
+                  <option value="oracle">Oracle</option>
+                  <option value="sqlite">SQLite</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="indentSize" class="form-label">Indent Size:</label>
+                <select class="form-select bg-dark text-light border-danger" id="indentSize">
+                  <option value="2">2 spaces</option>
+                  <option value="4" selected="">4 spaces</option>
+                  <option value="8">8 spaces</option>
+                  <option value="tab">Tab</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Formatting Options:</label>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="uppercaseKeywords" checked="">
+                    <label class="form-check-label" for="uppercaseKeywords">Uppercase keywords</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="alignClauses" checked="">
+                    <label class="form-check-label" for="alignClauses">Align clauses</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="addSemicolon" checked="">
+                    <label class="form-check-label" for="addSemicolon">Add semicolon</label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="formatComments" checked="">
+                    <label class="form-check-label" for="formatComments">Format comments</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="compactMode">
+                    <label class="form-check-label" for="compactMode">Compact mode</label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="preserveCase">
+                    <label class="form-check-label" for="preserveCase">Preserve case</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="text-center mb-3">
+              <button class="btn btn-danger me-2" onclick="formatSQL()">
+                <i class="fas fa-magic me-2"></i>Format SQL
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="clearInput()">
+                <i class="fas fa-trash me-2"></i>Clear Input
+              </button>
+              <button class="btn btn-outline-danger" onclick="loadExample()">
+                <i class="fas fa-download me-2"></i>Load Example
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark border-danger mb-4" style="display: none;">
+          
+          <div class="card-body">
+            <div class="row text-center mb-3">
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Lines</h6>
+                    <h4 id="lineCount">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Characters</h6>
+                    <h4 id="charCount">0</h4>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 mb-2">
+                <div class="card bg-secondary border-danger">
+                  <div class="card-body">
+                    <h6 class="text-danger">Keywords</h6>
+                    <h4 id="keywordCount">0</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="formattedOutput" class="form-label">Formatted SQL:</label>
+              <div id="formattedOutput" class="formatted-output"></div>
+            </div>
+            <div class="text-center">
+              <button class="btn btn-outline-danger me-2" onclick="copyFormatted()">
+                <i class="fas fa-copy me-2"></i>Copy Formatted
+              </button>
+              <button class="btn btn-outline-danger me-2" onclick="downloadSQL()">
+                <i class="fas fa-download me-2"></i>Download SQL
+              </button>
+              <button class="btn btn-outline-danger" onclick="validateSQL()">
+                <i class="fas fa-check me-2"></i>Validate
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- SQL Examples -->        
+        <!-- Info Card -->
+        <!-- Removed About SQL FORMATTER section as requested -->
+              
+        </div>
+</div>
+    </div>
+  </div>
+  
+  <!-- Comprehensive Guide Section -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card bg-black border-danger">
+        <div class="card-body">
+          <h3 style="color: #0c0f11af !important;">Complete Guide to SQL Formatting and Best Practices</h3>
+          <p>Properly formatted SQL improves readability, reduces bugs, and makes collaboration easier. This guide explains formatting rules, conventions, and practical tips for writing clean, maintainable SQL across different dialects.</p>
+          
+          <h4 style="color: #ec6a1f !important;">Why SQL Formatting Matters</h4>
+          <ul>
+            <li><strong>Readability:</strong> Clear structure helps you and your team understand queries faster</li>
+            <li><strong>Maintainability:</strong> Easier to update queries without introducing errors</li>
+            <li><strong>Debuggability:</strong> Logical line breaks and indentation surface mistakes early</li>
+            <li><strong>Consistency:</strong> Shared conventions reduce cognitive load across projects</li>
+            <li><strong>Performance Reviews:</strong> Clean SQL is easier to optimize and review</li>
+          </ul>
+          
+          <h4 style="color: #4330f1 !important;">Core Formatting Rules</h4>
+          <ul>
+            <li><strong>Keywords:</strong> Use UPPERCASE for SQL keywords (SELECT, FROM, WHERE, JOIN)</li>
+            <li><strong>Indentation:</strong> Indent nested queries and clause continuations consistently</li>
+            <li><strong>Line Breaks:</strong> Place major clauses on new lines (FROM, WHERE, GROUP BY)</li>
+            <li><strong>Joins:</strong> Put each JOIN on its own line with ON conditions indented</li>
+            <li><strong>Commas:</strong> Place commas at the end of lines for column lists</li>
+          </ul>
+          
+          <h4 style="color: #00ff88 !important;">Example: Clean vs. Messy</h4>
+          <div class="alert alert-info">
+<pre class="mb-0"><code>-- Messy
+select u.id,u.name,o.total from users u left join orders o on u.id=o.user_id <br> where u.status='active' and o.total&gt;100 order by o.total desc;<br>
+
+-- Clean
+SELECT
+  u.id,
+  u.name,
+  o.total
+FROM users u
+LEFT JOIN orders o
+  ON u.id = o.user_id
+WHERE u.status = 'active'
+  AND o.total &gt; 100
+ORDER BY o.total DESC;
+</code></pre>
+          </div>
+          
+          <h4 style="color: #ee0fee !important;">Dialect Differences</h4>
+          <ul>
+            <li><strong>MySQL:</strong> Backticks for identifiers (`users`), LIMIT syntax</li>
+            <li><strong>PostgreSQL:</strong> Double-quotes for identifiers, powerful window functions</li>
+            <li><strong>SQL Server:</strong> TOP syntax, square brackets for identifiers</li>
+            <li><strong>Oracle:</strong> NVL/DECODE, ROWNUM, different date functions</li>
+          </ul>
+          
+          <h4 style="color: #1d41dd !important;">Safety and Performance Tips</h4>
+          <ul>
+            <li>Prefer explicit column lists over SELECT *</li>
+            <li>Qualify columns with table aliases to avoid ambiguity</li>
+            <li>Use WHERE filters before GROUP BY to reduce intermediate rows</li>
+            <li>Index join keys and frequently filtered columns</li>
+            <li>Beware of implicit conversions; cast explicitly when needed</li>
+          </ul>
+          
+          <h4 style="color: #06eb4a !important;">Common Anti-Patterns</h4>
+          <ul>
+            <li>Nesting subqueries unnecessarily where JOINs suffice</li>
+            <li>Using SELECT DISTINCT to hide duplicate-creation bugs</li>
+            <li>Applying functions to indexed columns in WHERE (prevents index use)</li>
+            <li>Mixing presentation logic (formatting) inside SQL (do it in code)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer=""></script>
+  <script>
+    function formatSQL() {
+      const sql = document.getElementById('sqlInput').value;
+      if (!sql.trim()) {
+        alert('Please enter SQL to format.');
+        return;
+      }
+      
+      let formatted = sql;
+      const indentSize = document.getElementById('indentSize').value;
+      const indent = indentSize === 'tab' ? '\t' : ' '.repeat(parseInt(indentSize));
+      
+      // Uppercase keywords
+      if (document.getElementById('uppercaseKeywords').checked) {
+        const keywords = ['SELECT', 'FROM', 'WHERE', 'AND', 'OR', 'ORDER BY', 'GROUP BY', 'HAVING', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'ALTER', 'DROP', 'TABLE', 'INDEX', 'JOIN', 'LEFT', 'RIGHT', 'INNER', 'OUTER', 'ON', 'AS', 'INTO', 'VALUES', 'SET', 'DISTINCT', 'COUNT', 'SUM', 'AVG', 'MAX', 'MIN'];
+        keywords.forEach(keyword => {
+          const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+          formatted = formatted.replace(regex, keyword);
+        });
+      }
+      
+      // Basic formatting
+      formatted = formatted.replace(/\s+/g, ' ');
+      formatted = formatted.replace(/\s*,\s*/g, ', ');
+      formatted = formatted.replace(/\s*=\s*/g, ' = ');
+      formatted = formatted.replace(/\s*>\s*/g, ' > ');
+      formatted = formatted.replace(/\s*<\s*/g, ' < ');
+      formatted = formatted.replace(/\s*\(\s*/g, ' (');
+      formatted = formatted.replace(/\s*\)\s*/g, ') ');
+      
+      // Add line breaks for major clauses
+      formatted = formatted.replace(/\b(FROM|WHERE|ORDER BY|GROUP BY|HAVING|JOIN|LEFT JOIN|RIGHT JOIN|INNER JOIN|OUTER JOIN)\b/gi, '\n$1');
+      
+      // Add semicolon
+      if (document.getElementById('addSemicolon').checked && !formatted.trim().endsWith(';')) {
+        formatted = formatted.trim() + ';';
+      }
+      
+      // Update output
+      document.getElementById('formattedOutput').textContent = formatted;
+      
+      // Update statistics
+      updateStats(sql, formatted);
+      document.getElementById('resultsBox').style.display = 'block';
+    }
+    
+    function updateStats(original, formatted) {
+      document.getElementById('lineCount').textContent = formatted.split('\n').length;
+      document.getElementById('charCount').textContent = formatted.length;
+      document.getElementById('keywordCount').textContent = (formatted.match(/\b(SELECT|FROM|WHERE|AND|OR|ORDER BY|GROUP BY|HAVING|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|TABLE|INDEX|JOIN|LEFT|RIGHT|INNER|OUTER|ON|AS|INTO|VALUES|SET|DISTINCT|COUNT|SUM|AVG|MAX|MIN)\b/gi) || []).length;
+    }
+    
+    function clearInput() {
+      document.getElementById('sqlInput').value = '';
+      document.getElementById('formattedOutput').textContent = '';
+      document.getElementById('resultsBox').style.display = 'none';
+    }
+    
+    function loadExample() {
+      const example = `SELECT u.id, u.name, u.email, COUNT(o.id) as order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+WHERE u.status = 'active' AND u.created_at > '2023-01-01'
+GROUP BY u.id, u.name, u.email
+HAVING COUNT(o.id) > 0
+ORDER BY order_count DESC;`;
+      
+      document.getElementById('sqlInput').value = example;
+      formatSQL();
+    }
+    
+    function copyFormatted() {
+      const formatted = document.getElementById('formattedOutput').textContent;
+      if (!formatted.trim()) {
+        alert('No formatted SQL to copy.');
+        return;
+      }
+      
+      navigator.clipboard.writeText(formatted).then(() => {
+        alert('Formatted SQL copied to clipboard!');
+      }).catch(() => {
+        const textArea = document.createElement('textarea');
+        textArea.value = formatted;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        alert('Formatted SQL copied to clipboard!');
+      });
+    }
+    
+    function downloadSQL() {
+      const formatted = document.getElementById('formattedOutput').textContent;
+      if (!formatted.trim()) {
+        alert('No SQL to download.');
+        return;
+      }
+      
+      const blob = new Blob([formatted], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.download = 'formatted.sql';
+      link.href = url;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+    
+    function validateSQL() {
+      const sql = document.getElementById('formattedOutput').textContent;
+      if (!sql.trim()) {
+        alert('No SQL to validate.');
+        return;
+      }
+      
+      // Basic validation
+      const errors = [];
+      if (!sql.toUpperCase().includes('SELECT') && !sql.toUpperCase().includes('INSERT') && !sql.toUpperCase().includes('UPDATE') && !sql.toUpperCase().includes('DELETE')) {
+        errors.push('No valid SQL statement found (SELECT, INSERT, UPDATE, DELETE)');
+      }
+      if (sql.includes('SELECT') && !sql.toUpperCase().includes('FROM')) {
+        errors.push('SELECT statement missing FROM clause');
+      }
+      if ((sql.match(/\(/g) || []).length !== (sql.match(/\)/g) || []).length) {
+        errors.push('Mismatched parentheses');
+      }
+      
+      if (errors.length === 0) {
+        alert('SQL appears to be valid!');
+      } else {
+        alert('SQL validation errors:\n' + errors.join('\n'));
+      }
+    }
+  </script>
+
+  <!-- Footer Script -->
+  
+
+<!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js')
+          .then(registration => console.log('SW registered'))
+          .catch(error => console.log('SW registration failed'));
+      });
+    }
+  </script>
+  
+  <!-- Header Loading Script -->
+  
+<script src="../assets/js/include.js?v=3" defer=""></script>
+
+  <!-- Footer -->
+  <div id="footer"><footer>
+  <div class="container text-center">
+    <div>
+      <a href="/About.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">About</a>
+      <a href="/Contact.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Contact</a>
+      <a href="/Privacy-Policy.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Privacy Policy</a>
+      <a href="/Terms-of-Service.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Terms</a>
+    </div>
+    <div class="small mt-1" style="color: #0981e4 !important;">© 2025 MultiTools. All rights reserved.</div>
+    <div class="mt-3">
+      <p class="mb-1"><strong>Contact:</strong> <a href="mailto:rajeshkumarmenon@zohomail.in" style="color: #ffc107 !important; text-decoration: none;">rajeshkumarmenon@zohomail.in</a></p>
+    </div>
+  </div>
+</footer>
+</div>
+
+
+
+
+</body></html>

@@ -1,0 +1,48 @@
+
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb align-items-center mb-4">
+    <li class="breadcrumb-item">
+      <a href="../" class="text-decoration-none text-danger">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </li>   
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://multitoolszone.fun/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://multitoolszone.fun/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Current Tool",
+      "item": "https://multitoolszone.fun/tools/current-tool.html"
+    }
+  ]
+}
+</script>
+<script>
+// Update breadcrumb JSON-LD with current page URL
+document.addEventListener('DOMContentLoaded', function() {
+  const script = document.querySelector('script[type="application/ld+json"]');
+  if (script) {
+    const data = JSON.parse(script.textContent);
+    data.itemListElement[2].item = window.location.href;
+    script.textContent = JSON.stringify(data);
+  }
+});
+</script>

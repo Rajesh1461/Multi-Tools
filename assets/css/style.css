@@ -1,0 +1,2082 @@
+/* Homepage-only: triple navbar brand logo size */
+body.index-page .navbar-brand img {
+  height: 120px !important;
+  width: auto !important;
+}
+/* Font imports removed for performance optimization */
+/* Custom fonts were not being used in the HTML */
+
+/* Font display optimization for better performance */
+@font-face {
+  font-family: 'system-ui';
+  font-display: swap;
+  src: local('system-ui');
+}
+
+/* Skeleton loading animation for lazy-loaded tools */
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+
+.tool-placeholder {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Optimize font loading for all text elements */
+body, h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select {
+  font-display: swap;
+}
+
+/* Critical performance optimizations */
+* {
+  box-sizing: border-box;
+}
+
+/* Reduce layout shift with explicit dimensions */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Optimize ad containers to prevent CLS */
+.ad-container-top,
+.ad-container-incontent,
+.ad-container-multiplex {
+  min-height: 90px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Optimize cards to prevent layout shift */
+.card {
+  min-height: auto;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+.card-body {
+  min-height: auto;
+  /* Removed contain: layout style to prevent layout issues */
+}
+
+/* Prevent Layout Shift (CLS) - Critical for Performance */
+/* Set explicit dimensions for images to prevent layout shift */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Prevent layout shift for lazy-loaded images */
+img[data-src], img[loading="lazy"] {
+  aspect-ratio: attr(width) / attr(height);
+  background-color: #f0f0f0;
+}
+
+/* Set dimensions for common image sizes to prevent CLS */
+.navbar-brand img {
+  width: auto;
+  height: 40px;
+  max-height: 40px;
+}
+
+/* Prevent layout shift for cards and containers */
+.card {
+  min-height: 200px;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+/* Removed duplicate card-body rule */
+
+/* Prevent layout shift for buttons */
+.btn {
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Prevent layout shift for form elements */
+.form-control, .form-select {
+  min-height: 38px;
+}
+
+/* Prevent layout shift for tool containers */
+.tool-container {
+  min-height: 300px;
+}
+
+/* Prevent layout shift for ad placeholders */
+.ad-placeholder-top,
+.ad-placeholder-incontent,
+.ad-placeholder-multiplex {
+  min-height: 90px;
+  display: block;
+}
+
+/* Prevent layout shift for ad containers */
+.sticky-side-ad {
+  width: 160px;
+  height: 600px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+}
+
+/* Prevent layout shift for content areas */
+.content-area {
+  min-height: 400px;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background: #000;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #000;
+  color: #fff;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+/* Ensure video covers entire viewport */
+html {
+  background: #000;
+  overflow-x: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* Ensure full page coverage */
+body {
+  background: #000;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Live video wallpaper - complete page coverage */
+#videoBackground {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 100vw !important;
+  min-height: 100vh !important;
+  max-width: 100vw !important;
+  max-height: 100vh !important;
+  object-fit: cover !important;
+  z-index: -10 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  background: #000 !important;
+  transform: scale(1.01) !important;
+}
+
+/* Additional animated elements */
+.container, .ad-placeholder, .tool-btn, .bg-black, .bg-dark {
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(15px);
+  background: rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Optimized card styling - reduced animations for performance */
+.card {
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: border-color 0.2s ease;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+/* Ensure colorful card backgrounds override defaults */
+.card.bg-primary {
+  background-color: #0d6efd !important;
+}
+
+.card.bg-success {
+  background-color: #198754 !important;
+}
+
+.card.bg-warning {
+  background-color: #ffc107 !important;
+}
+
+.card.bg-info {
+  background-color: #0dcaf0 !important;
+}
+
+.card.bg-secondary {
+  background-color: #6c757d !important;
+}
+
+.card.bg-danger {
+  background-color: #dc3545 !important;
+}
+
+.card.bg-light {
+  background-color: #f8f9fa !important;
+}
+
+/* Ensure text visibility in main content containers */
+.container.my-5 p,
+.container.my-5 span,
+.container.my-5 div,
+.container.my-5 li,
+.container.my-5 ul {
+  color: #fff !important;
+}
+
+.container.my-5 h1,
+.container.my-5 h2,
+.container.my-5 h3,
+.container.my-5 h4,
+.container.my-5 h5,
+.container.my-5 h6 {
+  color: #4fc3f7 !important;
+}
+
+
+
+/* Options section specific styling */
+.form-check-label {
+  opacity: 0.9 !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.form-check-input {
+  opacity: 0.9 !important;
+}
+
+/* Optimized button styling - reduced animations for performance */
+.tool-btn {
+  position: relative;
+  background: rgba(0,0,0,0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  transition: background-color 0.2s ease;
+}
+
+
+
+/* Sticky side ads - positioned at same vertical level with enhanced mouse tracking */
+.sticky-side-ad {
+  position: absolute !important;
+  top: 50% !important;
+  transform: none; /* Remove transform to allow JS positioning */
+  width: 160px;
+  height: 600px;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  transition: none; /* Disable CSS transitions for smooth JS animation */
+  will-change: top;
+  margin: 0;
+  padding: 0;
+  /* Enhanced performance for mouse tracking */
+  backface-visibility: hidden;
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+/* Left and right ads positioned at same vertical level */
+.sticky-side-ad.left {
+  left: 10px !important;
+  top: 50% !important;
+  transform: none; /* Remove transform to allow JS positioning */
+}
+
+.sticky-side-ad.right {
+  right: 10px !important;
+  top: 50% !important;
+  transform: none; /* Remove transform to allow JS positioning */
+}
+
+/* Enhanced form elements */
+input[type="file"], input[type="text"], input[type="number"], input[type="search"], select, textarea {
+  background: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #fff !important;
+  transition: all 0.3s ease;
+}
+
+input[type="file"]:focus, input[type="text"]:focus, input[type="number"]:focus, input[type="search"]:focus, select:focus, textarea:focus {
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6) !important;
+  transform: scale(1.02);
+}
+
+/* Optimized ad placeholders - reduced animations for performance */
+.ad-placeholder {
+  min-height: 80px;
+  color: #fff;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 15px;
+  opacity: 0.9;
+}
+
+.container {
+  flex: 1 0 auto;
+}
+#header {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1001;
+}
+#footer {
+  flex-shrink: 0;
+  min-height: 36px;
+  padding: 8px 0;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.btn-danger, .btn-outline-danger {
+  border-radius: 0.375rem;
+  font-weight: 500;
+}
+.btn-danger {
+  background: #dc3545;
+  border: none;
+  color: #fff;
+}
+.btn-outline-danger {
+  color: #dc3545;
+  background: transparent;
+  border: 2px solid #dc3545;
+}
+
+.tool-btn {
+  min-width: 220px;
+  margin-bottom: 10px;
+  background: rgba(0,0,0,0.1) !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+@media (max-width: 1200px) {
+  .sticky-side-ad {
+    display: none;
+  }
+}
+@media (max-width: 768px) {
+  .tool-btn {
+    min-width: 100%;
+  }
+  #videoBackground {
+    width: 100vw !important;
+    height: 100vh !important;
+    min-width: 100vw !important;
+    min-height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    object-fit: cover !important;
+    transform: scale(1.01) !important;
+  }
+}
+@media (max-width: 480px) {
+  #videoBackground {
+    width: 100vw !important;
+    height: 100vh !important;
+    min-width: 100vw !important;
+    min-height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    object-fit: cover !important;
+    transform: scale(1.01) !important;
+  }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  #videoBackground {
+    width: 100vw !important;
+    height: 100vh !important;
+    min-width: 100vw !important;
+    min-height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    object-fit: cover !important;
+    transform: scale(1.01) !important;
+  }
+}
+label.form-label {
+  color: #fff !important;
+}
+input[type="file"] {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  border-radius: 8px;
+  border: 2px solid #fff;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  color: #fff;
+  padding: 8px 12px;
+  transition: all 0.3s ease;
+}
+
+input[type="file"]:focus {
+  box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
+  outline: none;
+}
+input[type="file"]::file-selector-button {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  border-radius: 6px;
+  border: 2px solid #fff;
+  background: linear-gradient(145deg, #0d6efd, #0b5ed7);
+  color: #fff;
+  padding: 6px 12px;
+  margin-right: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+.btn-success, button.btn-success {
+  border: 2px solid #fff !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+  background: linear-gradient(145deg, #198754, #157347) !important;
+}
+
+.btn-success:active, button.btn-success:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  border: 2px solid #fff !important;
+}
+
+/* .home-btn-font class removed - font not used */
+
+/* Options section styling for Case Converter */
+.form-check-label {
+  opacity: 0.9 !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+.form-check-input {
+  opacity: 0.9 !important;
+}
+
+/* Options container styling */
+.col-md-6 .form-label {
+  opacity: 0.9 !important;
+  color: #fff !important;
+  font-weight: 500;
+}
+
+/* Ensure sticky ads are 20% down only on index page */
+body.index-page .sticky-side-ad.left,
+body.index-page .sticky-side-ad.right {
+  top: calc(20vh + 2in) !important;
+  transform: none !important;
+}
+
+body.index-page .sticky-side-ad.left .developer-info {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Move a little up from previous position */
+  top: calc(8.5rem - 3.5in);
+  z-index: 1100;
+}
+
+.card-title {
+  color: #fff !important;
+}
+
+.card-body {
+  border-radius: 0.5rem;
+  transition: background 0.3s;
+  /* Removed width: 100% to prevent overlapping issues */
+}
+
+/* Ensure readable text on dark backgrounds across tools pages */
+.bg-dark,
+.bg-black {
+  color: #fff;
+}
+
+.card.bg-dark .card-body,
+.card.bg-black .card-body {
+  color: #fff;
+}
+
+/* Bootstrap alerts rendered on dark backgrounds need explicit text color */
+.alert.bg-dark,
+.alert.bg-black {
+  color: #fff !important;
+}
+
+/* Improve muted text visibility on dark surfaces */
+.bg-dark .text-muted,
+.bg-black .text-muted {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Input placeholders on dark backgrounds */
+input::placeholder, textarea::placeholder, .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Ensure visibility for lists and common content blocks on dark surfaces */
+.bg-dark .list-unstyled,
+.bg-black .list-unstyled,
+.card.bg-dark .list-unstyled,
+.card.bg-black .list-unstyled {
+  color: #fff !important;
+}
+
+.bg-dark .list-unstyled li,
+.bg-black .list-unstyled li,
+.card.bg-dark .list-unstyled li,
+.card.bg-black .list-unstyled li {
+  color: #fff !important;
+}
+
+.bg-dark .mb-3,
+.bg-black .mb-3,
+.card.bg-dark .mb-3,
+.card.bg-black .mb-3 {
+  color: #fff !important;
+}
+
+.bg-dark .mb-3 .form-text,
+.bg-black .mb-3 .form-text,
+.card.bg-dark .mb-3 .form-text,
+.card.bg-black .mb-3 .form-text,
+.bg-dark .mb-3 small,
+.bg-black .mb-3 small,
+.card.bg-dark .mb-3 small,
+.card.bg-black .mb-3 small {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Additional rules for Energy Converter and similar tools */
+.form-label {
+  color: #fff !important;
+}
+
+.card.bg-dark .form-label,
+.card.bg-black .form-label {
+  color: #fff !important;
+}
+
+/* Ensure small text is visible in dark cards */
+.card.bg-dark small,
+.card.bg-black small {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Make sure strong tags are visible */
+.card.bg-dark strong,
+.card.bg-black strong,
+.bg-dark strong,
+.bg-black strong {
+  color: #fff !important;
+}
+
+/* Ensure paragraph text is visible */
+.card.bg-dark p,
+.card.bg-black p,
+.bg-dark p,
+.bg-black p {
+  color: #fff !important;
+}
+
+/* Fix any remaining text-muted elements */
+.text-muted {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.card.bg-dark .text-muted,
+.card.bg-black .text-muted {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+/* Comprehensive text visibility rules for all tools */
+/* Form check labels */
+.form-check-label {
+  color: #fff !important;
+}
+
+.card.bg-dark .form-check-label,
+.card.bg-black .form-check-label,
+.bg-dark .form-check-label,
+.bg-black .form-check-label {
+  color: #fff !important;
+}
+
+/* Table elements */
+.table-dark {
+  color: #fff !important;
+}
+
+.table-dark td,
+.table-dark th {
+  color: #fff !important;
+}
+
+.table-dark.table-striped > tbody > tr:nth-of-type(odd) > td,
+.table-dark.table-striped > tbody > tr:nth-of-type(odd) > th {
+  color: #fff !important;
+}
+
+/* bg-secondary cards */
+.card.bg-secondary {
+  color: #fff !important;
+}
+
+.card.bg-secondary .card-body {
+  color: #fff !important;
+}
+
+.card.bg-secondary h1,
+.card.bg-secondary h2,
+.card.bg-secondary h3,
+.card.bg-secondary h4,
+.card.bg-secondary h5,
+.card.bg-secondary h6 {
+  color: #fff !important;
+}
+
+.card.bg-secondary p,
+.card.bg-secondary span,
+.card.bg-secondary div {
+  color: #fff !important;
+}
+
+.card.bg-secondary small {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* List elements */
+.card.bg-dark ul,
+.card.bg-black ul,
+.bg-dark ul,
+.bg-black ul {
+  color: #fff !important;
+}
+
+.card.bg-dark ul li,
+.card.bg-black ul li,
+.bg-dark ul li,
+.bg-black ul li {
+  color: #fff !important;
+}
+
+/* Any remaining text elements */
+.card.bg-dark *,
+.card.bg-black *,
+.bg-dark *,
+.bg-black * {
+  color: inherit;
+}
+
+/* Ensure specific text colors are preserved */
+.text-danger,
+.text-warning,
+.text-success,
+.text-info,
+.text-primary,
+.text-secondary {
+  color: inherit !important;
+}
+
+/* Fix for any remaining dark text on dark backgrounds */
+.bg-dark .text-dark,
+.bg-black .text-dark {
+  color: #fff !important;
+}
+
+/* Ensure form elements are visible */
+.form-control {
+  color: #fff !important;
+}
+
+.form-select {
+  color: #fff !important;
+}
+
+/* Fix for any remaining small text */
+small {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.card.bg-dark small,
+.card.bg-black small,
+.bg-dark small,
+.bg-black small {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Cyber wallpaper for index page */
+body.index-page {
+  background: url('../img/cyber.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
+}
+
+/* Larger navbar logo only on homepage */
+body.index-page header img {
+  height: 60px;
+  max-height: 60px;
+
+}
+
+/* Cyber wallpaper for all tool pages */
+body.tool-page {
+  background: url('../img/cyber.jpg') no-repeat center center fixed !important;
+  background-size: cover !important;
+}
+
+body.index-page::before {
+  content: none !important;
+}
+
+body.index-page > * {
+  position: relative;
+  z-index: 1;
+}
+
+
+
+/* Active state during mouse tracking */
+.sticky-side-ad.left.tracking,
+.sticky-side-ad.right.tracking {
+  border-color: rgba(220, 53, 69, 0.8);
+  box-shadow: 0 15px 50px rgba(220, 53, 69, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+} 
+
+/* Final comprehensive rules for all tools */
+/* Alert elements */
+.alert {
+  color: #fff !important;
+}
+
+.alert.bg-dark,
+.alert.bg-black {
+  color: #fff !important;
+}
+
+/* Info Alert Styling */
+.alert-info {
+  color: #0dcaf0 !important; /* Bright cyan text for better visibility */
+  background-color: #002b36 !important; /* Dark blue background */
+  border-color: #0dcaf0 !important; /* Cyan border */
+}
+
+.alert-info .alert-link {
+  color: #80deea !important; /* Lighter cyan for links */
+  text-decoration: underline;
+}
+
+.alert-info i.fas {
+  color: #0dcaf0 !important; /* Match icon color with text */
+}
+
+/* Hover state for better interactivity */
+.alert-info:hover {
+  background-color: #003847 !important;
+  box-shadow: 0 0 10px rgba(13, 202, 240, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Warning Alert Styling */
+.alert-warning {
+  color: #ffd700 !important; /* Brighter gold text for better visibility */
+  background-color: #332b00 !important; /* Dark yellow background */
+  border-color: #ffd700 !important; /* Gold border */
+}
+
+.alert-warning .alert-link {
+  color: #ffeb3b !important; /* Brighter link color for better contrast */
+  text-decoration: underline;
+}
+
+.alert-warning i.fas {
+  color: #ffd700 !important; /* Match icon color with text */
+}
+
+/* Hover state for better interactivity */
+.alert-warning:hover {
+  background-color: #3d3300 !important;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Custom elements and any remaining text */
+.card *,
+.bg-dark *,
+.bg-black * {
+  color: inherit;
+}
+
+/* Ensure all text elements are visible */
+.bg-dark label,
+.bg-black label,
+.card.bg-dark label,
+.card.bg-black label {
+  color: #fff !important;
+}
+
+/* Fix for any remaining dark text */
+.text-dark {
+  color: #fff !important;
+}
+
+.bg-dark .text-dark,
+.bg-black .text-dark,
+.card.bg-dark .text-dark,
+.card.bg-black .text-dark {
+  color: #fff !important;
+}
+
+/* Ensure all form elements are properly styled */
+input, textarea, select {
+  color: #fff !important;
+}
+
+/* Fix for any remaining invisible text */
+.bg-dark span,
+.bg-black span,
+.card.bg-dark span,
+.card.bg-black span {
+  color: #fff !important;
+}
+
+/* Ensure all headings are visible */
+.bg-dark h1, .bg-dark h2, .bg-dark h3, .bg-dark h4, .bg-dark h5, .bg-dark h6,
+.bg-black h1, .bg-black h2, .bg-black h3, .bg-black h4, .bg-black h5, .bg-black h6,
+.card.bg-dark h1, .card.bg-dark h2, .card.bg-dark h3, .card.bg-dark h4, .card.bg-dark h5, .card.bg-dark h6,
+.card.bg-black h1, .card.bg-black h2, .card.bg-black h3, .card.bg-black h4, .card.bg-black h5, .card.bg-black h6 {
+  color: #fff !important;
+} 
+
+/* Navigation Size Doubling - Header and Breadcrumb */
+/* Header navigation links */
+header a {
+  font-size: 1.25rem !important;
+  font-weight: 600 !important;
+  padding: 0.5rem 0.75rem !important;
+  margin: 0 0.25rem !important;
+}
+
+/* Header logo and brand name */
+header .fs-3 {
+  font-size: 1.75rem !important;
+  font-weight: 700 !important;
+}
+
+/* Header logo image */
+header img {
+  height: var(--header-logo-height, 72px) !important;
+  width: auto !important;
+  max-height: var(--header-logo-height, 72px) !important;
+  object-fit: contain !important;
+}
+
+/* Specific styling for right column navigation links - 50% font size reduction */
+header .col-4.text-end {
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+  flex-wrap: nowrap !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+}
+
+header .col-4.text-end a {
+  font-size: 1rem !important; /* 50% reduction from 2rem */
+  padding: 0.5rem 0.75rem !important; /* 50% reduction from 1rem 1.5rem */
+  margin: 0 0.25rem !important; /* 50% reduction from 0 0.5rem */
+  display: inline-block !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+  text-decoration: none !important;
+}
+
+/* Breadcrumb navigation */
+.breadcrumb {
+  padding: 1.5rem !important; /* Increased padding */
+  font-size: 1.5rem !important; /* Doubled from default */
+  line-height: 1.6 !important;
+}
+
+.breadcrumb-item {
+  font-size: 1.5rem !important; /* Doubled from default */
+  font-weight: 500 !important;
+}
+
+.breadcrumb-item a {
+  font-size: 1.5rem !important; /* Doubled from default */
+  font-weight: 500 !important;
+  padding: 0.5rem 1rem !important; /* Increased padding */
+}
+
+.breadcrumb-item.active {
+  font-size: 1.5rem !important; /* Doubled from default */
+  font-weight: 600 !important;
+}
+
+/* Breadcrumb icons */
+.breadcrumb .bi {
+  font-size: 1.5rem !important; /* Doubled from default */
+  margin-right: 0.5rem !important; /* Increased margin */
+}
+
+/* ============================================
+   CONTENT ALIGNMENT FIXES
+   ============================================ */
+
+/* Ensure consistent container alignment across all pages */
+.container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Fix main content alignment */
+main .container,
+.article-content .container,
+.tool-content .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Ensure proper text alignment for all content */
+.article-content p,
+.article-content li,
+.article-content div,
+.tool-content p,
+.tool-content li,
+.tool-content div {
+  text-align: left !important;
+  line-height: 1.6 !important;
+}
+
+/* Fix card alignment and spacing */
+.card {
+  margin-bottom: 1.5rem !important;
+  border-radius: 0.5rem !important;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+.card-body {
+  padding: 1.5rem !important;
+  /* Removed width: 100% to prevent overlapping issues */
+}
+
+/* Fix form alignment */
+.form-control,
+.form-select,
+.form-check-input {
+  margin-bottom: 1rem !important;
+}
+
+.form-label {
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+/* Fix button alignment */
+.btn {
+  margin: 0.25rem !important;
+  padding: 0.5rem 1rem !important;
+}
+
+/* Fix list alignment */
+ul, ol {
+  padding-left: 1.5rem !important;
+  margin-bottom: 1rem !important;
+}
+
+li {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Fix heading alignment */
+h1, h2, h3, h4, h5, h6 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.3 !important;
+}
+
+/* Fix paragraph alignment */
+p {
+  margin-bottom: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Fix table alignment */
+.table {
+  margin-bottom: 1rem !important;
+}
+
+.table td, .table th {
+  padding: 0.75rem !important;
+  vertical-align: middle !important;
+}
+
+/* Fix alert alignment */
+.alert {
+  margin-bottom: 1rem !important;
+  padding: 1rem !important;
+  border-radius: 0.375rem !important;
+}
+
+/* Fix navigation alignment */
+.navbar {
+  padding: 0.5rem 0 !important;
+}
+
+.navbar-nav .nav-link {
+  padding: 0.5rem 1rem !important;
+  margin: 0 0.25rem !important;
+}
+
+/* Fix footer alignment */
+footer {
+  margin-top: 3rem !important;
+  padding: 2rem 0 !important;
+  text-align: center !important;
+}
+
+/* Fix breadcrumb alignment */
+.breadcrumb {
+  margin-bottom: 1.5rem !important;
+  padding: 1rem !important;
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 0.375rem !important;
+}
+
+/* Fix tool interface alignment */
+.tool-interface {
+  margin-bottom: 2rem !important;
+}
+
+.tool-interface .card {
+  margin-bottom: 1rem !important;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+/* Fix blog content alignment */
+.blog-content {
+  line-height: 1.7 !important;
+}
+
+.blog-content h2 {
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+}
+
+.blog-content h3 {
+  margin-top: 1.5rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.blog-content p {
+  margin-bottom: 1.25rem !important;
+}
+
+/* Fix tool page alignment */
+.tool-page .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+}
+
+.tool-page .card {
+  margin-bottom: 1.5rem !important;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+.tool-page .form-group {
+  margin-bottom: 1rem !important;
+}
+
+/* Fix responsive alignment */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  
+  .card-body {
+    padding: 1rem !important;
+  }
+  
+  /* Adjust card width for mobile devices */
+  .card {
+    width: 100% !important; /* Reset to full width on mobile */
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  
+  .btn {
+    margin: 0.125rem !important;
+    padding: 0.375rem 0.75rem !important;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    margin-top: 1rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+}
+
+/* ============================================
+   ADDITIONAL ALIGNMENT FIXES
+   ============================================ */
+
+/* Fix main page alignment */
+.index-page main .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Fix about page alignment */
+.about-page .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Fix contact page alignment */
+.contact-page .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Fix blog page alignment */
+.blog-page .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Fix tool page alignment */
+.tool-page .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Fix section alignment */
+section {
+  margin-bottom: 2rem !important;
+  padding: 1rem 0 !important;
+}
+
+/* Fix row alignment */
+.row {
+  margin-left: -15px !important;
+  margin-right: -15px !important;
+}
+
+.row > * {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Fix column alignment */
+.col-lg-8,
+.col-lg-10,
+.col-lg-12 {
+  margin: 0 auto !important;
+}
+
+/* Fix text alignment for different content types */
+.text-content {
+  line-height: 1.7 !important;
+  text-align: left !important;
+}
+
+.text-content h1,
+.text-content h2,
+.text-content h3,
+.text-content h4,
+.text-content h5,
+.text-content h6 {
+  margin-top: 2rem !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.3 !important;
+}
+
+.text-content p {
+  margin-bottom: 1.25rem !important;
+  line-height: 1.7 !important;
+}
+
+.text-content ul,
+.text-content ol {
+  margin-bottom: 1.25rem !important;
+  padding-left: 2rem !important;
+}
+
+.text-content li {
+  margin-bottom: 0.5rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Fix form alignment */
+.form-group {
+  margin-bottom: 1.5rem !important;
+}
+
+.form-control,
+.form-select {
+  width: 100% !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Fix button group alignment */
+.btn-group {
+  margin-bottom: 1rem !important;
+}
+
+.btn-group .btn {
+  margin: 0 !important;
+}
+
+/* Fix card group alignment */
+.card-group {
+  margin-bottom: 2rem !important;
+}
+
+.card-group .card {
+  margin-bottom: 0 !important;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+/* Fix accordion alignment */
+.accordion {
+  margin-bottom: 2rem !important;
+}
+
+.accordion-item {
+  margin-bottom: 0.5rem !important;
+}
+
+.accordion-body {
+  padding: 1.5rem !important;
+}
+
+/* Fix FAQ section alignment */
+.faq-section,
+#faq-section {
+  margin-bottom: 2rem !important;
+}
+
+.faq-section h3,
+#faq-section h3 {
+  margin-bottom: 1.5rem !important;
+  text-align: left !important;
+  color: #4fc3f7 !important;
+}
+
+.faq-section h5,
+#faq-section h5 {
+  margin-bottom: 0.75rem !important;
+  margin-top: 1rem !important;
+  color: #00ff88 !important;
+  font-weight: 600 !important;
+}
+
+.faq-section p,
+#faq-section p {
+  margin-bottom: 1rem !important;
+  line-height: 1.6 !important;
+  text-align: left !important;
+}
+
+.faq-section .mb-3,
+#faq-section .mb-3 {
+  margin-bottom: 1.5rem !important;
+  padding: 1rem !important;
+  border-left: 3px solid #dc3545 !important;
+  background-color: rgba(220, 53, 69, 0.05) !important;
+  border-radius: 0 0.5rem 0.5rem 0 !important;
+}
+
+/* Fix dynamic FAQ accordion alignment */
+#pane-faq .accordion {
+  margin-top: 1rem !important;
+}
+
+#pane-faq .accordion-item {
+  background-color: #1a1a1a !important;
+  border: 1px solid #dc3545 !important;
+  margin-bottom: 0.5rem !important;
+  border-radius: 0.5rem !important;
+}
+
+#pane-faq .accordion-button {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 1rem 1.5rem !important;
+  font-weight: 500 !important;
+}
+
+#pane-faq .accordion-button:not(.collapsed) {
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+  box-shadow: none !important;
+}
+
+#pane-faq .accordion-button:focus {
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25) !important;
+  border-color: #dc3545 !important;
+}
+
+#pane-faq .accordion-body {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  padding: 1.5rem !important;
+  line-height: 1.6 !important;
+}
+
+/* Fix FAQ container alignment */
+.faq-container,
+#faq-container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Fix tool page FAQ sections */
+.tool-page .faq-section,
+.tool-page #faq-section {
+  margin: 2rem 0 !important;
+  padding: 0 1rem !important;
+}
+
+.tool-page .faq-section .card,
+.tool-page #faq-section .card {
+  margin-bottom: 2rem !important;
+  border-radius: 0.5rem !important;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+.tool-page .faq-section .card-body,
+.tool-page #faq-section .card-body {
+  padding: 2rem !important;
+}
+
+/* Fix FAQ question and answer alignment */
+.faq-question {
+  font-weight: 600 !important;
+  color: #00ff88 !important;
+  margin-bottom: 0.75rem !important;
+  margin-top: 1.5rem !important;
+}
+
+.faq-answer {
+  color: #ffffff !important;
+  line-height: 1.6 !important;
+  margin-bottom: 1.5rem !important;
+  padding-left: 1rem !important;
+  border-left: 2px solid #dc3545 !important;
+}
+
+/* Responsive FAQ alignment */
+@media (max-width: 768px) {
+  .faq-section,
+  #faq-section {
+    margin: 1rem 0 !important;
+    padding: 0 0.5rem !important;
+  }
+  
+  .faq-section .card-body,
+  #faq-section .card-body {
+    padding: 1rem !important;
+  }
+  
+  .faq-section h3,
+  #faq-section h3 {
+    font-size: 1.5rem !important;
+    margin-bottom: 1rem !important;
+  }
+  
+  .faq-section h5,
+  #faq-section h5 {
+    font-size: 1.1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* Fix table alignment */
+.table-responsive {
+  margin-bottom: 1.5rem !important;
+}
+
+/* Fix modal alignment */
+.modal-body {
+  padding: 1.5rem !important;
+}
+
+.modal-header {
+  padding: 1rem 1.5rem !important;
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem !important;
+}
+
+/* Fix navigation alignment */
+.navbar-brand {
+  margin-right: 2rem !important;
+}
+
+.navbar-nav {
+  margin-left: auto !important;
+}
+
+/* Fix footer alignment */
+footer .container {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 15px !important;
+}
+
+/* Fix breadcrumb alignment */
+.breadcrumb {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-radius: 0.375rem !important;
+  padding: 1rem !important;
+  margin-bottom: 1.5rem !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+  content: ">" !important;
+  color: #fff !important;
+}
+
+/* Fix alert alignment */
+.alert {
+  border-radius: 0.5rem !important;
+  margin-bottom: 1.5rem !important;
+  padding: 1rem 1.5rem !important;
+}
+
+.alert .alert-heading {
+  margin-bottom: 0.5rem !important;
+}
+
+/* Fix progress bar alignment */
+.progress {
+  margin-bottom: 1rem !important;
+  height: 1rem !important;
+}
+
+/* Fix badge alignment */
+.badge {
+  margin: 0 0.25rem !important;
+}
+
+/* Fix spinner alignment */
+.spinner-border {
+  margin: 0.5rem !important;
+}
+
+/* Fix tooltip alignment */
+.tooltip {
+  font-size: 0.875rem !important;
+}
+
+/* Fix popover alignment */
+.popover {
+  max-width: 300px !important;
+}
+
+/* Fix carousel alignment */
+.carousel {
+  margin-bottom: 2rem !important;
+}
+
+.carousel-item {
+  padding: 2rem 0 !important;
+}
+
+/* Fix pagination alignment */
+.pagination {
+  margin: 2rem 0 !important;
+  justify-content: center !important;
+}
+
+/* Fix list group alignment */
+.list-group {
+  margin-bottom: 1.5rem !important;
+}
+
+.list-group-item {
+  padding: 1rem 1.5rem !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Fix input group alignment */
+.input-group {
+  margin-bottom: 1rem !important;
+}
+
+.input-group-text {
+  padding: 0.5rem 0.75rem !important;
+}
+
+/* Fix dropdown alignment */
+.dropdown-menu {
+  margin-top: 0.5rem !important;
+  border-radius: 0.5rem !important;
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem !important;
+}
+
+/* Fix nav alignment */
+.nav {
+  margin-bottom: 1rem !important;
+}
+
+.nav-link {
+  padding: 0.5rem 1rem !important;
+  margin: 0 0.25rem !important;
+}
+
+/* Fix tab alignment */
+.tab-content {
+  padding: 1.5rem 0 !important;
+}
+
+.tab-pane {
+  margin-bottom: 1rem !important;
+}
+
+/* Fix FAQ tabs styling - unified background and connected corners */
+.nav-tabs {
+  border-bottom: 1px solid #dc3545 !important;
+  margin-bottom: 0 !important;
+}
+
+.nav-tabs .nav-link {
+  background-color: #1a1a1a !important;
+  color: #ffffff !important;
+  border: 1px solid #dc3545 !important;
+  border-bottom: none !important;
+  margin-right: 0 !important;
+  border-radius: 0 !important;
+  padding: 0.75rem 1.5rem !important;
+}
+
+.nav-tabs .nav-link:first-child {
+  border-top-left-radius: 0.5rem !important;
+}
+
+.nav-tabs .nav-link:last-child {
+  border-top-right-radius: 0.5rem !important;
+}
+
+.nav-tabs .nav-link.active {
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+  border-color: #dc3545 !important;
+  border-bottom: 1px solid #dc3545 !important;
+}
+
+.nav-tabs .nav-link:hover {
+  background-color: rgba(220, 53, 69, 0.8) !important;
+  color: #ffffff !important;
+  border-color: #dc3545 !important;
+}
+
+.tab-content {
+  background-color: #1a1a1a !important;
+  border: 1px solid #dc3545 !important;
+  border-top: none !important;
+  border-radius: 0 0 0.5rem 0.5rem !important;
+  padding: 1.5rem !important;
+  margin-top: 0 !important;
+}
+
+.tab-pane {
+  color: #ffffff !important;
+  margin-bottom: 0 !important;
+}
+
+.tab-pane h5 {
+  color: #dc3545 !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.tab-pane p {
+  color: #ffffff !important;
+  margin-bottom: 1rem !important;
+  line-height: 1.6 !important;
+}
+
+.tab-pane ul, .tab-pane ol {
+  color: #ffffff !important;
+}
+
+.tab-pane li {
+  color: #ffffff !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.tab-pane strong {
+  color: #ffffff !important;
+}
+
+/* Additional FAQ styling for better visual consistency */
+#tool-info-tabs {
+  margin-top: 2rem !important;
+}
+
+#tool-info-tabs .nav-tabs .nav-link {
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+#tool-info-tabs .tab-content {
+  min-height: 200px !important;
+}
+
+/* Ensure FAQ questions and answers are properly styled */
+#pane-faq .mb-4 {
+  margin-bottom: 1.5rem !important;
+  padding: 1rem !important;
+  background-color: rgba(0, 0, 0, 0.2) !important;
+  border-radius: 0.5rem !important;
+  border-left: 3px solid #dc3545 !important;
+}
+
+#pane-faq h5 {
+  color: #dc3545 !important;
+  font-weight: 600 !important;
+  margin-bottom: 0.75rem !important;
+}
+
+#pane-faq p {
+  color: #ffffff !important;
+  margin-bottom: 0 !important;
+  line-height: 1.6 !important;
+}
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 768px) {
+  header a {
+    font-size: 1rem !important;
+    padding: 0.375rem 0.5rem !important;
+    margin: 0 0.25rem !important;
+  }
+  
+  /* Right column navigation links - 50% reduction on tablet */
+  header .col-4.text-end {
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+  }
+  
+  header .col-4.text-end a {
+    font-size: 0.75rem !important; /* 50% reduction from 1.5rem */
+    padding: 0.375rem 0.5rem !important; /* 50% reduction from 0.75rem 1rem */
+    margin: 0 0.125rem !important; /* 50% reduction from 0 0.25rem */
+    flex-shrink: 1 !important; /* Allow shrinking on smaller screens */
+    min-width: 0 !important;
+  }
+  
+  header .fs-3 {
+    font-size: 1.5rem !important;
+  }
+  
+  header img {
+    height: var(--header-logo-height, 72px) !important;
+    width: auto !important;
+    max-height: var(--header-logo-height, 72px) !important;
+  }
+  
+  .breadcrumb {
+    padding: 1rem !important;
+    font-size: 1.25rem !important;
+  }
+  
+  .breadcrumb-item,
+  .breadcrumb-item a,
+  .breadcrumb-item.active,
+  .breadcrumb .bi {
+    font-size: 1.25rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  header a {
+    font-size: 0.9rem !important;
+    padding: 0.25rem 0.375rem !important;
+    margin: 0 0.125rem !important;
+  }
+  
+  /* Right column navigation links - 50% reduction on mobile */
+  header .col-4.text-end {
+    flex-wrap: nowrap !important;
+    overflow: hidden !important;
+  }
+  
+  header .col-4.text-end a {
+    font-size: 0.625rem !important; /* 50% reduction from 1.25rem */
+    padding: 0.25rem 0.375rem !important; /* 50% reduction from 0.5rem 0.75rem */
+    margin: 0 0.0625rem !important; /* 50% reduction from 0 0.125rem */
+    flex-shrink: 1 !important; /* Allow shrinking on smaller screens */
+    min-width: 0 !important;
+  }
+  
+  header .fs-3 {
+    font-size: 1.25rem !important;
+  }
+  
+  header img {
+    height: var(--header-logo-height, 72px) !important;
+    width: auto !important;
+    max-height: var(--header-logo-height, 72px) !important;
+  }
+  
+  .breadcrumb {
+    padding: 0.75rem !important;
+    font-size: 1.125rem !important;
+  }
+  
+  .breadcrumb-item,
+  .breadcrumb-item a,
+  .breadcrumb-item.active,
+  .breadcrumb .bi {
+    font-size: 1.125rem !important;
+  }
+} 
+
+/* === Standard website size === */
+.site-content {
+  transform: scale(0.9);
+  transform-origin: top center;
+  width: 111.11%;
+  margin-left: -5.56%;
+  box-sizing: border-box;
+}
+
+/* Ensure tool buttons scale with the rest of the content */
+.site-content .tool-btn {
+  transform: none !important; /* Remove any conflicting transforms */
+  font-size: inherit !important;
+  min-width: auto !important;
+  margin-bottom: inherit !important;
+}
+
+/* Ensure all buttons inside site-content scale properly */
+.site-content .btn {
+  transform: none !important;
+  font-size: inherit !important;
+}
+
+/* Ensure cards and their content scale properly */
+.site-content .card {
+  transform: none !important;
+  /* Removed width and margin overrides to prevent overlapping */
+}
+
+.site-content .card-title,
+.site-content .card-text,
+.site-content .card-body {
+  transform: none !important;
+  font-size: inherit !important;
+}
+
+/* Ensure JavaScript-generated tool cards scale properly */
+.site-content .tool-card {
+  transform: none !important;
+  font-size: inherit !important;
+}
+
+.site-content .tool-card .card-body {
+  transform: none !important;
+  font-size: inherit !important;
+}
+
+.site-content .tool-card .card-title {
+  transform: none !important;
+  font-size: inherit !important;
+}
+
+.site-content .tool-card i {
+  transform: none !important;
+  font-size: inherit !important;
+}
+
+/* Override any inline styles that might prevent scaling */
+.site-content [style*="transition"] {
+  transform: none !important;
+}
+
+/* Globally hide Related Tools section on all pages */
+#related-tools {
+  display: none !important;
+}
+
+/* Ensure ALL tool pages have standard scaling applied */
+body:not(.index-page) {
+  transform: scale(0.9);
+  transform-origin: top center;
+  width: 111.11%;
+  margin-left: -5.56%;
+  box-sizing: border-box;
+}
+
+/* Override for tool pages that have index-page class - apply body scaling instead of .site-content */
+body.index-page:not(.index-page) {
+  transform: scale(0.9);
+  transform-origin: top center;
+  width: 111.11%;
+  margin-left: -5.56%;
+  box-sizing: border-box;
+}
+
+/* Ensure tool pages with index-page class get body scaling */
+body.index-page {
+  transform: scale(0.9);
+  transform-origin: top center;
+  width: 111.11%;
+  margin-left: -5.56%;
+  box-sizing: border-box;
+}
+
+/* Exception: Only the main homepage (with .site-content) should use .site-content scaling */
+body.index-page .site-content {
+  transform: scale(0.9);
+  transform-origin: top center;
+  width: 111.11%;
+  margin-left: -5.56%;
+  box-sizing: border-box;
+}
+
+/* ============================================
+   VISIBILITY FIXES FOR BETTER USER EXPERIENCE
+   ============================================ */
+
+/* Fix alert-info boxes with dark backgrounds - make text visible */
+.alert-info.bg-dark,
+.alert-info.bg-dark.border-danger {
+  color: #2806eb !important;
+  background-color: rgba(13, 110, 253, 0.1) !important;
+  border-color: #2806eb !important;
+}
+
+.alert-info.bg-dark strong,
+.alert-info.bg-dark.border-danger strong {
+  color: #2806eb !important;
+}
+
+.alert-info.bg-dark i,
+.alert-info.bg-dark.border-danger i {
+  color: #2806eb !important;
+}
+
+/* Remove only background color from alert-info when it contains code examples, keep box styling */
+.alert-info pre,
+.alert-info code {
+  background-color: transparent !important;
+}
+
+.alert-info:has(pre),
+.alert-info:has(code) {
+  background-color: transparent !important;
+}
+
+/* Fix text-muted elements - make them more visible */
+.text-muted {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Fix form labels and text in dark cards */
+.card.bg-black .form-label,
+.card.bg-black label {
+  color: #ffffff !important;
+}
+
+.card.bg-black .text-light {
+  color: #ffffff !important;
+}
+
+/* Fix result displays and output areas */
+.result-display,
+.output-display,
+.password-display {
+  color: #2806eb !important;
+  font-weight: bold !important;
+}
+
+/* Fix input placeholders */
+.form-control::placeholder,
+.form-select::placeholder {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+/* Fix small text and helper text */
+small,
+.small {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+/* Fix card text in dark themes */
+.card.bg-black .card-text,
+.card.bg-black p {
+  color: #ffffff !important;
+}
+
+.card.bg-black h1,
+.card.bg-black h2,
+.card.bg-black h3,
+.card.bg-black h4,
+.card.bg-black h5,
+.card.bg-black h6 {
+  color: #ffffff !important;
+}
+
+/* Fix list items in dark cards */
+.card.bg-black ul li,
+.card.bg-black ol li {
+  color: #ffffff !important;
+}
+
+/* Fix table text in dark themes */
+.table-dark,
+.table-dark td,
+.table-dark th {
+  color: #ffffff !important;
+}
+
+/* Fix button text visibility */
+.btn-outline-danger {
+  color: #dc3545 !important;
+  border-color: #dc3545 !important;
+}
+
+.btn-outline-danger:hover {
+  color: #ffffff !important;
+  background-color: #dc3545 !important;
+}
+
+/* Fix breadcrumb text */
+.breadcrumb-item,
+.breadcrumb-item a {
+  color: #ffffff !important;
+}
+
+.breadcrumb-item.active {
+  color: #2806eb !important;
+}
+
+/* Fix navbar text */
+.navbar-nav .nav-link {
+  color: #ffffff !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #2806eb !important;
+}
+
+/* Fix footer text */
+footer,
+footer p,
+footer a,
+footer .text-muted {
+  color: #ffffff !important;
+}
+
+/* Fix tool description text */
+.tool-description,
+.tool-description p {
+  color: #ffffff !important;
+}
+
+/* Fix info boxes and tips */
+.info-box,
+.tip-box {
+  color: #ffffff !important;
+  background-color: rgba(13, 110, 253, 0.1) !important;
+  border: 1px solid #2806eb !important;
+}
+
+/* Fix calculation results */
+.calculation-result,
+.result-value {
+  color: #2806eb !important;
+  font-weight: bold !important;
+}
+
+/* Fix status messages */
+.status-message,
+.status-text {
+  color: #ffffff !important;
+}
+
+/* Fix dropdown text */
+.dropdown-menu {
+  background-color: #000000 !important;
+  border: 1px solid #dc3545 !important;
+}
+
+.dropdown-item {
+  color: #ffffff !important;
+}
+
+.dropdown-item:hover {
+  background-color: #dc3545 !important;
+  color: #ffffff !important;
+}
+
+/* ============================================
+   CARD WIDTH INCREASE - FINAL OVERRIDE
+   ============================================ */
+
+/* Removed card width and margin overrides to prevent overlapping */
+
+/* Removed duplicate card-body width rule to prevent overlapping issues */
+/* Defer layout/paint for below-the-fold grids */
+.tools-grid-below-fold {
+  content-visibility: auto;
+  contain-intrinsic-size: 1px 1200px;
+}

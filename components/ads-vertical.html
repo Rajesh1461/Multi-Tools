@@ -1,0 +1,65 @@
+﻿<!-- Vertical Side Ads Component -->
+<div class="vertical-ad left-ad sticky-side-ad left">
+  <div class="ad-placeholder-vertical">
+    <!-- 📢 AD SENSE VERTICAL LEFT Ad -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3712069892669914"
+         data-ad-slot="7131210434"
+         data-ad-format="vertical"
+         data-full-width-responsive="true"></ins>
+  </div>
+</div>
+
+<div class="vertical-ad right-ad sticky-side-ad right">
+  <div class="ad-placeholder-vertical">
+    <!-- 📢 AD SENSE VERTICAL RIGHT Ad -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3712069892669914"
+         data-ad-slot="4595744104"
+         data-ad-format="vertical"
+         data-full-width-responsive="true"></ins>
+  </div>
+</div>
+
+<style>
+.vertical-ad {
+  width: 160px;
+  height: 600px;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.vertical-ad.left {
+  left: 10px;
+}
+
+.vertical-ad.right {
+  right: 10px;
+}
+
+.ad-placeholder-vertical {
+  min-height: 600px;
+  width: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 1200px) {
+  .vertical-ad {
+    display: none;
+  }
+}
+</style>

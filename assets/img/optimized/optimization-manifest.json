@@ -1,0 +1,72 @@
+{
+  "generated": "2025-10-27T07:03:43.635Z",
+  "totalImages": 9,
+  "totalOriginalSize": 949641,
+  "totalOptimizedSize": 315734,
+  "totalSavings": "66.75",
+  "images": [
+    {
+      "original": "assets\\img\\apple-touch-icon.png",
+      "optimized": "assets\\img\\optimized\\apple-touch-icon.webp",
+      "originalSize": 38306,
+      "optimizedSize": 24040,
+      "savings": 37.24
+    },
+    {
+      "original": "assets\\img\\cyber.jpg",
+      "optimized": "assets\\img\\optimized\\cyber.webp",
+      "originalSize": 23558,
+      "optimizedSize": 50736,
+      "savings": -115.37
+    },
+    {
+      "original": "assets\\img\\favicon-96x96.png",
+      "optimized": "assets\\img\\optimized\\favicon-96x96.webp",
+      "originalSize": 13161,
+      "optimizedSize": 18666,
+      "savings": -41.83
+    },
+    {
+      "original": "assets\\img\\leaf-wallpaper.jpg",
+      "optimized": "assets\\img\\optimized\\leaf-wallpaper.webp",
+      "originalSize": 406289,
+      "optimizedSize": 43668,
+      "savings": 89.25
+    },
+    {
+      "original": "assets\\img\\MULTI-TOOLS.png",
+      "optimized": "assets\\img\\optimized\\MULTI-TOOLS.webp",
+      "originalSize": 95785,
+      "optimizedSize": 51692,
+      "savings": 46.03
+    },
+    {
+      "original": "assets\\img\\og-image.jpg",
+      "optimized": "assets\\img\\optimized\\og-image.webp",
+      "originalSize": 38235,
+      "optimizedSize": 19266,
+      "savings": 49.61
+    },
+    {
+      "original": "assets\\img\\Rajesh Kumar S.jpg",
+      "optimized": "assets\\img\\optimized\\Rajesh Kumar S.webp",
+      "originalSize": 43119,
+      "optimizedSize": 50438,
+      "savings": -16.97
+    },
+    {
+      "original": "assets\\img\\web-app-manifest-192x192.png",
+      "optimized": "assets\\img\\optimized\\web-app-manifest-192x192.webp",
+      "originalSize": 43459,
+      "optimizedSize": 24248,
+      "savings": 44.2
+    },
+    {
+      "original": "assets\\img\\web-app-manifest-512x512.png",
+      "optimized": "assets\\img\\optimized\\web-app-manifest-512x512.webp",
+      "originalSize": 247729,
+      "optimizedSize": 32980,
+      "savings": 86.69
+    }
+  ]
+}

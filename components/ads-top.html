@@ -1,0 +1,44 @@
+<!-- Top Ad Unit -->
+<div class="ad-container-top">
+  <div class="ad-placeholder-top">
+    <!-- 📢 AD SENSE TOP Ad -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3712069892669914"
+         data-ad-slot="8498162808"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </div>
+</div>
+<style>
+.ad-container-top {
+  position: relative;
+  z-index: 1;
+}
+.ad-placeholder-top {
+  transition: all 0.3s ease;
+}
+
+</style>
+<script>
+// Hide placeholder when ad loads
+document.addEventListener('DOMContentLoaded', function() {
+  const adContainer = document.querySelector('.ad-container-top');
+  if (adContainer) {
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList') {
+          const adElement = adContainer.querySelector('iframe');
+          if (adElement) {
+            const placeholder = adContainer.querySelector('.ad-placeholder-top');
+            if (placeholder) {
+              placeholder.style.display = 'none';
+            }
+          }
+        }
+      });
+    });
+    observer.observe(adContainer, { childList: true, subtree: true });
+  }
+});
+</script>

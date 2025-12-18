@@ -1,0 +1,290 @@
+﻿<!-- Related Tools Component -->
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card bg-black border-danger mt-4">
+      
+      <div class="card-body text-light">
+        <div class="row" id="related-tools-container">
+          <div class="col-12 text-center text-light">Loading related tools...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// Related tools mapping
+const toolCategories = {
+  'calculator': [
+    { name: 'Age Calculator', url: 'age-calculator.html', icon: 'bi-calculator' },
+    { name: 'BMI Calculator', url: 'bmi-calculator.html', icon: 'bi-calculator' },
+    { name: 'Percentage Calculator', url: 'percentage-calculator.html', icon: 'bi-calculator' },
+    { name: 'Tip Calculator', url: 'tip-calculator.html', icon: 'bi-calculator' },
+    { name: 'Compound Interest Calculator', url: 'compound-interest-calculator.html', icon: 'bi-calculator' },
+    { name: 'Loan EMI Calculator', url: 'loan-emi-calculator.html', icon: 'bi-calculator' }
+  ],
+  'converter': [
+    { name: 'Unit Converter', url: 'unit-converter.html', icon: 'bi-arrow-left-right' },
+    { name: 'Currency Converter', url: 'currency-converter.html', icon: 'bi-currency-exchange' },
+    { name: 'Temperature Converter', url: 'temperature-converter.html', icon: 'bi-thermometer-half' },
+    { name: 'Length Converter', url: 'length-converter.html', icon: 'bi-rulers' },
+    { name: 'Weight Converter', url: 'weight-converter.html', icon: 'bi-weight' },
+    { name: 'Speed Converter', url: 'speed-converter.html', icon: 'bi-speedometer2' },
+    { name: 'Area Calculator', url: 'area-calculator.html', icon: 'bi-square' },
+    { name: 'Volume Calculator', url: 'volume-calculator.html', icon: 'bi-box' },
+    { name: 'Data Storage Converter', url: 'data-storage-converter.html', icon: 'bi-hdd' },
+    { name: 'Energy Converter', url: 'energy-converter.html', icon: 'bi-lightning' },
+    { name: 'Pressure Converter', url: 'pressure-converter.html', icon: 'bi-speedometer' },
+    { name: 'Fuel Efficiency Converter', url: 'fuel-efficiency-converter.html', icon: 'bi-fuel-pump' }
+  ],
+  'generator': [
+    { name: 'Password Generator', url: 'password-generator.html', icon: 'bi-key' },
+    { name: 'QR Code Generator', url: 'qr-code-generator.html', icon: 'bi-qr-code' },
+    { name: 'Hash Generator', url: 'hash-generator.html', icon: 'bi-hash' },
+    { name: 'Random Number Generator', url: 'random-number-generator.html', icon: 'bi-shuffle' },
+    { name: 'Random String Generator', url: 'random-string-generator.html', icon: 'bi-text-paragraph' },
+    { name: 'Key Generator', url: 'key-generator.html', icon: 'bi-key-fill' },
+    { name: 'Business Name Generator', url: 'business-name-generator.html', icon: 'bi-building' },
+    { name: 'Hashtag Generator', url: 'hashtag-generator.html', icon: 'bi-hash' },
+    { name: 'Certificate Generator', url: 'certificate-generator.html', icon: 'bi-award' },
+    { name: 'Wedding Invitation Generator', url: 'wedding-invitation-generator.html', icon: 'bi-envelope-heart' },
+    { name: 'Story Plot Generator', url: 'story-plot-generator.html', icon: 'bi-book' },
+    { name: 'Social Media Post Generator', url: 'social-media-post-generator.html', icon: 'bi-share' }
+  ],
+  'image': [
+    { name: 'Image Compressor', url: 'image-compressor.html', icon: 'bi-image' },
+    { name: 'Image Resizer', url: 'image-resizer.html', icon: 'bi-arrows-angle-expand' },
+    { name: 'Image Cropper', url: 'image-cropper.html', icon: 'bi-crop' },
+    { name: 'Convert Image to Base64', url: 'convert-image-to-base64.html', icon: 'bi-code-slash' },
+    { name: 'Convert Image to JPG', url: 'image-to-jpg.html', icon: 'bi-file-earmark-image' },
+    { name: 'Convert Image to PNG', url: 'image-to-png.html', icon: 'bi-file-earmark-image' },
+    { name: 'Convert WebP to PNG', url: 'convert-webp-to-png.html', icon: 'bi-arrow-repeat' },
+    { name: 'Color Picker', url: 'color-picker.html', icon: 'bi-palette' },
+    { name: 'Color Code Picker', url: 'color-code-picker.html', icon: 'bi-palette-fill' },
+    { name: 'GIF Maker', url: 'gif-maker.html', icon: 'bi-camera-video' },
+    { name: 'Meme Generator', url: 'meme-generator.html', icon: 'bi-emoji-laughing' },
+    { name: 'Screenshot to PDF', url: 'screenshot-to-pdf.html', icon: 'bi-file-earmark-pdf' }
+  ],
+  'text': [
+    { name: 'Word Counter', url: 'word-counter.html', icon: 'bi-text-paragraph' },
+    { name: 'Character Counter', url: 'character-counter.html', icon: 'bi-type' },
+    { name: 'Text Case Converter', url: 'text-case-converter.html', icon: 'bi-text-center' },
+    { name: 'Case Converter', url: 'case-converter.html', icon: 'bi-text-center' },
+    { name: 'Fancy Text Generator', url: 'fancy-text-generator.html', icon: 'bi-type-bold' },
+    { name: 'Text to Speech', url: 'text-to-speech.html', icon: 'bi-volume-up' },
+    { name: 'Speech to Text', url: 'speech-to-text.html', icon: 'bi-mic' },
+    { name: 'HTML to Markdown', url: 'html-to-markdown.html', icon: 'bi-code' },
+    { name: 'Markdown to HTML', url: 'markdown-to-html.html', icon: 'bi-code-slash' },
+    { name: 'JSON Formatter', url: 'json-formatter.html', icon: 'bi-braces' },
+    { name: 'SQL Formatter', url: 'sql-formatter.html', icon: 'bi-database' },
+    { name: 'CSS Minifier', url: 'css-minifier.html', icon: 'bi-filetype-css' },
+    { name: 'JavaScript Minifier', url: 'javascript-minifier.html', icon: 'bi-filetype-js' },
+    { name: 'Grammar Checker', url: 'grammar-checker.html', icon: 'bi-check-circle' },
+    { name: 'Plagiarism Checker', url: 'plagiarism-checker.html', icon: 'bi-search' }
+  ],
+  'seo': [
+    { name: 'Meta Tag Generator', url: 'meta-tag-generator.html', icon: 'bi-tags' },
+    { name: 'Keyword Density Checker', url: 'keyword-density-checker.html', icon: 'bi-search' },
+    { name: 'Backlink Checker', url: 'backlink-checker.html', icon: 'bi-link-45deg' },
+    { name: 'Domain Authority Checker', url: 'domain-authority-checker.html', icon: 'bi-award' },
+    { name: 'Google Index Checker', url: 'google-index-checker.html', icon: 'bi-google' },
+    { name: 'Page Speed Checker', url: 'page-speed-checker.html', icon: 'bi-speedometer2' },
+    { name: 'Mobile Friendly Test', url: 'mobile-friendly-test.html', icon: 'bi-phone' },
+    { name: 'Sitemap Generator', url: 'sitemap-generator.html', icon: 'bi-diagram-3' },
+    { name: 'Robots.txt Generator', url: 'robots-txt-generator.html', icon: 'bi-robot' },
+    { name: 'XML Sitemap Validator', url: 'xml-sitemap-validator.html', icon: 'bi-check-circle' },
+    { name: 'SSL Certificate Checker', url: 'ssl-certificate-checker.html', icon: 'bi-shield-check' }
+  ],
+  'security': [
+    { name: 'Password Generator', url: 'password-generator.html', icon: 'bi-key' },
+    { name: 'Password Strength Checker', url: 'password-strength-checker.html', icon: 'bi-shield-check' },
+    { name: 'Password Hash Generator', url: 'password-hash-generator.html', icon: 'bi-hash' },
+    { name: '2FA Generator', url: '2fa-generator.html', icon: 'bi-phone' },
+    { name: 'Encryption Decryption', url: 'encryption-decryption.html', icon: 'bi-lock' },
+    { name: 'Digital Signature Generator', url: 'digital-signature-generator.html', icon: 'bi-signature' },
+    { name: 'File Hash Calculator', url: 'file-hash-calculator.html', icon: 'bi-file-earmark' },
+    { name: 'Checksum Calculator', url: 'checksum-calculator.html', icon: 'bi-calculator' },
+    { name: 'SHA Hash Generator', url: 'sha-hash-generator.html', icon: 'bi-hash' }
+  ],
+  'social': [
+    { name: 'TikTok Video Downloader', url: 'tiktok-video-downloader.html', icon: 'bi-music-note' },
+    { name: 'YouTube Video Downloader', url: 'youtube-video-downloader.html', icon: 'bi-youtube' },
+    { name: 'YouTube Thumbnail Downloader', url: 'youtube-thumbnail-downloader.html', icon: 'bi-image' },
+    { name: 'YouTube Tags Extractor', url: 'youtube-tags-extractor.html', icon: 'bi-tags' },
+    { name: 'Social Media Analytics', url: 'social-media-analytics.html', icon: 'bi-graph-up' },
+    { name: 'Social Media Post Generator', url: 'social-media-post-generator.html', icon: 'bi-share' },
+    { name: 'Social Media Scheduler', url: 'social-media-scheduler.html', icon: 'bi-calendar' },
+    { name: 'Hashtag Generator', url: 'hashtag-generator.html', icon: 'bi-hash' }
+  ],
+  'utility': [
+    { name: 'URL Shortener', url: 'url-shortener.html', icon: 'bi-link-45deg' },
+    { name: 'URL Encoder Decoder', url: 'url-encoder-decoder.html', icon: 'bi-link' },
+    { name: 'Base64 Encoder Decoder', url: 'base64-encoder-decoder.html', icon: 'bi-code-slash' },
+    { name: 'Binary Decimal Converter', url: 'binary-decimal-converter.html', icon: 'bi-0-circle' },
+    { name: 'Angle Converter', url: 'angle-converter.html', icon: 'bi-compass' },
+    { name: 'Time Zone Converter', url: 'time-zone-converter.html', icon: 'bi-clock' },
+    { name: 'Name to Numerology', url: 'name-to-numerology.html', icon: 'bi-person' },
+    { name: 'Dice Roller', url: 'dice-roller.html', icon: 'bi-dice-6' },
+    { name: 'Flip a Coin', url: 'flip-a-coin.html', icon: 'bi-coin' },
+    { name: 'Lottery Number Generator', url: 'lottery-number-generator.html', icon: 'bi-trophy' },
+    { name: 'Random Text Generator', url: 'random-text-generator.html', icon: 'bi-text-paragraph' },
+    { name: 'Emoji Keyboard', url: 'emoji-keyboard.html', icon: 'bi-emoji-smile' },
+    { name: 'Internet Speed Test', url: 'internet-speed-test.html', icon: 'bi-speedometer2' },
+    { name: 'IP Address Lookup', url: 'ip-address-lookup.html', icon: 'bi-geo-alt' },
+    { name: 'IP Address Tracker', url: 'ip-address-tracker.html', icon: 'bi-geo-alt-fill' },
+    { name: 'Barcode Generator', url: 'barcode-generator.html', icon: 'bi-upc-scan' },
+    { name: 'Daily Planner', url: 'daily-planner.html', icon: 'bi-calendar-check' },
+    { name: 'Resume Builder', url: 'resume-builder.html', icon: 'bi-file-earmark-text' },
+    { name: 'Invoice Generator', url: 'invoice-generator.html', icon: 'bi-receipt' },
+    { name: 'Ebook Creator', url: 'ebook-creator.html', icon: 'bi-book' },
+    { name: 'Htaccess Redirect Generator', url: 'htaccess-redirect-generator.html', icon: 'bi-arrow-repeat' }
+  ]
+};
+
+// Function to determine tool category based on current page
+function getToolCategory() {
+  const currentPath = window.location.pathname;
+  const fileName = currentPath.split('/').pop();
+  // Map specific tools to categories
+  const toolCategoryMap = {
+    'mobile-friendly-test.html': 'seo',
+    'age-calculator.html': 'calculator',
+    'bmi-calculator.html': 'calculator',
+    'percentage-calculator.html': 'calculator',
+    'tip-calculator.html': 'calculator',
+    'compound-interest-calculator.html': 'calculator',
+    'loan-emi-calculator.html': 'calculator',
+    'unit-converter.html': 'converter',
+    'currency-converter.html': 'converter',
+    'temperature-converter.html': 'converter',
+    'length-converter.html': 'converter',
+    'weight-converter.html': 'converter',
+    'speed-converter.html': 'converter',
+    'area-calculator.html': 'converter',
+    'volume-calculator.html': 'converter',
+    'data-storage-converter.html': 'converter',
+    'energy-converter.html': 'converter',
+    'pressure-converter.html': 'converter',
+    'fuel-efficiency-converter.html': 'converter',
+    'password-generator.html': 'security',
+    'qr-code-generator.html': 'generator',
+    'hash-generator.html': 'security',
+    'random-number-generator.html': 'generator',
+    'random-string-generator.html': 'generator',
+    'key-generator.html': 'security',
+    'business-name-generator.html': 'generator',
+    'hashtag-generator.html': 'social',
+    'certificate-generator.html': 'generator',
+    'wedding-invitation-generator.html': 'generator',
+    'story-plot-generator.html': 'generator',
+    'social-media-post-generator.html': 'social',
+    'image-compressor.html': 'image',
+    'image-resizer.html': 'image',
+    'image-cropper.html': 'image',
+    'convert-image-to-base64.html': 'image',
+    'image-to-jpg.html': 'image',
+    'image-to-png.html': 'image',
+    'convert-webp-to-png.html': 'image',
+    'color-picker.html': 'image',
+    'color-code-picker.html': 'image',
+    'gif-maker.html': 'image',
+    'meme-generator.html': 'image',
+    'screenshot-to-pdf.html': 'image',
+    'word-counter.html': 'text',
+    'character-counter.html': 'text',
+    'text-case-converter.html': 'text',
+    'case-converter.html': 'text',
+    'fancy-text-generator.html': 'text',
+    'text-to-speech.html': 'text',
+    'speech-to-text.html': 'text',
+    'html-to-markdown.html': 'text',
+    'markdown-to-html.html': 'text',
+    'json-formatter.html': 'text',
+    'sql-formatter.html': 'text',
+    'css-minifier.html': 'text',
+    'javascript-minifier.html': 'text',
+    'grammar-checker.html': 'text',
+    'plagiarism-checker.html': 'text',
+    'meta-tag-generator.html': 'seo',
+    'keyword-density-checker.html': 'seo',
+    'backlink-checker.html': 'seo',
+    'domain-authority-checker.html': 'seo',
+    'google-index-checker.html': 'seo',
+    'page-speed-checker.html': 'seo',
+    'sitemap-generator.html': 'seo',
+    'robots-txt-generator.html': 'seo',
+    'xml-sitemap-validator.html': 'seo',
+    'ssl-certificate-checker.html': 'security',
+    'password-strength-checker.html': 'security',
+    'password-hash-generator.html': 'security',
+    '2fa-generator.html': 'security',
+    'encryption-decryption.html': 'security',
+    'digital-signature-generator.html': 'security',
+    'file-hash-calculator.html': 'security',
+    'checksum-calculator.html': 'security',
+    'sha-hash-generator.html': 'security',
+    'tiktok-video-downloader.html': 'social',
+    'youtube-video-downloader.html': 'social',
+    'youtube-thumbnail-downloader.html': 'social',
+    'youtube-tags-extractor.html': 'social',
+    'social-media-analytics.html': 'social',
+    'social-media-scheduler.html': 'social',
+    'url-shortener.html': 'utility',
+    'url-encoder-decoder.html': 'utility',
+    'base64-encoder-decoder.html': 'utility',
+    'binary-decimal-converter.html': 'utility',
+    'angle-converter.html': 'utility',
+    'time-zone-converter.html': 'utility',
+    'name-to-numerology.html': 'utility',
+    'dice-roller.html': 'utility',
+    'flip-a-coin.html': 'utility',
+    'lottery-number-generator.html': 'utility',
+    'random-text-generator.html': 'utility',
+    'emoji-keyboard.html': 'utility',
+    'internet-speed-test.html': 'utility',
+    'ip-address-lookup.html': 'utility',
+    'ip-address-tracker.html': 'utility',
+    'barcode-generator.html': 'utility',
+    'daily-planner.html': 'utility',
+    'resume-builder.html': 'utility',
+    'invoice-generator.html': 'utility',
+    'ebook-creator.html': 'utility',
+    'htaccess-redirect-generator.html': 'utility'
+  };
+  return toolCategoryMap[fileName] || 'utility';
+}
+
+// Function to populate related tools
+function populateRelatedTools() {
+  const container = document.getElementById('related-tools-container');
+  if (!container) return;
+  const category = getToolCategory();
+  const relatedTools = toolCategories[category] || toolCategories['utility'];
+  // Shuffle and take first 6 tools
+  const shuffled = relatedTools.sort(() => 0.5 - Math.random());
+  const selectedTools = shuffled.slice(0, 6);
+  let html = '';
+  selectedTools.forEach(tool => {
+    html += `
+      <div class="col-md-6 col-lg-4 mb-3">
+        <a href="${tool.url}" class="text-decoration-none">
+          <div class="card bg-dark border-danger h-100 tool-card">
+            <div class="card-body text-center">
+              <i class="bi ${tool.icon} text-danger fs-3 mb-2"></i>
+              <h6 class="text-light mb-0">${tool.name}</h6>
+            </div>
+          </div>
+        </a>
+      </div>
+    `;
+  });
+  container.innerHTML = html;
+}
+
+// Initialize related tools whether injected before or after DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', populateRelatedTools);
+} else {
+  populateRelatedTools();
+}
+</script>

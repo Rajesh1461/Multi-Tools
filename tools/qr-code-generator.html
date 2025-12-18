@@ -1,0 +1,787 @@
+<html lang="en"><head></head><body class="bg-dark text-light">﻿
+
+
+<style>
+/* Vertical side ads - show only on large screens */
+@media (min-width: 1200px) {
+  .vertical-ad {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vertical-ad {
+    display: none !important;
+  }
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>QR Code Generator - Free Online QR Code Creator | MultiTools</title>
+    <meta name="description" content="Generate QR codes online for free using our QR Code Generator. Customize size, colors, error correction, and download your QR instantly.">
+    <meta name="keywords" content="QR code generator, QR code creator, free QR code, QR code maker, online QR code, QR code tool">
+    <meta name="author" content="MultiTools">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="revisit-after" content="7 days">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  <!-- CSP temporarily disabled for debugging -->
+  <!--  -->
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://multitoolszone.fun/tools/qr-code-generator.html">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="QR Code Generator - Free Online QR Code Creator | MultiTools">
+  <meta property="og:description" content="Generate QR codes online for free using our QR Code Generator. Customize size, colors, error correction, and download your QR instantly.">
+  <meta property="og:url" content="https://multitoolszone.fun/tools/qr-code-generator.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://multitoolszone.fun/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-96x96.png">
+    
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+  <!-- Optimized Stylesheets -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css?v=3">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "QR Code Generator",
+      "description": "Free QR code generator tool to create QR codes for URLs, text, WiFi, contacts, and more. 100% free, no login required.",
+      "url": "https://multitoolszone.fun/tools/qr-code-generator.html",
+      "applicationCategory": "UtilitiesApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "ratingCount": "189"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "MultiTools"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MultiTools",
+        "url": "https://multitoolszone.fun"
+      }
+  </script>
+
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+/* Critical styles for immediate rendering */
+html, body { height: 100%; }
+body { margin: 0; padding: 0; background: #000; color: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+.card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); }
+.tool-btn { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); }
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.navbar { background: rgba(0, 0, 0, 0.8) !important; }
+.navbar-brand { color: #fff !important; }
+.nav-link { color: #fff !important; }
+.btn { border-radius: 0.375rem; }
+.btn-primary { background: #dc3545; border-color: #dc3545; }
+.btn-outline-primary { color: #dc3545; border-color: #dc3545; }
+.form-control { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; }
+.form-control:focus { background: rgba(0, 0, 0, 0.6); border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); }
+.card-body { color: #fff; }
+h1, h2, h3, h4, h5, h6 { color: #fff; }
+p { color: #fff; }
+label { color: #fff; }
+small { color: rgba(255, 255, 255, 0.85); }
+.alert { color: #fff; }
+.table-dark { color: #fff; }
+.table-dark td, .table-dark th { color: #fff; }
+.bg-dark { background: rgba(0, 0, 0, 0.8) !important; }
+.bg-secondary { background: rgba(108, 117, 125, 0.8) !important; color: #fff; }
+.text-muted { color: rgba(255, 255, 255, 0.75) !important; }
+/* Sticky footer */
+#footer { margin-top: auto; }
+  </style>
+  
+  <!-- Non-critical CSS loaded asynchronously -->
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../assets/css/style.css?v=3" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  </noscript>
+  <!-- Performance Optimization - Resource Hints -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="">
+
+  <!-- Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer=""></script>
+  <script src="../sw-config.js" defer=""></script>
+  <script src="../assets/js/include.js?v=3" defer=""></script>
+
+    <!-- AdSense Script with Error Handling -->
+    <script>
+      // AdSense initialization with error handling
+      (function() {
+        var adScript = document.createElement('script');
+        adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3712069892669914';
+        adScript.async = true;
+        adScript.crossOrigin = 'anonymous';
+        
+        // Add error handling
+        adScript.onerror = function() {
+          console.warn('Failed to load AdSense script. This is normal if you have an ad blocker enabled.');
+          // Fallback to a non-blocking error handler
+          window.adsbygoogle = window.adsbygoogle || [];
+          window.adsbygoogle.push({});
+        };
+        
+        // Insert the script in the head
+        document.head.appendChild(adScript);
+      })();
+    </script>
+
+
+<div id="header"><header class="bg-transparent pt-3 mb-4 border-bottom border-danger">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Logo positioned outside container for independent sizing -->
+  <div class="text-center mb-2" id="site-logo" style="background: transparent !important; margin-top: 5px;">
+    <a href="/">
+      <img src="/assets/img/optimized/MULTI-TOOLS.webp" alt="Multi Tools" style="height: 100px !important; width: auto !important; max-height: none !important; background: transparent !important; display: block !important; margin: 0 auto !important;" loading="lazy" decoding="async" width="500" height="500">
+    </a>
+  </div>
+  <div class="container" style="background: transparent !important;">
+
+    <!-- Simple link row below logo -->
+    <nav class="d-flex justify-content-end align-items-center gap-3 pb-1" aria-label="Primary" style="max-height: 100px;">
+      <a href="../" class="text-danger fw-semibold text-decoration-none">Home</a>
+      <a href="../About.html" class="text-danger fw-semibold text-decoration-none" target="_blank">About</a>
+      <a href="../Contact.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Contact</a>
+      <a href="../blog/" class="text-danger fw-semibold text-decoration-none" target="_blank">Blog</a>
+      <a href="../Privacy-Policy.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Privacy Policy</a>
+      <a href="../Terms-of-Service.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Terms</a>
+    </nav>
+  </div>
+
+  <style>
+    /* Navigation link styles */
+    header nav a {
+      font-size: 18px !important; 
+      /* around 17–18px */
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+
+    /* Hover effect */
+    header nav a:hover {
+      color: #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      header nav a {
+        font-size: 1rem !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      header nav a {
+        font-size: 0.55rem !important;
+        display: inline-block;
+      }
+    }
+  </style>
+</header>
+</div>
+<div class="container py-4">
+  <div id="breadcrumb">
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb align-items-center mb-4">
+    <li class="breadcrumb-item">
+      <a href="../" class="text-danger text-decoration-none">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </li>   
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://multitoolszone.fun/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://multitoolszone.fun/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Current Tool",
+      "item": "https://multitoolszone.fun/tools/current-tool.html"
+    }
+  ]
+}
+</script>
+<script>
+// Update breadcrumb JSON-LD with current page URL
+document.addEventListener('DOMContentLoaded', function() {
+  const script = document.querySelector('script[type="application/ld+json"]');
+  if (script) {
+    const data = JSON.parse(script.textContent);
+    data.itemListElement[2].item = window.location.href;
+    script.textContent = JSON.stringify(data);
+  }
+});
+</script>
+</div>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-4 text-center flex-grow-1 text-decoration-underline" style="color: #09ce24 !important;">
+        QR Code Generator - Free Online QR Code Creator
+      </h1>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+  
+  
+  <!-- In-Content Ad Unit (populated by includes) -->
+  <div id="ads-incontent"></div>
+  <div class="tool-interface">
+    <div class="row justify-content-center">
+      <div class="col-md-10 col-lg-8">
+        <div class="card">
+          <div class="card-body">
+                <div class="alert alert-info bg-dark">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Note:</strong> Generate QR codes for any content including URLs, text, contact information, and more.
+                </div>
+                
+                <div class="mb-3">
+                    <label for="qrContent" class="form-label">Content to encode:</label>
+                    <textarea id="qrContent" class="form-control bg-dark text-light" rows="3" placeholder="Enter text, URL, phone number, email, or any content you want to encode in QR code"></textarea>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="qrSize" class="form-label">QR Code Size:</label>
+                        <select id="qrSize" class="form-select bg-dark text-light">
+                            <option value="128">128x128 (Small)</option>
+                            <option value="256" selected="">256x256 (Medium)</option>
+                            <option value="512">512x512 (Large)</option>
+                            <option value="1024">1024x1024 (Extra Large)</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="qrErrorLevel" class="form-label">Error Correction Level:</label>
+                        <select id="qrErrorLevel" class="form-select bg-dark text-light">
+                            <option value="L">Low (7%)</option>
+                            <option value="M" selected="">Medium (15%)</option>
+                            <option value="Q">Quartile (25%)</option>
+                            <option value="H">High (30%)</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="qrForeground" class="form-label">Foreground Color:</label>
+                        <input type="color" id="qrForeground" class="form-control form-control-color bg-dark text-light" value="#000000">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="qrBackground" class="form-label">Background Color:</label>
+                        <input type="color" id="qrBackground" class="form-control form-control-color bg-dark text-light" value="#FFFFFF">
+                    </div>
+                </div>
+                
+                <div class="text-center mb-3">
+                    <button class="btn btn-danger me-2" onclick="generateQR()">
+                        <i class="fas fa-qrcode me-2"></i>Generate QR Code
+                    </button>
+                    <button class="btn btn-outline-danger" onclick="clearQR()">
+                        <i class="fas fa-trash me-2"></i>Clear
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Results Output Box -->
+        <div id="resultsBox" class="card bg-dark mb-4" style="display: none;">
+            
+            <div class="card-body text-center">
+                <div class="mb-3">
+                    <canvas id="qrCanvas" class="border"></canvas>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="downloadQR('png')">
+                            <i class="fas fa-download me-2"></i>Download PNG
+                        </button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="downloadQR('svg')">
+                            <i class="fas fa-download me-2"></i>Download SVG
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="copyQR()">
+                            <i class="fas fa-copy me-2"></i>Copy to Clipboard
+                        </button>
+                    </div>
+                    <div class="col-md-6 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="printQR()">
+                            <i class="fas fa-print me-2"></i>Print QR Code
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Quick Templates -->
+        <div class="card bg-dark mb-4">
+            
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="useTemplate('url')">
+                            <i class="fas fa-link me-2"></i>Website URL
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="useTemplate('email')">
+                            <i class="fas fa-envelope me-2"></i>Email Address
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="useTemplate('phone')">
+                            <i class="fas fa-phone me-2"></i>Phone Number
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="useTemplate('wifi')">
+                            <i class="fas fa-wifi me-2"></i>WiFi Network
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="useTemplate('vcard')">
+                            <i class="fas fa-address-card me-2"></i>Contact Info
+                        </button>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <button class="btn btn-outline-danger w-100" onclick="useTemplate('text')">
+                            <i class="fas fa-text-width me-2"></i>Plain Text
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+<!-- Related Tools -->
+<div id="related-tools"></div>
+
+<!-- Content Enhancer -->
+<div id="content-enhancer"></div>
+
+<!-- Multiplex Ad Unit (populated by includes) -->
+<div id="ads-multiplex"></div>
+</div>
+</div>
+
+  
+
+
+    <!-- Tool Description -->
+    <div class="card bg-black border-danger mb-4">
+      <div class="card-body">
+        <h2 class="text-danger mb-3">Free QR Code Generator</h2>
+        <p class="mb-3">Create professional QR codes instantly for URLs, text, contact information, WiFi networks, and more. Our QR code generator offers customization options and high-quality output for all your needs.</p>
+      </div>
+    </div>
+
+  <!-- Scripts specific to this tool -->
+  <script>
+    // Load related tools component
+    fetch('../components/related-tools.html')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('related-tools').innerHTML = html;
+      })
+      .catch(error => {
+        console.log('Error loading related tools:', error);
+        // Fallback: show a simple message instead of broken component
+        const container = document.getElementById('related-tools');
+        if (container) {
+          container.innerHTML = '<div class="text-center text-muted">Related tools temporarily unavailable</div>';
+        }
+      });
+    
+    // Load content enhancer component
+    fetch('../components/content-enhancer.html')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.text();
+      })
+      .then(html => {
+        document.getElementById('content-enhancer').innerHTML = html;
+      })
+      .catch(error => {
+        console.log('Error loading content enhancer:', error);
+        // Fallback: show a simple message instead of broken component
+        const container = document.getElementById('content-enhancer');
+        if (container) {
+          container.innerHTML = '<div class="text-center text-muted">Content enhancer temporarily unavailable</div>';
+        }
+      });
+  </script>
+  <script type="text/javascript">
+        let currentQRData = null;
+        let generateTimeout = null;
+        let qrLibLoading = false;
+        let qrLibLoaded = (typeof QRCode !== 'undefined');
+
+        function loadQRCodeLibrary(callback) {
+            if (qrLibLoaded) { if (callback) callback(); return; }
+            if (qrLibLoading) { // poll until available
+                const check = setInterval(function(){
+                    if (typeof QRCode !== 'undefined') { clearInterval(check); qrLibLoaded = true; if (callback) callback(); }
+                }, 100);
+                return;
+            }
+            qrLibLoading = true;
+            
+            var sources = [
+              '../assets/js/vendor/qrcode.min.js',
+              'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js',
+              'https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js',
+              'https://unpkg.com/qrcode@1.5.1/build/qrcode.min.js'
+            ];
+            
+            function tryNext() {
+              if (sources.length === 0) {
+                qrLibLoading = false;
+                alert('Failed to load QR Code library. Ensure a local copy exists at /assets/js/vendor/qrcode.min.js or check your internet connection.');
+                return;
+              }
+              var url = sources.shift();
+              var s = document.createElement('script');
+              s.src = url;
+              s.onload = function(){ qrLibLoaded = true; qrLibLoading = false; if (callback) callback(); };
+              s.onerror = function(){ tryNext(); };
+              document.head.appendChild(s);
+            }
+            tryNext();
+        }
+        
+        function generateQR() {
+            if (typeof QRCode === 'undefined') {
+                return loadQRCodeLibrary(generateQR);
+            }
+            const content = document.getElementById('qrContent').value.trim();
+            if (!content) {
+                alert('Please enter content to encode in the QR code.');
+                return;
+            }
+            
+            const size = parseInt(document.getElementById('qrSize').value);
+            const errorLevel = document.getElementById('qrErrorLevel').value;
+            const foreground = document.getElementById('qrForeground').value;
+            const background = document.getElementById('qrBackground').value;
+            
+            const canvas = document.getElementById('qrCanvas');
+            
+            try {
+                QRCode.toCanvas(canvas, content, {
+                    width: size,
+                    margin: 2,
+                    color: {
+                        dark: foreground,
+                        light: background
+                    },
+                    errorCorrectionLevel: errorLevel
+                }, function (error) {
+                    if (error) {
+                        console.error('QR Code generation error:', error);
+                        alert('Error generating QR code: ' + error.message);
+                    } else {
+                        currentQRData = {
+                            content: content,
+                            size: size,
+                            errorLevel: errorLevel,
+                            foreground: foreground,
+                            background: background
+                        };
+                        document.getElementById('resultsBox').style.display = 'block';
+                    }
+                });
+            } catch (error) {
+                console.error('QR Code generation exception:', error);
+                alert('Error generating QR code: ' + error.message);
+            }
+        }
+        
+        function clearQR() {
+            document.getElementById('qrContent').value = '';
+            document.getElementById('resultsBox').style.display = 'none';
+            currentQRData = null;
+        }
+        
+        function downloadQR(format) {
+            if (!currentQRData) {
+                alert('Please generate a QR code first.');
+                return;
+            }
+            
+            const content = currentQRData.content;
+            const size = currentQRData.size;
+            const errorLevel = currentQRData.errorLevel;
+            const foreground = currentQRData.foreground;
+            const background = currentQRData.background;
+            
+            if (format === 'png') {
+                QRCode.toDataURL(content, {
+                    width: size,
+                    margin: 2,
+                    color: {
+                        dark: foreground,
+                        light: background
+                    },
+                    errorCorrectionLevel: errorLevel
+                }, function (error, url) {
+                    if (error) {
+                        console.error('PNG generation error:', error);
+                        alert('Error generating PNG: ' + error.message);
+                    } else {
+                        const link = document.createElement('a');
+                        link.download = 'qr-code.png';
+                        link.href = url;
+                        link.click();
+                    }
+                });
+            } else if (format === 'svg') {
+                QRCode.toString(content, {
+                    width: size,
+                    margin: 2,
+                    color: {
+                        dark: foreground,
+                        light: background
+                    },
+                    errorCorrectionLevel: errorLevel
+                }, function (error, string) {
+                    if (error) {
+                        console.error('SVG generation error:', error);
+                        alert('Error generating SVG: ' + error.message);
+                    } else {
+                        const blob = new Blob([string], { type: 'image/svg+xml' });
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.download = 'qr-code.svg';
+                        link.href = url;
+                        link.click();
+                        URL.revokeObjectURL(url);
+                    }
+                });
+            }
+        }
+        
+        function copyQR() {
+            if (!currentQRData) {
+                alert('Please generate a QR code first.');
+                return;
+            }
+            
+            const canvas = document.getElementById('qrCanvas');
+            canvas.toBlob(function(blob) {
+                const item = new ClipboardItem({ "image/png": blob });
+                navigator.clipboard.write([item]).then(function() {
+                    alert('QR code copied to clipboard!');
+                }).catch(function() {
+                    alert('Failed to copy QR code to clipboard.');
+                });
+            });
+        }
+        
+        function printQR() {
+            if (!currentQRData) {
+                alert('Please generate a QR code first.');
+                return;
+            }
+            const canvas = document.getElementById('qrCanvas');
+            const printWindow = window.open('', '_blank');
+            if (!printWindow) return;
+            const doc = printWindow.document;
+            const html = '<!DOCTYPE html>' +
+              '<html><head><title>Print QR Code<\/title>' +
+              '<style>body{margin:0;padding:20px;text-align:center;}img{max-width:100%;height:auto;}<\/style>' +
+              '<\/head><body><\/body><\/html>';
+            doc.open();
+            doc.write(html);
+            doc.close();
+            const img = doc.createElement('img');
+            img.setAttribute('alt', 'QR Code');
+            img.src = canvas.toDataURL();
+            doc.body.appendChild(img);
+            setTimeout(function(){
+              try { printWindow.focus(); printWindow.print(); } catch(e) {}
+            }, 100);
+        }
+        
+        function useTemplate(type) {
+            let template = '';
+            let placeholder = '';
+            
+            switch(type) {
+                case 'url':
+                    template = 'https://example.com';
+                    placeholder = 'Enter website URL (e.g., https://example.com)';
+                    break;
+                case 'email':
+                    template = 'mailto:example@email.com';
+                    placeholder = 'Enter email address (e.g., example@email.com)';
+                    break;
+                case 'phone':
+                    template = 'tel:+1234567890';
+                    placeholder = 'Enter phone number (e.g., +1234567890)';
+                    break;
+                case 'wifi':
+                    template = 'WIFI:S:NetworkName;T:WPA;P:Password;;';
+                    placeholder = 'Enter WiFi details (SSID, Password, Security Type)';
+                    break;
+                case 'vcard':
+                    template = 'BEGIN:VCARD\nVERSION:3.0\nFN:John Doe\nORG:Company\nTEL:+1234567890\nEMAIL:john@example.com\nEND:VCARD';
+                    placeholder = 'Enter contact information';
+                    break;
+                case 'text':
+                    template = 'Hello World!';
+                    placeholder = 'Enter any text content';
+                    break;
+            }
+            
+            document.getElementById('qrContent').value = template;
+            document.getElementById('qrContent').placeholder = placeholder;
+        }
+        
+        // Debounced auto-generation for better performance
+        function debouncedGenerate() {
+            if (generateTimeout) {
+                clearTimeout(generateTimeout);
+            }
+            generateTimeout = setTimeout(function() {
+                const content = document.getElementById('qrContent').value.trim();
+                if (content !== '') {
+                    generateQR();
+                }
+            }, 1000); // Wait 1 second after user stops typing
+        }
+        
+        // Initialize event listeners after DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listeners with debouncing
+            document.getElementById('qrContent').addEventListener('input', debouncedGenerate);
+        
+        // Auto-generate when settings change (no debouncing needed)
+        document.getElementById('qrSize').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+        
+        document.getElementById('qrErrorLevel').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+        
+        document.getElementById('qrForeground').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+        
+        document.getElementById('qrBackground').addEventListener('change', function() {
+            if (document.getElementById('qrContent').value.trim() !== '') {
+                generateQR();
+            }
+        });
+        });
+        
+         // Optional: log only on success
+         if (typeof QRCode !== 'undefined') {
+             console.log('QRCode library loaded successfully');
+         }
+    </script>
+  
+  </div>
+
+  <!-- Footer Script -->
+  
+
+  <!-- Footer -->
+  <div id="footer"><footer>
+  <div class="container text-center">
+    <div>
+      <a href="/About.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">About</a>
+      <a href="/Contact.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Contact</a>
+      <a href="/Privacy-Policy.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Privacy Policy</a>
+      <a href="/Terms-of-Service.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Terms</a>
+    </div>
+    <div class="small mt-1" style="color: #0981e4 !important;">© 2025 MultiTools. All rights reserved.</div>
+    <div class="mt-3">
+      <p class="mb-1"><strong>Contact:</strong> <a href="mailto:rajeshkumarmenon@zohomail.in" style="color: #ffc107 !important; text-decoration: none;">rajeshkumarmenon@zohomail.in</a></p>
+    </div>
+  </div>
+</footer>
+</div>
+
+
+
+
+
+
+</div></div></div></body></html>

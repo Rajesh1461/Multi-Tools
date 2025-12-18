@@ -1,0 +1,780 @@
+<html lang="en"><head></head><body class="bg-dark text-light index-page">﻿
+
+
+<style>
+/* Vertical side ads - show only on large screens */
+@media (min-width: 1200px) {
+  .vertical-ad {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vertical-ad {
+    display: none !important;
+  }
+}
+</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Primary Meta Tags -->
+    <title>Keyword Density Checker - Free Online Tool | MultiTools</title>
+    <meta name="description" content="Free online Keyword Density Checker tool. Professional, easy-to-use Keyword Density Checker for various tasks and calculations.">
+    <meta name="keywords" content="keyword density checker, keyword analysis tool, SEO keyword tool, keyword frequency analyzer, content optimization, SEO tool, keyword density analyzer">
+    <meta name="author" content="MultiTools">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="en">
+    <meta name="revisit-after" content="7 days">
+  
+  <!-- Security Headers -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  
+  
+  <!-- Canonical URL -->
+    
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Keyword Density Checker - Free Online SEO Keyword Analysis Tool | MultiTools">
+  <meta property="og:description" content="Free online keyword density checker. Analyze keyword frequency and density in your content for better SEO optimization. Perfect for content creators and SEO professionals.">
+  <meta property="og:url" content="https://multitoolszone.fun/tools/keyword-density-checker.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://multitoolszone.fun/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+    <link rel="canonical" href="https://multitoolszone.fun/tools/keyword-density-checker.html">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon-96x96.png">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    
+    <!-- Performance Optimization -->
+    <div id="performance-optimizer"></div>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Optimized Stylesheets -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Keyword Density Checker",
+      "description": "Free online keyword density checker for analyzing keyword frequency and density in content",
+      "url": "https://multitoolszone.fun/tools/keyword-density-checker.html",
+      "applicationCategory": "SEOApplication",
+      "operatingSystem": "Web Browser",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Organization",
+        "name": "MultiTools"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "MultiTools",
+        "url": "https://multitoolszone.fun"
+      }
+    }
+    </script>
+    
+    <style>
+        .density-bar {
+            height: 20px;
+            background: #333;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        .density-fill {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .density-optimal { background: #dc3545; }
+        .density-high { background: #dc3545; }
+        .density-low { background: #6c757d; }
+        .keyword-highlight {
+            background-color: #dc3545;
+            color: white;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        .stats-card {
+            background: #000;
+            color: white;
+            border: 2px solid #dc3545;
+            border-radius: 10px;
+        }
+        .card-header-custom {
+            background: #dc3545 !important;
+            color: white !important;
+        }
+        .text-custom-red {
+            color: #dc3545 !important;
+        }
+        .text-custom-white {
+            color: white !important;
+        }
+        .text-custom-black {
+            color: #000 !important;
+        }
+        .bg-custom-red {
+            background-color: #dc3545 !important;
+        }
+        .bg-custom-black {
+            background-color: #000 !important;
+        }
+        .bg-custom-white {
+            background-color: white !important;
+        }
+        .border-custom-red {
+            border-color: #dc3545 !important;
+        }
+    </style>
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+/* Critical styles for immediate rendering */
+body { margin: 0; padding: 0; background: #000; color: #fff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+.card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); }
+.tool-btn { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); }
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.navbar { background: rgba(0, 0, 0, 0.8) !important; }
+.navbar-brand { color: #fff !important; }
+.nav-link { color: #fff !important; }
+.btn { border-radius: 0.375rem; }
+.btn-primary { background: #dc3545; border-color: #dc3545; }
+.btn-outline-primary { color: #dc3545; border-color: #dc3545; }
+.form-control { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; }
+.form-control:focus { background: rgba(0, 0, 0, 0.6); border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); }
+.card-body { color: #fff; }
+h1, h2, h3, h4, h5, h6 { color: #fff; }
+p { color: #fff; }
+label { color: #fff; }
+small { color: rgba(255, 255, 255, 0.85); }
+.alert { color: #fff; }
+.table-dark { color: #fff; }
+.table-dark td, .table-dark th { color: #fff; }
+.bg-dark { background: rgba(0, 0, 0, 0.8) !important; }
+.bg-secondary { background: rgba(108, 117, 125, 0.8) !important; color: #fff; }
+.text-muted { color: rgba(255, 255, 255, 0.75) !important; }
+</style>
+  
+  <!-- Non-critical CSS loaded asynchronously -->
+
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../assets/css/style.css?v=3" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  </noscript>
+  <!-- Performance Optimization - Resource Hints -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="">
+
+    <!-- AdSense Script with Error Handling -->
+    <script>
+      // AdSense initialization with error handling
+      (function() {
+        var adScript = document.createElement('script');
+        adScript.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3712069892669914';
+        adScript.async = true;
+        adScript.crossOrigin = 'anonymous';
+        
+        // Add error handling
+        adScript.onerror = function() {
+          console.warn('Failed to load AdSense script. This is normal if you have an ad blocker enabled.');
+          // Fallback to a non-blocking error handler
+          window.adsbygoogle = window.adsbygoogle || [];
+          window.adsbygoogle.push({});
+        };
+        
+        // Insert the script in the head
+        document.head.appendChild(adScript);
+      })();
+    </script>
+
+
+    
+
+    <div id="header"><header class="bg-transparent pt-3 mb-4 border-bottom border-danger">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Logo positioned outside container for independent sizing -->
+  <div class="text-center mb-2" id="site-logo" style="background: transparent !important; margin-top: 5px;">
+    <a href="/">
+      <img src="/assets/img/optimized/MULTI-TOOLS.webp" alt="Multi Tools" style="height: 100px !important; width: auto !important; max-height: none !important; background: transparent !important; display: block !important; margin: 0 auto !important;" loading="lazy" decoding="async" width="500" height="500">
+    </a>
+  </div>
+  <div class="container" style="background: transparent !important;">
+
+    <!-- Simple link row below logo -->
+    <nav class="d-flex justify-content-end align-items-center gap-3 pb-1" aria-label="Primary" style="max-height: 100px;">
+      <a href="../" class="text-danger fw-semibold text-decoration-none">Home</a>
+      <a href="../About.html" class="text-danger fw-semibold text-decoration-none" target="_blank">About</a>
+      <a href="../Contact.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Contact</a>
+      <a href="../blog/" class="text-danger fw-semibold text-decoration-none" target="_blank">Blog</a>
+      <a href="../Privacy-Policy.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Privacy Policy</a>
+      <a href="../Terms-of-Service.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Terms</a>
+    </nav>
+  </div>
+
+  <style>
+    /* Navigation link styles */
+    header nav a {
+      font-size: 18px !important; 
+      /* around 17–18px */
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+
+    /* Hover effect */
+    header nav a:hover {
+      color: #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      header nav a {
+        font-size: 1rem !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      header nav a {
+        font-size: 0.55rem !important;
+        display: inline-block;
+      }
+    }
+  </style>
+</header>
+</div>
+    
+    <div class="container py-4">
+    
+    <div id="breadcrumb">
+<nav aria-label="breadcrumb" class="mb-3">
+  <ol class="breadcrumb align-items-center mb-4">
+    <li class="breadcrumb-item">
+      <a href="../" class="text-danger text-decoration-none">
+        <i class="fas fa-home"></i> Home
+      </a>
+    </li>   
+  </ol>
+</nav>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://multitoolszone.fun/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Tools",
+      "item": "https://multitoolszone.fun/tools/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Current Tool",
+      "item": "https://multitoolszone.fun/tools/current-tool.html"
+    }
+  ]
+}
+</script>
+<script>
+// Update breadcrumb JSON-LD with current page URL
+document.addEventListener('DOMContentLoaded', function() {
+  const script = document.querySelector('script[type="application/ld+json"]');
+  if (script) {
+    const data = JSON.parse(script.textContent);
+    data.itemListElement[2].item = window.location.href;
+    script.textContent = JSON.stringify(data);
+  }
+});
+</script>
+</div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-4 text-center flex-grow-1 text-decoration-underline" style="color: #09ce24 !important;">
+        Keyword Density Checker - Free Online SEO Keyword Analysis Tool
+      </h1>
+    </div>
+    
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        
+        <div class="alert alert-info bg-dark border-danger text-light">
+            <strong>About this tool:</strong> Analyze the keyword density of your content to optimize for SEO and readability.
+            <br><strong>How to use:</strong> Paste your text or webpage content, then click 'Check Density' to see keyword frequency and percentage breakdowns.
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card bg-black border-danger">
+                    
+                    <div class="card-body">
+                        <div class="alert bg-black border-danger text-custom-white">
+                            <strong>Note:</strong> Analyze keyword density in your content to optimize for SEO. Check how often your target keywords appear in the text.
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-custom-white">Content Text</label>
+                            <textarea class="form-control bg-dark text-light border-danger" id="contentText" rows="8" placeholder="Paste your content here..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label text-custom-white">Target Keywords (one per line)</label>
+                            <textarea class="form-control bg-dark text-light border-danger" id="keywords" rows="4" placeholder="Enter your target keywords, one per line..."></textarea>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="caseSensitive">
+                                    <label class="form-check-label text-custom-white" for="caseSensitive">
+                                        Case Sensitive
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="excludeCommonWords" checked="">
+                                    <label class="form-check-label text-custom-white" for="excludeCommonWords">
+                                        Exclude Common Words
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-danger btn-lg me-2" onclick="analyzeDensity()">
+                                Analyze Density
+                            </button>
+                            <button class="btn btn-outline-danger me-2" onclick="loadSample()">
+                                Load Sample
+                            </button>
+                            <button class="btn btn-outline-danger" onclick="clearContent()">
+                                Clear
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card bg-black border-danger mb-4">
+                    
+                    <div class="card-body">
+                        <div id="resultsSection" style="display: none;">
+                            <div class="stats-card p-3 mb-3">
+                                <div class="row text-center">
+                                    <div class="col-md-4">
+                                        <h6 class="text-custom-white">Total Words</h6>
+                                        <div id="totalWords" class="text-custom-white">0</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="text-custom-white">Unique Words</h6>
+                                        <div id="uniqueWords" class="text-custom-white">0</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6 class="text-custom-white">Keywords Found</h6>
+                                        <div id="keywordsFound" class="text-custom-white">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="keywordResults">
+                                <!-- Keyword results will be displayed here -->
+                            </div>
+                            <div class="text-center mt-3">
+                                <button class="btn btn-outline-danger me-2" onclick="downloadReport()" id="downloadBtn">
+                                    Download Report
+                                </button>
+                                <button class="btn btn-outline-danger" onclick="highlightKeywords()" id="highlightBtn">
+                                    Highlight Keywords
+                                </button>
+                            </div>
+                        </div>
+                        <div id="noResultsSection">
+                            <div class="text-center text-custom-white">
+                                <p>Enter content and keywords, then click "Analyze Density" to see results.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-black border-danger">
+                    
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <h6 class="text-custom-red">Optimal Density (1-3%)</h6>
+                                <div class="density-bar">
+                                    <div class="density-fill density-optimal" style="width: 60%"></div>
+                                </div>
+                                <small class="text-custom-white">Best for SEO - natural and effective</small>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <h6 class="text-custom-red">High Density (3-5%)</h6>
+                                <div class="density-bar">
+                                    <div class="density-fill density-high" style="width: 80%"></div>
+                                </div>
+                                <small class="text-custom-white">May be considered keyword stuffing</small>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <h6 class="text-custom-red">Low Density (&lt;1%)</h6>
+                                <div class="density-bar">
+                                    <div class="density-fill density-low" style="width: 30%"></div>
+                                </div>
+                                <small class="text-custom-white">May need more keyword usage</small>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <h6 class="text-custom-red">Best Practices:</h6>
+                            <ul class="text-custom-white">
+                                <li>Use keywords naturally in your content</li>
+                                <li>Aim for 1-3% keyword density</li>
+                                <li>Include keywords in headings and meta descriptions</li>
+                                <li>Focus on user intent, not just keyword stuffing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                    
+        </div>
+</div>
+        </div>
+    </div>
+  <!-- Related Tools -->
+
+        <!-- Related Tools -->
+  <div id="related-tools"></div>
+  
+  <!-- Multiplex Ad Unit -->
+  <div id="ads-multiplex"></div>
+  
+  <!-- In-Content Ad Unit -->
+  <div id="ads-incontent"></div>
+  
+  
+    <script>
+        let analysisResults = null;
+
+        function analyzeDensity() {
+            const content = document.getElementById('contentText').value.trim();
+            const keywords = document.getElementById('keywords').value.trim();
+            const caseSensitive = document.getElementById('caseSensitive').checked;
+            const excludeCommonWords = document.getElementById('excludeCommonWords').checked;
+
+            if (!content) {
+                alert('Please enter some content to analyze.');
+                return;
+            }
+
+            if (!keywords) {
+                alert('Please enter at least one keyword to analyze.');
+                return;
+            }
+
+            // Parse keywords
+            const keywordList = keywords.split('\n').map(k => k.trim()).filter(k => k.length > 0);
+            
+            // Analyze content
+            const analysis = performAnalysis(content, keywordList, caseSensitive, excludeCommonWords);
+            analysisResults = analysis;
+            
+            // Display results
+            displayResults(analysis);
+        }
+
+        function performAnalysis(content, keywords, caseSensitive, excludeCommonWords) {
+            // Clean and prepare content
+            let processedContent = content;
+            if (!caseSensitive) {
+                processedContent = content.toLowerCase();
+            }
+
+            // Remove HTML tags and extra whitespace
+            processedContent = processedContent.replace(/<[^>]*>/g, ' ');
+            processedContent = processedContent.replace(/\s+/g, ' ').trim();
+
+            // Split into words
+            const words = processedContent.split(/\s+/);
+            const totalWords = words.length;
+
+            // Get unique words
+            const uniqueWords = [...new Set(words)].length;
+
+            // Common words to exclude
+            const commonWords = excludeCommonWords ? [
+                'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by',
+                'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did',
+                'will', 'would', 'could', 'should', 'may', 'might', 'can', 'this', 'that', 'these', 'those',
+                'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them'
+            ] : [];
+
+            // Analyze each keyword
+            const keywordAnalysis = [];
+            let totalKeywordOccurrences = 0;
+
+            keywords.forEach(keyword => {
+                const searchKeyword = caseSensitive ? keyword : keyword.toLowerCase();
+                const regex = new RegExp(`\\b${searchKeyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, caseSensitive ? 'g' : 'gi');
+                const matches = processedContent.match(regex) || [];
+                const occurrences = matches.length;
+                const density = totalWords > 0 ? (occurrences / totalWords) * 100 : 0;
+
+                totalKeywordOccurrences += occurrences;
+
+                // Determine density status
+                let status, statusClass, recommendation;
+                if (density >= 3) {
+                    status = 'High';
+                    statusClass = 'text-custom-red';
+                    recommendation = 'Consider reducing keyword usage to avoid keyword stuffing.';
+                } else if (density >= 1) {
+                    status = 'Optimal';
+                    statusClass = 'text-custom-red';
+                    recommendation = 'Good keyword density for SEO.';
+                } else {
+                    status = 'Low';
+                    statusClass = 'text-custom-white';
+                    recommendation = 'Consider increasing keyword usage for better SEO.';
+                }
+
+                keywordAnalysis.push({
+                    keyword: keyword,
+                    occurrences: occurrences,
+                    density: density,
+                    status: status,
+                    statusClass: statusClass,
+                    recommendation: recommendation
+                });
+            });
+
+            return {
+                totalWords: totalWords,
+                uniqueWords: uniqueWords,
+                keywordsFound: totalKeywordOccurrences,
+                keywordAnalysis: keywordAnalysis,
+                content: content,
+                processedContent: processedContent
+            };
+        }
+
+        function displayResults(analysis) {
+            // Update stats
+            document.getElementById('totalWords').textContent = analysis.totalWords.toLocaleString();
+            document.getElementById('uniqueWords').textContent = analysis.uniqueWords.toLocaleString();
+            document.getElementById('keywordsFound').textContent = analysis.keywordsFound.toLocaleString();
+
+            // Display keyword analysis
+            let keywordHTML = '<h6 class="mb-3 text-custom-red">Keyword Analysis:</h6>';
+            
+            analysis.keywordAnalysis.forEach(item => {
+                const densityBarClass = item.status === 'Optimal' ? 'density-optimal' : 
+                                      item.status === 'High' ? 'density-high' : 'density-low';
+                const barWidth = Math.min(item.density * 20, 100); // Scale for visualization
+
+                keywordHTML += `
+                    <div class="card bg-black border-danger mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <strong class="text-custom-white">${item.keyword}</strong>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="badge bg-custom-red text-custom-white">${item.occurrences} times</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="${item.statusClass} fw-bold">${item.density.toFixed(2)}%</span>
+                                </div>
+                                <div class="col-md-2">
+                                    <span class="badge bg-custom-red text-custom-white">${item.status}</span>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="density-bar">
+                                        <div class="density-fill ${densityBarClass}" style="width: ${barWidth}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-2">
+                                <small class="text-custom-white">${item.recommendation}</small>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('keywordResults').innerHTML = keywordHTML;
+            document.getElementById('resultsSection').style.display = 'block';
+            document.getElementById('noResultsSection').style.display = 'none';
+        }
+
+        function highlightKeywords() {
+            if (!analysisResults) {
+                alert('Please analyze content first.');
+                return;
+            }
+
+            let highlightedContent = analysisResults.content;
+            const caseSensitive = document.getElementById('caseSensitive').checked;
+
+            analysisResults.keywordAnalysis.forEach(item => {
+                const regex = new RegExp(`\\b${item.keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, caseSensitive ? 'g' : 'gi');
+                highlightedContent = highlightedContent.replace(regex, `<span class="keyword-highlight">$&</span>`);
+            });
+
+            // Show highlighted content in a modal
+            const modal = `
+                
+                            <div class="modal-body">
+                                <div class="bg-dark p-3 rounded" style="max-height: 400px; overflow-y: auto;">
+                                    ${highlightedContent}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Remove existing modal if any
+            const existingModal = document.getElementById('highlightModal');
+            if (existingModal) {
+                existingModal.remove();
+            }
+
+            // Add new modal
+            document.body.insertAdjacentHTML('beforeend', modal);
+            
+            // Show modal
+            const modalElement = document.getElementById('highlightModal');
+            const modalInstance = new bootstrap.Modal(modalElement);
+            modalInstance.show();
+        }
+
+        function loadSample() {
+            const sampleContent = `Search engine optimization (SEO) is the practice of optimizing your website to increase its visibility when people search for products or services related to your business on Google, Bing, and other search engines. The better visibility your pages have in search results, the more likely you are to garner attention and attract prospective and existing customers to your business.
+
+SEO is a fundamental digital marketing strategy because people conduct trillions of searches every year, often with commercial intent to find information about products and services. Search is often the primary source of digital traffic for brands and complements other marketing channels. Greater visibility and ranking higher in search results than your competition can have a material impact on your bottom line.
+
+The best way to think about SEO is that it's a way to help search engines understand and present content that searchers will find valuable. This means that SEO involves both technical and creative elements to help your site rank higher in search results.`;
+
+            const sampleKeywords = `SEO
+search engine optimization
+digital marketing
+search results`;
+
+            document.getElementById('contentText').value = sampleContent;
+            document.getElementById('keywords').value = sampleKeywords;
+        }
+
+        function clearContent() {
+            document.getElementById('contentText').value = '';
+            document.getElementById('keywords').value = '';
+            document.getElementById('resultsSection').style.display = 'none';
+            document.getElementById('noResultsSection').style.display = 'block';
+            document.getElementById('keywordResults').innerHTML = '';
+        }
+
+        function downloadReport() {
+            if (!analysisResults) {
+                alert('Please analyze content first.');
+                return;
+            }
+
+            let report = `Keyword Density Analysis Report\n`;
+            report += `Generated on: ${new Date().toLocaleString()}\n\n`;
+            report += `Content Statistics:\n`;
+            report += `- Total Words: ${analysisResults.totalWords}\n`;
+            report += `- Unique Words: ${analysisResults.uniqueWords}\n`;
+            report += `- Keywords Found: ${analysisResults.keywordsFound}\n\n`;
+            report += `Keyword Analysis:\n`;
+
+            analysisResults.keywordAnalysis.forEach(item => {
+                report += `\nKeyword: ${item.keyword}\n`;
+                report += `- Occurrences: ${item.occurrences}\n`;
+                report += `- Density: ${item.density.toFixed(2)}%\n`;
+                report += `- Status: ${item.status}\n`;
+                report += `- Recommendation: ${item.recommendation}\n`;
+            });
+
+            const blob = new Blob([report], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'keyword-density-report.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer=""></script>
+
+  <!-- Footer Script -->
+  
+
+<!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js')
+          .then(registration => console.log('SW registered'))
+          .catch(error => console.log('SW registration failed'));
+      });
+    }
+  </script>
+  
+  <!-- Header Loading Script -->
+  
+<script src="../assets/js/include.js?v=3" defer=""></script>
+
+  <!-- Footer -->
+  <div id="footer"><footer>
+  <div class="container text-center">
+    <div>
+      <a href="/About.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">About</a>
+      <a href="/Contact.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Contact</a>
+      <a href="/Privacy-Policy.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Privacy Policy</a>
+      <a href="/Terms-of-Service.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Terms</a>
+    </div>
+    <div class="small mt-1" style="color: #0981e4 !important;">© 2025 MultiTools. All rights reserved.</div>
+    <div class="mt-3">
+      <p class="mb-1"><strong>Contact:</strong> <a href="mailto:rajeshkumarmenon@zohomail.in" style="color: #ffc107 !important; text-decoration: none;">rajeshkumarmenon@zohomail.in</a></p>
+    </div>
+  </div>
+</footer>
+</div>
+
+
+
+
+
+
+</div></body></html>

@@ -1,0 +1,17 @@
+# Primary URLs (Currently showing errors in GSC)
+https://multitoolszone.fun/components/related-tools.html
+https://multitoolszone.fun/components/performance-optimizer.html
+https://multitoolszone.fun/components/breadcrumb.html
+https://multitoolszone.fun/components/ads-incontent.html
+
+# Additional component files (proactive removal - optional)
+https://multitoolszone.fun/components/ads-multiplex.html
+https://multitoolszone.fun/components/ads-top.html
+https://multitoolszone.fun/components/ads-vertical.html
+https://multitoolszone.fun/components/content-enhancer.html
+https://multitoolszone.fun/components/footer.html
+https://multitoolszone.fun/components/header.html
+
+# API endpoints (404 errors)
+https://multitoolszone.fun/api/error
+

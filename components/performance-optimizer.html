@@ -1,0 +1,193 @@
+﻿<!-- Performance Optimization Component -->
+<script>
+// Lazy loading for images
+document.addEventListener('DOMContentLoaded', function() {
+  const images = document.querySelectorAll('img[data-src]');
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        img.src = img.dataset.src;
+        img.classList.remove('lazy');
+        imageObserver.unobserve(img);
+      }
+    });
+  });
+  images.forEach(img => imageObserver.observe(img));
+});
+
+// Lazy loading for iframes
+document.addEventListener('DOMContentLoaded', function() {
+  const iframes = document.querySelectorAll('iframe[data-src]');
+  const iframeObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const iframe = entry.target;
+        iframe.src = iframe.dataset.src;
+        iframe.classList.remove('lazy');
+        iframeObserver.unobserve(iframe);
+      }
+    });
+  });
+  iframes.forEach(iframe => iframeObserver.observe(iframe));
+});
+
+// Preload critical resources
+function preloadCriticalResources() {
+  const criticalResources = [
+    '../assets/css/style.css?v=3',
+    'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css',
+    'https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css'
+  ];
+  criticalResources.forEach(resource => {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.href = resource;
+    link.as = resource.endsWith('.css') ? 'style' : 'font';
+    document.head.appendChild(link);
+  });
+}
+
+// Optimize images
+function optimizeImages() {
+  const images = document.querySelectorAll('img');
+  images.forEach(img => {
+    // Add loading="lazy" for images below the fold
+    if (!img.hasAttribute('loading')) {
+      img.loading = 'lazy';
+    }
+    // Add decoding="async" for better performance
+    if (!img.hasAttribute('decoding')) {
+      img.decoding = 'async';
+    }
+    // Add alt text if missing
+    if (!img.alt) {
+      img.alt = 'Image';
+    }
+  });
+}
+
+// Defer non-critical JavaScript
+function deferNonCriticalJS() {
+  const scripts = document.querySelectorAll('script[data-defer]');
+  scripts.forEach(script => {
+    script.defer = true;
+  });
+}
+
+// Optimize CSS delivery
+function optimizeCSSDelivery() {
+  const nonCriticalCSS = document.querySelectorAll('link[data-non-critical]');
+  nonCriticalCSS.forEach(link => {
+    link.media = 'print';
+    link.onload = function() {
+      this.media = 'all';
+    };
+  });
+}
+
+// Initialize performance optimizations
+document.addEventListener('DOMContentLoaded', function() {
+  preloadCriticalResources();
+  optimizeImages();
+  deferNonCriticalJS();
+  optimizeCSSDelivery();
+});
+
+// Service Worker registration for caching
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('/sw.js')
+      .then(function(registration) {
+      })
+      .catch(function(err) {
+      });
+  });
+}
+
+// Performance monitoring
+function monitorPerformance() {
+  if ('performance' in window) {
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        const perfData = performance.getEntriesByType('navigation')[0];
+        const loadTime = perfData.loadEventEnd - perfData.loadEventStart;
+        const domContentLoaded = perfData.domContentLoadedEventEnd - perfData.domContentLoadedEventStart;
+        // Send performance data to analytics if needed
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'timing_complete', {
+            name: 'load',
+            value: Math.round(loadTime)
+          });
+        }
+      }, 0);
+    });
+  }
+}
+
+// Initialize performance monitoring
+monitorPerformance();
+</script>
+
+<!-- Critical CSS Inline -->
+<style>
+/* Critical above-the-fold styles */
+.lazy {
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.lazy.loaded {
+  opacity: 1;
+}
+
+/* Performance optimizations */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Reduce layout shift */
+.card {
+  min-height: 200px;
+}
+
+/* Loading states */
+.loading {
+  position: relative;
+}
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid #dc3545;
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Font loading optimization */
+.multitools-script {
+  font-display: swap;
+}
+
+/* Reduce paint operations */
+.card, .btn, .form-control {
+  will-change: transform;
+}
+
+/* Optimize animations */
+@media (prefers-reduced-motion: reduce) {
+  .loading::after {
+    animation: none;
+  }
+}
+</style>

@@ -1,0 +1,492 @@
+<!DOCTYPE html><html lang="en"><head></head><body class="bg-dark text-light tool-page">﻿
+
+
+<style>
+/* Vertical side ads - show only on large screens */
+@media (min-width: 1200px) {
+  .vertical-ad {
+    display: block !important;
+  }
+}
+
+@media (max-width: 1199px) {
+  .vertical-ad {
+    display: none !important;
+  }
+}
+</style>
+    <meta charset="UTF-8">
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="../favicon-96x96.png">
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Text Case Converter - Free Online Text Case Tool | MultiTools">
+  <meta property="og:description" content="Convert text between different cases instantly with our free online text case converter. Transform text to uppercase, lowercase, title case, camel case, and more.">
+  <meta property="og:url" content="https://multitoolszone.fun/tools/text-case-converter.html">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://multitoolszone.fun/assets/img/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <!-- Security Headers -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin">
+  
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; img-src 'self' data: https:; font-src 'self' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net; connect-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://www.googletagmanager.com; frame-src 'none'; object-src 'none'; base-uri 'self';"><title>Text Case Converter - Free Online Tool | MultiTools</title>
+    <meta name="description" content="Free online Text Case Converter tool. Professional, easy-to-use Text Case Converter for various tasks and calculations.">
+    <meta name="keywords" content="text case converter, uppercase, lowercase, title case, camel case, text formatter, case converter, text tool">
+    <link rel="canonical" href="https://multitoolszone.fun/tools/text-case-converter.html">
+    
+    
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Text Case Converter",
+    "description": "Free online Text Case Converter tool for various tasks and calculations",
+    "url": "https://multitoolszone.fun/tools/text-case-converter.html",
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web Browser",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "MultiTools"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "MultiTools",
+      "url": "https://multitoolszone.fun"
+    }
+  }
+  </script>
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+/* Critical styles for immediate rendering */
+body { margin: 0; padding: 0; background: #000; color: #fff; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+.card { background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.3); }
+.tool-btn { background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(255, 255, 255, 0.3); }
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.navbar { background: rgba(0, 0, 0, 0.8) !important; }
+.navbar-brand { color: #fff !important; }
+.nav-link { color: #fff !important; }
+.btn { border-radius: 0.375rem; }
+.btn-primary { background: #dc3545; border-color: #dc3545; }
+.btn-outline-primary { color: #dc3545; border-color: #dc3545; }
+.form-control { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; }
+.form-control:focus { background: rgba(0, 0, 0, 0.6); border-color: #dc3545; box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25); }
+.card-body { color: #fff; }
+h1, h2, h3, h4, h5, h6 { color: #fff; }
+p { color: #fff; }
+label { color: #fff; }
+small { color: rgba(255, 255, 255, 0.85); }
+.alert { color: #fff; }
+.table-dark { color: #fff; }
+.table-dark td, .table-dark th { color: #fff; }
+.bg-dark { background: rgba(0, 0, 0, 0.8) !important; }
+.bg-secondary { background: rgba(108, 117, 125, 0.8) !important; color: #fff; }
+.text-muted { color: rgba(255, 255, 255, 0.75) !important; }
+</style>
+  
+  <!-- Non-critical CSS loaded asynchronously -->
+
+  <link rel="preload" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <link rel="preload" href="../assets/css/style.css?v=3" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <!-- Fallback for browsers that don't support preload -->
+  <noscript>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=3">
+  </noscript>
+  <!-- Performance Optimization - Resource Hints -->
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin="">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin="">
+  <meta name="language" content="en">
+
+
+    
+
+
+<div id="header"><header class="bg-transparent pt-3 mb-4 border-bottom border-danger">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Logo positioned outside container for independent sizing -->
+  <div class="text-center mb-2" id="site-logo" style="background: transparent !important; margin-top: 5px;">
+    <a href="/">
+      <img src="/assets/img/optimized/MULTI-TOOLS.webp" alt="Multi Tools" style="height: 100px !important; width: auto !important; max-height: none !important; background: transparent !important; display: block !important; margin: 0 auto !important;" loading="lazy" decoding="async" width="500" height="500">
+    </a>
+  </div>
+  <div class="container" style="background: transparent !important;">
+
+    <!-- Simple link row below logo -->
+    <nav class="d-flex justify-content-end align-items-center gap-3 pb-1" aria-label="Primary" style="max-height: 100px;">
+      <a href="../" class="text-danger fw-semibold text-decoration-none">Home</a>
+      <a href="../About.html" class="text-danger fw-semibold text-decoration-none" target="_blank">About</a>
+      <a href="../Contact.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Contact</a>
+      <a href="../blog/" class="text-danger fw-semibold text-decoration-none" target="_blank">Blog</a>
+      <a href="../Privacy-Policy.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Privacy Policy</a>
+      <a href="../Terms-of-Service.html" class="text-danger fw-semibold text-decoration-none" target="_blank">Terms</a>
+    </nav>
+  </div>
+
+  <style>
+    /* Navigation link styles */
+    header nav a {
+      font-size: 18px !important; 
+      /* around 17–18px */
+      transition: color 0.1s ease, transform 0.1s ease;
+    }
+
+    /* Hover effect */
+    header nav a:hover {
+      color: #ff4d4d;
+      transform: scale(1.05);
+    }
+
+    /* Tablet */
+    @media (max-width: 992px) {
+      header nav a {
+        font-size: 1rem !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 576px) {
+      header nav a {
+        font-size: 0.55rem !important;
+        display: inline-block;
+      }
+    }
+  </style>
+</header>
+</div>
+    
+    <div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h1 class="mb-4 text-center flex-grow-1 text-decoration-underline" style="color: #09ce24 !important;">
+        Text Case Converter - Free Online Text Case Tool
+      </h1>
+    </div>
+    
+    <!-- Tool Interface -->
+    <div class="tool-interface">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <!-- In-Content Ad Unit -->
+          <div id="ads-incontent"></div>
+                  
+                  <!-- Tool Description -->
+                  <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <h2 class="text-danger mb-3">Free Text Case Converter</h2>
+                        <p class="mb-3">Convert text between uppercase, lowercase, title case, camel case, and more with our comprehensive text case converter. Perfect for writing, programming, and content formatting.</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                
+                            </div>
+                            <div class="col-md-6">
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Input and Conversion -->
+                <div class="card bg-black border-danger mb-4">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="inputText" class="form-label text-warning">Enter Your Text</label>
+                            <textarea class="form-control bg-dark text-light border-danger" id="inputText" rows="6" placeholder="Type or paste your text here..."></textarea>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="d-flex justify-content-between">
+                                    <span class="text-muted">Characters: <span id="charCount">0</span></span>
+                                    <span class="text-muted">Words: <span id="wordCount">0</span></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <button class="btn btn-outline-danger btn-sm" onclick="clearText()">Clear Text</button>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('uppercase')">UPPERCASE</button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('lowercase')">lowercase</button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('titlecase')">Title Case</button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('camelcase')">camelCase</button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('pascalcase')">PascalCase</button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('snakecase')">snake_case</button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('kebabcase')">kebab-case</button>
+                            </div>
+                            <div class="col-md-6 mb-2">
+                                <button class="btn btn-danger w-100" onclick="convertCase('alternating')">aLtErNaTiNg</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results" class="card bg-black border-danger mb-4" style="display: none;">
+                    <div class="card-body">
+                        <h3 class="text-danger mb-3">Converted Text</h3>
+                        <div class="mb-3">
+                            <textarea class="form-control bg-dark text-light border-danger" id="outputText" rows="6" readonly=""></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button class="btn btn-success" onclick="copyToClipboard()">Copy to Clipboard</button>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+      </div>
+    </div>
+
+  <!-- Multiplex Ad Unit -->
+  <div id="ads-multiplex"></div>
+  
+  <!-- Comprehensive Guide Section -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card bg-black border-danger">
+        <div class="card-body">
+          <h3 style="color: #4fc3f7;">Complete Guide to Text Case Conversion and Formatting</h3>
+          
+          <h4 style="color: #00ff88;">What is Text Case Conversion?</h4>
+          <p>Text case conversion is the process of changing the capitalization of text from one format to another. This is essential for maintaining consistency in writing, following style guides, and ensuring proper formatting across different platforms and applications.</p>
+          
+          <h4 style="color: #00ff88;">Why Use Text Case Conversion?</h4>
+          <p>Text case conversion provides several important benefits:</p>
+          <ul>
+            <li><strong>Consistency:</strong> Maintain uniform text formatting across documents</li>
+            <li><strong>Style Compliance:</strong> Follow specific writing style guidelines</li>
+            <li><strong>Platform Requirements:</strong> Meet formatting requirements for different platforms</li>
+            <li><strong>Professional Appearance:</strong> Ensure polished, professional-looking text</li>
+            <li><strong>Accessibility:</strong> Improve readability for different audiences</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">Common Case Types</h4>
+          <ul>
+            <li><strong>UPPERCASE:</strong> All letters in capital form (HELLO WORLD)</li>
+            <li><strong>lowercase:</strong> All letters in small form (hello world)</li>
+            <li><strong>Title Case:</strong> First letter of each word capitalized (Hello World)</li>
+            <li><strong>Sentence case:</strong> First letter of sentence capitalized (Hello world)</li>
+            <li><strong>camelCase:</strong> First word lowercase, subsequent words capitalized (helloWorld)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- How It Works Section -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card bg-black border-danger">
+        <div class="card-body">
+          <h3 style="color: #4fc3f7;">How Our Text Case Converter Works</h3>
+          
+          <h4 style="color: #00ff88;">Conversion Process</h4>
+          <p>Our text case converter follows advanced text processing algorithms:</p>
+          <ol>
+            <li><strong>Text Analysis:</strong> Analyzes input text for current case format</li>
+            <li><strong>Pattern Recognition:</strong> Identifies words, sentences, and special characters</li>
+            <li><strong>Case Application:</strong> Applies the selected case conversion rules</li>
+            <li><strong>Formatting Preservation:</strong> Maintains spacing and special characters</li>
+            <li><strong>Output Generation:</strong> Produces correctly formatted text</li>
+          </ol>
+          
+          <h4 style="color: #00ff88;">Supported Case Types</h4>
+          <ul>
+            <li><strong>UPPERCASE:</strong> Converts all letters to capital form</li>
+            <li><strong>lowercase:</strong> Converts all letters to small form</li>
+            <li><strong>Title Case:</strong> Capitalizes first letter of each word</li>
+            <li><strong>Sentence Case:</strong> Capitalizes first letter of each sentence</li>
+            <li><strong>camelCase:</strong> First word lowercase, rest capitalized</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">Advanced Features</h4>
+          <ul>
+            <li><strong>Bulk Conversion:</strong> Process large amounts of text efficiently</li>
+            <li><strong>Preserve Formatting:</strong> Maintain original spacing and punctuation</li>
+            <li><strong>Special Character Handling:</strong> Properly handle numbers and symbols</li>
+            <li><strong>Real-time Preview:</strong> See results as you type</li>
+            <li><strong>Copy to Clipboard:</strong> Easy copying of converted text</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  <!-- Tips and Best Practices -->
+  <div class="row mb-4">
+    <div class="col-lg-8 mx-auto">
+      <div class="card bg-black border-danger">
+        <div class="card-body">
+          <h3 style="color: #4fc3f7;">Tips and Best Practices</h3>
+          
+          <h4 style="color: #00ff88;">For Writers and Editors:</h4>
+          <ul>
+            <li>Use title case for headings and subheadings</li>
+            <li>Apply sentence case for body text and paragraphs</li>
+            <li>Use uppercase sparingly for emphasis or headings</li>
+            <li>Maintain consistency throughout your document</li>
+            <li>Follow style guide requirements for your publication</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">For Developers:</h4>
+          <ul>
+            <li>Use camelCase for JavaScript variable names</li>
+            <li>Apply PascalCase for class and constructor names</li>
+            <li>Use UPPERCASE for constants and configuration values</li>
+            <li>Follow language-specific naming conventions</li>
+            <li>Maintain consistency across your codebase</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">For Content Creators:</h4>
+          <ul>
+            <li>Use title case for blog post titles and headings</li>
+            <li>Apply sentence case for social media captions</li>
+            <li>Use uppercase for hashtags and call-to-action text</li>
+            <li>Consider your audience and platform requirements</li>
+            <li>Test readability with different case formats</li>
+          </ul>
+          
+          <h4 style="color: #00ff88;">Style Guide Compliance:</h4>
+          <ul>
+            <li>APA Style: Title case for headings, sentence case for text</li>
+            <li>Chicago Manual: Title case for headings, sentence case for text</li>
+            <li>MLA Style: Title case for titles, sentence case for text</li>
+            <li>AP Style: Sentence case for headlines and text</li>
+            <li>Company Style: Follow internal style guide requirements</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" defer=""></script>
+    <script>
+        function updateCounts() {
+            const text = document.getElementById('inputText').value;
+            document.getElementById('charCount').textContent = text.length;
+            document.getElementById('wordCount').textContent = text.trim() ? text.trim().split(/\s+/).length : 0;
+        }
+
+        function convertCase(caseType) {
+            const input = document.getElementById('inputText').value;
+            let result = '';
+
+            switch(caseType) {
+                case 'uppercase':
+                    result = input.toUpperCase();
+                    break;
+                case 'lowercase':
+                    result = input.toLowerCase();
+                    break;
+                case 'titlecase':
+                    result = input.toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
+                    break;
+                case 'camelcase':
+                    result = input.toLowerCase().replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+                    break;
+                case 'pascalcase':
+                    result = input.toLowerCase().replace(/\b\w/g, l => l.toUpperCase()).replace(/[^a-zA-Z0-9]+(.)/g, (m, chr) => chr.toUpperCase());
+                    break;
+                case 'snakecase':
+                    result = input.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '_');
+                    break;
+                case 'kebabcase':
+                    result = input.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-');
+                    break;
+                case 'alternating':
+                    result = input.split('').map((char, i) => i % 2 === 0 ? char.toLowerCase() : char.toUpperCase()).join('');
+                    break;
+            }
+
+            document.getElementById('outputText').value = result;
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function copyToClipboard() {
+            const output = document.getElementById('outputText');
+            output.select();
+            document.execCommand('copy');
+            alert('Text copied to clipboard!');
+        }
+
+        function clearText() {
+            document.getElementById('inputText').value = '';
+            document.getElementById('outputText').value = '';
+            document.getElementById('results').style.display = 'none';
+            updateCounts();
+        }
+
+        document.getElementById('inputText').addEventListener('input', updateCounts);
+    </script>
+
+  <!-- Footer Script -->
+  
+
+<!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('../sw.js')
+          .then(registration => console.log('SW registered'))
+          .catch(error => console.log('SW registration failed'));
+      });
+    }
+  </script>
+  
+  <!-- Header Loading Script -->
+  
+<script src="../assets/js/include.js?v=3" defer=""></script>
+
+  <!-- Footer -->
+  <div id="footer"><footer>
+  <div class="container text-center">
+    <div>
+      <a href="/About.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">About</a>
+      <a href="/Contact.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Contact</a>
+      <a href="/Privacy-Policy.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Privacy Policy</a>
+      <a href="/Terms-of-Service.html" class="text-danger me-3" target="_blank" style="color: #dc3545 !important;">Terms</a>
+    </div>
+    <div class="small mt-1" style="color: #0981e4 !important;">© 2025 MultiTools. All rights reserved.</div>
+    <div class="mt-3">
+      <p class="mb-1"><strong>Contact:</strong> <a href="mailto:rajeshkumarmenon@zohomail.in" style="color: #ffc107 !important; text-decoration: none;">rajeshkumarmenon@zohomail.in</a></p>
+    </div>
+  </div>
+</footer>
+</div>
+
+
+
+
+</div></body></html>

@@ -1,0 +1,18 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+
+# Run link checker
+echo "🔗 Checking for broken links..."
+node check-links.js
+LINK_CHECK_RESULT=$?
+
+# If link check failed, exit with error
+if [ $LINK_CHECK_RESULT -ne 0 ]; then
+  echo "❌ Broken links found! Please run 'npm run fix-links' to fix them."
+  exit 1
+fi
+
+echo "✅ All pre-commit checks passed!"
+exit 0

@@ -1,0 +1,73 @@
+<!-- In-Content Ad Unit for Tool Pages - Horizontal Format -->
+<div class="ad-container-incontent">
+  <div class="ad-placeholder-incontent">
+    <!-- 📢 AD SENSE IN-CONTENT Ad - Horizontal Format -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3712069892669914"
+         data-ad-slot="5951890513"
+         data-ad-format="horizontal"
+         data-full-width-responsive="true"></ins>
+  </div>
+</div>
+<style>
+.ad-container-incontent {
+  position: relative;
+  z-index: 1;
+  margin: 2rem 0;
+}
+.ad-placeholder-incontent {
+  transition: all 0.3s ease;
+  min-height: 90px;
+}
+
+/* Responsive adjustments for horizontal ad */
+@media (max-width: 768px) {
+  .ad-container-incontent {
+    margin: 1rem 0;
+  }
+  .ad-placeholder-incontent {
+    min-height: 60px;
+  }
+  ins.adsbygoogle {
+    min-height: 60px !important;
+  }
+}
+/* Ensure horizontal layout on all screen sizes */
+ins.adsbygoogle {
+  display: block !important;
+  width: 100% !important;
+  min-height: 90px !important;
+}
+</style>
+<script>
+// Hide placeholder when ad loads
+document.addEventListener('DOMContentLoaded', function() {
+  const adContainer = document.querySelector('.ad-container-incontent');
+  if (adContainer) {
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList') {
+          const adElement = adContainer.querySelector('iframe');
+          if (adElement) {
+            const placeholder = adContainer.querySelector('.ad-placeholder-incontent');
+            if (placeholder) {
+              placeholder.style.display = 'none';
+            }
+          }
+        }
+      });
+    });
+    observer.observe(adContainer, { childList: true, subtree: true });
+  }
+});
+// Force horizontal format for better mobile experience
+window.addEventListener('load', function() {
+  const adElements = document.querySelectorAll('.ad-container-incontent ins.adsbygoogle');
+  adElements.forEach(function(ad) {
+    ad.style.minHeight = '90px';
+    ad.style.width = '100%';
+    ad.style.display = 'block';
+  });
+});
+</script>
